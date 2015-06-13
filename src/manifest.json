@@ -1,0 +1,26 @@
+/* manifest.json */
+
+{
+    // 拡張機能の定義
+    "manifest_version": 2,  // マニフェストのバージョン ※"2"を指定
+    "name": "twitter画像原寸表示",       // 拡張機能の名称
+    "version": "1.4",       // 拡張機能のバージョン
+ 
+    "description": "twitterのツイート詳細画面にボタンを追加する拡張機能。追加されたボタンを押すとtwitterの画像の原寸を別ウィンドウで表示する。連絡は@HOGExtendまで。",  // 拡張機能の概要
+ 
+    // アイコンの設定
+    "icons": {
+        "16": "icons/icon.png",         // 16×16[px]アイコンファイルのパス
+        "48": "icons/icon.png",         // 48×48[px]アイコンファイルのパス
+        "128": "icons/icon.png"         // 128×128[px]アイコンファイルのパス
+    },
+ 
+    // スクリプトの設定
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/*"],  // 拡張機能を適用するURLパターン
+            "js": ["js/main.js"]                                      // JavaScriptのパス
+        }
+    ]
+}
+
