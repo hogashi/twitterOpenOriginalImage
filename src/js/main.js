@@ -18,10 +18,11 @@ document.addEventListener("click", start);
 function INCL(){
     var imgurl = [];
     if(!!document.querySelector('.permalink-tweet-container .cards-base img')){ // if 画像ツイートなら
-        if(!!(document.querySelector('.permalink-footer .cards-base .multi-photos'))){ // if 複数画像ツイートなら
+        if(!!(document.querySelector('.cards-media-container .cards-base .multi-photos'))){ // if 複数画像ツイートなら
             for(var i=1; i<=4; i++){
-                if(!!document.querySelector('.permalink-footer .cards-base .multi-photos .photo-' + i + ' img')){
-                    imgurl[i-1] = document.querySelector('.permalink-footer .cards-base .multi-photos .photo-' + i + ' img').src;
+                if(!!document.querySelector('.cards-media-container .cards-base .multi-photos .photo-' + i + ' img')){
+                    imgurl[i-1] = document.querySelector('.cards-media-container .cards-base .multi-photos .photo-' + i + ' img').src;
+                    //console.log(imgurl[i-1]);  //debug
                 }
             }
             for(var i=4; i>0; i--){

@@ -16,3 +16,8 @@ Usage:<br>
 
 Contact:<br>
   twitter: @HOGExend<br>
+
+-----
+Changes
+
+ver.1.5 2015/07/20 Coped with change of multiple photo showing in twitter.
