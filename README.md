@@ -18,3 +18,7 @@ If you want to edit this, please contact me as you possible.<br />
 
 Contact:<br />
   twitter: @HOGExend
+
+-----
+# Changes
+ver.1.5 [2015/07/20] Coped with the change of multiple show in twitter.
