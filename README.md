@@ -19,6 +19,12 @@ If you want to edit this, please contact me as you possible.<br />
 Contact:<br />
   twitter: @HOGExend
 
------
+---
+
 # Changes
-ver.1.5 [2015/07/20] Coped with the change of multiple show in twitter.
+ver.1.5 [2015/07/20] Coped with the change of multiple-photo-tweet showing in twitter<br />
+ver.1.3 [2015/05/14] Coped with reply-photo-tweet to photo-tweet<br />
+　[2015/03/24] Fixed readme.txt<br />
+ver.1.2 [2015/03/19] Coped with multiple-photo-tweet, fixed behavior<br />
+ver.1.1 [2015/02/16] Added operation procedure ([Enter(Return)] key), fixed behavior<br />
+ver.1.0 [2015/02/15] Released<br />
