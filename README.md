@@ -22,6 +22,7 @@ Contact:<br />
 ---
 
 # Changes
+ver.1.5.2 [2015/10/20] Fixed Original-button position (to the side of action-buttons). <br />
 ver.1.5.1 [2015/08/02] Fixed the behavior of multiple-photo-tweet-reply to multiple-photo-tweet situation.  It did open former photos (and so on). <br />
 ver.1.5 [2015/07/20] Coped with the change of multiple-photo-tweet showing in twitter<br />
 ver.1.3 [2015/05/14] Coped with reply-photo-tweet to photo-tweet<br />

@@ -1,7 +1,6 @@
 /* main.js */
 
 var timerid;
-//var count = 0;  // for debug
 
 window.addEventListener("load", start);
 document.addEventListener("keydown", function(e){
@@ -9,7 +8,6 @@ document.addEventListener("keydown", function(e){
         INCL();
     }
     var locurl = location.href;
-    //document.querySelector("h1.Icon").innerHTML += locurl;
     start();
 });
 document.addEventListener("keyup", start);
@@ -24,7 +22,6 @@ function INCL(){
             for(var i=1; i<=4; i++){
                 if(!!node_photos.querySelector('.photo-' + i + ' img')){
                     imgurl[i-1] = node_photos.querySelector('.photo-' + i + ' img').src;
-                    //console.log(imgurl[i-1]);  //debug
                 }
             }
             for(var i=4; i>0; i--){
@@ -43,18 +40,14 @@ function INCL(){
 }
 
 function start(){
-    //document.querySelector("h1.Icon").innerHTML = count;  // for debug
     if(!document.getElementById("twioriginput")){ // if まだ処理行ってないなら
         if(!!document.querySelector('.permalink-tweet-container .cards-base img')){ // if 画像ツイートなら
-//            var sel = ;
             var sel = document.querySelector(".permalink-tweet-container .ProfileTweet-actionList");
             if(!!document.querySelector(".permalink-tweet p.tweet-text")){ // if ツイート本文のpタグが存在するなら
-                //sel.appendChild(document.createElement("br"));
                 var divch = document.createElement("div");
                 divch.id = "twiorigdiv";
-                //spanch.innerHTML = "";
-                //spanch.style.fontSize = "12px";
                 sel.appendChild(divch);
+                document.getElementById("twiorigdiv").className = "ProfileTweet-action";
 
                 var inputch = document.createElement("input");
                 inputch.id = "twioriginput";
@@ -65,9 +58,6 @@ function start(){
                 document.getElementById("twiorigdiv").appendChild(inputch);
             }
         }
-        //var locurl = location.href;
-        //document.querySelector("h1.Icon").innerHTML += locurl;
-        //count++;  // for debug
         clearTimeout(timerid);
         timerid = setTimeout("start()",1000);
     }
