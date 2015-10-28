@@ -1,62 +1,51 @@
 /* main.js */
 
 var timerid;
-
 window.addEventListener("load", start);
 document.addEventListener("keydown", function(e){
-    if(e.keyCode == 13){ // if [RETURN(ENTER)]キーなら
+    // if [RETURN(ENTER)]キーなら
+    if(e.keyCode == 13){
         INCL();
     }
-    var locurl = location.href;
     start();
 });
 document.addEventListener("keyup", start);
 document.addEventListener("click", start);
 
 function INCL(){
-    var imgurl = [];
-    var node_photos = [];
-    if(!!document.querySelector('.permalink-tweet-container .cards-base img')){ // if 画像ツイートなら
-        if(!!(document.querySelector('.permalink-tweet-container .cards-media-container .cards-base .multi-photos'))){ // if 複数画像ツイートなら
-            node_photos = document.querySelector('.permalink-tweet-container .cards-media-container .cards-base .multi-photos');
-            for(var i=1; i<=4; i++){
-                if(!!node_photos.querySelector('.photo-' + i + ' img')){
-                    imgurl[i-1] = node_photos.querySelector('.photo-' + i + ' img').src;
-                }
-            }
-            for(var i=4; i>0; i--){
-                if(!!imgurl[i-1]){ // if 画像URLが取得できたなら
-                    window.open(imgurl[i-1] + ':orig');
-                }
-            }
-        }
-        else{ // else 単一画像ツイートなら
-            imgurl[0] = document.querySelector('.permalink-tweet-container .cards-base img').src;
-            if(!!imgurl[0]){ // if 画像URLが取得できたなら
-                window.open(imgurl[0] + ':orig');
+    // .permalink-tweet-container: ツイート詳細ページのメインツイート
+    // .OldMedia-photoContainer: 画像
+    if(!!document.querySelector('.permalink-tweet-container')){
+        var mediatags = document.querySelector('.permalink-tweet-container').getElementsByClassName('OldMedia-photoContainer');
+        for(var i=mediatags.length-1; i>=0; i--){
+            var imgurl = mediatags[i].getElementsByTagName('img')[0].src;
+             // if 画像URLが取得できたなら
+            if(!!imgurl){
+                window.open(imgurl + ':orig');
             }
         }
     }
 }
 
 function start(){
-    if(!document.getElementById("twioriginput")){ // if まだ処理行ってないなら
-        if(!!document.querySelector('.permalink-tweet-container .cards-base img')){ // if 画像ツイートなら
+    // if まだ処理を行っていないなら
+    if(!document.getElementById("twioriginput")){
+         // if ツイート詳細ページかつメインツイートが画像ツイートなら
+        if(!!document.querySelector('.permalink-tweet-container .OldMedia')){
+            // メインツイートの操作ボタン
             var sel = document.querySelector(".permalink-tweet-container .ProfileTweet-actionList");
-            if(!!document.querySelector(".permalink-tweet p.tweet-text")){ // if ツイート本文のpタグが存在するなら
-                var divch = document.createElement("div");
-                divch.id = "twiorigdiv";
-                sel.appendChild(divch);
-                document.getElementById("twiorigdiv").className = "ProfileTweet-action";
-
-                var inputch = document.createElement("input");
-                inputch.id = "twioriginput";
-                inputch.style.width = "70px";
-                inputch.type = "button";
-                inputch.value = "Original";
-                inputch.onclick = INCL;
-                document.getElementById("twiorigdiv").appendChild(inputch);
-            }
+            var divch = document.createElement("div");
+            divch.id = "twiorigdiv";
+            sel.appendChild(divch);
+            document.getElementById("twiorigdiv").className = "ProfileTweet-action";
+            // Originalボタン
+            var inputch = document.createElement("input");
+            inputch.id = "twioriginput";
+            inputch.style.width = "70px";
+            inputch.type = "button";
+            inputch.value = "Original";
+            inputch.onclick = INCL;
+            document.getElementById("twiorigdiv").appendChild(inputch);
         }
         clearTimeout(timerid);
         timerid = setTimeout("start()",1000);
