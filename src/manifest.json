@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "twitter画像原寸表示",
-    "version": "1.6",
+    "version": "1.6.1",
  
     "description": "twitterのツイート詳細画面にボタンを追加する拡張機能。追加されたボタンかEnterキーを押すとtwitterの画像の原寸を別ウィンドウで表示する。連絡は@hogextendまで。",
  
