@@ -31,7 +31,7 @@ function start(){
     // if まだ処理を行っていないなら
     if(!document.getElementById("twioriginput")){
          // if ツイート詳細ページかつメインツイートが画像ツイートなら
-        if(!!document.querySelector('.permalink-tweet-container')){
+        if(!!document.querySelector('.permalink-tweet-container .AdaptiveMedia-photoContainer')){
             // メインツイートの操作ボタン
             var sel = document.querySelector(".permalink-tweet-container .ProfileTweet-actionList");
             var divch = document.createElement("div");

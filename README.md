@@ -22,7 +22,8 @@ Contact:<br />
 ---
 
 # Changes
-ver.1.6.1 [2015/12/09] ver.1.6 [2015/10/28] Coped with the change of photo-tweet showing in twitter (again)<br />
+ver.1.6.2 [2015/12/09] Fixed Original-button appearance (not to appear the button on a non-photo-tweet)
+ver.1.6.1 [2015/12/09] Coped with the change of photo-tweet showing in twitter (again)<br />
 ver.1.6 [2015/10/28] Coped with the change of photo-tweet showing in twitter<br />
 ver.1.5.2 [2015/10/20] Fixed Original-button position (to the side of action-buttons). <br />
 ver.1.5.1 [2015/08/02] Fixed the behavior of multiple-photo-tweet-reply to multiple-photo-tweet situation.  It did open former photos (and so on). <br />
