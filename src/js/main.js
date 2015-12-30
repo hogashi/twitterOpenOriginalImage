@@ -43,7 +43,7 @@ function start() {
 	);
 	clearTimeout(timerid);
 	timerid = setTimeout('start()', 1500);
-}
+} // start end
 
 function setButtonInDetailpage() {
 	var actionList = "",
@@ -71,32 +71,13 @@ function setButtonInDetailpage() {
 			document.getElementById('tooiDivDetailpage').appendChild(origButton);
 		}
 	}
-}
-
-function openFromDetailpage() {
-	var mediatags = "",
-		imgurl = [],
-		i = 0;
-	console.log('openFromDetailpage : ' + c++);
-	// .permalink-tweet-container: ツイート詳細ページのメインツイート
-	// .AdaptiveMedia-photoContainer: 画像の親エレメント
-	if(!!document.querySelector('.permalink-tweet-container')) {
-		mediatags = document.querySelector('.permalink-tweet-container').getElementsByClassName('AdaptiveMedia-photoContainer');
-		for(i=mediatags.length-1; i>=0; i--) {
-			imgurl[i] = mediatags[i].getElementsByTagName('img')[0].src;
-			// if 画像URLが取得できたなら
-			if(!!imgurl[i]) {
-				window.open(imgurl[i] + ':orig');
-			}
-		}
-	}
-}
+} // setButtonInDetailpage end
 
 function setButtonInTimeline() {
 	var tweets = [],
-		sel = [],
-		divch = [],
-		inputch = [],
+		actionList = [],
+		parentDiv = [],
+		origButton = [],
 		i = 0;
 	console.log('setButtonInTimeline : ' + c++);
 	// if ツイートを取得できたら
@@ -109,27 +90,46 @@ function setButtonInTimeline() {
 			if(!!tweets[i].querySelector('.AdaptiveMedia-container') && !(document.getElementById('tooiDivTimeline' + tweets[i].id))) {
 				// ボタンを設置
 				// 操作ボタンの外側は様式にあわせる
-				sel[i] = tweets[i].querySelector('.ProfileTweet-actionList');
-				divch[i] = document.createElement('div');
-				divch[i].id = 'tooiDivTimeline' + tweets[i].id;
-				divch[i].className = 'ProfileTweet-action'
-				sel[i].appendChild(divch[i]);
+				actionList[i] = tweets[i].querySelector('.ProfileTweet-actionList');
+				parentDiv[i] = document.createElement('div');
+				parentDiv[i].id = 'tooiDivTimeline' + tweets[i].id;
+				parentDiv[i].className = 'ProfileTweet-action'
+				actionList[i].appendChild(parentDiv[i]);
 				// Originalボタン
-				inputch[i] = document.createElement('input');
-				inputch[i].id = 'tooiInputTimeline' + tweets[i].id;
-				inputch[i].style.width = '70px';
-				inputch[i].type = 'button';
-				inputch[i].value = 'Original';
-				inputch[i].onclick = openFromTimeline;
-				document.getElementById('tooiDivTimeline' + tweets[i].id).appendChild(inputch[i]);
+				origButton[i] = document.createElement('input');
+				origButton[i].id = 'tooiInputTimeline' + tweets[i].id;
+				origButton[i].style.width = '70px';
+				origButton[i].type = 'button';
+				origButton[i].value = 'Original';
+				origButton[i].onclick = openFromTimeline;
+				document.getElementById('tooiDivTimeline' + tweets[i].id).appendChild(origButton[i]);
 			}
 		}
 	}
-}
+} // setButtonInTimeline end
+
+function openFromDetailpage() {
+	var mediatag = "",
+		imgurls = [],
+		i = 0;
+	console.log('openFromDetailpage : ' + c++);
+	// .permalink-tweet-container: ツイート詳細ページのメインツイート
+	// .AdaptiveMedia-photoContainer: 画像の親エレメント
+	if(!!document.querySelector('.permalink-tweet-container')) {
+		mediatag = document.querySelector('.permalink-tweet-container').getElementsByClassName('AdaptiveMedia-photoContainer');
+		for(i=mediatag.length-1; i>=0; i--) {
+			imgurls[i] = mediatag[i].getElementsByTagName('img')[0].src;
+			// if 画像URLが取得できたなら
+			if(!!imgurls[i]) {
+				window.open(imgurls[i] + ':orig');
+			}
+		}
+	}
+} // openFromDetailpage end
 
 function openFromTimeline() {
 	var mediatags = [],
-		imgurl = [],
+		imgurls = [],
 		i = 0;
 	console.log('openFromTimeline : ' + c++);
 	// this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container'):
@@ -137,10 +137,10 @@ function openFromTimeline() {
 	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container')) {
 		mediatags = this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer');
 		for(i=mediatags.length-1; i>=0; i--) {
-			imgurl[i] = mediatags[i].getElementsByTagName('img')[0].src;
-			if(!!imgurl[i]) {
-				window.open(imgurl[i] + ':orig');
+			imgurls[i] = mediatags[i].getElementsByTagName('img')[0].src;
+			if(!!imgurls[i]) {
+				window.open(imgurls[i] + ':orig');
 			}
 		}
 	}
-}
+} // openFromTimeline end
