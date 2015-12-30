@@ -1,7 +1,5 @@
 /* main.js */
 
-var c = 0;
-
 var timerid;
 window.addEventListener('load', start);
 document.addEventListener('click', start);
@@ -22,7 +20,6 @@ document.addEventListener('keydown', function(e) {
 });
 
 function start() {
-	console.log('start : ' + c++);
 	// 詳細ページのボタン表示設定の読み込み
 	chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'showInDetailpage'},
 		function(response) {
@@ -49,9 +46,8 @@ function setButtonInDetailpage() {
 	var actionList = "",
 		parentDiv = "",
 		origButton = "";
-	console.log('setButtonInDetailpage : ' + c++);
 	// if まだ処理を行っていないなら
-	if(!document.getElementById('tooiInputDetail')) {
+	if(!document.getElementById('tooiInputDetailpage')) {
 		// if ツイート詳細ページかつメインツイートが画像ツイートなら
 		if(!!document.querySelector('.permalink-tweet-container .AdaptiveMedia-photoContainer')) {
 			// Originalボタンの親の親となる枠
@@ -59,11 +55,11 @@ function setButtonInDetailpage() {
 			// Originalボタンの親となるdiv
 			parentDiv = document.createElement('div');
 			parentDiv.id = 'tooiDivDetailpage';
-			parentDiv.className = 'ProfileTweet-action'
+			parentDiv.className = 'ProfileTweet-action';
 			actionList.appendChild(parentDiv);
 			// Originalボタン(input type='button')
 			origButton = document.createElement('input');
-			origButton.id = 'tooiInputDetail';
+			origButton.id = 'tooiInputDetailpage';
 			origButton.type = 'button';
 			origButton.value = 'Original';
 			origButton.style.width = '70px';
@@ -79,7 +75,6 @@ function setButtonInTimeline() {
 		parentDiv = [],
 		origButton = [],
 		i = 0;
-	console.log('setButtonInTimeline : ' + c++);
 	// if ツイートを取得できたら
 	if(document.getElementsByClassName('js-stream-item').length != 0) {
 		tweets = document.getElementsByClassName('js-stream-item');
@@ -112,7 +107,6 @@ function openFromDetailpage() {
 	var mediatag = "",
 		imgurls = [],
 		i = 0;
-	console.log('openFromDetailpage : ' + c++);
 	// .permalink-tweet-container: ツイート詳細ページのメインツイート
 	// .AdaptiveMedia-photoContainer: 画像の親エレメント
 	if(!!document.querySelector('.permalink-tweet-container')) {
@@ -131,7 +125,6 @@ function openFromTimeline() {
 	var mediatags = [],
 		imgurls = [],
 		i = 0;
-	console.log('openFromTimeline : ' + c++);
 	// this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container'):
 	// ツイートの画像の親エレメントの親まで遡り、ツイートの画像の親エレメントを取得
 	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container')) {

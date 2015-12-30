@@ -3,28 +3,42 @@
 	margin: 0;
 	padding: 0;
 	font-family: "メイリオ", "Lato", "Meiryo", "ヒラギノ角ゴ", "osaka", sans-serif;
-	border: 1px solid #f00;
 }
 body{
-	width: 200px;
+	width: 230px;
 }
 header{
-	max-width: 100px;
+	margin-bottom: 4px;
+	box-shadow: 0px 2px 4px #777;
+	background-color: #008;
 }
 main{
-	margin: 5px;
+	padding: 5px;
 }
 h1{
-	/*margin-left: 5px;*/
-	font-size: 1.4em;
+	padding-top: 3px;
+	font-size: 1.7em;
+	color: #eef;
+	text-align: center;
 }
 h2{
-	/*margin-left: 5px;*/
+	padding-top: 3px;
 	font-size: 1.2em;
+	color: #eef;
+	text-align: center;
+}
+hr{
+	border-color: #aaa;
+	border-width: 1px;
+	background-color: #aaa;
 }
 p{
 	margin: 5px 0 5px 0;
-	/*border: 1px solid #0f0;*/
+	font-size: 1.2em;
+}
+.bb{
+	font-size: 1.2em;
+	font-weight: bold;
 }
 .mode{
 	margin: 5px;
@@ -32,10 +46,12 @@ p{
 .save{
 	margin-left: 5%;
 	width: 90%;
-	background: #eff;
+	color: #008;
+	font-size: 1.1em;
 	border-color: #28f;
 	border-radius: 5px;
 	box-shadow: 2px 2px 2px #345;
+	background-color: #fff;
 }
 .save:active{
 	box-shadow: 2px 2px 2px #345 inset;
