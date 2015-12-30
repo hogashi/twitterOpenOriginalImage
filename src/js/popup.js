@@ -4,24 +4,26 @@ var showInTimeline = document.getElementById("showInTimeline");
 
 window.onload = function(){
 	// 最初はどっちもtrueであってほしい
-	// 最初は値が入っていないので、「if falseでなければ」としておく
-	if(localStorage.showInDetailpage != "false") {
+	// 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
+	if(localStorage["showInDetailpage"] != "isfalse") {
 		showInDetailpage.checked = true;
 	}
 	else {
 		showInDetailpage.checked = false;
 	}
-	if(localStorage.showInTimeline != "false") {
+	if(localStorage["showInTimeline"] != "isfalse") {
 		showInTimeline.checked = true;
 	}
 	else {
 		showInTimeline.checked = false;
 	}
+	document.getElementById("res").innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ":" + localStorage["showInDetailpage"] + localStorage["showInTimeline"];
 }
 
 document.getElementById("save").onclick = function() {
-	localStorage.showInDetailpage = showInDetailpage.checked.toString();
-	localStorage.showInTimeline = showInTimeline.checked.toString();
+	localStorage["showInDetailpage"] = "is" + (showInDetailpage.checked.toString());
+	localStorage["showInTimeline"] = "is" + (showInTimeline.checked.toString());
+	document.getElementById("res").innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ":" + localStorage["showInDetailpage"] + localStorage["showInTimeline"];
 }
 
 

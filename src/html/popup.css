@@ -3,31 +3,44 @@
 	margin: 0;
 	padding: 0;
 	font-family: "メイリオ", "Lato", "Meiryo", "ヒラギノ角ゴ", "osaka", sans-serif;
+	border: 1px solid #f00;
 }
-section{
-	margin: 3px;
-	padding: 2px;
+body{
 	width: 200px;
 }
+header{
+	max-width: 100px;
+}
+main{
+	margin: 5px;
+}
 h1{
-	margin: 0 0 0 5px;
+	/*margin-left: 5px;*/
 	font-size: 1.4em;
 }
 h2{
-	margin: 0 0 0 5px;
+	/*margin-left: 5px;*/
 	font-size: 1.2em;
 }
 p{
 	margin: 5px 0 5px 0;
-	padding: 0 5px 0 5px;
+	/*border: 1px solid #0f0;*/
 }
-input{
+.mode{
 	margin: 5px;
-/*	background: #eff;
-	border-radius: 5px;
+}
+.save{
+	margin-left: 5%;
+	width: 90%;
+	background: #eff;
 	border-color: #28f;
-*/
+	border-radius: 5px;
+	box-shadow: 2px 2px 2px #345;
+}
+.save:active{
+	box-shadow: 2px 2px 2px #345 inset;
 }
 .text{
 	line-height: 1.4em;
+	vertical-align: text-top;
 }

@@ -5,7 +5,7 @@ This is available in here:<br />
   https://chrome.google.com/webstore/detail/kmcomcgcopagkhcbmcmcfhpcmdolfijg<br />
 
 Usage:<br />
-  1. Open an image tweet (like this: "https://twitter.com/HOGExtend/status/598896954270060544").<br />
+  1. Open an image tweet (like this: "https://twitter.com/hogextend/status/598896954270060544").<br />
   2. Push the button "Original" or push the key [Enter(Return)].<br />
 <img alt="usage2" src="./images/tooi1.jpg" height="350px" /><br />
   3. It opens original image in new tab.<br />
