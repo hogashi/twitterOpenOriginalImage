@@ -1,28 +1,50 @@
 # twitterOpenOriginalImage
-Open original image to new tab. It's an extension of GoogleChrome.
 
-This is available in here:<br />
+Opens tweeted image(s) in original size to new tab(s). This is an extension of GoogleChrome.
+
+##Installation
+
+Available in Chrome Web Store:<br />
   https://chrome.google.com/webstore/detail/kmcomcgcopagkhcbmcmcfhpcmdolfijg<br />
 
-Usage:<br />
+##Usage
+
+###Tweet detail page
+
   1. Open an image tweet (like this: "https://twitter.com/hogextend/status/598896954270060544").<br />
-  2. Push the button "Original" or push the key [Enter(Return)].<br />
-<img alt="usage2" src="./images/tooi1.jpg" height="350px" /><br />
+  2. Click the button "Original" or press the [Enter(Return)] key.<br />
+<img alt="usage2" src="./images/detail1.jpg" height="350px" /><br />
   3. It opens original image in new tab.<br />
-<img alt="usage3" src="./images/tooi2.jpg" height="350px" /><br />
+<img alt="usage3" src="./images/detail2.jpg" height="350px" /><br />
 
-  ! "Original image" means like this; "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg:orig"<br>
-  ! It's the url "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg" and adding ":orig"<br>
+###Timeline
 
-If you want to edit this, please contact me as you possible.<br />
+  1. Click the button "Original" (on image tweet).<br />
+<img alt="usage3" src="./images/timeline1.jpg" height="350px" /><br />
 
-Contact:<br />
-  twitter: @hogexend
+  2. It opens original image in new tab.<br />
+<img alt="usage4" src="./images/timeline2.jpg" height="350px" /><br />
+
+  ! "Original image" means like this; "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg:orig"<br />
+  ! It's the resized image's url "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg" plus ":orig"<br />
+
+###Option
+
+  1. Press the extension button in top right of chrome.<br />
+<img alt="usage4" src="./images/option.jpg" height="350px" /><br />
+  2. Modify which function you use and press the botton "設定を保存" (Save the Settings).
+
+If you want to edit this project, please contact me as you possible.<br />
+
+##Contact:
+
+  twitter: [@hogexend](https://twitter.com/hogextend)
 
 ---
 
-# Changes
-ver.1.6.2 [2015/12/09] Fixed Original-button appearance (not to appear the button on a non-photo-tweet)
+## Changes
+ver.2.0 [2016/01/01] Change the Original-button appearance (appears in timeline, too) and add option to choose which function to use.<br />
+ver.1.6.2 [2015/12/09] Fixed Original-button appearance (not to appear the button on a non-photo-tweet)<br />
 ver.1.6.1 [2015/12/09] Coped with the change of photo-tweet showing in twitter (again)<br />
 ver.1.6 [2015/10/28] Coped with the change of photo-tweet showing in twitter<br />
 ver.1.5.2 [2015/10/20] Fixed Original-button position (to the side of action-buttons). <br />
