@@ -115,7 +115,10 @@ function openFromDetailpage() {
 			imgurls[i] = mediatag[i].getElementsByTagName('img')[0].src;
 			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				window.open(imgurls[i] + ':orig');
+				if(!(imgurls[i].match(/:orig$/))) {
+					imgurls[i] += ':orig';
+				}
+				window.open(imgurls[i]);
 			}
 		}
 	}
@@ -131,8 +134,12 @@ function openFromTimeline() {
 		mediatags = this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer');
 		for(i=mediatags.length-1; i>=0; i--) {
 			imgurls[i] = mediatags[i].getElementsByTagName('img')[0].src;
+			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				window.open(imgurls[i] + ':orig');
+				if(!(imgurls[i].match(/:orig$/))) {
+					imgurls[i] += ':orig';
+				}
+				window.open(imgurls[i]);
 			}
 		}
 	}
