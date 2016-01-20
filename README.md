@@ -43,6 +43,7 @@ If you want to edit this project, please contact me as you possible.<br />
 ---
 
 ## Changes
+ver.2.0.2 [2016/01/13] Fixed URL to open (":bla" to ":orig").<br />
 ver.2.0.1 [2016/01/13] Fixed URL to open (it had had ":orig:orig" in its tail).<br />
 ver.2.0 [2016/01/01] Changed the Original-button appearance (appears in timeline, too) and add option to choose which function to use.<br />
 ver.1.6.2 [2015/12/09] Fixed Original-button appearance (not to appear the button on a non-photo-tweet)<br />

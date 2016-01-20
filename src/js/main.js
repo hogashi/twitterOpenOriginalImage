@@ -115,10 +115,7 @@ function openFromDetailpage() {
 			imgurls[i] = mediatag[i].getElementsByTagName('img')[0].src;
 			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				if(!(imgurls[i].match(/:orig$/))) {
-					imgurls[i] += ':orig';
-				}
-				window.open(imgurls[i]);
+				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, "$1:orig"));
 			}
 		}
 	}
@@ -136,10 +133,7 @@ function openFromTimeline() {
 			imgurls[i] = mediatags[i].getElementsByTagName('img')[0].src;
 			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				if(!(imgurls[i].match(/:orig$/))) {
-					imgurls[i] += ':orig';
-				}
-				window.open(imgurls[i]);
+				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, "$1:orig"));
 			}
 		}
 	}
