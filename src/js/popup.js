@@ -1,6 +1,7 @@
 /* popup.js */
 var showInDetailpage = document.getElementById("showInDetailpage");
 var showInTimeline = document.getElementById("showInTimeline");
+var openWithReturnKey = document.getElementById("openWithReturnKey");
 
 window.onload = function(){
 	// 最初はどっちも機能オンであってほしい
@@ -17,11 +18,18 @@ window.onload = function(){
 	else {
 		showInTimeline.checked = false;
 	}
+	if(localStorage["openWithReturnKey"] != "isfalse") {
+		openWithReturnKey.checked = true;
+	}
+	else {
+		openWithReturnKey.checked = false;
+	}
 	// document.getElementById("res").innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ":" + localStorage["showInDetailpage"] + localStorage["showInTimeline"];
 }
 
 document.getElementById("save").onclick = function() {
 	localStorage["showInDetailpage"] = "is" + (showInDetailpage.checked.toString());
 	localStorage["showInTimeline"] = "is" + (showInTimeline.checked.toString());
+	localStorage["openWithReturnKey"] = "is" + (openWithReturnKey.checked.toString());
 	// document.getElementById("res").innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ":" + localStorage["showInDetailpage"] + localStorage["showInTimeline"];
 }

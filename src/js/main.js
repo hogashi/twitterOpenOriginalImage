@@ -9,7 +9,7 @@ document.addEventListener('keydown', function(e) {
 	// かつ 詳細ページにボタン表示する設定がされていたら
 	start();
 	if(e.keyCode == 13) {
-		chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'showInDetailpage'},
+		chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'openWithReturnKey'},
 			function(response) {
 				if(response.data != 'isfalse') {
 					openFromDetailpage();
