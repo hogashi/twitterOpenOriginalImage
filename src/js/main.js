@@ -1,13 +1,14 @@
 /* main.js */
 
-var timerid;
-window.addEventListener('load', start);
-document.addEventListener('click', start);
-document.addEventListener('keyup', start);
+// ページ全体でDOMの変更を検知し都度ボタン設置
+var target = document.querySelector('html');
+var observer = new MutationObserver(start);
+var config = {childList: true, subtree: true};
+observer.observe(target, config);
+
 document.addEventListener('keydown', function(e) {
 	// if [RETURN(ENTER)]キーなら
 	// かつ 詳細ページにボタン表示する設定がされていたら
-	start();
 	if(e.keyCode == 13) {
 		chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'openWithReturnKey'},
 			function(response) {
@@ -18,6 +19,7 @@ document.addEventListener('keydown', function(e) {
 		);
 	}
 });
+
 
 function start() {
 	// 詳細ページのボタン表示設定の読み込み
@@ -38,9 +40,8 @@ function start() {
 			}
 		}
 	);
-	clearTimeout(timerid);
-	timerid = setTimeout('start()', 1500);
-} // start end
+}
+
 
 function setButtonInDetailpage() {
 	var actionList = "",
