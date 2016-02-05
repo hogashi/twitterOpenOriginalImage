@@ -43,6 +43,7 @@ If you want to edit this project, please contact me as you possible.<br />
 ---
 
 ## Changes
+ver.2.0.4 [2016/02/06] Fixed that tweet opens in popup when you press the Original-button.<br />
 ver.2.0.3 [2016/01/22] Add "Open with Return Key" option.<br />
 ver.2.0.2 [2016/01/13] Fixed URL to open (":bla" to ":orig").<br />
 ver.2.0.1 [2016/01/13] Fixed URL to open (it had had ":orig:orig" in its tail).<br />

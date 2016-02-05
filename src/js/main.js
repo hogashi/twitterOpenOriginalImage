@@ -122,10 +122,14 @@ function openFromDetailpage() {
 	}
 } // openFromDetailpage end
 
-function openFromTimeline() {
+function openFromTimeline(e) {
 	var mediatags = [],
 		imgurls = [],
 		i = 0;
+	// イベント(MouseEvent)による既定の動作をキャンセル
+	e.preventDefault();
+	// イベント(MouseEvent)の親要素への伝播を停止
+	e.stopPropagation();
 	// this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container'):
 	// ツイートの画像の親エレメントの親まで遡り、ツイートの画像の親エレメントを取得
 	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container')) {
