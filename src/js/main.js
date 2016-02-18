@@ -2,9 +2,26 @@
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
 var target = document.querySelector('html');
-var observer = new MutationObserver(start);
+var observer = new MutationObserver(doTask);
 var config = {childList: true, subtree: true};
 observer.observe(target, config);
+
+function init() {
+	chrome.runtime.onMessage.addListener(
+		function(request, sender, sendResponse) {
+			switch(request.method) {
+				case 'OPTION_UPDATED' :
+					updateOptions();
+					sendResponse({data: "done"});
+					break;
+				default :
+					console.log("req: " + request.method);
+					sendResponse({data: "yet"});
+					break;
+			}
+		}
+	);
+}
 
 document.addEventListener('keydown', function(e) {
 	// if [RETURN(ENTER)]キーなら
@@ -21,7 +38,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 
-function start() {
+function doTask() {
 	// 詳細ページのボタン表示設定の読み込み
 	chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'showInDetailpage'},
 		function(response) {
