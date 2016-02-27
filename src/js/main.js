@@ -1,69 +1,75 @@
 /* main.js */
 
+// 設定項目の初期値は「無効」(最初のボタン設置が早過ぎるため)
+// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+var options = {'showInDetailpage': 'isfalse', 'showInTimeline': 'isfalse', 'openWithReturnKey': 'isfalse'};
+
 // ページ全体でDOMの変更を検知し都度ボタン設置
 var target = document.querySelector('html');
 var observer = new MutationObserver(doTask);
 var config = {childList: true, subtree: true};
 observer.observe(target, config);
 
-function init() {
-	chrome.runtime.onMessage.addListener(
-		function(request, sender, sendResponse) {
-			switch(request.method) {
-				case 'OPTION_UPDATED' :
-					updateOptions();
-					sendResponse({data: "done"});
-					break;
-				default :
-					console.log("req: " + request.method);
-					sendResponse({data: "yet"});
-					break;
-			}
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		switch(request.method) {
+			case 'OPTION_UPDATED' :
+				updateOptions();
+				sendResponse({data: 'done'});
+				break;
+			default :
+				sendResponse({data: 'yet'});
+				break;
 		}
-	);
-}
+	}
+);
 
 document.addEventListener('keydown', function(e) {
 	// if [RETURN(ENTER)]キーなら
 	// かつ 詳細ページにボタン表示する設定がされていたら
 	if(e.keyCode == 13) {
-		chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'openWithReturnKey'},
-			function(response) {
-				if(response.data != 'isfalse') {
-					openFromDetailpage();
-				}
-			}
-		);
+		if(options['openWithReturnKey'] != 'isfalse') {
+			openFromDetailpage();
+		}
 	}
 });
 
-
-function doTask() {
-	// 詳細ページのボタン表示設定の読み込み
+function updateOptions() {
 	chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'showInDetailpage'},
 		function(response) {
-			// if 詳細ページにボタン表示する設定がされていたら
-			if(response.data != 'isfalse') {
-				setButtonInDetailpage();
-			}
+			options['showInDetailpage'] = response.data;
 		}
 	);
-	// タイムラインのボタン表示設定の読み込み
 	chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'showInTimeline'},
 		function(response) {
-			// if タイムラインにボタン表示する設定がされていたら
-			if(response.data != 'isfalse') {
-				setButtonInTimeline();
-			}
+			options['showInTimeline'] = response.data;
 		}
 	);
-}
+	chrome.runtime.sendMessage({method: 'getLocalStorage', key: 'openWithReturnKey'},
+		function(response) {
+			options['openWithReturnKey'] = response.data;
+		}
+	);
+} // updateOptions end
 
+function doTask() {
+	// 設定の読み込み
+	updateOptions();
+	// if 詳細ページにボタン表示する設定がされていたら
+	if(options['showInDetailpage'] != 'isfalse') {
+		setButtonInDetailpage();
+	}
+	// タイムラインのボタン表示設定の読み込み
+	// if タイムラインにボタン表示する設定がされていたら
+	if(options['showInTimeline'] != 'isfalse') {
+		setButtonInTimeline();
+	}
+} // doTask end
 
 function setButtonInDetailpage() {
-	var actionList = "",
-		parentDiv = "",
-		origButton = "";
+	var actionList = '',
+		parentDiv = '',
+		origButton = '';
 	// if まだ処理を行っていないなら
 	if(!document.getElementById('tooiInputDetailpage')) {
 		// if ツイート詳細ページかつメインツイートが画像ツイートなら
@@ -100,7 +106,7 @@ function setButtonInTimeline() {
 		for(i=0; i<tweets.length; i++) {
 			// if 画像ツイート
 			// かつ まだ処理を行っていないなら
-			if(!!tweets[i].querySelector('.AdaptiveMedia-container') && !(document.getElementById('tooiDivTimeline' + tweets[i].id))) {
+			if(!!tweets[i].querySelector('.AdaptiveMedia-container') && !!tweets[i].querySelector('.AdaptiveMedia-container').querySelector('img') && !(document.getElementById('tooiDivTimeline' + tweets[i].id))) {
 				// ボタンを設置
 				// 操作ボタンの外側は様式にあわせる
 				actionList[i] = tweets[i].querySelector('.ProfileTweet-actionList');
@@ -122,7 +128,7 @@ function setButtonInTimeline() {
 } // setButtonInTimeline end
 
 function openFromDetailpage() {
-	var mediatag = "",
+	var mediatag = '',
 		imgurls = [],
 		i = 0;
 	// .permalink-tweet-container: ツイート詳細ページのメインツイート
@@ -133,7 +139,7 @@ function openFromDetailpage() {
 			imgurls[i] = mediatag[i].getElementsByTagName('img')[0].src;
 			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, "$1:orig"));
+				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
 			}
 		}
 	}
@@ -155,7 +161,7 @@ function openFromTimeline(e) {
 			imgurls[i] = mediatags[i].getElementsByTagName('img')[0].src;
 			// if 画像URLが取得できたなら
 			if(!!imgurls[i]) {
-				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, "$1:orig"));
+				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
 			}
 		}
 	}
