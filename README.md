@@ -43,6 +43,7 @@ If you want to edit this project, please contact me as you possible.<br />
 ---
 
 ## Changes
+ver.2.0.5 [2016/03/19] Fixed "don't open images with return-key when replying", "show Original-button on tweet-image-gallery", "don't get rid of Original-button on timeline".<br />
 ver.2.0.4 [2016/02/06] Fixed that tweet opens in popup when you press the Original-button.<br />
 ver.2.0.3 [2016/01/22] Add "Open with Return Key" option.<br />
 ver.2.0.2 [2016/01/13] Fixed URL to open (":bla" to ":orig").<br />
