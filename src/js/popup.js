@@ -1,37 +1,36 @@
 /* popup.js */
-var showInDetailpage = document.getElementById('showInDetailpage');
-var showInTimeline = document.getElementById('showInTimeline');
-var openWithReturnKey = document.getElementById('openWithReturnKey');
+var showOnTweetDetail = document.getElementById('SHOW_ON_TWEET_DETAIL');
+var showOnTimeline = document.getElementById('SHOW_ON_TIMELINE');
+var openWithKeyPress = document.getElementById('OPEN_WITH_KEY_PRESS');
 
 window.onload = function(){
 	// 最初はどっちも機能オンであってほしい
 	// 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-	if(localStorage['showInDetailpage'] != 'isfalse') {
-		showInDetailpage.checked = true;
+	if(localStorage['SHOW_ON_TWEET_DETAIL'] != 'isfalse') {
+		showOnTweetDetail.checked = true;
 	}
 	else {
-		showInDetailpage.checked = false;
+		showOnTweetDetail.checked = false;
 	}
-	if(localStorage['showInTimeline'] != 'isfalse') {
-		showInTimeline.checked = true;
-	}
-	else {
-		showInTimeline.checked = false;
-	}
-	if(localStorage['openWithReturnKey'] != 'isfalse') {
-		openWithReturnKey.checked = true;
+	if(localStorage['SHOW_ON_TIMELINE'] != 'isfalse') {
+		showOnTimeline.checked = true;
 	}
 	else {
-		openWithReturnKey.checked = false;
+		showOnTimeline.checked = false;
 	}
-	// document.getElementById('res').innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ':' + localStorage['showInDetailpage'] + localStorage['showInTimeline'];
+	if(localStorage['OPEN_WITH_KEY_PRESS'] != 'isfalse') {
+		openWithKeyPress.checked = true;
+	}
+	else {
+		openWithKeyPress.checked = false;
+	}
+	// document.getElementById('res').innerHTML = showOnTweetDetail.checked.toString() + showOnTimeline.checked.toString() + ':' + localStorage['SHOW_ON_TWEET_DETAIL'] + localStorage['SHOW_ON_TIMELINE'];
 }
 
 document.getElementById('save').onclick = function() {
-	localStorage['showInDetailpage'] = 'is' + (showInDetailpage.checked.toString());
-	localStorage['showInTimeline'] = 'is' + (showInTimeline.checked.toString());
-	localStorage['openWithReturnKey'] = 'is' + (openWithReturnKey.checked.toString());
-	// console.log('hoge');
+	localStorage['SHOW_ON_TWEET_DETAIL'] = 'is' + (showOnTweetDetail.checked.toString());
+	localStorage['SHOW_ON_TIMELINE'] = 'is' + (showOnTimeline.checked.toString());
+	localStorage['OPEN_WITH_KEY_PRESS'] = 'is' + (openWithKeyPress.checked.toString());
 	chrome.tabs.query({}, function(result) {
 		console.log(result);
 		for(i=0; i<result.length; i++) {
@@ -39,5 +38,5 @@ document.getElementById('save').onclick = function() {
 			chrome.tabs.sendMessage(result[i].id, {method: 'OPTION_UPDATED'}, function(response) {console.log('res: ' + response)});
 		}
 	});
-	// document.getElementById('res').innerHTML = showInDetailpage.checked.toString() + showInTimeline.checked.toString() + ':' + localStorage['showInDetailpage'] + localStorage['showInTimeline'];
+	// document.getElementById('res').innerHTML = showOnTweetDetail.checked.toString() + showOnTimeline.checked.toString() + ':' + localStorage['SHOW_ON_TWEET_DETAIL'] + localStorage['SHOW_ON_TIMELINE'];
 }
