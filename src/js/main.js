@@ -154,14 +154,9 @@ function openFromTimeline(e) {
 	// ツイートの画像の親エレメントを取得するためにその親まで遡る
 	// if 上述のエレメントが取得できたら
 	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container')) {
-		mediatags = this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer');
-		for(i=mediatags.length-1; i>=0; i--) {
-			imgurls[i] = mediatags[i].getElementsByTagName('img')[0].src;
-			// if 画像URLが取得できたなら
-			if(!!imgurls[i]) {
-				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
-			}
-		}
+		openImagesInNewTab(
+			this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
+		);
 	}
 	else {
 		printException('CANT_FIND_IMAGE_ELEMENT_ON_TIMELINE')
@@ -170,25 +165,31 @@ function openFromTimeline(e) {
 
 // ツイート詳細から画像を新しいタブに開く
 function openFromTweetDetail() {
-	var mediatag = '',
-		imgurls = [],
-		i = 0;
 	// .permalink-tweet-container: ツイート詳細ページのメインツイート
 	// .AdaptiveMedia-photoContainer: 画像の親エレメント
 	if(!!document.querySelector('.permalink-tweet-container')) {
-		mediatag = document.querySelector('.permalink-tweet-container').getElementsByClassName('AdaptiveMedia-photoContainer');
-		for(i=mediatag.length-1; i>=0; i--) {
-			imgurls[i] = mediatag[i].getElementsByTagName('img')[0].src;
-			// if 画像URLが取得できたなら
-			if(!!imgurls[i]) {
-				window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
-			}
-			else {
-				printException('CANT_FIND_IMAGE_URL_ON_TWEET_DETAIL');
-			}
-		}
+		openImagesInNewTab(
+				document.querySelector('.permalink-tweet-container').getElementsByClassName('AdaptiveMedia-photoContainer')
+		);
 	}
 	else {
 		printException('CANT_FIND_TWEET_DETAIL_ELEMENT');
 	}
 } // openFromTweetDetail end
+
+// 画像を原寸で新しいタブに開く
+function openImagesInNewTab(tag) {
+	var imgurls = [],
+		i = 0;
+	for(i=tag.length-1; i>=0; i--) {
+		imgurls[i] = tag[i].getElementsByTagName('img')[0].src;
+		// if 画像URLが取得できたなら
+		if(!!imgurls[i]) {
+			window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
+		}
+		else {
+			printException('CANT_FIND_IMAGE_URL');
+		}
+	}
+}
+
