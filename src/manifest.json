@@ -18,6 +18,10 @@
 			"js": ["js/main.js"]
 		},
 		{
+			"matches": ["https://tweetdeck.twitter.com/*"],
+			"js": ["js/tooitweetdeck.js"]
+		},
+		{
 			"matches": ["https://pbs.twimg.com/*"],
 			"js": ["js/imagetab.js"]
 		}
