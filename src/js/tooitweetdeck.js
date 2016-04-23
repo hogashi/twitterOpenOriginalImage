@@ -4,12 +4,7 @@
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
 // 無効だった場合はそのままボタンは表示されない
 var options = {
-	// 'SHOW_ON_TIMELINE': 'isfalse',
-	// 'SHOW_ON_TWEET_DETAIL': 'isfalse',
-	// 'OPEN_WITH_KEY_PRESS': 'isfalse'
-	'SHOW_ON_TIMELINE': 'istrue',
-	'SHOW_ON_TWEET_DETAIL': 'istrue',
-	'OPEN_WITH_KEY_PRESS': 'istrue'
+	'SHOW_ON_TWEETDECK_TIMELINE': 'isfalse'
 };
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
@@ -37,24 +32,12 @@ chrome.runtime.onMessage.addListener(
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 function printException(tooiException) {
-	console.log('tooi: ' + tooiException);
+	console.log('tooitd: ' + tooiException);
 }
-
-// // キー押下時
-// document.addEventListener('keydown', function(e) {
-// 	// if [RETURN(ENTER)]キーなら
-// 	if(e.keyCode == 13) {
-// 		// ツイート詳細にボタン表示する設定がされていたら
-// 		// かつ ツイート入力ボックスがアクティブでないなら
-// 		if((options['OPEN_WITH_KEY_PRESS'] != 'isfalse') && !(document.activeElement.className.match(/rich-editor/))) {
-// 			openFromTweetDetail();
-// 		}
-// 	}
-// });
 
 // 設定項目更新
 function updateOptions() {
-	// console.log('upOpt bfr: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']); // debug
+	// console.log('upOpt bfr: ' + options['SHOW_ON_TWEETDECK_TIMELINE']); // debug
 	for(var key in options) {
 		(function(key) {
 			chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: key},
@@ -67,17 +50,15 @@ function updateOptions() {
 			);
 		})(key);
 	}
-	// console.log('upOpt aft: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']); // debug
+	// console.log('upOpt bfr: ' + options['SHOW_ON_TWEETDECK_TIMELINE']); // debug
 } // updateOptions end
 
 // 各機能の呼び出し
 function doTask() {
-	// console.log('doTask: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']); // debug
+	// console.log('upOpt bfr: ' + options['SHOW_ON_TWEETDECK_TIMELINE']); // debug
 	// if タイムラインにボタン表示する設定がされていたら
-	printException('doTask');
-	if(options['SHOW_ON_TIMELINE'] != 'isfalse') {
+	if(options['SHOW_ON_TWEETDECK_TIMELINE'] != 'isfalse') {
 		setButtonOnTimeline();
-		printException('doTask#if');
 	}
 	// // if ツイート詳細にボタン表示する設定がされていたら
 	// if(options['SHOW_ON_TWEET_DETAIL'] != 'isfalse') {
@@ -87,7 +68,6 @@ function doTask() {
 
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
-	printException('setButtonOnTimeline');
 	var tweets = [],
 		actionList = [],
 		parentDiv = [],
@@ -103,7 +83,6 @@ function setButtonOnTimeline() {
 			// かつ まだ処理を行っていないなら
 			if(!!tweets[i].querySelector('.js-media') && !(tweets[i].querySelector('.tooiLiTimeline'))) {
 				// ボタンを設置
-				printException('setButtonOnTimeline#if');
 				tweets[i].querySelector('footer').insertAdjacentHTML('beforeEnd', '<a class="pull-left margin-txs txt-mute is-vishidden-narrow tooiLiTimeline" style="margin-left: 3px; padding-right: 1px; font-size: 0.75em; border: 1px solid #556; border-radius: 2px; line-height: 1.5em;">Original</a>');
 				tweets[i].querySelector('.tooiLiTimeline').addEventListener('click', openFromTimeline);
 			}
@@ -141,7 +120,6 @@ function setButtonOnTimeline() {
 
 // タイムラインから画像を新しいタブに開く
 function openFromTimeline(e) {
-	printException('openFromTimeline');
 	var mediatags = [],
 		imgurls = [],
 		i = 0;
@@ -152,7 +130,6 @@ function openFromTimeline(e) {
 	// ツイートの画像の親エレメントを取得するためにその親まで遡る
 	// if 上述のエレメントが取得できたら
 	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.js-media')) {
-		printException('openFromTimeline#if');
 		openImagesInNewTab(
 			this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('js-media-image-link')
 		);
@@ -178,14 +155,12 @@ function openFromTimeline(e) {
 
 // 画像を原寸で新しいタブに開く
 function openImagesInNewTab(tag) {
-	printException('openImagesInNewTab');
 	var imgurls = [],
 		i = 0;
 	for(i=tag.length-1; i>=0; i--) {
 		imgurls[i] = tag[i].style.backgroundImage;
 		// if 画像URLが取得できたなら
 		if(!!imgurls[i]) {
-			printException('openImagesInNewTab#if');
 			window.open(imgurls[i].replace(/^.+(https:\/\/pbs\.twimg\.com\/media\/[^:]+):small.+$/, "$1:orig"));
 		}
 		else {
@@ -193,8 +168,3 @@ function openImagesInNewTab(tag) {
 		}
 	}
 }
-
-
-
-
-
