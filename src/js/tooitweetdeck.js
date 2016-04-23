@@ -93,9 +93,10 @@ function setButtonOnTimeline() {
 		parentDiv = [],
 		origButton = [],
 		i = 0;
-	// if ツイートを取得できたら
-	if(document.getElementsByClassName('js-stream-item').length != 0) {
-		tweets = document.getElementsByClassName('js-stream-item');
+	// if タイムラインのツイートを取得できたら
+	// is-actionable: タイムラインのみ
+	if(document.getElementsByClassName('js-stream-item is-actionable').length != 0) {
+		tweets = document.getElementsByClassName('js-stream-item is-actionable');
 		// 各ツイートに対して
 		for(i=0; i<tweets.length; i++) {
 			// if 画像ツイート
