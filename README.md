@@ -43,7 +43,7 @@ If you want to edit this project, please contact me as you possible.<br />
 ---
 
 ## Changes
-ver.2.0.6 [2016/04/23] Set Original-button on Tweetdeck (timeline only).<br />
+ver.2.0.6 [2016/04/23] Set Original-button on Tweetdeck (timeline only) and improved saving behavior.<br />
 ver.2.0.5 [2016/03/19] Fixed "don't open images with return-key when replying", "show Original-button on tweet-image-gallery", "don't get rid of Original-button on timeline".<br />
 ver.2.0.4 [2016/02/06] Fixed that tweet opens in popup when you press the Original-button.<br />
 ver.2.0.3 [2016/01/22] Add "Open with Return Key" option.<br />
