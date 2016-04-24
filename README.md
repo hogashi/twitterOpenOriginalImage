@@ -84,7 +84,7 @@ Chromeウェブストアで入手できます: [twitter画像原寸ボタン](ht
 ---
 
 ## Changes
-ver.2.0.6 [2016/04/23] Set Original-button on Tweetdeck (timeline only) and improved saving behavior.<br />
+ver.2.1 [2016/04/23] Set Original-button on Tweetdeck (timeline only) and improved saving behavior.<br />
 ver.2.0.5 [2016/03/19] Fixed "don't open images with return-key when replying", "show Original-button on tweet-image-gallery", "don't get rid of Original-button on timeline".<br />
 ver.2.0.4 [2016/02/06] Fixed that tweet opens in popup when you press the Original-button.<br />
 ver.2.0.3 [2016/01/22] Add "Open with Return Key" option.<br />
@@ -104,7 +104,7 @@ ver.1.1 [2015/02/16] Added operation procedure ([Enter(Return)] key), fixed beha
 ver.1.0 [2015/02/15] Released<br />
 
 ## 更新履歴
-ver. 2.0.6 TweetDeckのタイムラインに対応、保存動作を向上<br />
+ver. 2.1 TweetDeckのタイムラインに対応、保存動作を向上<br />
 ver. 2.0.5 リプライ中はEnterキーで画像が開かないように修正、画像をクリックしたポップアップにもOriginalボタンを表示、タイムラインでのOriginalボタンの表示を安定化<br />
 ver. 2.0.4 タイムライン上のOriginalボタンを押してもツイートがポップアップしないよう修正<br />
 ver. 2.0.3 設定項目「Enterキーで画像を開く」を追加<br />
