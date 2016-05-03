@@ -81,7 +81,7 @@ function setButtonOnTimeline() {
 		for(i=0; i<tweets.length; i++) {
 			// if 画像ツイート
 			// かつ まだ処理を行っていないなら
-			if(!!tweets[i].querySelector('.js-media') && !(tweets[i].querySelector('.tooiLiTimeline'))) {
+			if(!!tweets[i].querySelector('.js-media-image-link') && !(tweets[i].querySelector('.tooiLiTimeline'))) {
 				// ボタンを設置
 				tweets[i].querySelector('footer').insertAdjacentHTML('beforeEnd', '<a class="pull-left margin-txs txt-mute is-vishidden-narrow tooiLiTimeline" style="margin-left: 3px; padding-right: 1px; font-size: 0.75em; border: 1px solid #556; border-radius: 2px; line-height: 1.5em;">Original</a>');
 				tweets[i].querySelector('.tooiLiTimeline').addEventListener('click', openFromTimeline);
@@ -161,7 +161,7 @@ function openImagesInNewTab(tag) {
 		imgurls[i] = tag[i].style.backgroundImage;
 		// if 画像URLが取得できたなら
 		if(!!imgurls[i]) {
-			window.open(imgurls[i].replace(/^.+(https:\/\/pbs\.twimg\.com\/media\/[^:]+):small.+$/, "$1:orig"));
+			window.open(imgurls[i].replace(/^[^(]+\(\"(https:[^:]+)(|:[^:]+)\"\)$/, '$1:orig'));
 		}
 		else {
 			printException('CANT_FIND_IMAGE_URL');
