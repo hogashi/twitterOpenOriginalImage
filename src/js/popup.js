@@ -1,4 +1,8 @@
 /* popup.js */
+
+// ツールバー右に表示される拡張機能のボタンをクリック、または
+// [設定]->[拡張機能]の[オプション]から出る設定画面
+
 var showOnTweetDetail = document.getElementById('SHOW_ON_TWEET_DETAIL');
 var showOnTimeline = document.getElementById('SHOW_ON_TIMELINE');
 var openWithKeyPress = document.getElementById('OPEN_WITH_KEY_PRESS');
