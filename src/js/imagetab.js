@@ -29,7 +29,7 @@ document.addEventListener('keydown', function(e) {
 	// かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
 	if( options['STRIP_IMAGE_SUFFIX'] != 'isfalse'
 		 && e.keyCode == 83
-		 && (e.ctrlKey | e.metaKey)
+		 && (e.ctrlKey || e.metaKey)
 		 && window.location.href.match(/https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/)) {
 		// もとの挙動(ブラウザが行う保存)をしないよう中止
 		e.preventDefault();
