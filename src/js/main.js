@@ -5,16 +5,16 @@
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
 // 無効だった場合はそのままボタンは表示されない
-var options = {
+let options = {
 	'SHOW_ON_TIMELINE': 'isfalse',
 	'SHOW_ON_TWEET_DETAIL': 'isfalse',
 	'OPEN_WITH_KEY_PRESS': 'isfalse'
 };
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
-var target = document.querySelector('html');
-var observer = new MutationObserver(doTask);
-var config = {childList: true, subtree: true};
+let target = document.getElementsByTagName('html')[0];
+let observer = new MutationObserver(doTask);
+let config = {childList: true, subtree: true};
 observer.observe(target, config);
 
 // 設定読み込み
@@ -23,11 +23,11 @@ updateOptions();
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		switch(request.method) {
-			case 'OPTION_UPDATED' :
+			case 'OPTION_UPDATED':
 				updateOptions();
 				sendResponse({data: 'done'});
 				break;
-			default :
+			default:
 				sendResponse({data: 'yet'});
 				break;
 		}
@@ -42,10 +42,11 @@ function printException(tooiException) {
 // キー押下時
 document.addEventListener('keydown', function(e) {
 	// if [RETURN(ENTER)]キーなら
-	if(e.keyCode == 13) {
+	if(e.key == 'Enter') {
 		// ツイート詳細にボタン表示する設定がされていたら
 		// かつ ツイート入力ボックスがアクティブでないなら
-		if((options['OPEN_WITH_KEY_PRESS'] != 'isfalse') && !(document.activeElement.className.match(/rich-editor/))) {
+		if((options['OPEN_WITH_KEY_PRESS'] != 'isfalse')
+		 && !(document.activeElement.className.match(/rich-editor/))) {
 			openFromTweetDetail();
 		}
 	}
@@ -54,11 +55,11 @@ document.addEventListener('keydown', function(e) {
 // 設定項目更新
 function updateOptions() {
 	// console.log('upOpt bfr: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']); // debug
-	for(var key in options) {
-		(function(key) {
-			chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: key},
+	for(let key in options) {
+		(function(k) {
+			chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: k},
 				function(response) {
-					options[key] = response.data;
+					options[k] = response.data;
 					// 設定を読み込んだら機能を呼び出す
 					// 設定読込と同スコープに書くことで同期的に呼び出し
 					doTask();
@@ -84,49 +85,50 @@ function doTask() {
 
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
-	var tweets = [],
-		actionList = [],
-		parentDiv = [],
-		origButton = [],
-		i = 0;
 	// if ツイートを取得できたら
 	if(document.getElementsByClassName('js-stream-tweet').length != 0) {
-		tweets = document.getElementsByClassName('js-stream-tweet');
 		// 各ツイートに対して
-		for(i = 0; i < tweets.length; i++) {
+		Array.from(document.getElementsByClassName('js-stream-tweet'))
+			.map((tweet, i) => {
 			// if 画像ツイート
 			// かつ まだ処理を行っていないなら
-			if(!!tweets[i].querySelector('.AdaptiveMedia-container') && !!tweets[i].querySelector('.AdaptiveMedia-container').querySelector('img') && !(tweets[i].querySelector('.tooiDivTimeline'))) {
+			if(!!(tweet.getElementsByClassName('AdaptiveMedia-container')[0])
+			 && !!(tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img')[0])
+			 && !(tweet.getElementsByClassName('tooiDivTimeline')[0])) {
+				let actionList,
+					parentDiv,
+					origButton;
 				// ボタンを設置
 				// 操作ボタンの外側は様式にあわせる
-				actionList[i] = tweets[i].querySelector('.ProfileTweet-actionList');
-				parentDiv[i] = document.createElement('div');
-				// parentDiv[i].id = '' + tweets[i].id;
-				parentDiv[i].className = 'ProfileTweet-action tooiDivTimeline';
-				actionList[i].appendChild(parentDiv[i]);
+				actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0];
+				parentDiv = document.createElement('div');
+				// parentDiv.id = '' + tweet.id;
+				parentDiv.className = 'ProfileTweet-action tooiDivTimeline';
+				actionList.appendChild(parentDiv);
 				// Originalボタン
-				origButton[i] = document.createElement('input');
-				origButton[i].style.width = '70px';
-				origButton[i].type = 'button';
-				origButton[i].value = 'Original';
-				origButton[i].onclick = openFromTimeline;
-				tweets[i].querySelector('.tooiDivTimeline').appendChild(origButton[i]);
+				origButton = document.createElement('input');
+				tweet.getElementsByClassName('tooiDivTimeline')[0].appendChild(origButton);
+				origButton.style.width = '70px';
+				origButton.type = 'button';
+				origButton.value = 'Original';
+				origButton.addEventListener('click', openFromTimeline);
 			}
-		}
+		});
 	}
 } // setButtonOnTimeline end
 
 // ツイート詳細にボタン表示
 function setButtonOnTweetDetail() {
-	var actionList = '',
-		parentDiv = '',
-		origButton = '';
 	// if まだ処理を行っていないなら
 	if(!document.getElementById('tooiInputDetailpage')) {
 		// if ツイート詳細ページかつメインツイートが画像ツイートなら
-		if(!!document.querySelector('.permalink-tweet-container .AdaptiveMedia-photoContainer')) {
+		if(!!(document.getElementsByClassName('permalink-tweet-container')[0])
+		 && !!(document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0])) {
+			let actionList,
+				parentDiv,
+				origButton;
 			// Originalボタンの親の親となる枠
-			actionList = document.querySelector('.permalink-tweet-container .ProfileTweet-actionList');
+			actionList = document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('ProfileTweet-actionList')[0];
 			// Originalボタンの親となるdiv
 			parentDiv = document.createElement('div');
 			parentDiv.id = 'tooiDivDetailpage';
@@ -146,22 +148,19 @@ function setButtonOnTweetDetail() {
 
 // タイムラインから画像を新しいタブに開く
 function openFromTimeline(e) {
-	var mediatags = [],
-		imgurls = [],
-		i = 0;
 	// イベント(MouseEvent)による既定の動作をキャンセル
 	e.preventDefault();
 	// イベント(MouseEvent)の親要素への伝播を停止
 	e.stopPropagation();
 	// ツイートの画像の親エレメントを取得するためにその親まで遡る
 	// if 上述のエレメントが取得できたら
-	if(this.parentNode.parentNode.parentNode.parentNode.querySelector('.AdaptiveMedia-container')) {
+	if(this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-container')[0]) {
 		openImagesInNewTab(
 			this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
 		);
 	}
 	else {
-		printException('CANT_FIND_IMAGE_ELEMENT_ON_TIMELINE')
+		printException('CANT_FIND_IMAGE_ELEMENT_ON_TIMELINE');
 	}
 } // openFromTimeline end
 
@@ -169,9 +168,9 @@ function openFromTimeline(e) {
 function openFromTweetDetail() {
 	// .permalink-tweet-container: ツイート詳細ページのメインツイート
 	// .AdaptiveMedia-photoContainer: 画像の親エレメント
-	if(!!document.querySelector('.permalink-tweet-container')) {
+	if(!!(document.getElementsByClassName('permalink-tweet-container')[0])) {
 		openImagesInNewTab(
-				document.querySelector('.permalink-tweet-container').getElementsByClassName('AdaptiveMedia-photoContainer')
+				document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')
 		);
 	}
 	else {
@@ -181,16 +180,13 @@ function openFromTweetDetail() {
 
 // 画像を原寸で新しいタブに開く
 function openImagesInNewTab(tag) {
-	var imgurls = [],
-		i = 0;
-	for(i = tag.length - 1; i >= 0; i--) {
-		imgurls[i] = tag[i].getElementsByTagName('img')[0].src;
-		// if 画像URLが取得できたなら
-		if(!!imgurls[i]) {
-			window.open(imgurls[i].replace(/(\.\w+)(:\w+|)$/, '$1:orig'));
+	Array.from(tag).reverse().map((v, i) => {
+		let imgurl = v.getElementsByTagName('img')[0].src;;
+		if(!!imgurl) {
+			window.open(imgurl.replace(/(\.\w+)(|:\w+)$/, '$1:orig'));
 		}
 		else {
 			printException('CANT_FIND_IMAGE_URL');
 		}
-	}
+	});
 }

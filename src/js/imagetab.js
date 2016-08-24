@@ -15,12 +15,14 @@ function printException(tooiException) {
 }
 
 // 設定の読み込み
-(function updateOptions() {
-chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX'},
-	function(response) {
-		options['STRIP_IMAGE_SUFFIX'] = response.data;
-	}
-);})();
+function updateOptions() {
+	chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX'},
+		function(response) {
+			options['STRIP_IMAGE_SUFFIX'] = response.data;
+		}
+	);
+}
+updateOptions();
 
 // キーを押したとき
 document.addEventListener('keydown', function(e) {
