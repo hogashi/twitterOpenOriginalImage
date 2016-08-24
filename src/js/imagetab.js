@@ -5,10 +5,7 @@
 // twitterの画像を表示したときのC-sを拡張
 // 拡張子を「.jpg-orig」「.png-orig」ではなく「.jpg」「.png」にする
 
-// キー押下状態を保存する変数
-var keysC = [];
-
-var options = {
+let options = {
 	'STRIP_IMAGE_SUFFIX': 'isfalse'
 };
 
@@ -17,18 +14,22 @@ function printException(tooiException) {
 	console.log('tooitd: ' + tooiException);
 }
 
+// 設定の読み込み
+(function updateOptions() {
+chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX'},
+	function(response) {
+		options['STRIP_IMAGE_SUFFIX'] = response.data;
+	}
+);})();
+
 // キーを押したとき
 document.addEventListener('keydown', function(e) {
-	chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX'},
-		function(response) {
-			options['STRIP_IMAGE_SUFFIX'] = response.data;
-		}
-	);
+	updateOptions();
 	// if 設定が有効なら
 	// かつ 押されたキーがC-s の状態なら
 	// かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
 	if( options['STRIP_IMAGE_SUFFIX'] != 'isfalse'
-		 && e.keyCode == 83
+		 && e.key == 's'
 		 && (e.ctrlKey || e.metaKey)
 		 && window.location.href.match(/https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/)) {
 		// もとの挙動(ブラウザが行う保存)をしないよう中止
