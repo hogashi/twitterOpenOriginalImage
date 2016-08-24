@@ -93,7 +93,7 @@ function setButtonOnTimeline() {
 	if(document.getElementsByClassName('js-stream-tweet').length != 0) {
 		tweets = document.getElementsByClassName('js-stream-tweet');
 		// 各ツイートに対して
-		for(i=0; i<tweets.length; i++) {
+		for(i = 0; i < tweets.length; i++) {
 			// if 画像ツイート
 			// かつ まだ処理を行っていないなら
 			if(!!tweets[i].querySelector('.AdaptiveMedia-container') && !!tweets[i].querySelector('.AdaptiveMedia-container').querySelector('img') && !(tweets[i].querySelector('.tooiDivTimeline'))) {
@@ -183,7 +183,7 @@ function openFromTweetDetail() {
 function openImagesInNewTab(tag) {
 	var imgurls = [],
 		i = 0;
-	for(i=tag.length-1; i>=0; i--) {
+	for(i = tag.length - 1; i >= 0; i--) {
 		imgurls[i] = tag[i].getElementsByTagName('img')[0].src;
 		// if 画像URLが取得できたなら
 		if(!!imgurls[i]) {
@@ -194,4 +194,3 @@ function openImagesInNewTab(tag) {
 		}
 	}
 }
-

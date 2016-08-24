@@ -1,4 +1,4 @@
-/* tooitweetdeck.js */
+/* tweetdeck.js */
 
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
@@ -8,7 +8,7 @@ var options = {
 };
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
-var target = document.querySelector('html');
+var target = document.getElementsByTagName('html')[0];
 var observer = new MutationObserver(doTask);
 var config = {childList: true, subtree: true};
 observer.observe(target, config);
@@ -66,27 +66,45 @@ function doTask() {
 	// }
 } // doTask end
 
+// エレメントへのstyle属性の設定
+function setStyle(e, attrs) {
+	Object.keys(attrs).map((key, i) => {
+		e.style[key] = attrs[key];
+	});
+}
+
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
-	var tweets = [],
-		actionList = [],
-		parentDiv = [],
-		origButton = [],
-		i = 0;
 	// if タイムラインのツイートを取得できたら
 	// is-actionable: タイムラインのみ
 	if(document.getElementsByClassName('js-stream-item is-actionable').length != 0) {
-		tweets = document.getElementsByClassName('js-stream-item is-actionable');
+		let tweets = document.getElementsByClassName('js-stream-item is-actionable');
 		// 各ツイートに対して
-		for(i=0; i<tweets.length; i++) {
-			// if 画像ツイート
+		Array.from(tweets).map((tweet, i) => {
+			// if メディアツイート
+			// かつ メディアが画像(動画でもGIFでもない)
 			// かつ まだ処理を行っていないなら
-			if(!!tweets[i].querySelector('.js-media-image-link') && !(tweets[i].querySelector('.tooiLiTimeline'))) {
+			if(!!(tweet.getElementsByClassName('js-media-image-link')[0])
+			 && !(tweet.getElementsByClassName('is-video')[0])
+			 && !(tweet.getElementsByClassName('is-gif')[0])
+			 && !(tweet.getElementsByClassName('tooiATimeline')[0])) {
 				// ボタンを設置
-				tweets[i].querySelector('footer').insertAdjacentHTML('beforeEnd', '<a class="pull-left margin-txs txt-mute is-vishidden-narrow tooiLiTimeline" style="margin-left: 3px; padding-right: 1px; font-size: 0.75em; border: 1px solid #556; border-radius: 2px; line-height: 1.5em;">Original</a>');
-				tweets[i].querySelector('.tooiLiTimeline').addEventListener('click', openFromTimeline);
+				let origButton = document.createElement('a');
+				tweet.querySelector('footer').appendChild(origButton);
+				origButton.className = 'pull-left margin-txs txt-mute tooiATimeline';
+				// 枠線の色は'Original'と同じく'.txt-mute'の色を使うのでボタンから取得して設定する
+				let borderColor = document.defaultView.getComputedStyle(origButton, '').color;
+				setStyle(origButton,
+					{border: `1px solid ${borderColor}`,
+					borderRadius: '2px',
+					fontSize: '0.75em',
+					marginLeft: '3px',
+					lineHeight: '1.5em',
+					paddingRight: '1px'});
+				origButton.insertAdjacentHTML('beforeend', 'Original');
+				origButton.addEventListener('click', openFromTimeline);
 			}
-		}
+		});
 	}
 } // setButtonOnTimeline end
 
@@ -157,7 +175,7 @@ function openFromTimeline(e) {
 function openImagesInNewTab(tag) {
 	var imgurls = [],
 		i = 0;
-	for(i=tag.length-1; i>=0; i--) {
+	for(i = tag.length - 1; i >= 0; i--) {
 		imgurls[i] = tag[i].style.backgroundImage;
 		// if 画像URLが取得できたなら
 		if(!!imgurls[i]) {
