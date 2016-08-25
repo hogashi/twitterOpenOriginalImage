@@ -1,62 +1,30 @@
 /* popup.js */
-
 // ツールバー右に表示される拡張機能のボタンをクリック、または
 // [設定]->[拡張機能]の[オプション]から出る設定画面
 
-var showOnTweetDetail = document.getElementById('SHOW_ON_TWEET_DETAIL');
-var showOnTimeline = document.getElementById('SHOW_ON_TIMELINE');
-var openWithKeyPress = document.getElementById('OPEN_WITH_KEY_PRESS');
-var showOnTweetdeckTimeline = document.getElementById('SHOW_ON_TWEETDECK_TIMELINE');
-var stripImageSuffix = document.getElementById('STRIP_IMAGE_SUFFIX');
+let options = ['SHOW_ON_TWEET_DETAIL',
+	'SHOW_ON_TIMELINE',
+	'OPEN_WITH_KEY_PRESS',
+	'SHOW_ON_TWEETDECK_TIMELINE',
+	'STRIP_IMAGE_SUFFIX'];
 
-window.onload = function(){
+// 各設定項目について
+options.map((v, i) => {
 	// 最初はどっちも機能オンであってほしい
 	// 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-	if(localStorage['SHOW_ON_TWEET_DETAIL'] != 'isfalse') {
-		showOnTweetDetail.checked = true;
-	}
-	else {
-		showOnTweetDetail.checked = false;
-	}
-	if(localStorage['SHOW_ON_TIMELINE'] != 'isfalse') {
-		showOnTimeline.checked = true;
-	}
-	else {
-		showOnTimeline.checked = false;
-	}
-	if(localStorage['OPEN_WITH_KEY_PRESS'] != 'isfalse') {
-		openWithKeyPress.checked = true;
-	}
-	else {
-		openWithKeyPress.checked = false;
-	}
-	if(localStorage['SHOW_ON_TWEETDECK_TIMELINE'] != 'isfalse') {
-		showOnTweetdeckTimeline.checked = true;
-	}
-	else {
-		showOnTweetdeckTimeline.checked = false;
-	}
-	if(localStorage['STRIP_IMAGE_SUFFIX'] != 'isfalse') {
-		stripImageSuffix.checked = true;
-	}
-	else {
-		stripImageSuffix.checked = false;
-	}
-	// document.getElementById('res').innerHTML = showOnTweetDetail.checked.toString() + showOnTimeline.checked.toString() + ':' + localStorage['SHOW_ON_TWEET_DETAIL'] + localStorage['SHOW_ON_TIMELINE'];
-}
+	document.getElementsByClassName(v)[0].checked = (localStorage[v] != 'isfalse');
+});
 
-document.getElementById('save').onclick = function() {
-	localStorage['SHOW_ON_TWEET_DETAIL'] = 'is' + (showOnTweetDetail.checked.toString());
-	localStorage['SHOW_ON_TIMELINE'] = 'is' + (showOnTimeline.checked.toString());
-	localStorage['OPEN_WITH_KEY_PRESS'] = 'is' + (openWithKeyPress.checked.toString());
-	localStorage['SHOW_ON_TWEETDECK_TIMELINE'] = 'is' + (showOnTweetdeckTimeline.checked.toString());
-	localStorage['STRIP_IMAGE_SUFFIX'] = 'is' + (stripImageSuffix.checked.toString());
-	chrome.tabs.query({}, function(result) {
-		console.log(result);
-		for(i=0; i<result.length; i++) {
-			console.log(result[i].id);
-			chrome.tabs.sendMessage(result[i].id, {method: 'OPTION_UPDATED'}, function(response) {console.log('res: ' + response)});
-		}
+document.getElementById('save').addEventListener('click', (e) => {
+	options.map((v, i) => {
+		localStorage[v] = `is${document.getElementsByClassName(v)[0].checked.toString()}`;
 	});
-	// document.getElementById('res').innerHTML = showOnTweetDetail.checked.toString() + showOnTimeline.checked.toString() + ':' + localStorage['SHOW_ON_TWEET_DETAIL'] + localStorage['SHOW_ON_TIMELINE'];
-}
+	chrome.tabs.query({}, (result) => {
+		result.map((v, i) => {
+			// console.log(v.id);
+			chrome.tabs.sendMessage(v.id, {method: 'OPTION_UPDATED'}, null, (response) => {
+				// console.log(`res: ${response}`)
+			});
+		});
+	});
+});
