@@ -1,4 +1,5 @@
 // ==UserScript==
+// @author          hogashi
 // @name            twitterOpenOriginalImage
 // @namespace       http://hogashi.hatenablog.com/
 // @description     TwitterページでOriginalボタンを押すと原寸の画像が開きます(http://hogashi.hatenablog.com)
