@@ -48,6 +48,6 @@ document.addEventListener('keydown', function(e) {
 		}
 		a.href = window.location.href;
 		a.setAttribute('download', imageName + imageSize + imageSuffix);
-		a.dispatchEvent(new CustomEvent('click'));
+		a.dispatchEvent(new MouseEvent('click'));
 	}
 });
