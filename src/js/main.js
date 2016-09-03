@@ -47,6 +47,7 @@ document.addEventListener('keydown', function(e) {
 		// かつ ツイート入力ボックスがアクティブでないなら
 		if((options['OPEN_WITH_KEY_PRESS'] != 'isfalse')
 		 && !(document.activeElement.className.match(/rich-editor/))) {
+		 	e.preventDefault();
 			openFromTweetDetail();
 		}
 	}
