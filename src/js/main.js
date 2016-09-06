@@ -47,8 +47,7 @@ document.addEventListener('keydown', function(e) {
 		// かつ ツイート入力ボックスがアクティブでないなら
 		if((options['OPEN_WITH_KEY_PRESS'] != 'isfalse')
 		 && !(document.activeElement.className.match(/rich-editor/))) {
-		 	e.preventDefault();
-			openFromTweetDetail();
+			openFromTweetDetail(e);
 		}
 	}
 });
@@ -137,25 +136,25 @@ function setButtonOnTweetDetail() {
 			actionList.appendChild(parentDiv);
 			// Originalボタン(input type='button')
 			origButton = document.createElement('input');
+			document.getElementById('tooiDivDetailpage').appendChild(origButton);
 			origButton.id = 'tooiInputDetailpage';
 			origButton.type = 'button';
 			origButton.value = 'Original';
 			origButton.style.width = '70px';
-			origButton.onclick = openFromTweetDetail;
-			document.getElementById('tooiDivDetailpage').appendChild(origButton);
+			origButton.addEventListener('click', openFromTweetDetail);
 		}
 	}
 } // setButtonOnTweetDetail end
 
 // タイムラインから画像を新しいタブに開く
 function openFromTimeline(e) {
-	// イベント(MouseEvent)による既定の動作をキャンセル
-	e.preventDefault();
-	// イベント(MouseEvent)の親要素への伝播を停止
-	e.stopPropagation();
 	// ツイートの画像の親エレメントを取得するためにその親まで遡る
 	// if 上述のエレメントが取得できたら
 	if(this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-container')[0]) {
+		// イベント(MouseEvent)による既定の動作をキャンセル
+		e.preventDefault();
+		// イベント(MouseEvent)の親要素への伝播を停止
+		e.stopPropagation();
 		openImagesInNewTab(
 			this.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
 		);
@@ -166,10 +165,14 @@ function openFromTimeline(e) {
 } // openFromTimeline end
 
 // ツイート詳細から画像を新しいタブに開く
-function openFromTweetDetail() {
+function openFromTweetDetail(e) {
 	// .permalink-tweet-container: ツイート詳細ページのメインツイート
 	// .AdaptiveMedia-photoContainer: 画像の親エレメント
 	if(!!(document.getElementsByClassName('permalink-tweet-container')[0])) {
+		// イベント(MouseEvent)による既定の動作をキャンセル
+		e.preventDefault();
+		// イベント(MouseEvent)の親要素への伝播を停止
+		e.stopPropagation();
 		openImagesInNewTab(
 				document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')
 		);
