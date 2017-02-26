@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Options - twitter画像原寸ボタン</title>
-	<link rel="stylesheet" href="./mdl/material.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" type="text/css" href="./popup.css">
+  <meta charset="utf-8">
+  <title>Options - twitter画像原寸ボタン</title>
+  <link rel="stylesheet" href="./mdl/material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="./popup.css">
 </head>
 <body>
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header">
-			<div class="mdl-layout__header-row">
-				<span class="mdl-layout__title">Options - 設定</span>
-			</div>
-		</header>
-		<main>
-			<section class="modeselect">
-				<div>
-					<p class="title">TwitterWeb公式</p>
-					<div class="service">
-						<div class="situation">
-							<p class="title">タイムライン</p>
-							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-1">
-								<input type="checkbox" id="checkbox-1" class="mdl-checkbox__input mode SHOW_ON_TIMELINE" checked>
-								<span class="mdl-checkbox__label"><span class="bb">ボタン</span>を表示</span>
-							</label>
-							</p>
-						</div>
-						<div class="situation">
-							<p class="title">ツイート詳細</p>
-							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-2">
-								<input type="checkbox" id="checkbox-2" class="mdl-checkbox__input mode SHOW_ON_TWEET_DETAIL" checked>
-								<span class="mdl-checkbox__label"><span class="bb">ボタン</span>を表示</span>
-							</label>
-							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-3">
-								<input type="checkbox" id="checkbox-3" class="mdl-checkbox__input mode OPEN_WITH_KEY_PRESS" checked>
-								<span class="mdl-checkbox__label"><span class="bb">Enterキー</span>で画像を開く</span>
-							</label>
-						</div>
-						<div class="situation">
-							<p class="title">画像ページ</p>
-							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-4">
-								<input type="checkbox" id="checkbox-4" class="mdl-checkbox__input mode STRIP_IMAGE_SUFFIX" checked>
-								<span class="mdl-checkbox__label"><span class="bb">[Ctrl]+[s]</span>で拡張子を校正</span>
-							</label>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<div>
-					<p class="title">TweetDeck</p>
-					<div class="service">
-						<div class="situation">
-							<p class="title">タイムライン</p>
-							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-5">
-								<input type="checkbox" id="checkbox-5" class="mdl-checkbox__input mode SHOW_ON_TWEETDECK_TIMELINE" checked>
-								<span class="mdl-checkbox__label"><span class="bb">ボタン</span>を表示</span>
-							</label>
-						</div>
-					</div>
-				</div>
-			</section>
-			<hr>
-			<div class="save-button">
-				<button id="save" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-					設定を保存
-				</button>
-			</div>
-		</main>
-		<footer class="mdl-mini-footer mdl-logo">twitter画像原寸ボタン - hogashi</footer>
-	</div>
-	<script src="./mdl/material.min.js"></script>
-	<script src="../js/popup.js"></script>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout__title">Options - 設定</span>
+      </div>
+    </header>
+    <main>
+      <section class="modeselect">
+        <div class="service">
+          <p class="title">TwitterWeb公式</p>
+          <div class="situation">
+            <div>
+              <p class="title">タイムライン</p>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-1">
+                <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input mode SHOW_ON_TIMELINE" checked>
+                <span class="mdl-checkbox__label"><b>ボタン</b>を表示</span>
+              </label>
+            </div>
+            <div>
+              <p class="title">ツイート詳細</p>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-2">
+                <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input mode SHOW_ON_TWEET_DETAIL" checked>
+                <span class="mdl-checkbox__label"><b>ボタン</b>を表示</span>
+              </label>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-3">
+                <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input mode OPEN_WITH_KEY_PRESS" checked>
+                <span class="mdl-checkbox__label"><b>Enterキー</b>で画像を開く</span>
+              </label>
+            </div>
+            <div>
+              <p class="title">画像ページ</p>
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-4">
+                <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input mode STRIP_IMAGE_SUFFIX" checked>
+                <span class="mdl-checkbox__label"><b>[Ctrl]+[s]</b>で拡張子を校正</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div>
+          <div class="service">
+            <p class="title">TweetDeck</p>
+            <div class="situation">
+              <div>
+                <p class="title">タイムライン</p>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-5">
+                  <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input mode SHOW_ON_TWEETDECK_TIMELINE" checked>
+                  <span class="mdl-checkbox__label"><b>ボタン</b>を表示</span>
+                </label>
+              </div>
+              <div>
+                <p class="title">ツイート詳細</p>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-checked is-upgraded" for="checkbox-6">
+                  <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input mode SHOW_ON_TWEETDECK_TWEET_DETAIL" checked>
+                  <span class="mdl-checkbox__label"><b>ボタン</b>を表示</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <hr>
+      <div class="save-button">
+        <button id="save" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          設定を保存
+        </button>
+      </div>
+    </main>
+    <footer class="mdl-mini-footer mdl-logo">twitter画像原寸ボタン - hogashi</footer>
+  </div>
+  <script src="./mdl/material.min.js"></script>
+  <script src="../js/popup.js"></script>
 </body>
 </html>
