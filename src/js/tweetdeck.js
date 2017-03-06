@@ -129,20 +129,24 @@ function setButtonOnTweetdeckTweetDetail() {
         && !(tweet.getElementsByClassName('tooiATweetdeckDetail')[0]) ) {
         // ボタンを設置
         let origButton = document.createElement('a')
-        tweet.getElementsByTagName('footer')[0].appendChild(origButton)
+        // tweet.getElementsByTagName('footer')[0].appendChild(origButton)
+        let footer = tweet.getElementsByTagName('footer')[0]
+        footer.parentNode.insertBefore(origButton, footer)
         // tweetdeckのツイート右上の時刻などに使われているclassを使う
         // 設置の有無の判別用に'tooiATweetdeckDetail'を付与する
-        origButton.className = 'pull-left margin-txs txt-mute tooiATweetdeckDetail'
+        origButton.className = 'txt-mute tooiATweetdeckDetail'
         // 枠線の色は'Original'と同じく'.txt-mute'の色を使うのでボタンから取得して設定する
         let borderColor = document.defaultView.getComputedStyle(origButton, '').color
         // ボタンのスタイル設定
         setStyle(origButton,
-          {border: `1px solid ${borderColor}`,
-          borderRadius: '2px',
-          fontSize: '0.75em',
-          marginLeft: '3px',
-          lineHeight: '1.5em',
-          paddingRight: '1px'})
+          {
+            border: `1px solid ${borderColor}`,
+            borderRadius: '2px',
+            fontSize: '0.75em',
+            marginTop: '5px',
+            padding: '2px 2px 2px 0',
+            cursor: 'pointer'
+          })
         origButton.insertAdjacentHTML('beforeend', 'Original')
         // ボタンを押した時の挙動を設定する
         origButton.addEventListener('click', openFromTweetdeckTweetDetail)
@@ -178,12 +182,12 @@ function openFromTweetdeckTweetDetail(e) {
   e.stopPropagation()
   // ツイートの画像の親エレメントを取得するためにその親まで遡る
   // if 上述のエレメントが取得できたら
-  if(this.parentNode.parentNode.getElementsByClassName('media-img')) {
+  if(this.parentNode.parentNode.getElementsByClassName('media-img').length != 0) {
     openImagesInNewTab(
       [this.parentNode.parentNode.getElementsByClassName('media-img')[0].src]
     )
   }
-  else if(this.parentNode.parentNode.getElementsByClassName('js-media-image-link')) {
+  else if(this.parentNode.parentNode.getElementsByClassName('js-media-image-link').length != 0) {
     openImagesInNewTab(
       Array.from(this.parentNode.parentNode.getElementsByClassName('js-media-image-link'))
         .map(v => {return v.style.backgroundImage})
