@@ -194,7 +194,7 @@ function openFromTweetdeckTweetDetail(e) {
     )
   }
   else {
-    printException('CANT_FIND_IMAGE_ELEMENT_ON_TWEETDECK_DETAIL')
+    printException('CANT_FIND_IMAGE_ELEMENT_ON_TWEETDECK_TWEET_DETAIL')
   }
 } // openFromTweetdeckTweetDetail end
 
