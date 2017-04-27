@@ -74,6 +74,13 @@ function doTask() {
   }
 } // doTask end
 
+// エレメントへのstyle属性の設定
+function setStyle(e, attrs) {
+  Object.keys(attrs).map((key, i) => {
+    e.style[key] = attrs[key]
+  })
+}
+
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
   // if ツイートを取得できたら
