@@ -204,6 +204,7 @@ function openImagesInNewTab(imgurls) {
     // if 画像URLが取得できたなら
     if(!!imgurl) {
       const url = new URL(imgurl.replace(/url\("([^"]*)"\)/, '$1'))
+      const pathname = url.pathname.replace(/:[a-z]+$/, '')
       window.open(`${url.protocol}//${url.host}${url.pathname}:orig`)
     }
     else {
