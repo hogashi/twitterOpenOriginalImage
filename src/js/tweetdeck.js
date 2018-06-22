@@ -208,7 +208,7 @@ function formatUrl(imgurl) {
     return res;
   })
 
-  const [_, pathname, extension] = url.pathname.match(/^(.*?)\.(|[^.:]*)(|:[a-z]+)$/)
+  const [_, pathname, extension] = url.pathname.match(/^(.*?)(?:|\.([^.:]*))(|:[a-z]+)$/)
   return `${url.protocol}//${url.host}${pathname}.${searchSets.format ? searchSets.format : extension}:orig`
 }
 
