@@ -198,14 +198,26 @@ function openFromTweetdeckTweetDetail(e) {
   }
 } // openFromTweetdeckTweetDetail end
 
+function formatUrl(imgurl) {
+  const url = new URL(imgurl.replace(/url\("([^"]*)"\)/, '$1'))
+
+  const searchSets = url.search.slice(1).split('&').map(set => {
+    [key, value] = set.split('=')
+    res = {}
+    res[key] = value
+    return res;
+  })
+
+  const [_, pathname, extension] = url.pathname.match(/^(.*?)\.(|[^.:]*)(|:[a-z]+)$/)
+  return `${url.protocol}//${url.host}${pathname}.${searchSets.format ? searchSets.format : extension}:orig`
+}
+
 // 画像を原寸で新しいタブに開く
 function openImagesInNewTab(imgurls) {
   Array.from(imgurls).reverse().map(imgurl => {
     // if 画像URLが取得できたなら
     if(!!imgurl) {
-      const url = new URL(imgurl.replace(/url\("([^"]*)"\)/, '$1'))
-      const pathname = url.pathname.replace(/:[a-z]+$/, '')
-      window.open(`${url.protocol}//${url.host}${url.pathname}:orig`)
+      window.open(formatUrl(imgurl))
     }
     else {
       printException('CANT_FIND_IMAGE_URL')

@@ -42,7 +42,7 @@ document.addEventListener('keydown', function(e) {
     const matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(?:|:([a-z]+))$/
     const [_, imageName, imageSuffix, imageSize] = imgSrc.match(matcher)
     a.href = window.location.href
-    a.setAttribute('download', `${imageName}${imageSize ? '-' : null}${imageSize}${imageSuffix}`)
+    a.setAttribute('download', `${imageName}${imageSize ? `-${imageSize}` : ''}${imageSuffix}`)
     a.dispatchEvent(new MouseEvent('click'))
   }
 })
