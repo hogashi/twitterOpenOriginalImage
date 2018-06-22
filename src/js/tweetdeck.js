@@ -203,7 +203,8 @@ function openImagesInNewTab(imgurls) {
   Array.from(imgurls).reverse().map(imgurl => {
     // if 画像URLが取得できたなら
     if(!!imgurl) {
-      window.open(imgurl.replace(/^[^(]+\(\"(https:[^:]+)(|:[^:]+)\"\)$/, '$1:orig'))
+      const url = new URL(imgurl.replace(/url\("([^"]*)"\)/, '$1'))
+      window.open(`${url.protocol}//${url.host}${url.pathname}:orig`)
     }
     else {
       printException('CANT_FIND_IMAGE_URL')

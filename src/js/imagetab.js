@@ -33,21 +33,16 @@ document.addEventListener('keydown', function(e) {
   if( options['STRIP_IMAGE_SUFFIX'] != 'isfalse'
      && e.key == 's'
      && (e.ctrlKey || e.metaKey)
-     && window.location.href.match(/https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/)) {
+     && /https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/.test(window.location.href) ) {
     // もとの挙動(ブラウザが行う保存)をしないよう中止
     e.preventDefault()
     // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
-    var a = document.createElement('a')
-    var imgSrc = document.querySelector('img').src
-    var matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(|:)([a-z]*)$/
-    var imageName = imgSrc.replace(matcher,'$1')
-    var imageSuffix = imgSrc.replace(matcher,'$2')
-    var imageSize = imgSrc.replace(matcher,'$4')
-    if(imageSize != '') {
-      imageSize = '-' + imageSize
-    }
+    const a = document.createElement('a')
+    const imgSrc = document.querySelector('img').src
+    const matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(?:|:([a-z]+))$/
+    const [_, imageName, imageSuffix, imageSize] = imgSrc.match(matcher)
     a.href = window.location.href
-    a.setAttribute('download', imageName + imageSize + imageSuffix)
+    a.setAttribute('download', `${imageName}${imageSize ? '-' : null}${imageSize}${imageSuffix}`)
     a.dispatchEvent(new MouseEvent('click'))
   }
 })
