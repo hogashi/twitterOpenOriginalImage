@@ -6,43 +6,51 @@
 // 拡張子を「.jpg-orig」「.png-orig」ではなく「.jpg」「.png」にする
 
 let options = {
-  'STRIP_IMAGE_SUFFIX': 'isfalse'
-}
+  STRIP_IMAGE_SUFFIX: 'isfalse',
+};
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 function printException(tooiException) {
-  console.log('tooitd: ' + tooiException)
+  console.log('tooitd: ' + tooiException);
 }
 
 // 設定の読み込み
 function updateOptions() {
-  chrome.runtime.sendMessage({method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX'},
+  chrome.runtime.sendMessage(
+    { method: 'GET_LOCAL_STORAGE', key: 'STRIP_IMAGE_SUFFIX' },
     function(response) {
-      options['STRIP_IMAGE_SUFFIX'] = response.data
+      options['STRIP_IMAGE_SUFFIX'] = response.data;
     }
-  )
+  );
 }
-updateOptions()
+updateOptions();
 
 // キーを押したとき
 document.addEventListener('keydown', function(e) {
-  updateOptions()
+  updateOptions();
   // if 設定が有効なら
   // かつ 押されたキーがC-s の状態なら
   // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
-  if( options['STRIP_IMAGE_SUFFIX'] != 'isfalse'
-     && e.key == 's'
-     && (e.ctrlKey || e.metaKey)
-     && /https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/.test(window.location.href) ) {
+  if (
+    options['STRIP_IMAGE_SUFFIX'] != 'isfalse' &&
+    e.key == 's' &&
+    (e.ctrlKey || e.metaKey) &&
+    /https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/.test(
+      window.location.href
+    )
+  ) {
     // もとの挙動(ブラウザが行う保存)をしないよう中止
-    e.preventDefault()
+    e.preventDefault();
     // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
-    const a = document.createElement('a')
-    const imgSrc = document.querySelector('img').src
-    const matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(?:|:([a-z]+))$/
-    const [_, imageName, imageSuffix, imageSize] = imgSrc.match(matcher)
-    a.href = window.location.href
-    a.setAttribute('download', `${imageName}${imageSize ? `-${imageSize}` : ''}${imageSuffix}`)
-    a.dispatchEvent(new MouseEvent('click'))
+    const a = document.createElement('a');
+    const imgSrc = document.querySelector('img').src;
+    const matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(?:|:([a-z]+))$/;
+    const [_, imageName, imageSuffix, imageSize] = imgSrc.match(matcher);
+    a.href = window.location.href;
+    a.setAttribute(
+      'download',
+      `${imageName}${imageSize ? `-${imageSize}` : ''}${imageSuffix}`
+    );
+    a.dispatchEvent(new MouseEvent('click'));
   }
-})
+});
