@@ -32,7 +32,7 @@ document.addEventListener('keydown', function(e) {
   // かつ 押されたキーがC-s の状態なら
   // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
   if (
-    options['STRIP_IMAGE_SUFFIX'] != 'isfalse' &&
+    options['STRIP_IMAGE_SUFFIX'] !== 'isfalse' &&
     e.key == 's' &&
     (e.ctrlKey || e.metaKey) &&
     /https:\/\/pbs\.twimg\.com\/media\/[^.]+\.(jpg|png)(|:[a-z]+)$/.test(
