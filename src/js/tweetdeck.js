@@ -228,8 +228,10 @@ function formatUrl(imgurl) {
     const [_matched, pathname, extension] = url.pathname.match(
       /^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/
     );
+    // TweetDeckのURLでは拡張子を優先する
+    // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
     return `${url.protocol}//${url.host}${pathname}.${
-      searchSet.format ? searchSet.format : extension
+      extension ? extension : searchSet.format
     }:orig`;
   }
   return url;
