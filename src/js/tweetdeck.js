@@ -208,8 +208,11 @@ function formatUrl(imgurl) {
     return res;
   })
 
-  const [_, pathname, extension] = url.pathname.match(/^(.*?)(?:|\.([^.:]*))(|:[a-z]+)$/)
-  return `${url.protocol}//${url.host}${pathname}.${searchSets.format ? searchSets.format : extension}:orig`
+  if (/https:\/\/pbs\.twimg\.com\/media/.test(url)) {
+    const [, pathname, extension] = url.pathname.match(/^(.*?)(?:|\.([^.:]*))(|:[a-z]+)$/)
+    return `${url.protocol}//${url.host}${pathname}.${searchSets.format ? searchSets.format : extension}:orig`
+  }
+  return url
 }
 
 // 画像を原寸で新しいタブに開く
