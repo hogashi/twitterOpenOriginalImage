@@ -62,15 +62,14 @@ document.addEventListener('keydown', function(e) {
 function updateOptions() {
   // console.log('upOpt bfr: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
   Object.keys(options).forEach(key => {
-    chrome.runtime.sendMessage(
-      { method: 'GET_LOCAL_STORAGE', key },
-      function(response) {
-        options[key] = response.data;
-        // 設定を読み込んだら機能を呼び出す
-        // 設定読込と同スコープに書くことで同期的に呼び出し
-        doTask();
-      }
-    );
+    chrome.runtime.sendMessage({ method: 'GET_LOCAL_STORAGE', key }, function(
+      response
+    ) {
+      options[key] = response.data;
+      // 設定を読み込んだら機能を呼び出す
+      // 設定読込と同スコープに書くことで同期的に呼び出し
+      doTask();
+    });
   });
   // console.log('upOpt aft: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
 } // updateOptions end
@@ -108,9 +107,7 @@ function setButtonOnTimeline() {
       let actionList, parentDiv, origButton;
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      actionList = tweet.getElementsByClassName(
-        'ProfileTweet-actionList'
-      )[0];
+      actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0];
       parentDiv = document.createElement('div');
       // parentDiv.id = '' + tweet.id
       parentDiv.className = 'ProfileTweet-action tooiDivTimeline';
@@ -169,19 +166,13 @@ function openFromTimeline(e) {
   // ツイートの画像の親エレメントを取得するためにその親まで遡る
   const parentNode = this.parentNode.parentNode.parentNode.parentNode;
   // if 上述のエレメントが取得できたら
-  if (
-    parentNode.getElementsByClassName(
-      'AdaptiveMedia-container'
-    )[0]
-  ) {
+  if (parentNode.getElementsByClassName('AdaptiveMedia-container')[0]) {
     // イベント(MouseEvent)による既定の動作をキャンセル
     e.preventDefault();
     // イベント(MouseEvent)の親要素への伝播を停止
     e.stopPropagation();
     openImagesInNewTab(
-      parentNode.getElementsByClassName(
-        'AdaptiveMedia-photoContainer'
-      )
+      parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
     );
   } else {
     printException('CANT_FIND_IMAGE_ELEMENT_ON_TIMELINE');

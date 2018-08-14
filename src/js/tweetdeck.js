@@ -38,17 +38,16 @@ function printException(tooiException) {
 function updateOptions() {
   // console.log('upOpt bfr: ' + options['SHOW_ON_TWEETDECK_TIMELINE']) // debug
   Object.keys(options).map(key => {
-    chrome.runtime.sendMessage(
-      { method: 'GET_LOCAL_STORAGE', key },
-      function(response) {
-        if (response) {
-          options[key] = response.data;
-        }
-        // 設定を読み込んだら機能を呼び出す
-        // 設定読込と同スコープに書くことで同期的に呼び出し
-        doTask();
+    chrome.runtime.sendMessage({ method: 'GET_LOCAL_STORAGE', key }, function(
+      response
+    ) {
+      if (response) {
+        options[key] = response.data;
       }
-    );
+      // 設定を読み込んだら機能を呼び出す
+      // 設定読込と同スコープに書くことで同期的に呼び出し
+      doTask();
+    });
   });
   // console.log('upOpt bfr: ' + options['SHOW_ON_TWEETDECK_TIMELINE']) // debug
 } // updateOptions end
@@ -68,9 +67,7 @@ function doTask() {
 
 // エレメントへのstyle属性の設定
 function setStyle(e, attrs) {
-  Object.keys(attrs).forEach(key =>
-    e.style[key] = attrs[key]
-  );
+  Object.keys(attrs).forEach(key => (e.style[key] = attrs[key]));
 }
 
 // タイムラインにボタン表示
@@ -150,10 +147,8 @@ function setButtonOnTweetdeckTweetDetail() {
     // 設置の有無の判別用に'tooiATweetdeckDetail'を付与する
     origButton.className = 'txt-mute tooiATweetdeckDetail';
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うのでボタンから取得して設定する
-    const borderColor = document.defaultView.getComputedStyle(
-      origButton,
-      ''
-    ).color;
+    const borderColor = document.defaultView.getComputedStyle(origButton, '')
+      .color;
     // ボタンのスタイル設定
     setStyle(origButton, {
       border: `1px solid ${borderColor}`,
@@ -180,7 +175,9 @@ function openFromTweetdeckTimeline(e) {
   const parentNode = this.parentNode.parentNode.parentNode.parentNode;
   if (parentNode.getElementsByClassName('js-media')) {
     openImagesInNewTab(
-      Array.from(parentNode.getElementsByClassName('js-media-image-link')).map(v => v.style.backgroundImage)
+      Array.from(parentNode.getElementsByClassName('js-media-image-link')).map(
+        v => v.style.backgroundImage
+      )
     );
   } else {
     printException('CANT_FIND_IMAGE_ELEMENT_ON_TWEETDECK_TIMELINE');
@@ -202,7 +199,9 @@ function openFromTweetdeckTweetDetail(e) {
     parentNode.getElementsByClassName('js-media-image-link').length !== 0
   ) {
     openImagesInNewTab(
-      Array.from(parentNode.getElementsByClassName('js-media-image-link')).map(v => v.style.backgroundImage)
+      Array.from(parentNode.getElementsByClassName('js-media-image-link')).map(
+        v => v.style.backgroundImage
+      )
     );
   } else {
     printException('CANT_FIND_IMAGE_ELEMENT_ON_TWEETDECK_TWEET_DETAIL');

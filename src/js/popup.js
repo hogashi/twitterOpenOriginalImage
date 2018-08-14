@@ -15,7 +15,8 @@ const optionKeys = [
 optionKeys.forEach(value => {
   // 最初はどっちも機能オンであってほしい
   // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-  document.getElementsByClassName(value)[0].checked = localStorage[value] !== 'isfalse';
+  document.getElementsByClassName(value)[0].checked =
+    localStorage[value] !== 'isfalse';
 });
 
 document.getElementById('save').addEventListener('click', e => {
