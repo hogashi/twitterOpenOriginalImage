@@ -1,0 +1,15 @@
+{
+  "name": "twitterOpenOriginalImage",
+  "version": "2.1.11",
+  "description": "opens images in original size at twitter",
+  "repository": "git@github.com:hogashi/twitterOpenOriginalImage.git",
+  "author": "hogashi <i1511015@edu.cc.uec.ac.jp>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "prettier src/js/*.js tooi*.js",
+    "lint:fix": "prettier --write src/js/*.js tooi*.js"
+  },
+  "devDependencies": {
+    "prettier": "^1.14.2"
+  }
+}
