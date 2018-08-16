@@ -11,7 +11,6 @@
 
 // common, main, tweetdeck, imagetab
 
-
 // common.js
 
 // 設定取得メッセージ
@@ -149,7 +148,6 @@ function openImagesInNewTab(imgurls) {
       }
     });
 }
-
 
 /* main.js */
 // https://twitter.com/* で実行される
@@ -307,7 +305,6 @@ function openFromTweetDetail(e) {
     printException('no tweet elements on tweet detail');
   }
 } // openFromTweetDetail end
-
 
 /* tweetdeck.js */
 // https://tweetdeck.twitter.com/* で実行される
@@ -467,7 +464,6 @@ function openFromTweetdeckTweetDetail(e) {
     printException('no image elements on tweetdeck tweet detail');
   }
 } // openFromTweetdeckTweetDetail end
-
 
 /* imagetab.js */
 // https://pbs.twimg.com/* で実行される
