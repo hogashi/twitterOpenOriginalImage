@@ -113,6 +113,7 @@ function formatUrl(imgurl) {
     const [_matched, pathname, extension] = url.pathname.match(
       /^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/
     );
+    // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
     // TweetDeckのURLでは拡張子を優先する
     // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
     return `${url.protocol}//${url.host}${pathname}.${
