@@ -71,6 +71,7 @@ function setButtonOnTimeline() {
       origButton.value = 'Original';
       origButton.style.width = '70px';
       origButton.style.fontSize = '13px';
+      origButton.style.color = '#000000';
       origButton.addEventListener('click', openFromTimeline);
     }
   });
