@@ -22,10 +22,8 @@ document.getElementById('save').addEventListener('click', e => {
   chrome.tabs.query({}, result =>
     result.forEach(value => {
       // console.log(value);
-      chrome.tabs.sendMessage(
-        value.id,
-        { method: OPTION_UPDATED },
-        response => console.log('res:', response)
+      chrome.tabs.sendMessage(value.id, { method: OPTION_UPDATED }, response =>
+        console.log('res:', response)
       );
     })
   );

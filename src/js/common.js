@@ -67,14 +67,13 @@ function updateOptions(setButtonsCallBack) {
       }
       // 設定を読み込んだらボタンを置く
       // 設定読込と同スコープに書くことで同期的に呼び出し
-      if (setButtonsCallBack){
+      if (setButtonsCallBack) {
         setButtonsCallBack();
       }
     });
   });
   // console.log('updated options: ', options) // debug
 } // updateOptions end
-
 
 // ヘルパ
 

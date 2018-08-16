@@ -26,7 +26,9 @@ document.addEventListener('keydown', function(e) {
     const a = document.createElement('a');
     const imageSrc = document.querySelector('img').src;
     const matcher = /https:\/\/pbs\.twimg\.com\/media\/([^.]+)(\.[^:]+)(?:|:([a-z]+))$/;
-    const [_matched, imageName, imageSuffix, imageSize] = imageSrc.match(matcher);
+    const [_matched, imageName, imageSuffix, imageSize] = imageSrc.match(
+      matcher
+    );
     a.href = window.location.href;
     a.setAttribute(
       'download',
