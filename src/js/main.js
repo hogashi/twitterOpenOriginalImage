@@ -2,6 +2,13 @@
 
 // https://twitter.com* で実行される
 
+const OPTION_UPDATED = 'OPTION_UPDATED';
+const PRINT_PREFIX = 'tooi: ';
+const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
+const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
+const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
+const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
+
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
 // 無効だった場合はそのままボタンは表示されない
@@ -12,29 +19,26 @@ const options = {
 };
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
-let target = document.getElementsByTagName('html')[0];
-let observer = new MutationObserver(doTask);
-let config = { childList: true, subtree: true };
+const target = document.getElementsByTagName('html')[0];
+const observer = new MutationObserver(doTask);
+const config = { childList: true, subtree: true };
 observer.observe(target, config);
 
 // 設定読み込み
 updateOptions();
 // 設定反映のためのリスナー設置
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  switch (request.method) {
-    case 'OPTION_UPDATED':
-      updateOptions();
-      sendResponse({ data: 'done' });
-      break;
-    default:
-      sendResponse({ data: 'yet' });
-      break;
+  if (request.method) {
+    updateOptions();
+    sendResponse({ data: 'done' });
+  } else {
+    sendResponse({ data: 'yet' });
   }
 });
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 function printException(tooiException) {
-  console.log('tooi: ' + tooiException);
+  console.log(PRINT_PREFIX + tooiException);
 }
 
 // キー押下時
@@ -50,7 +54,7 @@ document.addEventListener('keydown', function(e) {
     // ツイート詳細にボタン表示する設定がされていたら
     // かつ ツイート入力ボックスがアクティブでないなら
     if (
-      options['OPEN_WITH_KEY_PRESS'] !== 'isfalse' &&
+      options[OPEN_WITH_KEY_PRESS] !== 'isfalse' &&
       !document.activeElement.className.match(/rich-editor/)
     ) {
       openFromTweetDetail(e);
@@ -62,7 +66,7 @@ document.addEventListener('keydown', function(e) {
 function updateOptions() {
   // console.log('upOpt bfr: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
   Object.keys(options).forEach(key => {
-    chrome.runtime.sendMessage({ method: 'GET_LOCAL_STORAGE', key }, function(
+    chrome.runtime.sendMessage({ method: GET_LOCAL_STORAGE, key }, function(
       response
     ) {
       options[key] = response.data;
@@ -78,11 +82,11 @@ function updateOptions() {
 function doTask() {
   // console.log('doTask: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
   // if タイムラインにボタン表示する設定がされていたら
-  if (options['SHOW_ON_TIMELINE'] !== 'isfalse') {
+  if (options[SHOW_ON_TIMELINE] !== 'isfalse') {
     setButtonOnTimeline();
   }
   // if ツイート詳細にボタン表示する設定がされていたら
-  if (options['SHOW_ON_TWEET_DETAIL'] !== 'isfalse') {
+  if (options[SHOW_ON_TWEET_DETAIL] !== 'isfalse') {
     setButtonOnTweetDetail();
   }
 } // doTask end
@@ -172,10 +176,12 @@ function openFromTimeline(e) {
     // イベント(MouseEvent)の親要素への伝播を停止
     e.stopPropagation();
     openImagesInNewTab(
-      parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
+      Array.from(
+        parentNode.getElementsByClassName('AdaptiveMedia-photoContainer')
+      ).map(element => element.getElementsByTagName('img')[0].src)
     );
   } else {
-    printException('CANT_FIND_IMAGE_ELEMENT_ON_TIMELINE');
+    printException('no image elements on timeline');
   }
 } // openFromTimeline end
 
@@ -189,25 +195,26 @@ function openFromTweetDetail(e) {
     // イベント(MouseEvent)の親要素への伝播を停止
     e.stopPropagation();
     openImagesInNewTab(
-      document
-        .getElementsByClassName('permalink-tweet-container')[0]
-        .getElementsByClassName('AdaptiveMedia-photoContainer')
+      Array.from(
+        document
+          .getElementsByClassName('permalink-tweet-container')[0]
+          .getElementsByClassName('AdaptiveMedia-photoContainer')
+      ).map(element => element.getElementsByTagName('img')[0].src)
     );
   } else {
-    printException('CANT_FIND_TWEET_DETAIL_ELEMENT');
+    printException('no tweet elements on tweet detail');
   }
 } // openFromTweetDetail end
 
 // 画像を原寸で新しいタブに開く
-function openImagesInNewTab(tag) {
-  Array.from(tag)
+function openImagesInNewTab(imgurls) {
+  Array.from(imgurls)
     .reverse()
-    .forEach(value => {
-      const imgurl = value.getElementsByTagName('img')[0].src;
-      if (!!imgurl) {
+    .forEach(imgurl => {
+      if (imgurl) {
         window.open(imgurl.replace(/(\.\w+)(|:\w+)$/, '$1:orig'));
       } else {
-        printException('CANT_FIND_IMAGE_URL');
+        printException('no image url');
       }
     });
 }
