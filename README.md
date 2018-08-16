@@ -10,8 +10,8 @@ Chromeウェブストアからインストール: [twitter画像原寸ボタン]
 ## 使い方
 
 画像ツイートに付いた"Original"ボタンをクリックすると、原寸画像が新しいタブに開かれます。  
-<img alt="usage3" src="./images/timeline1.jpg" height="350px" />  
-<img alt="usage4" src="./images/timeline2.jpg" height="350px" />
+<img alt="usage3" src="./images/timeline1.jpg" style="height: 350px" />  
+<img alt="usage4" src="./images/timeline2.jpg" style="height: 350px" />
 
 - "原寸画像"とは、次のような画像を指します: "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg:orig"
   - これは通常の(縮小された)画像のURL ("https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg") に ":orig" を足したものです
@@ -24,7 +24,7 @@ Chromeウェブストアからインストール: [twitter画像原寸ボタン]
 1. Chromeのウィンドウ右上にある拡張機能のボタンをクリックする(またはChromeの拡張機能の設定からこの拡張機能の"オプション"をクリックする)
 1. 使いたい機能にチェックを入れ、"設定を保存"をクリックする
 
-<img alt="usage4" src="./images/option.jpg" height="350px" />
+<img alt="usage4" src="./images/options.png" />
 
 ## 注意
 
