@@ -1,45 +1,7 @@
 /* main.js */
+// https://twitter.com/* で実行される
 
-// https://twitter.com* で実行される
-
-const OPTION_UPDATED = 'OPTION_UPDATED';
-const PRINT_PREFIX = 'tooi: ';
-const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
-const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
-const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
-const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
-
-// 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
-const options = {
-  SHOW_ON_TIMELINE: 'isfalse',
-  SHOW_ON_TWEET_DETAIL: 'isfalse',
-  OPEN_WITH_KEY_PRESS: 'isfalse',
-};
-
-// ページ全体でDOMの変更を検知し都度ボタン設置
-const target = document.getElementsByTagName('html')[0];
-const observer = new MutationObserver(doTask);
-const config = { childList: true, subtree: true };
-observer.observe(target, config);
-
-// 設定読み込み
-updateOptions();
-// 設定反映のためのリスナー設置
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.method) {
-    updateOptions();
-    sendResponse({ data: 'done' });
-  } else {
-    sendResponse({ data: 'yet' });
-  }
-});
-
-// エラーメッセージの表示(予期せぬ状況の確認)
-function printException(tooiException) {
-  console.log(PRINT_PREFIX + tooiException);
-}
+tooiInit(setButtons);
 
 // キー押下時
 document.addEventListener('keydown', function(e) {
@@ -62,25 +24,9 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// 設定項目更新
-function updateOptions() {
-  // console.log('upOpt bfr: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  Object.keys(options).forEach(key => {
-    chrome.runtime.sendMessage({ method: GET_LOCAL_STORAGE, key }, function(
-      response
-    ) {
-      options[key] = response.data;
-      // 設定を読み込んだら機能を呼び出す
-      // 設定読込と同スコープに書くことで同期的に呼び出し
-      doTask();
-    });
-  });
-  // console.log('upOpt aft: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-} // updateOptions end
-
-// 各機能の呼び出し
-function doTask() {
-  // console.log('doTask: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
+// ボタンを置く
+function setButtons() {
+  // console.log('setButtons: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
   // if タイムラインにボタン表示する設定がされていたら
   if (options[SHOW_ON_TIMELINE] !== 'isfalse') {
     setButtonOnTimeline();
@@ -89,7 +35,7 @@ function doTask() {
   if (options[SHOW_ON_TWEET_DETAIL] !== 'isfalse') {
     setButtonOnTweetDetail();
   }
-} // doTask end
+} // setButtons end
 
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
@@ -205,16 +151,3 @@ function openFromTweetDetail(e) {
     printException('no tweet elements on tweet detail');
   }
 } // openFromTweetDetail end
-
-// 画像を原寸で新しいタブに開く
-function openImagesInNewTab(imgurls) {
-  Array.from(imgurls)
-    .reverse()
-    .forEach(imgurl => {
-      if (imgurl) {
-        window.open(imgurl.replace(/(\.\w+)(|:\w+)$/, '$1:orig'));
-      } else {
-        printException('no image url');
-      }
-    });
-}

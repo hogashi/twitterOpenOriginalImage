@@ -1,4 +1,5 @@
 /* tweetdeck.js */
+// https://tweetdeck.twitter.com/* で実行される
 
 tooiInit(setButtonsOnTweetdeck);
 
@@ -14,11 +15,6 @@ function setButtonsOnTweetdeck() {
     setButtonOnTweetdeckTweetDetail();
   }
 } // setButtonsOnTweetdeck end
-
-// // エレメントへのstyle属性の設定
-// function setStyle(element, attrSet) {
-//   Object.keys(attrSet).forEach(key => (element.style[key] = attrSet[key]));
-// }
 
 // タイムラインにボタン表示
 function setButtonOnTweetdeckTimeline() {
@@ -114,10 +110,6 @@ function setButtonOnTweetdeckTweetDetail() {
     origButton.addEventListener('click', openFromTweetdeckTweetDetail);
   });
 } // setButtonOnTweetdeckTweetDetail end
-
-// function getBackgroundImageUrl(element) {
-//   return element.style.backgroundImage.replace(/url\("([^"]*)"\)/, '$1');
-// }
 
 // Tweetdeckタイムラインから画像を新しいタブに開く
 function openFromTweetdeckTimeline(e) {
