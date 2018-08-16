@@ -15,19 +15,31 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["js/main.js"]
+      "js": [
+        "js/common.js",
+        "js/main.js"
+      ]
     },
     {
       "matches": ["https://tweetdeck.twitter.com/*"],
-      "js": ["js/tweetdeck.js"]
+      "js": [
+        "js/common.js",
+        "js/tweetdeck.js"
+      ]
     },
     {
       "matches": ["https://pbs.twimg.com/*"],
-      "js": ["js/imagetab.js"]
+      "js": [
+        "js/common.js",
+        "js/imagetab.js"
+      ]
     }
   ],
   "background" : {
-    "scripts" : ["js/background.js"],
+    "scripts" : [
+      "js/common.js",
+      "js/background.js"
+    ],
     "persistent": false
   },
   "browser_action": {
