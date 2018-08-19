@@ -6,7 +6,7 @@
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         2.1.11
+// @version         2.1.11.2
 // ==/UserScript==
 
 // common, main, tweetdeck, imagetab
@@ -44,9 +44,6 @@ const options = {
 let observer;
 
 function tooiInit(setButtonsCallBack) {
-  // 設定読み込み
-  updateOptions(setButtonsCallBack);
-
   if (setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
     observer = new MutationObserver(setButtonsCallBack);
@@ -55,37 +52,7 @@ function tooiInit(setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
     observer.observe(target, config);
   }
-
-  // 設定反映のためのリスナー設置
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method === OPTION_UPDATED) {
-      updateOptions(setButtonsCallBack);
-      sendResponse({ data: 'done' });
-    } else {
-      sendResponse({ data: 'yet' });
-    }
-  });
 }
-
-// 設定項目更新
-function updateOptions(setButtonsCallBack) {
-  // console.log('update options: ', options) // debug
-  Object.keys(options).map(key => {
-    chrome.runtime.sendMessage({ method: GET_LOCAL_STORAGE, key }, function(
-      response
-    ) {
-      if (response) {
-        options[key] = response.data;
-      }
-      // 設定を読み込んだらボタンを置く
-      // 設定読込と同スコープに書くことで同期的に呼び出し
-      if (setButtonsCallBack) {
-        setButtonsCallBack();
-      }
-    });
-  });
-  // console.log('updated options: ', options) // debug
-} // updateOptions end
 
 // ヘルパ
 
@@ -476,7 +443,6 @@ if (/^https:\/\/pbs\.twimg\.com/.test(window.location.href)) {
 
   // キーを押したとき
   document.addEventListener('keydown', function(e) {
-    updateOptions();
     // if 設定が有効なら
     // かつ 押されたキーがC-s の状態なら
     // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
