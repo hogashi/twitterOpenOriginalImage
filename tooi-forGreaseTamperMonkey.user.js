@@ -6,7 +6,7 @@
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         2.1.11.2
+// @version         2.1.12
 // ==/UserScript==
 
 // common, main, tweetdeck, imagetab
@@ -157,6 +157,37 @@ function setButtons() {
   }
 } // setButtons end
 
+// ドキュメント内からボタンの文字色を得る
+function getActionButtonColor() {
+  // コントラスト比4.5(chromeの推奨する最低ライン)の色
+  const contrastLimitColor = '#697b8c';
+
+  const actionButton = document.querySelector('.ProfileTweet-actionButton');
+  if (!actionButton || !actionButton.style) {
+    return contrastLimitColor;
+  }
+
+  const buttonColor = window.getComputedStyle(actionButton).color;
+  if (buttonColor && buttonColor.length > 0) {
+    return buttonColor;
+  }
+  return contrastLimitColor;
+}
+
+function createOriginalButton(onClick) {
+  const origButton = document.createElement('input');
+
+  origButton.type  = 'button';
+  origButton.value = 'Original';
+
+  origButton.style.width       = '70px';
+  origButton.style.fontSize    = '13px';
+  origButton.style.color       = getActionButtonColor();
+
+  origButton.addEventListener('click', onClick);
+  return origButton;
+}
+
 // タイムラインにボタン表示
 function setButtonOnTimeline() {
   const tweets = document.getElementsByClassName('js-stream-tweet');
@@ -174,25 +205,18 @@ function setButtonOnTimeline() {
         .getElementsByTagName('img')[0] &&
       !tweet.getElementsByClassName('tooiDivTimeline')[0]
     ) {
-      let actionList, parentDiv, origButton;
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0];
-      parentDiv = document.createElement('div');
+      const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0];
+      const parentDiv = document.createElement('div');
       // parentDiv.id = '' + tweet.id
       parentDiv.className = 'ProfileTweet-action tooiDivTimeline';
       actionList.appendChild(parentDiv);
       // Originalボタン
-      origButton = document.createElement('input');
+      const origButton = createOriginalButton(openFromTimeline);
       tweet
         .getElementsByClassName('tooiDivTimeline')[0]
         .appendChild(origButton);
-      origButton.type = 'button';
-      origButton.value = 'Original';
-      origButton.style.width = '70px';
-      origButton.style.fontSize = '13px';
-      origButton.style.color = '#000000';
-      origButton.addEventListener('click', openFromTimeline);
     }
   });
 } // setButtonOnTimeline end
@@ -211,25 +235,19 @@ function setButtonOnTweetDetail() {
     // 何もしない
     return;
   }
-  let actionList, parentDiv, origButton;
   // Originalボタンの親の親となる枠
-  actionList = document
+  const actionList = document
     .getElementsByClassName('permalink-tweet-container')[0]
     .getElementsByClassName('ProfileTweet-actionList')[0];
   // Originalボタンの親となるdiv
-  parentDiv = document.createElement('div');
+  const parentDiv = document.createElement('div');
   parentDiv.id = 'tooiDivDetailpage';
   parentDiv.className = 'ProfileTweet-action';
   actionList.appendChild(parentDiv);
   // Originalボタン(input type='button')
-  origButton = document.createElement('input');
+  const origButton = createOriginalButton(openFromTweetDetail);
   document.getElementById('tooiDivDetailpage').appendChild(origButton);
   origButton.id = 'tooiInputDetailpage';
-  origButton.type = 'button';
-  origButton.value = 'Original';
-  origButton.style.width = '70px';
-  origButton.style.fontSize = '13px';
-  origButton.addEventListener('click', openFromTweetDetail);
 } // setButtonOnTweetDetail end
 
 // タイムラインから画像を新しいタブに開く
