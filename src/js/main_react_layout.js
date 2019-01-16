@@ -18,7 +18,9 @@ function getActionButtonStyleReactLayout() {
   // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
   let color = '#697b8c';
   // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-  const actionButton = document.querySelector('.rn-1re7ezh') || document.querySelector('.rn-111h2gw');
+  const actionButton =
+    document.querySelector('.rn-1re7ezh') ||
+    document.querySelector('.rn-111h2gw');
   if (actionButton && actionButton.style) {
     const buttonColor = window.getComputedStyle(actionButton).color;
     if (buttonColor && buttonColor.length > 0) {
@@ -40,9 +42,11 @@ function getActionButtonStyleReactLayout() {
 function createOriginalButtonReactLayout(onClick) {
   const origButton = document.createElement('input');
 
-  origButton.type  = 'button';
+  origButton.type = 'button';
   origButton.value = 'Original';
-  Object.entries(getActionButtonStyleReactLayout()).forEach(([key, value]) => origButton.style[key] = value);
+  Object.entries(getActionButtonStyleReactLayout()).forEach(
+    ([key, value]) => (origButton.style[key] = value)
+  );
 
   origButton.addEventListener('click', onClick);
   return origButton;
@@ -50,7 +54,9 @@ function createOriginalButtonReactLayout(onClick) {
 
 // タイムラインにボタン表示
 function setButtonOnTimelineReactLayout() {
-  const tweets = Array.from(document.querySelectorAll('#react-root main section article'));
+  const tweets = Array.from(
+    document.querySelectorAll('#react-root main section article')
+  );
   if (!tweets.length) {
     return;
   }
@@ -58,7 +64,9 @@ function setButtonOnTimelineReactLayout() {
   tweets.forEach(tweet => {
     // if 画像ツイート
     // かつ まだ処理を行っていないなら
-    const tweetATags = Array.from(tweet.querySelectorAll('div div div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
+    const tweetATags = Array.from(
+      tweet.querySelectorAll('div div div div div div div div div a')
+    ).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
     if (
       tweetATags.length &&
       !tweet.getElementsByClassName('tooiDivTimeline')[0]
@@ -73,10 +81,12 @@ function setButtonOnTimelineReactLayout() {
         display: 'flex',
         flexFlow: 'column',
         justifyContent: 'center',
-      }).forEach(([key, value]) => parentDiv.style[key] = value);
+      }).forEach(([key, value]) => (parentDiv.style[key] = value));
       actionList.appendChild(parentDiv);
       // Originalボタン
-      const origButton = createOriginalButtonReactLayout(openFromTimelineReactLayout);
+      const origButton = createOriginalButtonReactLayout(
+        openFromTimelineReactLayout
+      );
       tweet
         .getElementsByClassName('tooiDivTimeline')[0]
         .appendChild(origButton);
@@ -88,7 +98,11 @@ function setButtonOnTimelineReactLayout() {
 function openFromTimelineReactLayout(e) {
   // ツイートの画像の親まで遡る
   const parentNode = e.target.parentNode.parentNode.parentNode;
-  const tweetImgs = Array.from(parentNode.querySelectorAll('div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href)).map(aTag => aTag.querySelector('img'));
+  const tweetImgs = Array.from(
+    parentNode.querySelectorAll('div div div div div div div a')
+  )
+    .filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href))
+    .map(aTag => aTag.querySelector('img'));
   // if 上述のエレメントが取得できたら
   if (tweetImgs.length) {
     // イベント(MouseEvent)による既定の動作をキャンセル
@@ -101,9 +115,7 @@ function openFromTimelineReactLayout(e) {
       tweetImgs[1] = tweetImgs[2];
       tweetImgs[2] = tweetimgTmp;
     }
-    openImagesInNewTab(
-      tweetImgs.map(img => img.src)
-    );
+    openImagesInNewTab(tweetImgs.map(img => img.src));
   } else {
     printException('no image elements on timeline in react layout');
   }
