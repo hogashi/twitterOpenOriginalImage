@@ -9,6 +9,7 @@
     "lint": "prettier --write src/js/*.js tooi*.js"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.83",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "awesome-typescript-loader": "^5.2.1",
