@@ -9,7 +9,14 @@
     "lint": "prettier --write src/js/*.js tooi*.js"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "awesome-typescript-loader": "^5.2.1",
+    "jest": "^24.7.1",
+    "prettier": "^1.14.2",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.4.5",
+    "webpack": "^4.30.0"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
