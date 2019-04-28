@@ -7,7 +7,9 @@
   "scripts": {
     "build": "webpack --mode production",
     "build-dev": "webpack --mode development",
-    "lint": "prettier --write src/js/*.js tooi*.js"
+    "lint": "run-p lint:eslint lint:prettier",
+    "lint:eslint": "eslint src --ext ts --ext tsx",
+    "lint:prettier": "prettier --write src"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
