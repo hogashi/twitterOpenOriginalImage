@@ -28,7 +28,7 @@ export const isFalse = 'isfalse';
 export interface Options {
   [key: string]: string;
 }
-export const INITIAL_OPTIONS = {
+export const INITIAL_OPTIONS: Options = {
   // 公式Web
   OPEN_WITH_KEY_PRESS: isFalse,
   SHOW_ON_TIMELINE: isFalse,
@@ -38,4 +38,15 @@ export const INITIAL_OPTIONS = {
   SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
   // 画像ページ
   STRIP_IMAGE_SUFFIX: isFalse,
+};
+export const OPTIONS_TEXT: Options = {
+  // 公式Web
+  OPEN_WITH_KEY_PRESS: '',
+  SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
+  SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: '',
 };
