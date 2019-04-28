@@ -94,13 +94,13 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
 /* unused harmony export OPEN_WITH_KEY_PRESS */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SHOW_ON_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEET_DETAIL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
-/* unused harmony export SHOW_ON_TWEETDECK_TIMELINE */
-/* unused harmony export SHOW_ON_TWEETDECK_TWEET_DETAIL */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
 /* unused harmony export STRIP_IMAGE_SUFFIX */
 /* unused harmony export isTrue */
-/* unused harmony export isFalse */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return isFalse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
 // 定数
 // 設定取得メッセージ
@@ -252,11 +252,18 @@ const updateOptions = options => {
 // CONCATENATED MODULE: ./src/helpers/ButtonSetter.tsx
 
 
+
  // twitter.comでボタンを設置するクラス
 
 class ButtonSetter_ButtonSetter {
   // タイムラインにボタン表示
-  setButtonOnTimeline() {
+  setButtonOnTimeline(options) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["f" /* SHOW_ON_TIMELINE */]] !== Constants["j" /* isFalse */])) {
+      return;
+    }
+
     const tweets = document.getElementsByClassName('js-stream-tweet');
 
     if (!tweets.length) {
@@ -292,7 +299,13 @@ class ButtonSetter_ButtonSetter {
   } // ツイート詳細にボタン表示
 
 
-  setButtonOnTweetDetail() {
+  setButtonOnTweetDetail(options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["i" /* SHOW_ON_TWEET_DETAIL */]] !== Constants["j" /* isFalse */])) {
+      return;
+    }
+
     if (!document.getElementsByClassName('permalink-tweet-container')[0] || !document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0] || document.getElementById('tooiInputDetailpage')) {
       // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
       // または、すでに処理を行ってあるとき
@@ -367,13 +380,20 @@ class ButtonSetter_ButtonSetter {
 
 
 
+
  // tweetdeck.twitter.comでボタンを設置するクラス
 
 class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSetter {
   // タイムラインにボタン表示
-  setButtonOnTimeline() {
-    // if タイムラインのツイートを取得できたら
+  setButtonOnTimeline(options) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["g" /* SHOW_ON_TWEETDECK_TIMELINE */]] !== Constants["j" /* isFalse */])) {
+      return;
+    } // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
+
+
     const tweets = document.getElementsByClassName('js-stream-item is-actionable');
 
     if (!tweets.length) {
@@ -410,10 +430,16 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
   } // ツイート詳細にボタン表示
 
 
-  setButtonOnTweetDetail() {
-    // console.log('TODO, ボタン実装') // TODO, debug
+  setButtonOnTweetDetail(options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["h" /* SHOW_ON_TWEETDECK_TWEET_DETAIL */]] !== Constants["j" /* isFalse */])) {
+      return;
+    } // console.log('TODO, ボタン実装') // TODO, debug
     // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
+
+
     const tweets = document.getElementsByClassName('js-tweet-detail');
 
     if (!tweets.length) {
@@ -505,15 +531,8 @@ const buttonSetters = helpers_ButtonSetters[hostname]; // ボタンを設置
 
 const setButton = () => {
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  // if タイムラインにボタン表示する設定がされていたら
-  if (main_options[Constants["f" /* SHOW_ON_TIMELINE */]] !== 'isfalse') {
-    buttonSetters.setButtonOnTimeline();
-  } // if ツイート詳細にボタン表示する設定がされていたら
-
-
-  if (main_options[Constants["g" /* SHOW_ON_TWEET_DETAIL */]] !== 'isfalse') {
-    buttonSetters.setButtonOnTweetDetail();
-  }
+  buttonSetters.setButtonOnTimeline(main_options);
+  buttonSetters.setButtonOnTweetDetail(main_options);
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
 
