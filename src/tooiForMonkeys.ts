@@ -9,7 +9,9 @@ const buttonSetters = ButtonSetters[hostname];
 // ボタンを設置
 const setButton = () => {
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
+  // eslint-disable-next-line no-undef
   buttonSetters.setButtonOnTimeline(options || {});
+  // eslint-disable-next-line no-undef
   buttonSetters.setButtonOnTweetDetail(options || {});
 };
 
