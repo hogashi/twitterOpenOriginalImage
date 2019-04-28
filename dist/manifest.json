@@ -16,25 +16,19 @@
     {
       "matches": ["https://twitter.com/*"],
       "js": [
-        "js/main.js"
+        "js/main.bundle.js"
       ]
     },
     {
       "matches": ["https://tweetdeck.twitter.com/*"],
       "js": [
-        "js/main.js"
-      ]
-    },
-    {
-      "matches": ["https://pbs.twimg.com/*"],
-      "js": [
-        "js/main.js"
+        "js/main.bundle.js"
       ]
     }
   ],
   "background" : {
     "scripts" : [
-      "js/background.js"
+      "js/background.bundle.js"
     ],
     "persistent": false
   },
