@@ -1,4 +1,5 @@
 import { GET_LOCAL_STORAGE } from './Constants';
+import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 export const printException = (tooiException: string) => {

@@ -3,12 +3,12 @@ import { GET_LOCAL_STORAGE } from './helpers/Constants';
 // バックグラウンドで実行される
 
 // chrome.runtime.sendMessage で送るメッセージ
-interface MessageRequest {
+export interface MessageRequest {
   method: string;
   key: string;
 }
 // chrome.runtime.sendMessage で返るメッセージ
-interface MessageResponse {
+export interface MessageResponse {
   data: string | null;
 }
 
