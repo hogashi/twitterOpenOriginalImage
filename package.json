@@ -10,9 +10,9 @@
     "build-dev": "run-s build-dev:js ",
     "build-dev:js": "webpack --mode development",
     "build:userjs": "./scripts/make_user_script.sh",
-    "lint": "run-p lint:eslint lint:prettier",
+    "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint src --ext ts --ext tsx",
-    "lint:prettier": "prettier --write src"
+    "lint:prettier": "prettier --write src/**/*.ts{,x}"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
