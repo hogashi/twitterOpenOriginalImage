@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -137,17 +137,15 @@ const INITIAL_OPTIONS = {
 };
 
 /***/ }),
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./src/helpers/Constants.ts
-var Constants = __webpack_require__(0);
-
-// CONCATENATED MODULE: ./src/helpers/Utils.ts
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return printException; });
+/* unused harmony export formatUrl */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return openImages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return updateOptions; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -213,7 +211,7 @@ const updateOptions = options => {
 
   return Promise.all(Object.keys(options).map(key => new Promise((resolve, reject) => {
     const request = {
-      method: Constants["a" /* GET_LOCAL_STORAGE */],
+      method: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"],
       key
     };
 
@@ -231,6 +229,19 @@ const updateOptions = options => {
     console.log('update options: ', options); // debug
   });
 };
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXTERNAL MODULE: ./src/helpers/Constants.ts
+var Constants = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./src/helpers/Utils.ts
+var Utils = __webpack_require__(1);
+
 // CONCATENATED MODULE: ./src/helpers/ButtonSetter.tsx
 
  // twitter.comでボタンを設置するクラス
@@ -269,10 +280,10 @@ class ButtonSetter_ButtonSetter {
               target: actionList
             });
           } else {
-            printException('no image urls on timeline');
+            Object(Utils["b" /* printException */])('no image urls on timeline');
           }
         } else {
-          printException('no image container on timeline');
+          Object(Utils["b" /* printException */])('no image container on timeline');
         }
       }
     });
@@ -304,7 +315,7 @@ class ButtonSetter_ButtonSetter {
         target: actionList
       });
     } else {
-      printException('no image urls on tweet detail');
+      Object(Utils["b" /* printException */])('no image urls on tweet detail');
     }
   }
 
@@ -313,7 +324,7 @@ class ButtonSetter_ButtonSetter {
     e.preventDefault(); // イベント(MouseEvent)の親要素への伝播を停止
 
     e.stopPropagation();
-    openImages(imgSrcs);
+    Object(Utils["a" /* openImages */])(imgSrcs);
   } // エレメントへのstyle属性の設定
 
 
@@ -417,10 +428,10 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
             target
           });
         } else {
-          printException('no image srcs on tweetdeck timeline');
+          Object(Utils["b" /* printException */])('no image srcs on tweetdeck timeline');
         }
       } else {
-        printException('no image elements on tweetdeck timeline');
+        Object(Utils["b" /* printException */])('no image elements on tweetdeck timeline');
       }
     });
   } // ツイート詳細にボタン表示
@@ -454,7 +465,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
       const target = tweet.getElementsByTagName('footer')[0]; // 画像エレメントがなかったら終了
 
       if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
-        printException('no image elements on tweetdeck tweet detail');
+        Object(Utils["b" /* printException */])('no image elements on tweetdeck tweet detail');
         return;
       }
 
@@ -522,41 +533,50 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 const ButtonSetters = {};
 ButtonSetters[Constants["c" /* HOST_TWITTER_COM */]] = new ButtonSetter_ButtonSetter();
 ButtonSetters[Constants["b" /* HOST_TWEETDECK_TWITTER_COM */]] = new ButtonSetterTweetDeck_ButtonSetterTweetDeck();
-/* harmony default export */ var helpers_ButtonSetters = (ButtonSetters);
-// CONCATENATED MODULE: ./src/main.ts
+/* harmony default export */ var helpers_ButtonSetters = __webpack_exports__["a"] = (ButtonSetters);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+/* harmony import */ var _helpers_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
 
 
  // 設定
 
-const main_options = Constants["d" /* INITIAL_OPTIONS */]; // ボタン設置クラス
+const options = _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* INITIAL_OPTIONS */ "d"]; // ボタン設置クラス
 
 const hostname = new URL(window.location.href).hostname;
-const buttonSetters = helpers_ButtonSetters[hostname]; // ボタンを設置
+const buttonSetters = _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"][hostname]; // ボタンを設置
 
 const setButton = () => {
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  buttonSetters.setButtonOnTimeline(main_options);
-  buttonSetters.setButtonOnTweetDetail(main_options);
+  buttonSetters.setButtonOnTimeline(options);
+  buttonSetters.setButtonOnTweetDetail(options);
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
 
 const observer = new MutationObserver(setButton);
-const main_target = document.querySelector('body');
+const target = document.querySelector('body');
 const config = {
   childList: true,
   subtree: true
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
-observer.observe(main_target, config); // 設定読み込み
+observer.observe(target, config); // 設定読み込み
 
-updateOptions(main_options).then(() => {
+Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "c"])(options).then(() => {
   // ボタンを(再)設置
   setButton();
 }); // 設定反映のためのリスナー設置
 
 chrome.runtime.onMessage.addListener(function (request, _, sendResponse) {
-  if (request.method === Constants["e" /* OPTION_UPDATED */]) {
-    updateOptions(main_options).then(() => {
+  if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* OPTION_UPDATED */ "e"]) {
+    Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "c"])(options).then(() => {
       // ボタンを(再)設置
       setButton();
       sendResponse({
