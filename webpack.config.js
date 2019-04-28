@@ -2,6 +2,7 @@ module.exports = {
   entry: {
     main: "./src/main.ts",
     background: "./src/background.ts",
+    tooiForMonkeys: "./src/tooiForMonkeys.ts",
   },
   output: {
     filename: "[name].bundle.js",
