@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -137,30 +137,12 @@ const INITIAL_OPTIONS = {
 };
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = React;
-
-/***/ }),
+/* 1 */,
 /* 2 */
-/***/ (function(module, exports) {
-
-module.exports = ReactDOM;
-
-/***/ }),
-/* 3 */,
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: external "React"
-var external_React_ = __webpack_require__(1);
-
-// EXTERNAL MODULE: external "ReactDOM"
-var external_ReactDOM_ = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./src/helpers/Constants.ts
 var Constants = __webpack_require__(0);
@@ -251,8 +233,6 @@ const updateOptions = options => {
 };
 // CONCATENATED MODULE: ./src/helpers/ButtonSetter.tsx
 
-
-
  // twitter.comでボタンを設置するクラス
 
 class ButtonSetter_ButtonSetter {
@@ -334,6 +314,12 @@ class ButtonSetter_ButtonSetter {
 
     e.stopPropagation();
     openImages(imgSrcs);
+  } // エレメントへのstyle属性の設定
+
+
+  setStyle(element, attrSet) {
+    const style = Object.entries(attrSet).map(entry => entry.join(': ')).join('; ');
+    element.setAttribute('style', style);
   }
 
   setButton(_ref) {
@@ -343,18 +329,30 @@ class ButtonSetter_ButtonSetter {
       width: '70px',
       fontSize: '13px',
       color: this.getActionButtonColor()
-    };
-    external_ReactDOM_["render"](external_React_["createElement"]("div", {
-      className: "ProfileTweet-action tooi-button-container"
-    }, external_React_["createElement"]("input", {
-      className: "tooi-button",
-      style: style,
-      type: "button",
-      value: "Original",
-      onClick: e => {
-        this.onClick(e, imgSrcs);
-      }
-    })), target);
+    }; // <div className='ProfileTweet-action tooi-button-container'>
+    //   <input
+    //     className='tooi-button'
+    //     style={style}
+    //     type='button'
+    //     value='Original'
+    //     onClick={(e) => {
+    //       this.onClick(e, imgSrcs);
+    //     }}
+    //   />
+    // </div>
+
+    const button = document.createElement('input');
+    button.className = 'tooi-button';
+    this.setStyle(button, style);
+    button.type = 'button';
+    button.value = 'Original';
+    button.addEventListener('click', e => {
+      this.onClick(e, imgSrcs);
+    });
+    const container = document.createElement('div');
+    container.className = 'ProfileTweet-action tooi-button-container';
+    target.appendChild(container);
+    container.appendChild(button);
   }
 
   getActionButtonColor() {
@@ -377,8 +375,6 @@ class ButtonSetter_ButtonSetter {
 
 }
 // CONCATENATED MODULE: ./src/helpers/ButtonSetterTweetDeck.tsx
-
-
 
 
  // tweetdeck.twitter.comでボタンを設置するクラス
@@ -480,10 +476,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
   setButton(_ref) {
     let imgSrcs = _ref.imgSrcs,
         target = _ref.target;
-    // tweetdeckのツイート右上の時刻などに使われているclassを使う
-    // 設置の有無の判別用に'tooi-a'を付与する
-    const className = 'pull-left margin-txs txt-mute tooi-a'; // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
-
+    // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const borderColor = window.getComputedStyle(document.querySelector('.txt-mute')).color; // ボタンのスタイル設定
 
     const style = {
@@ -494,15 +487,26 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
       marginTop: '5px',
       padding: '1px 1px 0',
       lineHeight: '1.5em'
-    }; // ボタンを設置
+    }; // <a
+    //   className={className}
+    //   style={style}
+    //   onClick={(e) => {
+    //     this.onClick(e, imgSrcs);
+    //   }}
+    // >
+    //   Original
+    // </a>
+    // tweetdeckのツイート右上の時刻などに使われているclassを使う
+    // 設置の有無の判別用に'tooi-a'を付与する
 
-    external_ReactDOM_["render"](external_React_["createElement"]("a", {
-      className: className,
-      style: style,
-      onClick: e => {
-        this.onClick(e, imgSrcs);
-      }
-    }, "Original"), target);
+    const button = document.createElement('a');
+    button.className = 'pull-left margin-txs txt-mute tooi-a';
+    this.setStyle(button, style);
+    button.addEventListener('click', e => {
+      this.onClick(e, imgSrcs);
+    });
+    button.insertAdjacentText('beforeend', 'Original');
+    target.appendChild(button);
   }
 
   getBackgroundImageUrl(element) {
