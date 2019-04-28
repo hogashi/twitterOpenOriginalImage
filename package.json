@@ -1,11 +1,12 @@
 {
   "name": "twitterOpenOriginalImage",
-  "version": "2.1.11",
   "description": "opens images in original size at twitter",
   "repository": "git@github.com:hogashi/twitterOpenOriginalImage.git",
-  "author": "hogashi <i1511015@edu.cc.uec.ac.jp>",
+  "author": "hogashi <hogextend@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "webpack --mode production",
+    "build-dev": "webpack --mode development",
     "lint": "prettier --write src/js/*.js tooi*.js"
   },
   "devDependencies": {
@@ -23,7 +24,8 @@
     "prettier": "^1.14.2",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.4.5",
-    "webpack": "^4.30.0"
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
