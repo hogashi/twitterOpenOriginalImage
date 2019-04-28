@@ -154,7 +154,7 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
     sendResponse({
       data: localStorage[request.key]
     });
-    console.log(request.key + " : " + localStorage[request.key]); // debug
+    console.log(request.key + ' : ' + localStorage[request.key]); // debug
   } else {
     sendResponse({
       data: null

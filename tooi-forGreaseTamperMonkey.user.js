@@ -581,7 +581,9 @@ const buttonSetters = _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__[/* def
 
 const setButton = () => {
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  buttonSetters.setButtonOnTimeline(options || {});
+  // eslint-disable-next-line no-undef
+  buttonSetters.setButtonOnTimeline(options || {}); // eslint-disable-next-line no-undef
+
   buttonSetters.setButtonOnTweetDetail(options || {});
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
