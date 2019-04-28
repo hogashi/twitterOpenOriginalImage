@@ -81,69 +81,85 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
-/***/ (function(module, exports, __webpack_require__) {
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return OPTION_UPDATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
+/* unused harmony export OPEN_WITH_KEY_PRESS */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SHOW_ON_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
+/* unused harmony export SHOW_ON_TWEETDECK_TIMELINE */
+/* unused harmony export SHOW_ON_TWEETDECK_TWEET_DETAIL */
+/* unused harmony export STRIP_IMAGE_SUFFIX */
+/* unused harmony export isTrue */
+/* unused harmony export isFalse */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
 // 定数
-Object.defineProperty(exports, "__esModule", { value: true });
 // 設定取得メッセージ
-exports.OPTION_UPDATED = 'OPTION_UPDATED';
-exports.GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
-// 公式Web
-exports.HOST_TWITTER_COM = 'twitter.com';
-exports.OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
-exports.SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
-exports.SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
-// TweetDeck
-exports.HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
-exports.SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
-exports.SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
-// 画像ページ
-exports.STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
-// 設定
+const OPTION_UPDATED = 'OPTION_UPDATED';
+const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE'; // 公式Web
+
+const HOST_TWITTER_COM = 'twitter.com';
+const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
+const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
+const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL'; // TweetDeck
+
+const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
+const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
+const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 画像ページ
+
+const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
-exports.isTrue = 'istrue';
-exports.isFalse = 'isfalse';
-exports.INITIAL_OPTIONS = {
-    // 公式Web
-    OPEN_WITH_KEY_PRESS: exports.isFalse,
-    SHOW_ON_TIMELINE: exports.isFalse,
-    SHOW_ON_TWEET_DETAIL: exports.isFalse,
-    // TweetDeck
-    SHOW_ON_TWEETDECK_TIMELINE: exports.isFalse,
-    SHOW_ON_TWEETDECK_TWEET_DETAIL: exports.isFalse,
-    // 画像ページ
-    STRIP_IMAGE_SUFFIX: exports.isFalse,
+
+const isTrue = 'istrue';
+const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
+// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+// 無効だった場合はそのままボタンは表示されない
+
+const INITIAL_OPTIONS = {
+  // 公式Web
+  OPEN_WITH_KEY_PRESS: isFalse,
+  SHOW_ON_TIMELINE: isFalse,
+  SHOW_ON_TWEET_DETAIL: isFalse,
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: isFalse,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: isFalse
 };
 
-
 /***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
+/* 1 */,
+/* 2 */,
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+ // バックグラウンドで実行される
+// chrome.runtime.sendMessage で送るメッセージ
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(0);
 chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
-    if (request.method === Constants_1.GET_LOCAL_STORAGE) {
-        sendResponse({ data: localStorage[request.key] });
-        console.log(request.key + " : " + localStorage[request.key]); // debug
-    }
-    else {
-        sendResponse({ data: null });
-    }
+  if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"]) {
+    sendResponse({
+      data: localStorage[request.key]
+    });
+    console.log(request.key + " : " + localStorage[request.key]); // debug
+  } else {
+    sendResponse({
+      data: null
+    });
+  }
 });
 
-
 /***/ })
-
-/******/ });
+/******/ ]);
