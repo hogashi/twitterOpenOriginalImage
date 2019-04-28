@@ -1,5 +1,10 @@
 import ButtonSetter from './ButtonSetter';
-import { Options, SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, isFalse } from './Constants';
+import {
+  Options,
+  SHOW_ON_TWEETDECK_TIMELINE,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  isFalse,
+} from './Constants';
 import { printException } from './Utils';
 
 // tweetdeck.twitter.comでボタンを設置するクラス
@@ -38,9 +43,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
 
       const target = tweet.getElementsByTagName('footer')[0] as HTMLElement;
       if (tweet.getElementsByClassName('js-media')) {
-        const imgSrcs = Array.from(tweet.getElementsByClassName('js-media-image-link')).map(
-          element => this.getBackgroundImageUrl(element as HTMLElement)
-        );
+        const imgSrcs = Array.from(
+          tweet.getElementsByClassName('js-media-image-link')
+        ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
         if (imgSrcs.length) {
           this.setButton({
             imgSrcs,
@@ -92,9 +97,14 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
 
       let imgSrcs: string[];
       if (tweet.getElementsByClassName('media-img').length !== 0) {
-        imgSrcs = [(tweet.getElementsByClassName('media-img')[0] as HTMLImageElement).src];
+        imgSrcs = [
+          (tweet.getElementsByClassName('media-img')[0] as HTMLImageElement)
+            .src,
+        ];
       } else {
-        imgSrcs = Array.from(tweet.getElementsByClassName('js-media-image-link')).map(element => this.getBackgroundImageUrl(element as HTMLElement));
+        imgSrcs = Array.from(
+          tweet.getElementsByClassName('js-media-image-link')
+        ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
       }
       this.setButton({
         imgSrcs,
@@ -103,12 +113,17 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     });
   }
 
-  protected setButton({ imgSrcs, target }: {
-    imgSrcs: string[],
-    target: HTMLElement,
+  protected setButton({
+    imgSrcs,
+    target,
+  }: {
+    imgSrcs: string[];
+    target: HTMLElement;
   }) {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
-    const borderColor = window.getComputedStyle(document.querySelector('.txt-mute')).color;
+    const borderColor = window.getComputedStyle(
+      document.querySelector('.txt-mute')
+    ).color;
     // ボタンのスタイル設定
     const style = {
       border: `1px solid ${borderColor}`,
@@ -135,7 +150,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     const button = document.createElement('a');
     button.className = 'pull-left margin-txs txt-mute tooi-a';
     this.setStyle(button, style);
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', e => {
       this.onClick(e, imgSrcs);
     });
     button.insertAdjacentText('beforeend', 'Original');

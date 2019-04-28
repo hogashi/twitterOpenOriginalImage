@@ -19,7 +19,7 @@ export const formatUrl = (imgUrl: string) => {
 
   const url = new URL(imgUrl);
   const searchSet: { [key: string]: string } = {
-    format: 'jpg',  // 拡張子が無い場合はjpgにフォールバック
+    format: 'jpg', // 拡張子が無い場合はjpgにフォールバック
   };
   url.search
     .slice(1)
@@ -29,22 +29,21 @@ export const formatUrl = (imgUrl: string) => {
       searchSet[key] = value;
     });
 
-  const matched = url.pathname.match(
-    /^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/
-  );
+  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/);
   const pathname = matched[1];
   const extension = matched[2];
   // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
   // TweetDeckのURLでは拡張子を優先する
   // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
-  return `${url.protocol}//${url.host}${pathname}?format=${extension || searchSet.format}&name=orig`;
+  return `${url.protocol}//${url.host}${pathname}?format=${extension ||
+    searchSet.format}&name=orig`;
 };
 
 // 画像を開く
 export const openImages = (imgSrcs: string[]) => {
   Array.from(imgSrcs)
-    .reverse()  // 逆順に開くことで右側のタブから読める
-    .forEach((imgSrc) => {
+    .reverse() // 逆順に開くことで右側のタブから読める
+    .forEach(imgSrc => {
       // if 画像URLが取得できたなら
       const url = formatUrl(imgSrc);
       if (url) {
@@ -57,26 +56,27 @@ export const openImages = (imgSrcs: string[]) => {
 
 // 設定項目更新
 export const updateOptions = (options: Options) => {
-  console.log('update options: ', options) // debug
+  console.log('update options: ', options); // debug
   return Promise.all(
-    Object.keys(options).map(key =>
-      new Promise((resolve, reject) => {
-        const request: MessageRequest = {
-          method: GET_LOCAL_STORAGE,
-          key,
-        };
-        const callback = (response: MessageResponse) => {
-          if (response && response.data) {
-            options[key] = response.data;
-            resolve();
-          } else {
-            reject();
-          }
-        };
-        chrome.runtime.sendMessage(request, callback);
-      })
+    Object.keys(options).map(
+      key =>
+        new Promise((resolve, reject) => {
+          const request: MessageRequest = {
+            method: GET_LOCAL_STORAGE,
+            key,
+          };
+          const callback = (response: MessageResponse) => {
+            if (response && response.data) {
+              options[key] = response.data;
+              resolve();
+            } else {
+              reject();
+            }
+          };
+          chrome.runtime.sendMessage(request, callback);
+        })
     )
   ).then(() => {
-    console.log('update options: ', options) // debug
+    console.log('update options: ', options); // debug
   });
 };

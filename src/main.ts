@@ -1,8 +1,5 @@
 import ButtonSetters from './helpers/ButtonSetters';
-import {
-  INITIAL_OPTIONS,
-  OPTION_UPDATED,
-} from './helpers/Constants';
+import { INITIAL_OPTIONS, OPTION_UPDATED } from './helpers/Constants';
 import { updateOptions } from './helpers/Utils';
 
 // 設定
@@ -33,7 +30,7 @@ updateOptions(options).then(() => {
 });
 
 // 設定反映のためのリスナー設置
-chrome.runtime.onMessage.addListener(function (request, _, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, _, sendResponse) {
   if (request.method === OPTION_UPDATED) {
     updateOptions(options).then(() => {
       // ボタンを(再)設置

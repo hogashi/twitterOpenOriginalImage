@@ -9,7 +9,9 @@ interface ButtonSettersType {
 // ボタンを設置するクラスのまとめ
 const ButtonSetters: ButtonSettersType = {};
 
-ButtonSetters[Constants.HOST_TWITTER_COM] = new ButtonSetter;
-ButtonSetters[Constants.HOST_TWEETDECK_TWITTER_COM] = new ButtonSetterTweetDeck;
+ButtonSetters[Constants.HOST_TWITTER_COM] = new ButtonSetter();
+ButtonSetters[
+  Constants.HOST_TWEETDECK_TWITTER_COM
+] = new ButtonSetterTweetDeck();
 
 export default ButtonSetters;

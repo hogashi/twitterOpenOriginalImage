@@ -1,4 +1,9 @@
-import { Options, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL, isFalse } from './Constants';
+import {
+  Options,
+  SHOW_ON_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
+  isFalse,
+} from './Constants';
 import { openImages, printException } from './Utils';
 
 // twitter.comでボタンを設置するクラス
@@ -28,13 +33,19 @@ export default class ButtonSetter {
         !tweet.getElementsByClassName('tooiDivTimeline')[0]
       ) {
         // 操作ボタンの外側は様式にあわせる
-        const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0] as HTMLElement;
+        const actionList = tweet.getElementsByClassName(
+          'ProfileTweet-actionList'
+        )[0] as HTMLElement;
 
         // 画像の親が取得できたら
-        const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
+        const mediaContainer = tweet.getElementsByClassName(
+          'AdaptiveMedia-container'
+        )[0];
         if (mediaContainer) {
           const imgSrcs = Array.from(
-            mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
+            mediaContainer.getElementsByClassName(
+              'AdaptiveMedia-photoContainer'
+            )
           ).map(element => element.getElementsByTagName('img')[0].src);
           if (imgSrcs.length) {
             this.setButton({
@@ -77,9 +88,11 @@ export default class ButtonSetter {
       .getElementsByClassName('ProfileTweet-actionList')[0] as HTMLElement;
 
     // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
-    const imgSrcs = Array.from(document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')).map(element =>
-      element.getElementsByTagName('img')[0].src
-    );
+    const imgSrcs = Array.from(
+      document
+        .getElementsByClassName('permalink-tweet-container')[0]
+        .getElementsByClassName('AdaptiveMedia-photoContainer')
+    ).map(element => element.getElementsByTagName('img')[0].src);
     if (imgSrcs.length) {
       this.setButton({
         imgSrcs,
@@ -101,13 +114,18 @@ export default class ButtonSetter {
 
   // エレメントへのstyle属性の設定
   protected setStyle(element: HTMLElement, attrSet: { [key: string]: string }) {
-    const style = Object.entries(attrSet).map(entry => entry.join(': ')).join('; ');
+    const style = Object.entries(attrSet)
+      .map(entry => entry.join(': '))
+      .join('; ');
     element.setAttribute('style', style);
   }
 
-  protected setButton({ imgSrcs, target }: {
-    imgSrcs: string[],
-    target: HTMLElement,
+  protected setButton({
+    imgSrcs,
+    target,
+  }: {
+    imgSrcs: string[];
+    target: HTMLElement;
   }) {
     const style = {
       width: '70px',
@@ -132,7 +150,7 @@ export default class ButtonSetter {
     this.setStyle(button, style);
     button.type = 'button';
     button.value = 'Original';
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', e => {
       this.onClick(e, imgSrcs);
     });
 
@@ -147,7 +165,9 @@ export default class ButtonSetter {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
     const contrastLimitColor = '#697b8c';
 
-    const actionButton = document.querySelector('.ProfileTweet-actionButton') as HTMLElement;
+    const actionButton = document.querySelector(
+      '.ProfileTweet-actionButton'
+    ) as HTMLElement;
     if (!(actionButton && actionButton.style)) {
       return contrastLimitColor;
     }
