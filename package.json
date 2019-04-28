@@ -25,7 +25,6 @@
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "prettier": "^1.14.2",
-    "source-map-loader": "^0.2.4",
     "ts-loader": "^5.4.4",
     "typescript": "^3.4.5",
     "webpack": "^4.30.0",
