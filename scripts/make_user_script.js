@@ -1,5 +1,6 @@
 // バージョン番号を取得
-const { version } = require('../dist/manifest.json');
+const manifest = require('../dist/manifest.json');
+const { version } = manifest;
 console.log(`
 // ==UserScript==
 // @author          hogashi

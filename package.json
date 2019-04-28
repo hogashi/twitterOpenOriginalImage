@@ -5,8 +5,11 @@
   "author": "hogashi <hogextend@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "build-dev": "webpack --mode development",
+    "build": "run-s build:js build:userjs",
+    "build:js": "webpack --mode production",
+    "build-dev": "run-s build-dev:js ",
+    "build-dev:js": "webpack --mode development",
+    "build:userjs": "./scripts/make_user_script.sh",
     "lint": "run-p lint:eslint lint:prettier",
     "lint:eslint": "eslint src --ext ts --ext tsx",
     "lint:prettier": "prettier --write src"
