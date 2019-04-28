@@ -1,4 +1,4 @@
-import { GET_LOCAL_STORAGE } from './Constants';
+import { GET_LOCAL_STORAGE, Options } from './Constants';
 import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
@@ -56,7 +56,7 @@ export const openImages = (imgSrcs: string[]) => {
 };
 
 // 設定項目更新
-export const updateOptions = (options) => {
+export const updateOptions = (options: Options) => {
   console.log('update options: ', options) // debug
   return Promise.all(
     Object.keys(options).map(key =>

@@ -25,6 +25,9 @@ export const isFalse = 'isfalse';
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
 // 無効だった場合はそのままボタンは表示されない
+export interface Options {
+  [key: string]: string;
+}
 export const INITIAL_OPTIONS = {
   // 公式Web
   OPEN_WITH_KEY_PRESS: isFalse,
