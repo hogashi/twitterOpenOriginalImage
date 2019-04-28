@@ -16,7 +16,7 @@ import {
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
- } from './helpers/Constants';
+} from './helpers/Constants';
 import { Checkbox } from '@material-ui/core';
 
 const { useCallback, useState } = React;
@@ -28,7 +28,7 @@ const { useCallback, useState } = React;
 const optionsText = OPTIONS_TEXT;
 const optionKeys = Object.keys(INITIAL_OPTIONS);
 const optionsEnabled: { [key: string]: boolean } = {};
-optionKeys.forEach((key) => {
+optionKeys.forEach(key => {
   // 最初はどっちも機能オンであってほしい
   // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
   optionsEnabled[key] = localStorage[key] !== isFalse;
@@ -36,14 +36,14 @@ optionKeys.forEach((key) => {
 const Popup = () => {
   const [enabled, setEnabled] = useState(optionsEnabled);
 
-  const onSave = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    optionKeys.forEach((key) => {
+  const onSave = useCallback(() => {
+    optionKeys.forEach(key => {
       localStorage[key] = enabled[key] ? isTrue : isFalse;
     });
-    chrome.tabs.query({}, (result) =>
-      result.forEach((tab) => {
+    chrome.tabs.query({}, result =>
+      result.forEach(tab => {
         // console.log(tab);
-        chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, (response) =>
+        chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, response =>
           console.log('res:', response)
         );
       })
@@ -51,7 +51,7 @@ const Popup = () => {
   }, [enabled]);
 
   const optionsItems: { [key: string]: JSX.Element } = {};
-  optionKeys.forEach((key) => {
+  optionKeys.forEach(key => {
     optionsItems[key] = (
       <ListItem
         dense
@@ -60,11 +60,7 @@ const Popup = () => {
           setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
         }}
       >
-        <Checkbox
-          checked={enabled[key]}
-          tabIndex={-1}
-          disableRipple
-        />
+        <Checkbox checked={enabled[key]} tabIndex={-1} disableRipple />
         <ListItemText primary={optionsText[key]} />
       </ListItem>
     );
@@ -72,10 +68,14 @@ const Popup = () => {
   return (
     <div>
       <List
-        subheader={<ListSubheader component="div">Options - 設定</ListSubheader>}
+        subheader={
+          <ListSubheader component="div">Options - 設定</ListSubheader>
+        }
       >
         <List
-          subheader={<ListSubheader component="div">TwitterWeb公式</ListSubheader>}
+          subheader={
+            <ListSubheader component="div">TwitterWeb公式</ListSubheader>
+          }
         >
           {optionsItems[SHOW_ON_TIMELINE]}
           {optionsItems[SHOW_ON_TWEET_DETAIL]}
@@ -88,11 +88,7 @@ const Popup = () => {
         </List>
         <hr />
       </List>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={onSave}
-      >
+      <Button variant="contained" color="primary" onClick={onSave}>
         設定を保存
       </Button>
       <footer>twitter画像原寸ボタン - hogashi</footer>
