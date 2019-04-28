@@ -1,6 +1,3 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-
 import ButtonSetter from './ButtonSetter';
 import { Options, SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, isFalse } from './Constants';
 import { printException } from './Utils';
@@ -110,9 +107,6 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     imgSrcs: string[],
     target: HTMLElement,
   }) {
-    // tweetdeckのツイート右上の時刻などに使われているclassを使う
-    // 設置の有無の判別用に'tooi-a'を付与する
-    const className = 'pull-left margin-txs txt-mute tooi-a';
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const borderColor = window.getComputedStyle(document.querySelector('.txt-mute')).color;
     // ボタンのスタイル設定
@@ -125,19 +119,28 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
       padding: '1px 1px 0',
       lineHeight: '1.5em',
     };
-    // ボタンを設置
-    ReactDOM.render(
-      <a
-        className={className}
-        style={style}
-        onClick={(e) => {
-          this.onClick(e, imgSrcs);
-        }}
-      >
-        Original
-      </a>,
-      target,
-    );
+
+    // <a
+    //   className={className}
+    //   style={style}
+    //   onClick={(e) => {
+    //     this.onClick(e, imgSrcs);
+    //   }}
+    // >
+    //   Original
+    // </a>
+
+    // tweetdeckのツイート右上の時刻などに使われているclassを使う
+    // 設置の有無の判別用に'tooi-a'を付与する
+    const button = document.createElement('a');
+    button.className = 'pull-left margin-txs txt-mute tooi-a';
+    this.setStyle(button, style);
+    button.addEventListener('click', (e) => {
+      this.onClick(e, imgSrcs);
+    });
+    button.insertAdjacentText('beforeend', 'Original');
+
+    target.appendChild(button);
   }
 
   private getBackgroundImageUrl(element: HTMLElement) {

@@ -1,6 +1,3 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-
 import { Options, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL, isFalse } from './Constants';
 import { openImages, printException } from './Utils';
 
@@ -93,13 +90,19 @@ export default class ButtonSetter {
     }
   }
 
-  protected onClick(e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>, imgSrcs: string[]) {
+  protected onClick(e: MouseEvent, imgSrcs: string[]) {
     // イベント(MouseEvent)による既定の動作をキャンセル
     e.preventDefault();
     // イベント(MouseEvent)の親要素への伝播を停止
     e.stopPropagation();
 
     openImages(imgSrcs);
+  }
+
+  // エレメントへのstyle属性の設定
+  protected setStyle(element: HTMLElement, attrSet: { [key: string]: string }) {
+    const style = Object.entries(attrSet).map(entry => entry.join(': ')).join('; ');
+    element.setAttribute('style', style);
   }
 
   protected setButton({ imgSrcs, target }: {
@@ -112,20 +115,32 @@ export default class ButtonSetter {
       color: this.getActionButtonColor(),
     };
 
-    ReactDOM.render(
-      <div className='ProfileTweet-action tooi-button-container'>
-        <input
-          className='tooi-button'
-          style={style}
-          type='button'
-          value='Original'
-          onClick={(e) => {
-            this.onClick(e, imgSrcs);
-          }}
-        />
-      </div>,
-      target,
-    );
+    // <div className='ProfileTweet-action tooi-button-container'>
+    //   <input
+    //     className='tooi-button'
+    //     style={style}
+    //     type='button'
+    //     value='Original'
+    //     onClick={(e) => {
+    //       this.onClick(e, imgSrcs);
+    //     }}
+    //   />
+    // </div>
+
+    const button = document.createElement('input');
+    button.className = 'tooi-button';
+    this.setStyle(button, style);
+    button.type = 'button';
+    button.value = 'Original';
+    button.addEventListener('click', (e) => {
+      this.onClick(e, imgSrcs);
+    });
+
+    const container = document.createElement('div');
+    container.className = 'ProfileTweet-action tooi-button-container';
+
+    target.appendChild(container);
+    container.appendChild(button);
   }
 
   private getActionButtonColor() {
