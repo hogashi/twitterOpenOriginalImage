@@ -1,6 +1,6 @@
 import ButtonSetter from './ButtonSetter';
 import ButtonSetterTweetDeck from './ButtonSetterTweetDeck';
-import * as Constants from './Constants';
+import { HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM } from './Constants';
 
 interface ButtonSettersType {
   [key: string]: ButtonSetter | ButtonSetterTweetDeck;
@@ -9,9 +9,7 @@ interface ButtonSettersType {
 // ボタンを設置するクラスのまとめ
 const ButtonSetters: ButtonSettersType = {};
 
-ButtonSetters[Constants.HOST_TWITTER_COM] = new ButtonSetter();
-ButtonSetters[
-  Constants.HOST_TWEETDECK_TWITTER_COM
-] = new ButtonSetterTweetDeck();
+ButtonSetters[HOST_TWITTER_COM] = new ButtonSetter();
+ButtonSetters[HOST_TWEETDECK_TWITTER_COM] = new ButtonSetterTweetDeck();
 
 export default ButtonSetters;
