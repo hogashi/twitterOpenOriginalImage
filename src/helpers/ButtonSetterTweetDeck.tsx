@@ -2,13 +2,20 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import ButtonSetter from './ButtonSetter';
+import { Options, SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, isFalse } from './Constants';
 import { printException } from './Utils';
 
 // tweetdeck.twitter.comでボタンを設置するクラス
 
 export default class ButtonSetterTweetDeck extends ButtonSetter {
   // タイムラインにボタン表示
-  public setButtonOnTimeline() {
+  public setButtonOnTimeline(options: Options) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    // - isFalse のとき OFF
+    if (!(options[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
+      return;
+    }
     // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
     const tweets = document.getElementsByClassName(
@@ -52,7 +59,13 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail() {
+  public setButtonOnTweetDetail(options: Options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    // - isFalse のとき OFF
+    if (!(options[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
+      return;
+    }
     // console.log('TODO, ボタン実装') // TODO, debug
     // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ

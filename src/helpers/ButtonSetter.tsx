@@ -1,13 +1,20 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { Options, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL, isFalse } from './Constants';
 import { openImages, printException } from './Utils';
 
 // twitter.comでボタンを設置するクラス
 
 export default class ButtonSetter {
   // タイムラインにボタン表示
-  public setButtonOnTimeline() {
+  public setButtonOnTimeline(options: Options) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    // - isFalse のとき OFF
+    if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
+      return;
+    }
     const tweets = document.getElementsByClassName('js-stream-tweet');
     if (!tweets.length) {
       return;
@@ -48,7 +55,13 @@ export default class ButtonSetter {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail() {
+  public setButtonOnTweetDetail(options: Options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    // - isFalse のとき OFF
+    if (!(options[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
+      return;
+    }
     if (
       !document.getElementsByClassName('permalink-tweet-container')[0] ||
       !document

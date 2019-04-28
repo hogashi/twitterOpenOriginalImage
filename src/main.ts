@@ -2,8 +2,6 @@ import ButtonSetters from './helpers/ButtonSetters';
 import {
   INITIAL_OPTIONS,
   OPTION_UPDATED,
-  SHOW_ON_TIMELINE,
-  SHOW_ON_TWEET_DETAIL,
 } from './helpers/Constants';
 import { updateOptions } from './helpers/Utils';
 
@@ -17,14 +15,8 @@ const buttonSetters = ButtonSetters[hostname];
 // ボタンを設置
 const setButton = () => {
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  // if タイムラインにボタン表示する設定がされていたら
-  if (options[SHOW_ON_TIMELINE] !== 'isfalse') {
-    buttonSetters.setButtonOnTimeline();
-  }
-  // if ツイート詳細にボタン表示する設定がされていたら
-  if (options[SHOW_ON_TWEET_DETAIL] !== 'isfalse') {
-    buttonSetters.setButtonOnTweetDetail();
-  }
+  buttonSetters.setButtonOnTimeline(options);
+  buttonSetters.setButtonOnTweetDetail(options);
 };
 
 // ページ全体でDOMの変更を検知し都度ボタン設置
