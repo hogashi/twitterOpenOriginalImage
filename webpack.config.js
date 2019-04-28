@@ -8,12 +8,9 @@ module.exports = {
     path: __dirname + "/dist/js"
   },
 
-  // Enable sourcemaps for debugging webpack's output.
-  // devtool: "source-map",
-
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: [".ts", ".tsx"]
   },
 
   module: {
@@ -21,7 +18,6 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-          // 下から順に処理される
           { loader: "babel-loader" },
         ],
         exclude: /node_modules/,
