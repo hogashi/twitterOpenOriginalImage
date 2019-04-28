@@ -11,7 +11,10 @@ module.exports = {
   ],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "chrome": "readonly",
+    "window": "readonly",
+    "document": "readonly",
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,12 +23,14 @@ module.exports = {
     },
     "ecmaVersion": 2018,
     "sourceType": "module",
-    // "project": "./tsconfig.json",
+    "project": "./tsconfig.json",
   },
   "plugins": [
     "react",
     "@typescript-eslint",
   ],
   "rules": {
+    "no-console": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
   }
 };
