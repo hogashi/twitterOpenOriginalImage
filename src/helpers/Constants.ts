@@ -6,15 +6,12 @@ export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
 
 // 公式Web
 export const HOST_TWITTER_COM = 'twitter.com';
-export const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
 export const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 // TweetDeck
 export const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
-// 画像ページ
-export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 設定
 
@@ -30,23 +27,17 @@ export interface Options {
 }
 export const INITIAL_OPTIONS: Options = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: isFalse,
   SHOW_ON_TIMELINE: isFalse,
   SHOW_ON_TWEET_DETAIL: isFalse,
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
   SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: isFalse,
 };
 export const OPTIONS_TEXT: Options = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: '',
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: '',
 };
