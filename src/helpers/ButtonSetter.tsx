@@ -129,7 +129,7 @@ export default class ButtonSetter {
   }) {
     const style = {
       width: '70px',
-      fontSize: '13px',
+      'font-size': '13px',
       color: this.getActionButtonColor(),
     };
 

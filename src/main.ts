@@ -30,14 +30,16 @@ updateOptions(options).then(() => {
 });
 
 // 設定反映のためのリスナー設置
-chrome.runtime.onMessage.addListener(function(request, _, sendResponse) {
+chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+  console.log(chrome.runtime.lastError);
   if (request.method === OPTION_UPDATED) {
     updateOptions(options).then(() => {
       // ボタンを(再)設置
       setButton();
       sendResponse({ data: 'done' });
     });
-    return;
+    return true;
   }
   sendResponse({ data: 'yet' });
+  return true;
 });

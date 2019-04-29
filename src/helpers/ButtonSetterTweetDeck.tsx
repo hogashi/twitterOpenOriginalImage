@@ -127,12 +127,13 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     // ボタンのスタイル設定
     const style = {
       border: `1px solid ${borderColor}`,
-      borderRadius: '2px',
+      'border-radius': '2px',
       display: 'inline-block',
-      fontSize: '0.75em',
-      marginTop: '5px',
+      'font-size': '0.75em',
+      'margin-top': '5px',
       padding: '1px 1px 0',
-      lineHeight: '1.5em',
+      'line-height': '1.5em',
+      cursor: 'pointer',
     };
 
     // <a
