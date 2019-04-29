@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -17,9 +18,8 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
 } from './helpers/Constants';
-import { Checkbox } from '@material-ui/core';
 
-const { useCallback, useState } = React;
+const { useState, useCallback } = React;
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または
@@ -33,6 +33,7 @@ optionKeys.forEach(key => {
   // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
   optionsEnabled[key] = localStorage[key] !== isFalse;
 });
+
 const Popup = () => {
   const [enabled, setEnabled] = useState(optionsEnabled);
 
@@ -65,6 +66,7 @@ const Popup = () => {
       </ListItem>
     );
   });
+
   return (
     <div>
       <List
