@@ -2,6 +2,7 @@ module.exports = {
   entry: {
     main: "./src/main.ts",
     background: "./src/background.ts",
+    popup: "./src/popup.tsx",
     tooiForMonkeys: "./src/tooiForMonkeys.ts",
   },
   output: {
