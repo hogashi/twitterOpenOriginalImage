@@ -11,7 +11,7 @@ import { openImages, printException } from './Utils';
 export default class ButtonSetter {
   // タイムラインにボタン表示
   public setButtonOnTimeline(options: Options) {
-    if (document.querySelectorAll('#react-root')) {
+    if (document.querySelector('#react-root')) {
       this._setButtonOnReactLayoutTimeline(options);
       return;
     }
@@ -42,9 +42,11 @@ export default class ButtonSetter {
   }
 
   protected setButton({
+    className,
     imgSrcs,
     target,
   }: {
+    className: string;
     imgSrcs: string[];
     target: HTMLElement;
   }) {
@@ -76,16 +78,18 @@ export default class ButtonSetter {
     });
 
     const container = document.createElement('div');
-    container.className = 'ProfileTweet-action tooi-button-container';
+    container.classList.add('ProfileTweet-action', className);
 
     target.appendChild(container);
     container.appendChild(button);
   }
 
   protected setReactLayoutButton({
+    className,
     imgSrcs,
     target,
   }: {
+    className: string;
     imgSrcs: string[];
     target: HTMLElement;
   }) {
@@ -109,7 +113,7 @@ export default class ButtonSetter {
 
     const container = document.createElement('div');
     // container.id = '' + tweet.id
-    container.className = 'tooi-button-container';
+    container.classList.add(className);
     this.setStyle(container, {
       display: 'flex',
       'flex-flow': 'column',
@@ -131,42 +135,44 @@ export default class ButtonSetter {
     if (!tweets.length) {
       return;
     }
+    const className = 'tooi-button-container-timeline';
     // 各ツイートに対して
     Array.from(tweets).forEach(tweet => {
-      // if 画像ツイート
-      // かつ まだ処理を行っていないなら
+      // 画像ツイートかつまだ処理を行っていないときのみ行う
       if (
-        !!tweet.getElementsByClassName('AdaptiveMedia-container')[0] &&
-        !!tweet
-          .getElementsByClassName('AdaptiveMedia-container')[0]
-          .getElementsByTagName('img')[0] &&
-        !tweet.getElementsByClassName('tooiDivTimeline')[0]
+        !(
+          tweet.getElementsByClassName('AdaptiveMedia-container').length !==
+            0 &&
+          tweet
+            .getElementsByClassName('AdaptiveMedia-container')[0]
+            .getElementsByTagName('img').length !== 0
+        ) ||
+        tweet.getElementsByClassName(className).length !== 0
       ) {
-        // 操作ボタンの外側は様式にあわせる
-        const actionList = tweet.getElementsByClassName(
-          'ProfileTweet-actionList'
-        )[0] as HTMLElement;
+        printException('no image container on timeline');
+        return;
+      }
+      // 操作ボタンの外側は様式にあわせる
+      const actionList = tweet.getElementsByClassName(
+        'ProfileTweet-actionList'
+      )[0] as HTMLElement;
 
-        // 画像の親が取得できたら
-        const mediaContainer = tweet.getElementsByClassName(
-          'AdaptiveMedia-container'
-        )[0];
-        if (mediaContainer) {
-          const imgSrcs = Array.from(
-            mediaContainer.getElementsByClassName(
-              'AdaptiveMedia-photoContainer'
-            )
-          ).map(element => element.getElementsByTagName('img')[0].src);
-          if (imgSrcs.length) {
-            this.setButton({
-              imgSrcs,
-              target: actionList,
-            });
-          } else {
-            printException('no image urls on timeline');
-          }
+      // 画像の親が取得できたら
+      const mediaContainer = tweet.getElementsByClassName(
+        'AdaptiveMedia-container'
+      )[0];
+      if (mediaContainer) {
+        const imgSrcs = Array.from(
+          mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
+        ).map(element => element.getElementsByTagName('img')[0].src);
+        if (imgSrcs.length) {
+          this.setButton({
+            className,
+            imgSrcs,
+            target: actionList,
+          });
         } else {
-          printException('no image container on timeline');
+          printException('no image urls on timeline');
         }
       }
     });
@@ -179,12 +185,13 @@ export default class ButtonSetter {
     if (!(options[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
       return;
     }
+    const className = 'tooi-button-container-detail';
     if (
       !document.getElementsByClassName('permalink-tweet-container')[0] ||
       !document
         .getElementsByClassName('permalink-tweet-container')[0]
         .getElementsByClassName('AdaptiveMedia-photoContainer')[0] ||
-      document.getElementById('tooiInputDetailpage')
+      document.getElementsByClassName(className).length !== 0
     ) {
       // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
       // または、すでに処理を行ってあるとき
@@ -204,6 +211,7 @@ export default class ButtonSetter {
     ).map(element => element.getElementsByTagName('img')[0].src);
     if (imgSrcs.length) {
       this.setButton({
+        className,
         imgSrcs,
         target: actionList,
       });
@@ -219,6 +227,7 @@ export default class ButtonSetter {
     if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
       return;
     }
+    const className = 'tooi-button-container-react-timeline';
     const tweets = Array.from(
       document.querySelectorAll('#react-root main section article')
     );
@@ -233,7 +242,7 @@ export default class ButtonSetter {
       ).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
       if (
         tweetATags.length === 0 ||
-        tweet.getElementsByClassName('tooi-button')[0]
+        tweet.getElementsByClassName(className)[0]
       ) {
         return;
       }
@@ -263,7 +272,11 @@ export default class ButtonSetter {
       }
       const imgSrcs = tweetImgs.map(img => img.src);
 
-      this.setReactLayoutButton({ imgSrcs, target });
+      this.setReactLayoutButton({
+        className,
+        imgSrcs,
+        target,
+      });
     });
   } // openFromTimeline end
 

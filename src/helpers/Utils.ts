@@ -1,4 +1,4 @@
-import { GET_LOCAL_STORAGE, Options } from './Constants';
+import { GET_LOCAL_STORAGE, Options, isTrue } from './Constants';
 import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
@@ -66,8 +66,8 @@ export const updateOptions = (options: Options) => {
             key,
           };
           const callback = (response: MessageResponse) => {
-            if (response && response.data) {
-              options[key] = response.data;
+            if (response) {
+              options[key] = response.data || isTrue;
               resolve();
             } else {
               reject();

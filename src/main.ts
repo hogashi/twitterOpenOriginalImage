@@ -9,8 +9,21 @@ const options = INITIAL_OPTIONS;
 const hostname = new URL(window.location.href).hostname;
 const buttonSetters = ButtonSetters[hostname];
 
+let isInterval = false;
+
 // ボタンを設置
 const setButton = () => {
+  // 短時間に何回も実行しないようインターバルを設ける
+  if (isInterval) {
+    return;
+  }
+  isInterval = true;
+  setTimeout(() => {
+    isInterval = false;
+  }, 300);
+
+  console.log('setButton');
+
   // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
   buttonSetters.setButtonOnTimeline(options);
   buttonSetters.setButtonOnTweetDetail(options);
@@ -20,7 +33,6 @@ const setButton = () => {
 const observer = new MutationObserver(setButton);
 const target = document.querySelector('body');
 const config = { childList: true, subtree: true };
-// ページ全体でDOMの変更を検知し都度ボタン設置
 observer.observe(target, config);
 
 // 設定読み込み

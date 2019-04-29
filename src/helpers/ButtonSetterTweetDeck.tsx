@@ -26,13 +26,14 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     if (!tweets.length) {
       return;
     }
+    const className = 'tooi-button-container-tweetdeck-timeline';
     // 各ツイートに対して
     Array.from(tweets).forEach(tweet => {
       if (
         !tweet.getElementsByClassName('js-media-image-link').length ||
         tweet.getElementsByClassName('is-video').length ||
         tweet.getElementsByClassName('is-gif').length ||
-        tweet.getElementsByClassName('tooi-a').length
+        tweet.getElementsByClassName(className).length
       ) {
         // メディアツイートでない
         // または メディアが画像でない(動画/GIF)
@@ -48,6 +49,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
         if (imgSrcs.length) {
           this.setButton({
+            className,
             imgSrcs,
             target,
           });
@@ -75,12 +77,13 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     if (!tweets.length) {
       return;
     }
+    const className = 'tooi-button-container-tweetdeck-detail';
     // 各ツイートに対して
     Array.from(tweets).forEach(tweet => {
       if (
         (!tweet.getElementsByClassName('media-img').length &&
           !tweet.getElementsByClassName('media-image').length) ||
-        tweet.getElementsByClassName('tooi-a').length
+        tweet.getElementsByClassName(className).length
       ) {
         // メディアツイートでない (画像のタグが取得できない)
         // または すでにボタンをおいてあるとき
@@ -107,6 +110,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
       }
       this.setButton({
+        className,
         imgSrcs,
         target,
       });
@@ -114,9 +118,11 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
   }
 
   protected setButton({
+    className,
     imgSrcs,
     target,
   }: {
+    className: string;
     imgSrcs: string[];
     target: HTMLElement;
   }) {
@@ -147,9 +153,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     // </a>
 
     // tweetdeckのツイート右上の時刻などに使われているclassを使う
-    // 設置の有無の判別用に'tooi-a'を付与する
+    // 設置の有無の判別用にclassNameを付与する
     const button = document.createElement('a');
-    button.className = 'pull-left margin-txs txt-mute tooi-a';
+    button.className = `pull-left margin-txs txt-mute ${className}`;
     this.setStyle(button, style);
     button.addEventListener('click', e => {
       this.onClick(e, imgSrcs);
