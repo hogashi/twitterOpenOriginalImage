@@ -6,6 +6,7 @@ module.exports = {
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
     "prettier",
     "prettier/@typescript-eslint",
   ],
@@ -33,5 +34,10 @@ module.exports = {
     "no-console": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/jsx-uses-react": [1],
-  }
+  },
+  "settings": {
+    "react": {
+      "version": "detect",
+    },
+  },
 };
