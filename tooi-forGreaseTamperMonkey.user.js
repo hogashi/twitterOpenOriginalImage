@@ -122,13 +122,11 @@ const options = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTION_UPDATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
-/* unused harmony export OPEN_WITH_KEY_PRESS */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TIMELINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEET_DETAIL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
-/* unused harmony export STRIP_IMAGE_SUFFIX */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return isTrue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return isFalse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
@@ -139,15 +137,12 @@ const OPTION_UPDATED = 'OPTION_UPDATED';
 const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE'; // 公式Web
 
 const HOST_TWITTER_COM = 'twitter.com';
-const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
 const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL'; // TweetDeck
 
 const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
-const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 画像ページ
-
-const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
+const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
@@ -157,25 +152,19 @@ const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初の�
 
 const INITIAL_OPTIONS = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: isFalse,
   SHOW_ON_TIMELINE: isFalse,
   SHOW_ON_TWEET_DETAIL: isFalse,
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: isFalse
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse
 };
 const OPTIONS_TEXT = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: '',
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: ''
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示'
 };
 
 /***/ }),
@@ -221,7 +210,7 @@ observer.observe(target, config);
 var Constants = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./src/helpers/Utils.ts
-var Utils = __webpack_require__(6);
+var Utils = __webpack_require__(4);
 
 // CONCATENATED MODULE: ./src/helpers/ButtonSetter.tsx
 
@@ -230,74 +219,19 @@ var Utils = __webpack_require__(6);
 class ButtonSetter_ButtonSetter {
   // タイムラインにボタン表示
   setButtonOnTimeline(options) {
-    // タイムラインにボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["g" /* SHOW_ON_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+    if (document.querySelectorAll('#react-root')) {
+      this._setButtonOnReactLayoutTimeline(options);
+
       return;
     }
 
-    const tweets = document.getElementsByClassName('js-stream-tweet');
-
-    if (!tweets.length) {
-      return;
-    } // 各ツイートに対して
-
-
-    Array.from(tweets).forEach(tweet => {
-      // if 画像ツイート
-      // かつ まだ処理を行っていないなら
-      if (!!tweet.getElementsByClassName('AdaptiveMedia-container')[0] && !!tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img')[0] && !tweet.getElementsByClassName('tooiDivTimeline')[0]) {
-        // 操作ボタンの外側は様式にあわせる
-        const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0]; // 画像の親が取得できたら
-
-        const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
-
-        if (mediaContainer) {
-          const imgSrcs = Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
-
-          if (imgSrcs.length) {
-            this.setButton({
-              imgSrcs,
-              target: actionList
-            });
-          } else {
-            Object(Utils["b" /* printException */])('no image urls on timeline');
-          }
-        } else {
-          Object(Utils["b" /* printException */])('no image container on timeline');
-        }
-      }
-    });
+    this._setButtonOnTimeline(options);
   } // ツイート詳細にボタン表示
 
 
   setButtonOnTweetDetail(options) {
-    // ツイート詳細にボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["j" /* SHOW_ON_TWEET_DETAIL */]] !== Constants["k" /* isFalse */])) {
-      return;
-    }
-
-    if (!document.getElementsByClassName('permalink-tweet-container')[0] || !document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0] || document.getElementById('tooiInputDetailpage')) {
-      // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
-      // または、すでに処理を行ってあるとき
-      // 何もしない
-      return;
-    } // Originalボタンの親の親となる枠
-
-
-    const actionList = document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('ProfileTweet-actionList')[0]; // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
-
-    const imgSrcs = Array.from(document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
-
-    if (imgSrcs.length) {
-      this.setButton({
-        imgSrcs,
-        target: actionList
-      });
-    } else {
-      Object(Utils["b" /* printException */])('no image urls on tweet detail');
-    }
+    // TODO: Reactレイアウトでも実装する必要がある？
+    this._setButtonOnTweetDetail(options);
   }
 
   onClick(e, imgSrcs) {
@@ -347,6 +281,155 @@ class ButtonSetter_ButtonSetter {
     container.appendChild(button);
   }
 
+  setReactLayoutButton(_ref2) {
+    let imgSrcs = _ref2.imgSrcs,
+        target = _ref2.target;
+    const button = document.createElement('input');
+    button.type = 'button';
+    button.value = 'Original';
+    const color = this.getReactLayoutActionButtonColor();
+    this.setStyle(button, {
+      fontSize: '13px',
+      padding: '4px 8px',
+      color,
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      border: "1px solid ".concat(color),
+      borderRadius: '3px',
+      cursor: 'pointer'
+    });
+    button.addEventListener('click', e => {
+      this.onClick(e, imgSrcs);
+    });
+    const container = document.createElement('div'); // container.id = '' + tweet.id
+
+    container.className = 'tooi-button-container';
+    this.setStyle(container, {
+      display: 'flex',
+      'flex-flow': 'column',
+      'justify-content': 'center'
+    });
+    target.appendChild(container);
+    container.appendChild(button);
+  }
+
+  _setButtonOnTimeline(options) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["g" /* SHOW_ON_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+      return;
+    }
+
+    const tweets = document.getElementsByClassName('js-stream-tweet');
+
+    if (!tweets.length) {
+      return;
+    } // 各ツイートに対して
+
+
+    Array.from(tweets).forEach(tweet => {
+      // if 画像ツイート
+      // かつ まだ処理を行っていないなら
+      if (!!tweet.getElementsByClassName('AdaptiveMedia-container')[0] && !!tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img')[0] && !tweet.getElementsByClassName('tooiDivTimeline')[0]) {
+        // 操作ボタンの外側は様式にあわせる
+        const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0]; // 画像の親が取得できたら
+
+        const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
+
+        if (mediaContainer) {
+          const imgSrcs = Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
+
+          if (imgSrcs.length) {
+            this.setButton({
+              imgSrcs,
+              target: actionList
+            });
+          } else {
+            Object(Utils["b" /* printException */])('no image urls on timeline');
+          }
+        } else {
+          Object(Utils["b" /* printException */])('no image container on timeline');
+        }
+      }
+    });
+  }
+
+  _setButtonOnTweetDetail(options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["j" /* SHOW_ON_TWEET_DETAIL */]] !== Constants["k" /* isFalse */])) {
+      return;
+    }
+
+    if (!document.getElementsByClassName('permalink-tweet-container')[0] || !document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0] || document.getElementById('tooiInputDetailpage')) {
+      // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
+      // または、すでに処理を行ってあるとき
+      // 何もしない
+      return;
+    } // Originalボタンの親の親となる枠
+
+
+    const actionList = document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('ProfileTweet-actionList')[0]; // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
+
+    const imgSrcs = Array.from(document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
+
+    if (imgSrcs.length) {
+      this.setButton({
+        imgSrcs,
+        target: actionList
+      });
+    } else {
+      Object(Utils["b" /* printException */])('no image urls on tweet detail');
+    }
+  }
+
+  _setButtonOnReactLayoutTimeline(options) {
+    // ツイート詳細にボタン表示する設定がされているときだけ実行する
+    // - isTrue か 設定なし のとき ON
+    if (!(options[Constants["g" /* SHOW_ON_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+      return;
+    }
+
+    const tweets = Array.from(document.querySelectorAll('#react-root main section article'));
+
+    if (!tweets.length) {
+      return;
+    } // 各ツイートに対して
+
+
+    tweets.forEach(tweet => {
+      // 画像ツイート かつ まだ処理を行っていないときのみ実行
+      const tweetATags = Array.from(tweet.querySelectorAll('div div div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
+
+      if (tweetATags.length === 0 || tweet.getElementsByClassName('tooi-button')[0]) {
+        return;
+      } // ボタンを設置
+      // 操作ボタンの外側は様式にあわせる
+
+
+      const target = tweet.querySelector('div div div[role="group"]');
+      const tweetImgs = Array.from(tweet.querySelectorAll('div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href)).map(aTag => aTag.querySelector('img')); // 画像エレメントが取得できなかったら終了
+
+      if (tweetImgs.length === 0) {
+        Object(Utils["b" /* printException */])('no image elements on timeline in react layout');
+        return;
+      }
+
+      if (tweetImgs.length === 4) {
+        // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
+        const tweetimgTmp = tweetImgs[1];
+        tweetImgs[1] = tweetImgs[2];
+        tweetImgs[2] = tweetimgTmp;
+      }
+
+      const imgSrcs = tweetImgs.map(img => img.src);
+      this.setReactLayoutButton({
+        imgSrcs,
+        target
+      });
+    });
+  } // openFromTimeline end
+
+
   getActionButtonColor() {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
     const contrastLimitColor = '#697b8c';
@@ -363,6 +446,24 @@ class ButtonSetter_ButtonSetter {
     }
 
     return contrastLimitColor;
+  }
+
+  getReactLayoutActionButtonColor() {
+    // 文字色
+    // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
+    let color = '#697b8c'; // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
+
+    const actionButton = document.querySelector('.rn-1re7ezh') || document.querySelector('.rn-111h2gw');
+
+    if (actionButton && actionButton.style) {
+      const buttonColor = window.getComputedStyle(actionButton).color;
+
+      if (buttonColor && buttonColor.length > 0) {
+        color = buttonColor;
+      }
+    }
+
+    return color;
   }
 
 }
@@ -519,7 +620,7 @@ ButtonSetters[Constants["b" /* HOST_TWEETDECK_TWITTER_COM */]] = new ButtonSette
 
 /***/ }),
 
-/***/ 6:
+/***/ 4:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

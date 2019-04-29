@@ -93,13 +93,11 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTION_UPDATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
-/* unused harmony export OPEN_WITH_KEY_PRESS */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TIMELINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEET_DETAIL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
-/* unused harmony export STRIP_IMAGE_SUFFIX */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return isTrue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return isFalse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
@@ -110,15 +108,12 @@ const OPTION_UPDATED = 'OPTION_UPDATED';
 const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE'; // 公式Web
 
 const HOST_TWITTER_COM = 'twitter.com';
-const OPEN_WITH_KEY_PRESS = 'OPEN_WITH_KEY_PRESS';
 const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL'; // TweetDeck
 
 const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
-const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 画像ページ
-
-const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
+const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
@@ -128,25 +123,19 @@ const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初の�
 
 const INITIAL_OPTIONS = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: isFalse,
   SHOW_ON_TIMELINE: isFalse,
   SHOW_ON_TWEET_DETAIL: isFalse,
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: isFalse
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse
 };
 const OPTIONS_TEXT = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: '',
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: ''
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示'
 };
 
 /***/ }),
