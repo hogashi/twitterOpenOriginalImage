@@ -81,27 +81,29 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 67);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return OPTION_UPDATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTION_UPDATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
 /* unused harmony export OPEN_WITH_KEY_PRESS */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SHOW_ON_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEET_DETAIL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
 /* unused harmony export STRIP_IMAGE_SUFFIX */
-/* unused harmony export isTrue */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return isFalse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return isTrue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return isFalse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return OPTIONS_TEXT; });
 // 定数
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
@@ -135,21 +137,32 @@ const INITIAL_OPTIONS = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: isFalse
 };
+const OPTIONS_TEXT = {
+  // 公式Web
+  OPEN_WITH_KEY_PRESS: '',
+  SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
+  SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: ''
+};
 
 /***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
+
+/***/ 67:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
  // バックグラウンドで実行される
 // chrome.runtime.sendMessage で送るメッセージ
 
 chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+  console.log(chrome.runtime.lastError);
+
   if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"]) {
     sendResponse({
       data: localStorage[request.key]
@@ -160,7 +173,10 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       data: null
     });
   }
+
+  return true;
 });
 
 /***/ })
-/******/ ]);
+
+/******/ });
