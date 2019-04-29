@@ -50,7 +50,11 @@ const Popup = () => {
       result.forEach(tab => {
         // console.log(tab);
         const tabUrl = new URL(tab.url).hostname;
-        if (![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM].some((url) => url === tabUrl)) {
+        if (
+          ![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM].some(
+            url => url === tabUrl
+          )
+        ) {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;
         }
@@ -78,25 +82,23 @@ const Popup = () => {
   });
 
   return (
-    <div style={{
-      display: 'flex',
-      flexFlow: 'column',
-      justifyContent: 'center',
-      minWidth: '300px',
-    }}>
-      <AppBar position='static'>
+    <div
+      style={{
+        display: 'flex',
+        flexFlow: 'column',
+        justifyContent: 'center',
+        minWidth: '300px',
+      }}
+    >
+      <AppBar position="static">
         <Toolbar
-          variant='dense'
+          variant="dense"
           style={{
             display: 'flex',
             justifyContent: 'center',
           }}
         >
-          <Typography
-            color='inherit'
-            variant='h5'
-            style={{ flex: '0 1 auto' }}
-          >
+          <Typography color="inherit" variant="h5" style={{ flex: '0 1 auto' }}>
             Options - 設定
           </Typography>
         </Toolbar>
@@ -123,10 +125,12 @@ const Popup = () => {
       >
         設定を保存
       </Button>
-      <footer style={{
-        textAlign: 'center',
-        marginTop: '3px',
-      }}>
+      <footer
+        style={{
+          textAlign: 'center',
+          marginTop: '3px',
+        }}
+      >
         twitter画像原寸ボタン - hogashi
       </footer>
     </div>

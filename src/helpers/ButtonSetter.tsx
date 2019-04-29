@@ -103,7 +103,7 @@ export default class ButtonSetter {
       borderRadius: '3px',
       cursor: 'pointer',
     });
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', e => {
       this.onClick(e, imgSrcs);
     });
 
@@ -239,12 +239,16 @@ export default class ButtonSetter {
       }
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      const target: HTMLElement = tweet.querySelector('div div div[role="group"]');
+      const target: HTMLElement = tweet.querySelector(
+        'div div div[role="group"]'
+      );
 
       const tweetImgs = Array.from(
         tweet.querySelectorAll('div div div div div div div a')
       )
-        .filter((aTag: HTMLAnchorElement) => /\/status\/[0-9]+\/photo\//.test(aTag.href))
+        .filter((aTag: HTMLAnchorElement) =>
+          /\/status\/[0-9]+\/photo\//.test(aTag.href)
+        )
         .map(aTag => aTag.querySelector('img'));
       // 画像エレメントが取得できなかったら終了
       if (tweetImgs.length === 0) {
@@ -259,10 +263,9 @@ export default class ButtonSetter {
       }
       const imgSrcs = tweetImgs.map(img => img.src);
 
-      this.setReactLayoutButton({ imgSrcs, target })
+      this.setReactLayoutButton({ imgSrcs, target });
     });
   } // openFromTimeline end
-
 
   private getActionButtonColor() {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
