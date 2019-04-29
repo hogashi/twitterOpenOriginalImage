@@ -219,7 +219,7 @@ var Utils = __webpack_require__(4);
 class ButtonSetter_ButtonSetter {
   // タイムラインにボタン表示
   setButtonOnTimeline(options) {
-    if (document.querySelectorAll('#react-root')) {
+    if (document.querySelector('#react-root')) {
       this._setButtonOnReactLayoutTimeline(options);
 
       return;
@@ -249,7 +249,8 @@ class ButtonSetter_ButtonSetter {
   }
 
   setButton(_ref) {
-    let imgSrcs = _ref.imgSrcs,
+    let className = _ref.className,
+        imgSrcs = _ref.imgSrcs,
         target = _ref.target;
     const style = {
       width: '70px',
@@ -276,13 +277,14 @@ class ButtonSetter_ButtonSetter {
       this.onClick(e, imgSrcs);
     });
     const container = document.createElement('div');
-    container.className = 'ProfileTweet-action tooi-button-container';
+    container.classList.add('ProfileTweet-action', className);
     target.appendChild(container);
     container.appendChild(button);
   }
 
   setReactLayoutButton(_ref2) {
-    let imgSrcs = _ref2.imgSrcs,
+    let className = _ref2.className,
+        imgSrcs = _ref2.imgSrcs,
         target = _ref2.target;
     const button = document.createElement('input');
     button.type = 'button';
@@ -302,7 +304,7 @@ class ButtonSetter_ButtonSetter {
     });
     const container = document.createElement('div'); // container.id = '' + tweet.id
 
-    container.className = 'tooi-button-container';
+    container.classList.add(className);
     this.setStyle(container, {
       display: 'flex',
       'flex-flow': 'column',
@@ -323,31 +325,33 @@ class ButtonSetter_ButtonSetter {
 
     if (!tweets.length) {
       return;
-    } // 各ツイートに対して
+    }
 
+    const className = 'tooi-button-container-timeline'; // 各ツイートに対して
 
     Array.from(tweets).forEach(tweet => {
-      // if 画像ツイート
-      // かつ まだ処理を行っていないなら
-      if (!!tweet.getElementsByClassName('AdaptiveMedia-container')[0] && !!tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img')[0] && !tweet.getElementsByClassName('tooiDivTimeline')[0]) {
-        // 操作ボタンの外側は様式にあわせる
-        const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0]; // 画像の親が取得できたら
+      // 画像ツイートかつまだ処理を行っていないときのみ行う
+      if (!(tweet.getElementsByClassName('AdaptiveMedia-container').length !== 0 && tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img').length !== 0) || tweet.getElementsByClassName(className).length !== 0) {
+        Object(Utils["b" /* printException */])('no image container on timeline');
+        return;
+      } // 操作ボタンの外側は様式にあわせる
 
-        const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
 
-        if (mediaContainer) {
-          const imgSrcs = Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
+      const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0]; // 画像の親が取得できたら
 
-          if (imgSrcs.length) {
-            this.setButton({
-              imgSrcs,
-              target: actionList
-            });
-          } else {
-            Object(Utils["b" /* printException */])('no image urls on timeline');
-          }
+      const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
+
+      if (mediaContainer) {
+        const imgSrcs = Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
+
+        if (imgSrcs.length) {
+          this.setButton({
+            className,
+            imgSrcs,
+            target: actionList
+          });
         } else {
-          Object(Utils["b" /* printException */])('no image container on timeline');
+          Object(Utils["b" /* printException */])('no image urls on timeline');
         }
       }
     });
@@ -360,7 +364,9 @@ class ButtonSetter_ButtonSetter {
       return;
     }
 
-    if (!document.getElementsByClassName('permalink-tweet-container')[0] || !document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0] || document.getElementById('tooiInputDetailpage')) {
+    const className = 'tooi-button-container-detail';
+
+    if (!document.getElementsByClassName('permalink-tweet-container')[0] || !document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')[0] || document.getElementsByClassName(className).length !== 0) {
       // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
       // または、すでに処理を行ってあるとき
       // 何もしない
@@ -374,6 +380,7 @@ class ButtonSetter_ButtonSetter {
 
     if (imgSrcs.length) {
       this.setButton({
+        className,
         imgSrcs,
         target: actionList
       });
@@ -389,6 +396,7 @@ class ButtonSetter_ButtonSetter {
       return;
     }
 
+    const className = 'tooi-button-container-react-timeline';
     const tweets = Array.from(document.querySelectorAll('#react-root main section article'));
 
     if (!tweets.length) {
@@ -400,7 +408,7 @@ class ButtonSetter_ButtonSetter {
       // 画像ツイート かつ まだ処理を行っていないときのみ実行
       const tweetATags = Array.from(tweet.querySelectorAll('div div div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
 
-      if (tweetATags.length === 0 || tweet.getElementsByClassName('tooi-button')[0]) {
+      if (tweetATags.length === 0 || tweet.getElementsByClassName(className)[0]) {
         return;
       } // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
@@ -423,6 +431,7 @@ class ButtonSetter_ButtonSetter {
 
       const imgSrcs = tweetImgs.map(img => img.src);
       this.setReactLayoutButton({
+        className,
         imgSrcs,
         target
       });
@@ -487,11 +496,12 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 
     if (!tweets.length) {
       return;
-    } // 各ツイートに対して
+    }
 
+    const className = 'tooi-button-container-tweetdeck-timeline'; // 各ツイートに対して
 
     Array.from(tweets).forEach(tweet => {
-      if (!tweet.getElementsByClassName('js-media-image-link').length || tweet.getElementsByClassName('is-video').length || tweet.getElementsByClassName('is-gif').length || tweet.getElementsByClassName('tooi-a').length) {
+      if (!tweet.getElementsByClassName('js-media-image-link').length || tweet.getElementsByClassName('is-video').length || tweet.getElementsByClassName('is-gif').length || tweet.getElementsByClassName(className).length) {
         // メディアツイートでない
         // または メディアが画像でない(動画/GIF)
         // または すでにボタンをおいてあるとき
@@ -506,6 +516,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 
         if (imgSrcs.length) {
           this.setButton({
+            className,
             imgSrcs,
             target
           });
@@ -533,11 +544,12 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 
     if (!tweets.length) {
       return;
-    } // 各ツイートに対して
+    }
 
+    const className = 'tooi-button-container-tweetdeck-detail'; // 各ツイートに対して
 
     Array.from(tweets).forEach(tweet => {
-      if (!tweet.getElementsByClassName('media-img').length && !tweet.getElementsByClassName('media-image').length || tweet.getElementsByClassName('tooi-a').length) {
+      if (!tweet.getElementsByClassName('media-img').length && !tweet.getElementsByClassName('media-image').length || tweet.getElementsByClassName(className).length) {
         // メディアツイートでない (画像のタグが取得できない)
         // または すでにボタンをおいてあるとき
         // 何もしない
@@ -560,6 +572,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
       }
 
       this.setButton({
+        className,
         imgSrcs,
         target
       });
@@ -567,7 +580,8 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
   }
 
   setButton(_ref) {
-    let imgSrcs = _ref.imgSrcs,
+    let className = _ref.className,
+        imgSrcs = _ref.imgSrcs,
         target = _ref.target;
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const borderColor = window.getComputedStyle(document.querySelector('.txt-mute')).color; // ボタンのスタイル設定
@@ -591,10 +605,10 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
     //   Original
     // </a>
     // tweetdeckのツイート右上の時刻などに使われているclassを使う
-    // 設置の有無の判別用に'tooi-a'を付与する
+    // 設置の有無の判別用にclassNameを付与する
 
     const button = document.createElement('a');
-    button.className = 'pull-left margin-txs txt-mute tooi-a';
+    button.className = "pull-left margin-txs txt-mute ".concat(className);
     this.setStyle(button, style);
     button.addEventListener('click', e => {
       this.onClick(e, imgSrcs);
@@ -699,8 +713,8 @@ const updateOptions = options => {
     };
 
     const callback = response => {
-      if (response && response.data) {
-        options[key] = response.data;
+      if (response) {
+        options[key] = response.data || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "l"];
         resolve();
       } else {
         reject();
