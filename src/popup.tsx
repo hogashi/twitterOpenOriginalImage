@@ -1,11 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import {
   isTrue,
@@ -13,6 +16,8 @@ import {
   OPTIONS_TEXT,
   OPTION_UPDATED,
   INITIAL_OPTIONS,
+  HOST_TWITTER_COM,
+  HOST_TWEETDECK_TWITTER_COM,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
@@ -44,6 +49,11 @@ const Popup = () => {
     chrome.tabs.query({}, result =>
       result.forEach(tab => {
         // console.log(tab);
+        const tabUrl = new URL(tab.url).hostname;
+        if (![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM].some((url) => url === tabUrl)) {
+          // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
+          return;
+        }
         chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, response =>
           console.log('res:', response)
         );
@@ -68,32 +78,57 @@ const Popup = () => {
   });
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      flexFlow: 'column',
+      justifyContent: 'center',
+      minWidth: '300px',
+    }}>
+      <AppBar position='static'>
+        <Toolbar
+          variant='dense'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            color='inherit'
+            variant='h5'
+            style={{ flex: '0 1 auto' }}
+          >
+            Options - 設定
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <List
         subheader={
-          <ListSubheader component="div">Options - 設定</ListSubheader>
+          <ListSubheader component="div">TwitterWeb公式</ListSubheader>
         }
       >
-        <List
-          subheader={
-            <ListSubheader component="div">TwitterWeb公式</ListSubheader>
-          }
-        >
-          {optionsItems[SHOW_ON_TIMELINE]}
-          {optionsItems[SHOW_ON_TWEET_DETAIL]}
-        </List>
-        <List
-          subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}
-        >
-          {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
-          {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
-        </List>
-        <hr />
+        {optionsItems[SHOW_ON_TIMELINE]}
+        {optionsItems[SHOW_ON_TWEET_DETAIL]}
       </List>
-      <Button variant="contained" color="primary" onClick={onSave}>
+      <List
+        subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}
+      >
+        {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
+        {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+      </List>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={onSave}
+        style={{ flex: '0 1 auto' }}
+      >
         設定を保存
       </Button>
-      <footer>twitter画像原寸ボタン - hogashi</footer>
+      <footer style={{
+        textAlign: 'center',
+        marginTop: '3px',
+      }}>
+        twitter画像原寸ボタン - hogashi
+      </footer>
     </div>
   );
 };
