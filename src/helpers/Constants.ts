@@ -12,6 +12,9 @@ export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 export const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
+// 画像ページ
+export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
+export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 設定
 
@@ -32,6 +35,8 @@ export const INITIAL_OPTIONS: Options = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
   SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: isFalse,
 };
 export const OPTIONS_TEXT: Options = {
   // 公式Web
@@ -40,4 +45,6 @@ export const OPTIONS_TEXT: Options = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
 };

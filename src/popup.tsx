@@ -18,10 +18,12 @@ import {
   INITIAL_OPTIONS,
   HOST_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
+  HOST_PBS_TWIMG_COM,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  STRIP_IMAGE_SUFFIX,
 } from './helpers/Constants';
 
 const { useState, useCallback } = React;
@@ -51,7 +53,7 @@ const Popup = () => {
         // console.log(tab);
         const tabUrl = new URL(tab.url).hostname;
         if (
-          ![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM].some(
+          ![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM, HOST_PBS_TWIMG_COM].some(
             url => url === tabUrl
           )
         ) {
@@ -116,6 +118,11 @@ const Popup = () => {
       >
         {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
         {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+      </List>
+      <List
+        subheader={<ListSubheader component="div">画像ページ</ListSubheader>}
+      >
+        {optionsItems[STRIP_IMAGE_SUFFIX]}
       </List>
       <Button
         variant="contained"
