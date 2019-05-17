@@ -86,22 +86,24 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
+/***/ 0:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTION_UPDATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return OPTION_UPDATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEET_DETAIL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return isTrue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return isFalse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return OPTIONS_TEXT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return HOST_TWITTER_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SHOW_ON_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWEETDECK_TWITTER_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_PBS_TWIMG_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return STRIP_IMAGE_SUFFIX; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return isTrue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return isFalse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return INITIAL_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTIONS_TEXT; });
 // 定数
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
@@ -113,7 +115,10 @@ const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL'; // TweetDeck
 
 const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
-const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 設定
+const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 画像ページ
+
+const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
+const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
@@ -127,7 +132,9 @@ const INITIAL_OPTIONS = {
   SHOW_ON_TWEET_DETAIL: isFalse,
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: isFalse
 };
 const OPTIONS_TEXT = {
   // 公式Web
@@ -135,7 +142,9 @@ const OPTIONS_TEXT = {
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示'
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正'
 };
 
 /***/ }),
@@ -146,10 +155,10 @@ const OPTIONS_TEXT = {
 "use strict";
 
 // EXTERNAL MODULE: ./src/helpers/Constants.ts
-var Constants = __webpack_require__(1);
+var Constants = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/helpers/Utils.ts
-var Utils = __webpack_require__(4);
+var Utils = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./src/helpers/ButtonSetter.tsx
 
@@ -178,7 +187,7 @@ class ButtonSetter_ButtonSetter {
     e.preventDefault(); // イベント(MouseEvent)の親要素への伝播を停止
 
     e.stopPropagation();
-    Object(Utils["a" /* openImages */])(imgSrcs);
+    Object(Utils["b" /* openImages */])(imgSrcs);
   } // エレメントへのstyle属性の設定
 
 
@@ -256,7 +265,7 @@ class ButtonSetter_ButtonSetter {
   _setButtonOnTimeline(options) {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["g" /* SHOW_ON_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+    if (!(options[Constants["h" /* SHOW_ON_TIMELINE */]] !== Constants["m" /* isFalse */])) {
       return;
     }
 
@@ -271,7 +280,7 @@ class ButtonSetter_ButtonSetter {
     Array.from(tweets).forEach(tweet => {
       // 画像ツイートかつまだ処理を行っていないときのみ行う
       if (!(tweet.getElementsByClassName('AdaptiveMedia-container').length !== 0 && tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img').length !== 0) || tweet.getElementsByClassName(className).length !== 0) {
-        Object(Utils["b" /* printException */])('no image container on timeline');
+        Object(Utils["c" /* printException */])('no image container on timeline');
         return;
       } // 操作ボタンの外側は様式にあわせる
 
@@ -290,7 +299,7 @@ class ButtonSetter_ButtonSetter {
             target: actionList
           });
         } else {
-          Object(Utils["b" /* printException */])('no image urls on timeline');
+          Object(Utils["c" /* printException */])('no image urls on timeline');
         }
       }
     });
@@ -299,7 +308,7 @@ class ButtonSetter_ButtonSetter {
   _setButtonOnTweetDetail(options) {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["j" /* SHOW_ON_TWEET_DETAIL */]] !== Constants["k" /* isFalse */])) {
+    if (!(options[Constants["k" /* SHOW_ON_TWEET_DETAIL */]] !== Constants["m" /* isFalse */])) {
       return;
     }
 
@@ -324,14 +333,14 @@ class ButtonSetter_ButtonSetter {
         target: actionList
       });
     } else {
-      Object(Utils["b" /* printException */])('no image urls on tweet detail');
+      Object(Utils["c" /* printException */])('no image urls on tweet detail');
     }
   }
 
   _setButtonOnReactLayoutTimeline(options) {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["g" /* SHOW_ON_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+    if (!(options[Constants["h" /* SHOW_ON_TIMELINE */]] !== Constants["m" /* isFalse */])) {
       return;
     }
 
@@ -357,7 +366,7 @@ class ButtonSetter_ButtonSetter {
       const tweetImgs = Array.from(tweet.querySelectorAll('div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href)).map(aTag => aTag.querySelector('img')); // 画像エレメントが取得できなかったら終了
 
       if (tweetImgs.length === 0) {
-        Object(Utils["b" /* printException */])('no image elements on timeline in react layout');
+        Object(Utils["c" /* printException */])('no image elements on timeline in react layout');
         return;
       }
 
@@ -425,7 +434,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
   setButtonOnTimeline(options) {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["h" /* SHOW_ON_TWEETDECK_TIMELINE */]] !== Constants["k" /* isFalse */])) {
+    if (!(options[Constants["i" /* SHOW_ON_TWEETDECK_TIMELINE */]] !== Constants["m" /* isFalse */])) {
       return;
     } // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
@@ -460,10 +469,10 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
             target
           });
         } else {
-          Object(Utils["b" /* printException */])('no image srcs on tweetdeck timeline');
+          Object(Utils["c" /* printException */])('no image srcs on tweetdeck timeline');
         }
       } else {
-        Object(Utils["b" /* printException */])('no image elements on tweetdeck timeline');
+        Object(Utils["c" /* printException */])('no image elements on tweetdeck timeline');
       }
     });
   } // ツイート詳細にボタン表示
@@ -472,7 +481,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
   setButtonOnTweetDetail(options) {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
-    if (!(options[Constants["i" /* SHOW_ON_TWEETDECK_TWEET_DETAIL */]] !== Constants["k" /* isFalse */])) {
+    if (!(options[Constants["j" /* SHOW_ON_TWEETDECK_TWEET_DETAIL */]] !== Constants["m" /* isFalse */])) {
       return;
     } // console.log('TODO, ボタン実装') // TODO, debug
     // if タイムラインのツイートを取得できたら
@@ -498,7 +507,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
       const target = tweet.getElementsByTagName('footer')[0]; // 画像エレメントがなかったら終了
 
       if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
-        Object(Utils["b" /* printException */])('no image elements on tweetdeck tweet detail');
+        Object(Utils["c" /* printException */])('no image elements on tweetdeck tweet detail');
         return;
       }
 
@@ -567,21 +576,22 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 
 // ボタンを設置するクラスのまとめ
 const ButtonSetters = {};
-ButtonSetters[Constants["c" /* HOST_TWITTER_COM */]] = new ButtonSetter_ButtonSetter();
-ButtonSetters[Constants["b" /* HOST_TWEETDECK_TWITTER_COM */]] = new ButtonSetterTweetDeck_ButtonSetterTweetDeck();
+ButtonSetters[Constants["d" /* HOST_TWITTER_COM */]] = new ButtonSetter_ButtonSetter();
+ButtonSetters[Constants["c" /* HOST_TWEETDECK_TWITTER_COM */]] = new ButtonSetterTweetDeck_ButtonSetterTweetDeck();
 /* harmony default export */ var helpers_ButtonSetters = __webpack_exports__["a"] = (ButtonSetters);
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return printException; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return printException; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collectUrlParams; });
 /* unused harmony export formatUrl */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return openImages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return updateOptions; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return openImages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateOptions; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -594,21 +604,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 // エラーメッセージの表示(予期せぬ状況の確認)
 const printException = tooiException => {
   console.log('tooi: ' + tooiException + ' at: ' + window.location.href);
-}; // 画像URLを https～?format=〜&name=orig に揃える
+}; // 画像urlの要素を集める
 
-const formatUrl = imgUrl => {
-  if (!imgUrl) {
+const collectUrlParams = rawUrl => {
+  if (!/https:\/\/pbs\.twimg\.com\/media/.test(rawUrl)) {
+    // twitterの画像URLでないときnull
     return null;
   }
 
-  if (!/https:\/\/pbs\.twimg\.com\/media/.test(imgUrl)) {
-    // twitterの画像URLでないときそのまま返す
-    return imgUrl;
-  }
-
-  const url = new URL(imgUrl);
+  const url = new URL(rawUrl);
   const searchSet = {
-    format: 'jpg' // 拡張子が無い場合はjpgにフォールバック
+    format: 'jpg',
+    // 拡張子が無い場合はjpgにフォールバック
+    name: null // 大きさ指定がない場合はnull
 
   };
   url.search.slice(1).split('&').forEach(set => {
@@ -617,15 +625,45 @@ const formatUrl = imgUrl => {
           key = _set$split2[0],
           value = _set$split2[1];
 
-    searchSet[key] = value;
-  });
-  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/);
-  const pathname = matched[1];
-  const extension = matched[2]; // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
-  // TweetDeckのURLでは拡張子を優先する
-  // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
+    if (key === 'format' || key === 'name') {
+      searchSet[key] = value;
+    }
+  }); // 空文字でもどんな文字列でもマッチする正規表現なのでnon-null
 
-  return "".concat(url.protocol, "//").concat(url.host).concat(pathname, "?format=").concat(extension || searchSet.format, "&name=orig");
+  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/); // どんな文字列でも空文字は最低入るのでnon-null
+
+  const pathname = matched[1]; // 拡張子はないかもしれないのでundefinedも示しておく
+
+  const extension = matched[2];
+  return {
+    protocol: url.protocol,
+    host: url.host,
+    pathname,
+    // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
+    // TweetDeckのURLでは拡張子を優先する
+    // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
+    format: extension || searchSet.format,
+    name: searchSet.name
+  };
+}; // 画像URLを https～?format=〜&name=orig に揃える
+
+const formatUrl = imgUrl => {
+  if (!imgUrl || imgUrl.length === 0) {
+    return null;
+  }
+
+  const params = collectUrlParams(imgUrl);
+
+  if (!params) {
+    // twitterの画像URLでないときそのまま返す
+    return imgUrl;
+  }
+
+  const protocol = params.protocol,
+        host = params.host,
+        pathname = params.pathname,
+        format = params.format;
+  return "".concat(protocol, "//").concat(host).concat(pathname, "?format=").concat(format, "&name=orig");
 }; // 画像を開く
 
 const openImages = imgSrcs => {
@@ -653,7 +691,7 @@ const updateOptions = options => {
 
     const callback = response => {
       if (response) {
-        options[key] = response.data || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "l"];
+        options[key] = response.data || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "n"];
         resolve();
       } else {
         reject();
@@ -674,13 +712,18 @@ const updateOptions = options => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
-/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _helpers_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+/* harmony import */ var _helpers_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
  // 設定
 
-const options = _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* INITIAL_OPTIONS */ "d"]; // ボタン設置クラス
+const options = _objectSpread({}, _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* INITIAL_OPTIONS */ "e"]); // ボタン設置クラス
+
 
 const hostname = new URL(window.location.href).hostname;
 const buttonSetters = _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"][hostname];
@@ -711,7 +754,7 @@ const config = {
 };
 observer.observe(target, config); // 設定読み込み
 
-Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "c"])(options).then(() => {
+Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "d"])(options).then(() => {
   // ボタンを(再)設置
   setButton();
 }); // 設定反映のためのリスナー設置
@@ -719,8 +762,8 @@ Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "c"])(opt
 chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   console.log(chrome.runtime.lastError);
 
-  if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* OPTION_UPDATED */ "f"]) {
-    Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "c"])(options).then(() => {
+  if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_1__[/* OPTION_UPDATED */ "g"]) {
+    Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_2__[/* updateOptions */ "d"])(options).then(() => {
       // ボタンを(再)設置
       setButton();
       sendResponse({

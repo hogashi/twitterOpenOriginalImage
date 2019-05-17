@@ -81,27 +81,29 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 67);
+/******/ 	return __webpack_require__(__webpack_require__.s = 68);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
+/***/ 0:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTION_UPDATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return OPTION_UPDATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_LOCAL_STORAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWITTER_COM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SHOW_ON_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEET_DETAIL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_TWEETDECK_TWITTER_COM; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return isTrue; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return isFalse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return INITIAL_OPTIONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return OPTIONS_TEXT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return HOST_TWITTER_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_ON_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SHOW_ON_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HOST_TWEETDECK_TWITTER_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_ON_TWEETDECK_TIMELINE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SHOW_ON_TWEETDECK_TWEET_DETAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HOST_PBS_TWIMG_COM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return STRIP_IMAGE_SUFFIX; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return isTrue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return isFalse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return INITIAL_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return OPTIONS_TEXT; });
 // 定数
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
@@ -113,7 +115,10 @@ const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL'; // TweetDeck
 
 const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
-const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 設定
+const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL'; // 画像ページ
+
+const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
+const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
@@ -127,7 +132,9 @@ const INITIAL_OPTIONS = {
   SHOW_ON_TWEET_DETAIL: isFalse,
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: isFalse
 };
 const OPTIONS_TEXT = {
   // 公式Web
@@ -135,17 +142,19 @@ const OPTIONS_TEXT = {
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示'
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正'
 };
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
  // バックグラウンドで実行される
 // chrome.runtime.sendMessage で送るメッセージ
 

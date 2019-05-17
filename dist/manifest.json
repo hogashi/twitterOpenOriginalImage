@@ -24,6 +24,12 @@
       "js": [
         "js/main.bundle.js"
       ]
+    },
+    {
+      "matches": ["https://pbs.twimg.com/*"],
+      "js": [
+        "js/imagetab.bundle.js"
+      ]
     }
   ],
   "background" : {
