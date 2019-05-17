@@ -7,7 +7,7 @@
 import { INITIAL_OPTIONS, STRIP_IMAGE_SUFFIX } from './helpers/Constants';
 import { updateOptions, collectUrlParams } from './helpers/Utils';
 
-const options = {...INITIAL_OPTIONS};
+const options = { ...INITIAL_OPTIONS };
 
 const getImageFilenameByUrl = (imgUrl: string) => {
   const params = collectUrlParams(imgUrl);
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // キーを押したとき
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   // if 設定が有効なら
   // かつ 押されたキーがC-s の状態なら
   // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
@@ -46,10 +46,7 @@ document.addEventListener('keydown', (e) => {
     // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
     const a = document.createElement('a');
     a.href = window.location.href;
-    a.setAttribute(
-      'download',
-      filename,
-    );
+    a.setAttribute('download', filename);
     a.dispatchEvent(new MouseEvent('click'));
   }
 });

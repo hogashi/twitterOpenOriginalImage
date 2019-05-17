@@ -7,12 +7,14 @@ export const printException = (tooiException: string) => {
 };
 
 // 画像urlの要素を集める
-export const collectUrlParams = (rawUrl: string): {
-  protocol: string,
-  host: string,
-  pathname: string,
-  format: string,
-  name: string | null,
+export const collectUrlParams = (
+  rawUrl: string
+): {
+  protocol: string;
+  host: string;
+  pathname: string;
+  format: string;
+  name: string | null;
 } | null => {
   if (!/https:\/\/pbs\.twimg\.com\/media/.test(rawUrl)) {
     // twitterの画像URLでないときnull
@@ -21,8 +23,8 @@ export const collectUrlParams = (rawUrl: string): {
 
   const url = new URL(rawUrl);
   const searchSet: {
-    format: string,
-    name: string | null,
+    format: string;
+    name: string | null;
   } = {
     format: 'jpg', // 拡張子が無い場合はjpgにフォールバック
     name: null, // 大きさ指定がない場合はnull

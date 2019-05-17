@@ -51,11 +51,16 @@ const Popup = () => {
     chrome.tabs.query({}, result =>
       result.forEach(tab => {
         // console.log(tab);
+        if (!tab.url || !tab.id) {
+          return;
+        }
         const tabUrl = new URL(tab.url).hostname;
         if (
-          ![HOST_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM, HOST_PBS_TWIMG_COM].some(
-            url => url === tabUrl
-          )
+          ![
+            HOST_TWITTER_COM,
+            HOST_TWEETDECK_TWITTER_COM,
+            HOST_PBS_TWIMG_COM,
+          ].some(url => url === tabUrl)
         ) {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;

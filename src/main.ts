@@ -3,7 +3,7 @@ import { INITIAL_OPTIONS, OPTION_UPDATED } from './helpers/Constants';
 import { updateOptions } from './helpers/Utils';
 
 // 設定
-const options = {...INITIAL_OPTIONS};
+const options = { ...INITIAL_OPTIONS };
 
 // ボタン設置クラス
 const hostname = new URL(window.location.href).hostname;
