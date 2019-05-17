@@ -168,7 +168,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-const options = _objectSpread({}, _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* INITIAL_OPTIONS */ "e"]);
+let options = _objectSpread({}, _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* INITIAL_OPTIONS */ "e"]);
 
 const getImageFilenameByUrl = imgUrl => {
   const params = Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* collectUrlParams */ "a"])(imgUrl);
@@ -204,12 +204,13 @@ const downloadImage = e => {
     a.dispatchEvent(new MouseEvent('click'));
   }
 };
-document.addEventListener('DOMContentLoaded', () => {
-  Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* updateOptions */ "d"])(options);
+Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* getOptions */ "b"])().then(newOptions => {
+  options = _objectSpread({}, newOptions);
 }); // キーを押したとき
 
 document.addEventListener('keydown', e => {
-  // 設定が有効なら
+  console.log(options[_helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* STRIP_IMAGE_SUFFIX */ "l"]]); // 設定が有効なら
+
   if (options[_helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* STRIP_IMAGE_SUFFIX */ "l"]] !== 'isfalse') {
     downloadImage(e);
   }
@@ -221,11 +222,11 @@ document.addEventListener('keydown', e => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return printException; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return printException; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collectUrlParams; });
 /* unused harmony export formatUrl */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return openImages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateOptions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return openImages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getOptions; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -315,27 +316,31 @@ const openImages = imgSrcs => {
   });
 }; // 設定項目更新
 
-const updateOptions = options => {
-  console.log('update options: ', options); // debug
+const getOptions = () => {
+  console.log('update options'); // debug
 
-  return Promise.all(Object.keys(options).map(key => new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const request = {
-      method: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"],
-      key
+      method: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"]
     };
 
     const callback = response => {
-      if (response) {
-        options[key] = response.data || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "n"];
-        resolve();
+      if (response.data) {
+        resolve(response.data);
       } else {
         reject();
       }
     };
 
     chrome.runtime.sendMessage(request, callback);
-  }))).then(() => {
+  }).then(data => {
+    const options = {};
+    Object.keys(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* INITIAL_OPTIONS */ "e"]).map(key => {
+      options[key] = data[key] || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "n"];
+    });
     console.log('update options: ', options); // debug
+
+    return options;
   });
 };
 

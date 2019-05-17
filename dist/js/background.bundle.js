@@ -162,9 +162,8 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   // console.log(chrome.runtime.lastError);
   if (request.method === _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"]) {
     sendResponse({
-      data: localStorage[request.key]
+      data: localStorage
     });
-    console.log(request.key + ' : ' + localStorage[request.key]); // debug
   } else {
     sendResponse({
       data: null

@@ -188,7 +188,7 @@ class ButtonSetter_ButtonSetter {
     e.preventDefault(); // イベント(MouseEvent)の親要素への伝播を停止
 
     e.stopPropagation();
-    Object(Utils["b" /* openImages */])(imgSrcs);
+    Object(Utils["c" /* openImages */])(imgSrcs);
   } // エレメントへのstyle属性の設定
 
 
@@ -281,7 +281,7 @@ class ButtonSetter_ButtonSetter {
     Array.from(tweets).forEach(tweet => {
       // 画像ツイートかつまだ処理を行っていないときのみ行う
       if (!(tweet.getElementsByClassName('AdaptiveMedia-container').length !== 0 && tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img').length !== 0) || tweet.getElementsByClassName(className).length !== 0) {
-        Object(Utils["c" /* printException */])('no image container on timeline');
+        Object(Utils["d" /* printException */])('no image container on timeline');
         return;
       } // 操作ボタンの外側は様式にあわせる
 
@@ -300,7 +300,7 @@ class ButtonSetter_ButtonSetter {
             target: actionList
           });
         } else {
-          Object(Utils["c" /* printException */])('no image urls on timeline');
+          Object(Utils["d" /* printException */])('no image urls on timeline');
         }
       }
     });
@@ -334,7 +334,7 @@ class ButtonSetter_ButtonSetter {
         target: actionList
       });
     } else {
-      Object(Utils["c" /* printException */])('no image urls on tweet detail');
+      Object(Utils["d" /* printException */])('no image urls on tweet detail');
     }
   }
 
@@ -367,7 +367,7 @@ class ButtonSetter_ButtonSetter {
       const tweetImgs = Array.from(tweet.querySelectorAll('div div div div div div div a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href)).map(aTag => aTag.querySelector('img')); // 画像エレメントが取得できなかったら終了
 
       if (tweetImgs.length === 0) {
-        Object(Utils["c" /* printException */])('no image elements on timeline in react layout');
+        Object(Utils["d" /* printException */])('no image elements on timeline in react layout');
         return;
       }
 
@@ -470,10 +470,10 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
             target
           });
         } else {
-          Object(Utils["c" /* printException */])('no image srcs on tweetdeck timeline');
+          Object(Utils["d" /* printException */])('no image srcs on tweetdeck timeline');
         }
       } else {
-        Object(Utils["c" /* printException */])('no image elements on tweetdeck timeline');
+        Object(Utils["d" /* printException */])('no image elements on tweetdeck timeline');
       }
     });
   } // ツイート詳細にボタン表示
@@ -508,7 +508,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
       const target = tweet.getElementsByTagName('footer')[0]; // 画像エレメントがなかったら終了
 
       if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
-        Object(Utils["c" /* printException */])('no image elements on tweetdeck tweet detail');
+        Object(Utils["d" /* printException */])('no image elements on tweetdeck tweet detail');
         return;
       }
 
@@ -590,7 +590,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
  // 設定
 
-const main_options = _objectSpread({}, Constants["e" /* INITIAL_OPTIONS */]); // ボタンを設置
+let main_options = _objectSpread({}, Constants["e" /* INITIAL_OPTIONS */]); // ボタンを設置
 
 
 const setButton = _options => {
@@ -626,8 +626,9 @@ const config = {
 };
 observer.observe(main_target, config); // 設定読み込み
 
-Object(Utils["d" /* updateOptions */])(main_options).then(() => {
-  // ボタンを(再)設置
+Object(Utils["b" /* getOptions */])().then(newOptions => {
+  main_options = _objectSpread({}, newOptions); // ボタンを(再)設置
+
   setButtonWithInterval();
 }); // 設定反映のためのリスナー設置
 
@@ -635,8 +636,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   console.log(chrome.runtime.lastError);
 
   if (request.method === Constants["g" /* OPTION_UPDATED */]) {
-    Object(Utils["d" /* updateOptions */])(main_options).then(() => {
-      // ボタンを(再)設置
+    Object(Utils["b" /* getOptions */])().then(newOptions => {
+      main_options = _objectSpread({}, newOptions); // ボタンを(再)設置
+
       setButtonWithInterval();
       sendResponse({
         data: 'done'
@@ -657,11 +659,11 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return printException; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return printException; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collectUrlParams; });
 /* unused harmony export formatUrl */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return openImages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateOptions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return openImages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getOptions; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -751,27 +753,31 @@ const openImages = imgSrcs => {
   });
 }; // 設定項目更新
 
-const updateOptions = options => {
-  console.log('update options: ', options); // debug
+const getOptions = () => {
+  console.log('update options'); // debug
 
-  return Promise.all(Object.keys(options).map(key => new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const request = {
-      method: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"],
-      key
+      method: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* GET_LOCAL_STORAGE */ "a"]
     };
 
     const callback = response => {
-      if (response) {
-        options[key] = response.data || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "n"];
-        resolve();
+      if (response.data) {
+        resolve(response.data);
       } else {
         reject();
       }
     };
 
     chrome.runtime.sendMessage(request, callback);
-  }))).then(() => {
+  }).then(data => {
+    const options = {};
+    Object.keys(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* INITIAL_OPTIONS */ "e"]).map(key => {
+      options[key] = data[key] || _Constants__WEBPACK_IMPORTED_MODULE_0__[/* isTrue */ "n"];
+    });
     console.log('update options: ', options); // debug
+
+    return options;
   });
 };
 
