@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 180);
+/******/ 	return __webpack_require__(__webpack_require__.s = 179);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -149,42 +149,128 @@ const OPTIONS_TEXT = {
 
 /***/ }),
 
-/***/ 180:
+/***/ 179:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
- // userjs生成スクリプト(scripts/make_user_script.js)でoptionsを書き込む
-// ボタン設置クラス
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _imagetab__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
 
-const hostname = new URL(window.location.href).hostname;
-const buttonSetters = _helpers_ButtonSetters__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"][hostname]; // ボタンを設置
 
-const setButton = () => {
-  // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
-  // eslint-disable-next-line no-undef
-  buttonSetters.setButtonOnTimeline(options || {}); // eslint-disable-next-line no-undef
+ // 最終的にファイルの冒頭にuserjs生成スクリプト(scripts/make_user_script.js)でoptionsを書き込む
 
-  buttonSetters.setButtonOnTweetDetail(options || {});
+let isInterval = false;
+
+const setButtonWithInterval = () => {
+  // 短時間に何回も実行しないようインターバルを設ける
+  if (isInterval) {
+    return;
+  }
+
+  isInterval = true;
+  setTimeout(() => {
+    isInterval = false;
+  }, 300);
+  Object(_main__WEBPACK_IMPORTED_MODULE_0__["setButton"])(options);
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
 
-const observer = new MutationObserver(setButton);
+const observer = new MutationObserver(setButtonWithInterval);
 const target = document.querySelector('body');
 const config = {
   childList: true,
   subtree: true
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 
-observer.observe(target, config);
+observer.observe(target, config); // 画像ページのとき
+
+if (/^pbs\.twimg\.com/.test(window.location.hostname)) {
+  // キーを押したとき
+  document.addEventListener('keydown', e => {
+    // 設定が有効なら
+    if (options[_helpers_Constants__WEBPACK_IMPORTED_MODULE_2__[/* STRIP_IMAGE_SUFFIX */ "l"]] !== 'isfalse') {
+      Object(_imagetab__WEBPACK_IMPORTED_MODULE_1__["downloadImage"])(e);
+    }
+  });
+}
 
 /***/ }),
 
-/***/ 22:
+/***/ 28:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadImage", function() { return downloadImage; });
+/* harmony import */ var _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _helpers_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* imagetab.ts */
+// https://pbs.twimg.com/* で実行される
+// twitterの画像を表示したときのC-sを拡張
+// 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
+
+
+
+const options = _objectSpread({}, _helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* INITIAL_OPTIONS */ "e"]);
+
+const getImageFilenameByUrl = imgUrl => {
+  const params = Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* collectUrlParams */ "a"])(imgUrl);
+
+  if (!params) {
+    return null;
+  }
+
+  const pathname = params.pathname,
+        format = params.format,
+        name = params.name;
+  const basename = pathname.match(/([^/.]*?)(?:\..+)?$/)[1];
+  return "".concat(basename).concat(name ? "-".concat(name) : '', ".").concat(format);
+};
+
+const downloadImage = e => {
+  // if 押されたキーがC-s の状態なら
+  // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
+  if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
+    const imageSrc = document.querySelector('img').src;
+    const filename = getImageFilenameByUrl(imageSrc);
+
+    if (!filename) {
+      return;
+    } // もとの挙動(ブラウザが行う保存)をしないよう中止
+
+
+    e.preventDefault(); // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
+
+    const a = document.createElement('a');
+    a.href = window.location.href;
+    a.setAttribute('download', filename);
+    a.dispatchEvent(new MouseEvent('click'));
+  }
+};
+document.addEventListener('DOMContentLoaded', () => {
+  Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* updateOptions */ "d"])(options);
+}); // キーを押したとき
+
+document.addEventListener('keydown', e => {
+  // 設定が有効なら
+  if (options[_helpers_Constants__WEBPACK_IMPORTED_MODULE_0__[/* STRIP_IMAGE_SUFFIX */ "l"]] !== 'isfalse') {
+    downloadImage(e);
+  }
+});
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./src/helpers/Constants.ts
 var Constants = __webpack_require__(0);
@@ -610,7 +696,77 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
 const ButtonSetters = {};
 ButtonSetters[Constants["d" /* HOST_TWITTER_COM */]] = new ButtonSetter_ButtonSetter();
 ButtonSetters[Constants["c" /* HOST_TWEETDECK_TWITTER_COM */]] = new ButtonSetterTweetDeck_ButtonSetterTweetDeck();
-/* harmony default export */ var helpers_ButtonSetters = __webpack_exports__["a"] = (ButtonSetters);
+/* harmony default export */ var helpers_ButtonSetters = (ButtonSetters);
+// CONCATENATED MODULE: ./src/main.ts
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setButton", function() { return setButton; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+ // 設定
+
+const main_options = _objectSpread({}, Constants["e" /* INITIAL_OPTIONS */]); // ボタンを設置
+
+
+const setButton = _options => {
+  // console.log('setButton');
+  // ボタン設置クラス
+  const hostname = new URL(window.location.href).hostname;
+  const buttonSetters = helpers_ButtonSetters[hostname]; // console.log('setButton: ' + _options['SHOW_ON_TIMELINE'] + ' ' + _options['SHOW_ON_TWEET_DETAIL'] + ' ' + _options['OPEN_WITH_KEY_PRESS']) // debug
+
+  buttonSetters.setButtonOnTimeline(_options);
+  buttonSetters.setButtonOnTweetDetail(_options);
+};
+let isInterval = false;
+
+const setButtonWithInterval = () => {
+  // 短時間に何回も実行しないようインターバルを設ける
+  if (isInterval) {
+    return;
+  }
+
+  isInterval = true;
+  setTimeout(() => {
+    isInterval = false;
+  }, 300);
+  setButton(main_options);
+}; // ページ全体でDOMの変更を検知し都度ボタン設置
+
+
+const observer = new MutationObserver(setButtonWithInterval);
+const main_target = document.querySelector('body');
+const config = {
+  childList: true,
+  subtree: true
+};
+observer.observe(main_target, config); // 設定読み込み
+
+Object(Utils["d" /* updateOptions */])(main_options).then(() => {
+  // ボタンを(再)設置
+  setButtonWithInterval();
+}); // 設定反映のためのリスナー設置
+
+chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+  console.log(chrome.runtime.lastError);
+
+  if (request.method === Constants["g" /* OPTION_UPDATED */]) {
+    Object(Utils["d" /* updateOptions */])(main_options).then(() => {
+      // ボタンを(再)設置
+      setButtonWithInterval();
+      sendResponse({
+        data: 'done'
+      });
+    });
+    return true;
+  }
+
+  sendResponse({
+    data: 'yet'
+  });
+  return true;
+});
 
 /***/ }),
 
