@@ -21,20 +21,10 @@ const getImageFilenameByUrl = (imgUrl: string) => {
   return `${basename}${name ? `-${name}` : ''}.${format}`;
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  updateOptions(options);
-});
-
-// キーを押したとき
-document.addEventListener('keydown', e => {
-  // if 設定が有効なら
-  // かつ 押されたキーがC-s の状態なら
+export const downloadImage = (e: KeyboardEvent) => {
+  // if 押されたキーがC-s の状態なら
   // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
-  if (
-    options[STRIP_IMAGE_SUFFIX] !== 'isfalse' &&
-    e.key === 's' &&
-    (e.ctrlKey || e.metaKey)
-  ) {
+  if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
     const imageSrc = document.querySelector('img')!.src;
     const filename = getImageFilenameByUrl(imageSrc);
     if (!filename) {
@@ -48,5 +38,17 @@ document.addEventListener('keydown', e => {
     a.href = window.location.href;
     a.setAttribute('download', filename);
     a.dispatchEvent(new MouseEvent('click'));
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateOptions(options);
+});
+
+// キーを押したとき
+document.addEventListener('keydown', e => {
+  // 設定が有効なら
+  if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
+    downloadImage(e);
   }
 });
