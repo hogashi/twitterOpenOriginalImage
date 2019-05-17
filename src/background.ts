@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(
     _,
     sendResponse: (res: MessageResponse) => void
   ) => {
-    console.log(chrome.runtime.lastError);
+    // console.log(chrome.runtime.lastError);
     if (request.method === GET_LOCAL_STORAGE) {
       sendResponse({ data: localStorage[request.key] });
       console.log(request.key + ' : ' + localStorage[request.key]); // debug
