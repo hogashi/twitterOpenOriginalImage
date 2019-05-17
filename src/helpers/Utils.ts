@@ -1,4 +1,4 @@
-import { GET_LOCAL_STORAGE, Options, isTrue } from './Constants';
+import { GET_LOCAL_STORAGE, INITIAL_OPTIONS, isTrue } from './Constants';
 import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
@@ -90,28 +90,28 @@ export const openImages = (imgSrcs: string[]) => {
 };
 
 // 設定項目更新
-export const updateOptions = (options: Options) => {
-  console.log('update options: ', options); // debug
-  return Promise.all(
-    Object.keys(options).map(
-      key =>
-        new Promise((resolve, reject) => {
-          const request: MessageRequest = {
-            method: GET_LOCAL_STORAGE,
-            key,
-          };
-          const callback = (response: MessageResponse) => {
-            if (response) {
-              options[key] = response.data || isTrue;
-              resolve();
-            } else {
-              reject();
-            }
-          };
-          chrome.runtime.sendMessage(request, callback);
-        })
-    )
-  ).then(() => {
+export const getOptions = () => {
+  console.log('update options'); // debug
+  return new Promise((resolve, reject) => {
+    const request: MessageRequest = {
+      method: GET_LOCAL_STORAGE,
+    };
+    const callback = (response: MessageResponse) => {
+      if (response.data) {
+        resolve(response.data);
+      } else {
+        reject();
+      }
+    };
+    chrome.runtime.sendMessage(request, callback);
+  }).then((data: { [key: string]: string }) => {
+    const options: { [key: string]: string } = {};
+    Object.keys(INITIAL_OPTIONS).map(key => {
+      options[key] = data[key] || isTrue;
+    });
+
     console.log('update options: ', options); // debug
+
+    return options;
   });
 };

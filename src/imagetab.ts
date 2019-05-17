@@ -5,9 +5,9 @@
 // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
 
 import { INITIAL_OPTIONS, STRIP_IMAGE_SUFFIX } from './helpers/Constants';
-import { updateOptions, collectUrlParams } from './helpers/Utils';
+import { getOptions, collectUrlParams } from './helpers/Utils';
 
-const options = { ...INITIAL_OPTIONS };
+let options = { ...INITIAL_OPTIONS };
 
 const getImageFilenameByUrl = (imgUrl: string) => {
   const params = collectUrlParams(imgUrl);
@@ -41,12 +41,13 @@ export const downloadImage = (e: KeyboardEvent) => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  updateOptions(options);
+getOptions().then(newOptions => {
+  options = { ...newOptions };
 });
 
 // キーを押したとき
 document.addEventListener('keydown', e => {
+  console.log(options[STRIP_IMAGE_SUFFIX]);
   // 設定が有効なら
   if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
     downloadImage(e);

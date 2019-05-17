@@ -5,11 +5,10 @@ import { GET_LOCAL_STORAGE } from './helpers/Constants';
 // chrome.runtime.sendMessage で送るメッセージ
 export interface MessageRequest {
   method: string;
-  key: string;
 }
 // chrome.runtime.sendMessage で返るメッセージ
 export interface MessageResponse {
-  data: string | null;
+  data: { [key: string]: string } | null;
 }
 
 chrome.runtime.onMessage.addListener(
@@ -20,8 +19,7 @@ chrome.runtime.onMessage.addListener(
   ) => {
     // console.log(chrome.runtime.lastError);
     if (request.method === GET_LOCAL_STORAGE) {
-      sendResponse({ data: localStorage[request.key] });
-      console.log(request.key + ' : ' + localStorage[request.key]); // debug
+      sendResponse({ data: localStorage });
     } else {
       sendResponse({ data: null });
     }

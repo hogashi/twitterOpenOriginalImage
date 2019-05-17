@@ -1,9 +1,9 @@
 import ButtonSetters from './helpers/ButtonSetters';
 import { INITIAL_OPTIONS, OPTION_UPDATED, Options } from './helpers/Constants';
-import { updateOptions } from './helpers/Utils';
+import { getOptions } from './helpers/Utils';
 
 // 設定
-const options = { ...INITIAL_OPTIONS };
+let options = { ...INITIAL_OPTIONS };
 
 // ボタンを設置
 export const setButton = (_options: Options) => {
@@ -39,7 +39,8 @@ const config = { childList: true, subtree: true };
 observer.observe(target, config);
 
 // 設定読み込み
-updateOptions(options).then(() => {
+getOptions().then(newOptions => {
+  options = { ...newOptions };
   // ボタンを(再)設置
   setButtonWithInterval();
 });
@@ -48,7 +49,8 @@ updateOptions(options).then(() => {
 chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   console.log(chrome.runtime.lastError);
   if (request.method === OPTION_UPDATED) {
-    updateOptions(options).then(() => {
+    getOptions().then(newOptions => {
+      options = { ...newOptions };
       // ボタンを(再)設置
       setButtonWithInterval();
       sendResponse({ data: 'done' });
