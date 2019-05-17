@@ -33,6 +33,7 @@ module.exports = {
   "rules": {
     "no-console": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "react/jsx-uses-react": [1],
   },
   "settings": {
