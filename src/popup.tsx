@@ -82,7 +82,12 @@ const Popup = () => {
           setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
         }}
       >
-        <Checkbox checked={enabled[key]} tabIndex={-1} disableRipple />
+        <Checkbox
+          checked={enabled[key]}
+          style={{ padding: '4px 12px' }}
+          tabIndex={-1}
+          disableRipple
+        />
         <ListItemText primary={optionsText[key]} />
       </ListItem>
     );
