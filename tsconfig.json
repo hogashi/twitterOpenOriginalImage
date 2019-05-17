@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/js/",
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "module": "commonjs",
     "target": "es2017",
     "jsx": "react"
