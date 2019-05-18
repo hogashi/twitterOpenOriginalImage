@@ -15,7 +15,7 @@ module.exports = {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "chrome": "readonly",
-    "window": "readonly",
+    "window": true,
     "document": "readonly",
   },
   "parser": "@typescript-eslint/parser",
