@@ -40,21 +40,23 @@ export const collectUrlParams = (
     });
 
   // 空文字でもどんな文字列でもマッチする正規表現なのでnon-null
-  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/)!;
+  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:([a-z]+))$/)!;
   // どんな文字列でも空文字は最低入るのでnon-null
-  const pathname = matched[1]!;
+  const pathnameWithoutExtension = matched[1]!;
   // 拡張子はないかもしれないのでundefinedも示しておく
   const extension = matched[2] as string | undefined;
+  // コロンを使う大きさ指定はないかもしれないのでなかったらnull
+  const legacyName = matched[3] || null;
 
   return {
     protocol: url.protocol,
     host: url.host,
-    pathname,
+    pathname: pathnameWithoutExtension,
     // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
     // TweetDeckのURLでは拡張子を優先する
     // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
     format: extension || searchSet.format,
-    name: searchSet.name,
+    name: searchSet.name || legacyName,
   };
 };
 
