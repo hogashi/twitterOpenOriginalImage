@@ -27,83 +27,98 @@ describe('Utils', () => {
     expect(console.log.mock.calls[0][0]).toBe('tooi: exception message at: http://example.com/');
   });
 
-  describe('画像urlの要素を集める', () => {
-    const cases = [
-      {
-        title: '何もなし',
-        url: 'https://pbs.twimg.com/media/hogefuga123',
-        params: { format: 'jpg' },
-      },
-      {
-        title: '.jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg',
-        params: { format: 'jpg' },
-      },
-      {
-        title: '.png',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png',
-        params: { format: 'png' },
-      },
-      {
-        title: '.jpg:orig',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg:orig',
-        params: { format: 'jpg', name: 'orig' },
-      },
-      {
-        title: '.jpg:large',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg:large',
-        params: { format: 'jpg', name: 'large' },
-      },
-      {
-        title: '?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg',
-        params: { format: 'jpg' },
-      },
-      {
-        title: '?format=png',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=png',
-        params: { format: 'png' },
-      },
-      {
-        title: '.jpg?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=jpg',
-        params: { format: 'jpg' },
-      },
-      {
-        title: '.jpg?format=png',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=png',
-        params: { format: 'jpg' },
-      },
-      {
-        title: '.png?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg',
-        params: { format: 'png' },
-      },
-      {
-        title: '.jpg?name=large',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?name=large',
-        params: { format: 'jpg', name: 'large' },
-      },
-      {
-        title: '?format=jpg&name=large',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg&name=large',
-        params: { format: 'jpg', name: 'large' },
-      },
-      {
-        title: '.png?format=jpg&name=orig',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg&name=orig',
-        params: { format: 'png', name: 'orig' },
-      },
-    ];
+  // URLの変換のテストの場合たち
+  const cases = [
+    {
+      title: '何もなし',
+      url: 'https://pbs.twimg.com/media/hogefuga123',
+      params: { format: 'jpg' },
+    },
+    {
+      title: '.jpg',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg',
+      params: { format: 'jpg' },
+    },
+    {
+      title: '.png',
+      url: 'https://pbs.twimg.com/media/hogefuga123.png',
+      params: { format: 'png' },
+    },
+    {
+      title: '.jpg:orig',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg:orig',
+      params: { format: 'jpg', name: 'orig' },
+    },
+    {
+      title: '.jpg:large',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg:large',
+      params: { format: 'jpg', name: 'large' },
+    },
+    {
+      title: '?format=jpg',
+      url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg',
+      params: { format: 'jpg' },
+    },
+    {
+      title: '?format=png',
+      url: 'https://pbs.twimg.com/media/hogefuga123?format=png',
+      params: { format: 'png' },
+    },
+    {
+      title: '.jpg?format=jpg',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=jpg',
+      params: { format: 'jpg' },
+    },
+    {
+      title: '.jpg?format=png',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=png',
+      params: { format: 'jpg' },
+    },
+    {
+      title: '.png?format=jpg',
+      url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg',
+      params: { format: 'png' },
+    },
+    {
+      title: '.jpg?name=large',
+      url: 'https://pbs.twimg.com/media/hogefuga123.jpg?name=large',
+      params: { format: 'jpg', name: 'large' },
+    },
+    {
+      title: '?format=jpg&name=large',
+      url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg&name=large',
+      params: { format: 'jpg', name: 'large' },
+    },
+    {
+      title: '.png?format=jpg&name=orig',
+      url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg&name=orig',
+      params: { format: 'png', name: 'orig' },
+    },
+  ];
 
+  describe('画像urlの要素を集める', () => {
     cases.forEach(singleCase => {
       const { title, url, params } = singleCase;
       it(title, () => {
         expect(collectUrlParams(url)).toStrictEqual(makeResultParams(params));
       });
     });
+
     it('twitterの画像URLでないときnull', () => {
       expect(collectUrlParams('https://twitter.com/tos')).toBe(null);
+    });
+  });
+
+  describe('画像URLを https～?format=〜&name=orig に揃える', () => {
+    cases.forEach(singleCase => {
+      const { title, url, params } = singleCase;
+      it(title, () => {
+        expect(formatUrl(url)).toBe(`https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`);
+      });
+    });
+
+    it('twitterの画像URLでないときそのまま', () => {
+      expect(formatUrl('https://twitter.com/tos')).toBe('https://twitter.com/tos');
     });
   });
 });
