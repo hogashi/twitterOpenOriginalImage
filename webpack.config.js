@@ -29,6 +29,7 @@ module.exports = {
   },
 
   optimization: {
+    // no minimize for chrome extension
     minimize: false
   },
 
