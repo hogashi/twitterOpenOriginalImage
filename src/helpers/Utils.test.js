@@ -2,6 +2,7 @@ import {
   printException,
   collectUrlParams,
   formatUrl,
+  openImages,
 } from './Utils';
 
 const makeResultParams = ({ format, name }) => {
