@@ -13,7 +13,7 @@ import {
   isFalse,
   INITIAL_OPTIONS,
   OPTIONS_TEXT,
-} from './Constants';
+} from '../../helpers/Constants';
 
 describe('定数', () => {
   it('設定取得メッセージ', () => {

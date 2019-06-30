@@ -1,8 +1,8 @@
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 
-import { OPTIONS_TEXT, INITIAL_OPTIONS, isFalse } from './helpers/Constants';
-import { Popup } from './popup';
+import { OPTIONS_TEXT, INITIAL_OPTIONS } from '../helpers/Constants';
+import { Popup } from '../popup';
 
 describe('Popup', () => {
   it('render', () => {

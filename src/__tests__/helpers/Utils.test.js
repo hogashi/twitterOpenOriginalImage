@@ -1,11 +1,11 @@
-import { INITIAL_OPTIONS, isTrue, isFalse } from './Constants';
+import { INITIAL_OPTIONS, isTrue, isFalse } from '../../helpers/Constants';
 import {
   printException,
   collectUrlParams,
   formatUrl,
   openImages,
   getOptions,
-} from './Utils';
+} from '../../helpers/Utils';
 
 const makeResultParams = ({ format, name }) => {
   return {
