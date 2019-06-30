@@ -1,4 +1,10 @@
-import { GET_LOCAL_STORAGE, INITIAL_OPTIONS, isTrue, Options, TooiBoolean, OptionsMaybe } from './Constants';
+import {
+  GET_LOCAL_STORAGE,
+  INITIAL_OPTIONS,
+  isTrue,
+  Options,
+  OptionsMaybe,
+} from './Constants';
 import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
@@ -77,7 +83,7 @@ export const formatUrl = (imgUrl: string | null) => {
 };
 
 // 画像を開く
-export const openImages = (imgSrcs: Array<string | null>) => {
+export const openImages = (imgSrcs: (string | null)[]) => {
   Array.from(imgSrcs)
     .reverse() // 逆順に開くことで右側のタブから読める
     .forEach(imgSrc => {

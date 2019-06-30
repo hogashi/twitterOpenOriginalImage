@@ -1,5 +1,5 @@
 import ButtonSetters from './helpers/ButtonSetters';
-import { INITIAL_OPTIONS, OPTION_UPDATED, Options, OptionsMaybe, TooiBoolean } from './helpers/Constants';
+import { INITIAL_OPTIONS, OPTION_UPDATED, Options, TooiBoolean } from './helpers/Constants';
 import { getOptions } from './helpers/Utils';
 
 // 設定

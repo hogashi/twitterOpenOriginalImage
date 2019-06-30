@@ -90,7 +90,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         // 何もしない
         return;
       }
-      const target = tweet.getElementsByTagName('footer')[0] as HTMLElement | null;
+      const target = tweet.getElementsByTagName(
+        'footer'
+      )[0] as HTMLElement | null;
 
       // 画像エレメントがなかったら終了
       if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
@@ -98,7 +100,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         return;
       }
 
-      let imgSrcs: Array<string | null>;
+      let imgSrcs: (string | null)[];
       if (tweet.getElementsByClassName('media-img').length !== 0) {
         imgSrcs = [
           (tweet.getElementsByClassName('media-img')[0] as HTMLImageElement)
@@ -123,7 +125,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     target,
   }: {
     className: string;
-    imgSrcs: Array<string | null>;
+    imgSrcs: (string | null)[];
     target: HTMLElement | null;
   }) {
     if (!target) {
@@ -132,7 +134,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     }
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
-    const borderColor = txtMute ? window.getComputedStyle(txtMute).color : '#697b8c';
+    const borderColor = txtMute
+      ? window.getComputedStyle(txtMute).color
+      : '#697b8c';
     // ボタンのスタイル設定
     const style = {
       border: `1px solid ${borderColor}`,

@@ -28,13 +28,13 @@ export type TooiBoolean = 'istrue' | 'isfalse';
 // 無効だった場合はそのままボタンは表示されない
 export interface Options {
   // 公式Web
-  SHOW_ON_TIMELINE: TooiBoolean,
-  SHOW_ON_TWEET_DETAIL: TooiBoolean,
+  SHOW_ON_TIMELINE: TooiBoolean;
+  SHOW_ON_TWEET_DETAIL: TooiBoolean;
   // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean,
+  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean;
   // 画像ページ
-  STRIP_IMAGE_SUFFIX: TooiBoolean,
+  STRIP_IMAGE_SUFFIX: TooiBoolean;
 }
 export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 export const INITIAL_OPTIONS: Options = {
