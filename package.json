@@ -7,7 +7,7 @@
   "scripts": {
     "build": "run-s build:js build:userjs",
     "build:js": "webpack --mode production",
-    "build-dev": "run-s build-dev:js ",
+    "build-dev": "run-s build-dev:js build:userjs",
     "build-dev:js": "webpack --mode development",
     "build:userjs": "./scripts/make_user_script.sh",
     "lint": "run-s lint:prettier lint:eslint",
