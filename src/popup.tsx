@@ -24,6 +24,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
+  Options,
 } from './helpers/Constants';
 
 const { useState, useCallback } = React;
@@ -32,16 +33,14 @@ const { useState, useCallback } = React;
 // ツールバー右に表示される拡張機能のボタンをクリック、または
 // [設定]->[拡張機能]の[オプション]から出る設定画面
 
-const optionsText = OPTIONS_TEXT;
-const optionKeys = Object.keys(INITIAL_OPTIONS);
-const optionsEnabled: { [key: string]: boolean } = {};
-optionKeys.forEach(key => {
-  // 最初はどっちも機能オンであってほしい
-  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-  optionsEnabled[key] = localStorage[key] !== isFalse;
-});
+interface Props {
+  optionsText: { [key: string]: string };
+  optionKeys: string[]; // Array<keyof Options>
+  optionsEnabled: { [key: string]: boolean };
+};
 
-const Popup = () => {
+export const Popup = (props: Props) => {
+  const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
 
   const onSave = useCallback(() => {
@@ -154,4 +153,22 @@ const Popup = () => {
   );
 };
 
-ReactDOM.render(<Popup />, document.querySelector('body'));
+const optionsText = OPTIONS_TEXT;
+const optionKeys = Object.keys(INITIAL_OPTIONS);
+const optionsEnabled: { [key: string]: boolean } = {};
+optionKeys.forEach(key => {
+  // 最初はどっちも機能オンであってほしい
+  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
+  optionsEnabled[key] = localStorage[key] !== isFalse;
+});
+
+const props = {
+  optionsText,
+  optionKeys,
+  optionsEnabled,
+};
+
+ReactDOM.render(
+  <Popup {...props} />,
+  document.querySelector('body'),
+);
