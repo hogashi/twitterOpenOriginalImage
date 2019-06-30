@@ -21,7 +21,7 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 // 設定に使う真偽値
 export const isTrue = 'istrue';
 export const isFalse = 'isfalse';
-type TooiBoolean = 'istrue' | 'isfalse';
+export type TooiBoolean = 'istrue' | 'isfalse';
 
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
@@ -36,6 +36,7 @@ export interface Options {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: TooiBoolean,
 }
+export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 export const INITIAL_OPTIONS: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: isFalse,

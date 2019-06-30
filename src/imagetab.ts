@@ -4,7 +4,7 @@
 // twitterの画像を表示したときのC-sを拡張
 // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
 
-import { INITIAL_OPTIONS, STRIP_IMAGE_SUFFIX } from './helpers/Constants';
+import { INITIAL_OPTIONS, STRIP_IMAGE_SUFFIX, Options, TooiBoolean } from './helpers/Constants';
 import { getOptions, collectUrlParams } from './helpers/Utils';
 
 let options = { ...INITIAL_OPTIONS };
@@ -42,7 +42,9 @@ export const downloadImage = (e: KeyboardEvent) => {
 };
 
 getOptions().then(newOptions => {
-  options = { ...newOptions };
+  Object.keys(newOptions).forEach((key: keyof Options) => {
+    options[key] = newOptions[key] as TooiBoolean;
+  });
 });
 
 // キーを押したとき

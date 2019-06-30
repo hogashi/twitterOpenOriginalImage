@@ -1,4 +1,4 @@
-import { GET_LOCAL_STORAGE, INITIAL_OPTIONS, isTrue } from './Constants';
+import { GET_LOCAL_STORAGE, INITIAL_OPTIONS, isTrue, Options, TooiBoolean, OptionsMaybe } from './Constants';
 import { MessageRequest, MessageResponse } from '../background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
@@ -106,9 +106,9 @@ export const getOptions = () => {
       }
     };
     chrome.runtime.sendMessage(request, callback);
-  }).then((data: { [key: string]: string }) => {
+  }).then((data: OptionsMaybe) => {
     const options: { [key: string]: string } = {};
-    Object.keys(INITIAL_OPTIONS).map(key => {
+    Object.keys(INITIAL_OPTIONS).map((key: keyof Options) => {
       options[key] = data[key] || isTrue;
     });
 

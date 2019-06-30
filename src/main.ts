@@ -1,5 +1,5 @@
 import ButtonSetters from './helpers/ButtonSetters';
-import { INITIAL_OPTIONS, OPTION_UPDATED, Options } from './helpers/Constants';
+import { INITIAL_OPTIONS, OPTION_UPDATED, Options, OptionsMaybe, TooiBoolean } from './helpers/Constants';
 import { getOptions } from './helpers/Utils';
 
 // 設定
@@ -39,8 +39,10 @@ const config = { childList: true, subtree: true };
 observer.observe(target, config);
 
 // 設定読み込み
-getOptions().then(newOptions => {
-  options = { ...newOptions };
+getOptions().then((newOptions) => {
+  Object.keys(newOptions).forEach((key: keyof Options) => {
+    options[key] = newOptions[key] as TooiBoolean;
+  });
   // ボタンを(再)設置
   setButtonWithInterval();
 });
@@ -50,7 +52,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   console.log(chrome.runtime.lastError);
   if (request.method === OPTION_UPDATED) {
     getOptions().then(newOptions => {
-      options = { ...newOptions };
+      Object.keys(newOptions).forEach((key: keyof Options) => {
+        options[key] = newOptions[key] as TooiBoolean;
+      });
       // ボタンを(再)設置
       setButtonWithInterval();
       sendResponse({ data: 'done' });
