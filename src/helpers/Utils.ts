@@ -61,7 +61,7 @@ export const collectUrlParams = (
 };
 
 // 画像URLを https～?format=〜&name=orig に揃える
-export const formatUrl = (imgUrl?: string) => {
+export const formatUrl = (imgUrl: string | null) => {
   if (!imgUrl || imgUrl.length === 0) {
     return null;
   }
@@ -77,7 +77,7 @@ export const formatUrl = (imgUrl?: string) => {
 };
 
 // 画像を開く
-export const openImages = (imgSrcs: Array<string | undefined>) => {
+export const openImages = (imgSrcs: Array<string | null>) => {
   Array.from(imgSrcs)
     .reverse() // 逆順に開くことで右側のタブから読める
     .forEach(imgSrc => {

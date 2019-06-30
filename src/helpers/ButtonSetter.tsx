@@ -24,7 +24,7 @@ export default class ButtonSetter {
     this._setButtonOnTweetDetail(options);
   }
 
-  protected onClick(e: MouseEvent, imgSrcs: string[]) {
+  protected onClick(e: MouseEvent, imgSrcs: Array<string | null>) {
     // イベント(MouseEvent)による既定の動作をキャンセル
     e.preventDefault();
     // イベント(MouseEvent)の親要素への伝播を停止
@@ -90,9 +90,14 @@ export default class ButtonSetter {
     target,
   }: {
     className: string;
-    imgSrcs: string[];
-    target: HTMLElement;
+    imgSrcs: Array<string | null>;
+    target: HTMLDivElement | null;
   }) {
+    if (!target) {
+      printException('no target');
+      return;
+    }
+
     const button = document.createElement('input');
 
     button.type = 'button';
@@ -238,7 +243,7 @@ export default class ButtonSetter {
     tweets.forEach(tweet => {
       // 画像ツイート かつ まだ処理を行っていないときのみ実行
       const tweetATags = Array.from(
-        tweet.querySelectorAll('div div div div div div div div div a')
+        tweet.querySelectorAll<HTMLAnchorElement>('div div div div div div div div div a')
       ).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
       if (
         tweetATags.length === 0 ||
@@ -248,14 +253,14 @@ export default class ButtonSetter {
       }
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      const target: HTMLElement = tweet.querySelector(
+      const target = tweet.querySelector<HTMLDivElement>(
         'div div div[role="group"]'
       );
 
       const tweetImgs = Array.from(
-        tweet.querySelectorAll('div div div div div div div a')
+        tweet.querySelectorAll<HTMLAnchorElement>('div div div div div div div a')
       )
-        .filter((aTag: HTMLAnchorElement) =>
+        .filter((aTag) =>
           /\/status\/[0-9]+\/photo\//.test(aTag.href)
         )
         .map(aTag => aTag.querySelector('img'));
@@ -270,7 +275,7 @@ export default class ButtonSetter {
         tweetImgs[1] = tweetImgs[2];
         tweetImgs[2] = tweetimgTmp;
       }
-      const imgSrcs = tweetImgs.map(img => img.src);
+      const imgSrcs = tweetImgs.map(img => img && img.src);
 
       this.setReactLayoutButton({
         className,
@@ -303,7 +308,7 @@ export default class ButtonSetter {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
     // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-    const actionButton: HTMLElement =
+    const actionButton: HTMLElement | null =
       document.querySelector('.rn-1re7ezh') ||
       document.querySelector('.rn-111h2gw');
     if (actionButton && actionButton.style) {
