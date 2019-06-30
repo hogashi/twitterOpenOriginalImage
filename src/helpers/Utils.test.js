@@ -1,8 +1,10 @@
+import { INITIAL_OPTIONS, isTrue, isFalse } from './Constants';
 import {
   printException,
   collectUrlParams,
   formatUrl,
   openImages,
+  getOptions,
 } from './Utils';
 
 const makeResultParams = ({ format, name }) => {
@@ -177,6 +179,37 @@ describe('Utils', () => {
       expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
       expect(window.open.mock.calls[1][0]).toBe('https://twitter.com/tos');
       expect(window.open.mock.calls[2][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
+    });
+  });
+
+  describe('設定を取得', () => {
+    it('初期設定を取得できる', () => {
+      const expected = {};
+      Object.keys(INITIAL_OPTIONS).forEach((key) => {
+        expected[key] = isTrue;
+      });
+      window.chrome = {
+        runtime: {
+          sendMessage: jest.fn((_, callback) => callback({ data: {} })),
+        },
+      };
+      getOptions().then((options) => {
+        expect(options).toStrictEqual(expected);
+      });
+    });
+    it('設定した値を取得できる', () => {
+      const expected = {};
+      Object.keys(INITIAL_OPTIONS).forEach((key, i) => {
+        expected[key] = i % 2 === 0 ? isTrue : isFalse;
+      });
+      window.chrome = {
+        runtime: {
+          sendMessage: jest.fn((_, callback) => callback({ data: expected })),
+        },
+      };
+      return getOptions().then((options) => {
+        return expect(options).toStrictEqual(expected);
+      });
     });
   });
 });
