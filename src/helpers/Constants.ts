@@ -21,12 +21,20 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 // 設定に使う真偽値
 export const isTrue = 'istrue';
 export const isFalse = 'isfalse';
+type TooiBoolean = 'istrue' | 'isfalse';
 
 // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
 // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
 // 無効だった場合はそのままボタンは表示されない
 export interface Options {
-  [key: string]: string;
+  // 公式Web
+  SHOW_ON_TIMELINE: TooiBoolean,
+  SHOW_ON_TWEET_DETAIL: TooiBoolean,
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: TooiBoolean,
 }
 export const INITIAL_OPTIONS: Options = {
   // 公式Web
@@ -38,7 +46,7 @@ export const INITIAL_OPTIONS: Options = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: isFalse,
 };
-export const OPTIONS_TEXT: Options = {
+export const OPTIONS_TEXT: { [key: string]: string } = {
   // 公式Web
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
