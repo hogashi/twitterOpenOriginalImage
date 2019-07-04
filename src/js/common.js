@@ -30,6 +30,7 @@ const options = {
 };
 
 let observer;
+let isInterval = false;
 
 function tooiInit(setButtonsCallBack) {
   // 設定読み込み
@@ -37,7 +38,13 @@ function tooiInit(setButtonsCallBack) {
 
   if (setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
-    observer = new MutationObserver(setButtonsCallBack);
+    observer = new MutationObserver(() => {
+      if (!isInterval) {
+        setButtonsCallBack();
+        isInterval = true;
+        setTimeout(() => { isInterval = false }, 150);
+      }
+    });
     const target = document.querySelector('body');
     const config = { childList: true, subtree: true };
     // ページ全体でDOMの変更を検知し都度ボタン設置
