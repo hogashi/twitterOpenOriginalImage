@@ -1,7 +1,11 @@
 /* main_react_layout.js */
 // https://twitter.com/* で実行される
 
-tooiInit(setButtonsReactLayout);
+window.addEventListener('load', () => {
+  if (document.querySelector('#react-root')) {
+    tooiInit(setButtonsReactLayout);
+  }
+});
 
 // ボタンを置く
 function setButtonsReactLayout() {

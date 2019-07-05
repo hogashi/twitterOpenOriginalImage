@@ -1,7 +1,11 @@
 /* main.js */
 // https://twitter.com/* で実行される
 
-tooiInit(setButtons);
+window.addEventListener('load', () => {
+  if (!document.querySelector('#react-root')) {
+    tooiInit(setButtons);
+  }
+});
 
 // キー押下時
 document.addEventListener('keydown', function(e) {
