@@ -1,5 +1,10 @@
 import ButtonSetters from './helpers/ButtonSetters';
-import { INITIAL_OPTIONS, OPTION_UPDATED, Options, TooiBoolean } from './helpers/Constants';
+import {
+  INITIAL_OPTIONS,
+  OPTION_UPDATED,
+  Options,
+  TooiBoolean,
+} from './helpers/Constants';
 import { getOptions } from './helpers/Utils';
 
 // 設定
@@ -39,7 +44,7 @@ const config = { childList: true, subtree: true };
 observer.observe(target, config);
 
 // 設定読み込み
-getOptions().then((newOptions) => {
+getOptions().then(newOptions => {
   Object.keys(newOptions).forEach((key: keyof Options) => {
     options[key] = newOptions[key] as TooiBoolean;
   });

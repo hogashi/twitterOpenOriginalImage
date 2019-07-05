@@ -36,7 +36,7 @@ interface Props {
   optionsText: { [key: string]: string };
   optionKeys: string[]; // Array<keyof Options>
   optionsEnabled: { [key: string]: boolean };
-};
+}
 
 export const Popup = (props: Props) => {
   const { optionsText, optionKeys, optionsEnabled } = props;
@@ -167,7 +167,4 @@ const props = {
   optionsEnabled,
 };
 
-ReactDOM.render(
-  <Popup {...props} />,
-  document.querySelector('body'),
-);
+ReactDOM.render(<Popup {...props} />, document.querySelector('body'));
