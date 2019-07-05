@@ -31,6 +31,7 @@ const options = {
 
 let observer;
 let isInterval = false;
+let didSetTimeout = false;
 
 function tooiInit(setButtonsCallBack) {
   // 設定読み込み
@@ -42,7 +43,14 @@ function tooiInit(setButtonsCallBack) {
       if (!isInterval) {
         setButtonsCallBack();
         isInterval = true;
-        setTimeout(() => { isInterval = false }, 150);
+        if (!didSetTimeout) {
+          setTimeout(() => {
+            setButtonsCallBack();
+            isInterval = false;
+            didSetTimeout = false;
+          }, 170);
+          didSetTimeout = true;
+        }
       }
     });
     const target = document.querySelector('body');
