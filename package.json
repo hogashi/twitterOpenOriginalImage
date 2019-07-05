@@ -13,7 +13,7 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint src --ext ts --ext tsx",
     "lint:prettier": "prettier --write src/**/*.ts{,x}",
-    "test": "jest"
+    "test": "run-p lint:eslint jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -29,7 +29,7 @@
     "babel-loader": "^8.0.5",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
-    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-jest": "^22.7.2",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.8.0",
