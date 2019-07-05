@@ -29,6 +29,9 @@ const options = {
   STRIP_IMAGE_SUFFIX: 'isfalse',
 };
 
+// 実行する間隔(ms)
+const INTERVAL_MSEC = 170;
+
 let observer;
 let isInterval = false;
 let didSetTimeout = false;
@@ -48,7 +51,7 @@ function tooiInit(setButtonsCallBack) {
             setButtonsCallBack();
             isInterval = false;
             didSetTimeout = false;
-          }, 170);
+          }, INTERVAL_MSEC);
           didSetTimeout = true;
         }
       }
