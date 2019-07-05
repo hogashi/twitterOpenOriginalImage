@@ -2,7 +2,7 @@
   "name": "twitter-open-original-image",
   "description": "opens images in original size at twitter",
   "repository": "git@github.com:hogashi/twitterOpenOriginalImage.git",
-  "author": "hogashi <hogextend@gmail.com>",
+  "author": "hogashi <azuma.ginkakuji@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "run-s build:js build:userjs",
