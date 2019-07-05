@@ -17,10 +17,8 @@ function getActionButtonStyleReactLayout() {
   // 文字色
   // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
   let color = '#697b8c';
-  // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-  const actionButton =
-    document.querySelector('.rn-1re7ezh') ||
-    document.querySelector('.rn-111h2gw');
+  // ツイートアクション(返信とか)のボタン
+  const actionButton = document.querySelector('div[role="group"] div["button"]');
   if (actionButton && actionButton.style) {
     const buttonColor = window.getComputedStyle(actionButton).color;
     if (buttonColor && buttonColor.length > 0) {

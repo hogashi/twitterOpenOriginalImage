@@ -47,12 +47,12 @@ function tooiInit(setButtonsCallBack) {
         setButtonsCallBack();
         isInterval = true;
         if (!didSetTimeout) {
+          didSetTimeout = true;
           setTimeout(() => {
             setButtonsCallBack();
             isInterval = false;
             didSetTimeout = false;
           }, INTERVAL_MSEC);
-          didSetTimeout = true;
         }
       }
     });
