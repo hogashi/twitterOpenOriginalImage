@@ -29,7 +29,12 @@ const options = {
   STRIP_IMAGE_SUFFIX: 'isfalse',
 };
 
+// 実行する間隔(ms)
+const INTERVAL_MSEC = 170;
+
 let observer;
+let isInterval = false;
+let didSetTimeout = false;
 
 function tooiInit(setButtonsCallBack) {
   // 設定読み込み
@@ -37,7 +42,20 @@ function tooiInit(setButtonsCallBack) {
 
   if (setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
-    observer = new MutationObserver(setButtonsCallBack);
+    observer = new MutationObserver(() => {
+      if (!isInterval) {
+        setButtonsCallBack();
+        isInterval = true;
+        if (!didSetTimeout) {
+          didSetTimeout = true;
+          setTimeout(() => {
+            setButtonsCallBack();
+            isInterval = false;
+            didSetTimeout = false;
+          }, INTERVAL_MSEC);
+        }
+      }
+    });
     const target = document.querySelector('body');
     const config = { childList: true, subtree: true };
     // ページ全体でDOMの変更を検知し都度ボタン設置
