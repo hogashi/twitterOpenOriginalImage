@@ -11,7 +11,7 @@
     "build-dev:js": "webpack --mode development",
     "build:userjs": "./scripts/make_user_script.sh",
     "lint": "run-s lint:prettier lint:eslint",
-    "lint:eslint": "eslint src --ext ts --ext tsx",
+    "lint:eslint": "eslint src --ext js --ext ts --ext tsx",
     "lint:prettier": "prettier --write src/**/*.ts{,x}",
     "jest": "jest",
     "test": "run-p lint:eslint jest"
