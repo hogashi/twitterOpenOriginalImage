@@ -1,5 +1,8 @@
 import ButtonSetter from '../../src/helpers/ButtonSetter';
 import { INITIAL_OPTIONS } from '../../src/helpers/Constants';
+import { openImages, printException } from '../../src/helpers/Utils';
+
+jest.mock('../../src/helpers/Utils');
 
 describe('ButtonSetters', () => {
   describe('setButtonOnTimeline', () => {
@@ -41,6 +44,25 @@ describe('ButtonSetters', () => {
       buttonSetter.setButtonOnTweetDetail(INITIAL_OPTIONS);
       expect(buttonSetter._setButtonOnTweetDetail).toHaveBeenCalledTimes(1);
       expect(buttonSetter._setButtonOnTweetDetail.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
+    });
+  });
+
+  describe('onClick', () => {
+    it('イベント中断して画像開くメソッド呼ばれる', () => {
+      const event = {
+        preventDefault: jest.fn(),
+        stopPropagation: jest.fn(),
+      };
+      const imgSrcs = ['src1', 'src2'];
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.onClick(event, imgSrcs);
+
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+      expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+
+      expect(openImages).toHaveBeenCalledTimes(1);
+      expect(openImages.mock.calls[0][0]).toBe(imgSrcs);
     });
   });
 });
