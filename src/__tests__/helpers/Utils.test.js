@@ -19,15 +19,9 @@ const makeResultParams = ({ format, name }) => {
 
 describe('Utils', () => {
   it('エラーメッセージの表示(予期せぬ状況の確認)', () => {
-    window = Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: 'http://example.com/',
-      },
-    });
     console.log = jest.fn();
     printException('exception message');
-    expect(console.log.mock.calls[0][0]).toBe('tooi: exception message at: http://example.com/');
+    expect(console.log.mock.calls[0][0]).toBe('tooi: exception message at: http://localhost/');
   });
 
   // URLの変換のテストの場合たち
