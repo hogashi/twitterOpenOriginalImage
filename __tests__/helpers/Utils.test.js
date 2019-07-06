@@ -136,6 +136,7 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
       );
     });
+
     it('画像URLを2つ渡したとき逆順に開く', () => {
       window.open = jest.fn();
       openImages([
@@ -150,6 +151,7 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
       );
     });
+
     it('画像URLを4つ渡したとき逆順に開く', () => {
       window.open = jest.fn();
       openImages([
@@ -172,17 +174,20 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
       );
     });
+
     it('画像URLでないURLを1つ渡したときもそのまま開く', () => {
       window.open = jest.fn();
       openImages(['https://twitter.com/tos']);
       expect(window.open.mock.calls.length).toBe(1);
       expect(window.open.mock.calls[0][0]).toBe('https://twitter.com/tos');
     });
+
     it('undefinedを1つ渡したとき開かない', () => {
       window.open = jest.fn();
       openImages([undefined]);
       expect(window.open.mock.calls.length).toBe(0);
     });
+
     it('URLとundefinedを混ぜたときURLだけ開いてundefinedは開かない', () => {
       window.open = jest.fn();
       openImages([
@@ -215,6 +220,7 @@ describe('Utils', () => {
       };
       expect(getOptions()).resolves.toStrictEqual(expected);
     });
+
     it('設定した値を取得できる', () => {
       const expected = {};
       Object.keys(INITIAL_OPTIONS).forEach((key, i) => {
@@ -229,6 +235,7 @@ describe('Utils', () => {
         return expect(options).toStrictEqual(expected);
       });
     });
+
     it('設定が取得できなかったらreject', () => {
       const expected = {};
       Object.keys(INITIAL_OPTIONS).forEach(key => {

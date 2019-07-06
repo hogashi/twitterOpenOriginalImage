@@ -26,6 +26,7 @@ describe('定数', () => {
     expect(SHOW_ON_TIMELINE).toBe('SHOW_ON_TIMELINE');
     expect(SHOW_ON_TWEET_DETAIL).toBe('SHOW_ON_TWEET_DETAIL');
   });
+
   it('TweetDeck', () => {
     expect(HOST_TWEETDECK_TWITTER_COM).toBe('tweetdeck.twitter.com');
     expect(SHOW_ON_TWEETDECK_TIMELINE).toBe('SHOW_ON_TWEETDECK_TIMELINE');
@@ -33,6 +34,7 @@ describe('定数', () => {
       'SHOW_ON_TWEETDECK_TWEET_DETAIL'
     );
   });
+
   it('画像ページ', () => {
     expect(HOST_PBS_TWIMG_COM).toBe('pbs.twimg.com');
     expect(STRIP_IMAGE_SUFFIX).toBe('STRIP_IMAGE_SUFFIX');
@@ -57,6 +59,7 @@ describe('定数', () => {
       // 画像ページ
       STRIP_IMAGE_SUFFIX: 'isfalse',
     });
+
     expect(OPTIONS_TEXT).toStrictEqual({
       // 公式Web
       SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
