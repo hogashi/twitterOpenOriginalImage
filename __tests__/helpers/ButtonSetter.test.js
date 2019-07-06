@@ -67,15 +67,17 @@ describe('ButtonSetters', () => {
   });
 
   describe('setStyle', () => {
-    const element = document.createElement('div');
-    const style = {
-      display: 'block',
-      'background-color': 'green',
-    };
+    it('objectからエレメントにstyle属性をつける', () => {
+      const element = document.createElement('div');
+      const style = {
+        display: 'block',
+        'background-color': 'green',
+      };
 
-    const buttonSetter = new ButtonSetter();
-    buttonSetter.setStyle(element, style);
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setStyle(element, style);
 
-    expect(element.getAttribute('style')).toBe('display: block; background-color: green');
+      expect(element.getAttribute('style')).toBe('display: block; background-color: green');
+    });
   });
 });
