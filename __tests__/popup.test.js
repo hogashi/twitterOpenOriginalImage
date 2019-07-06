@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 import { OPTIONS_TEXT, INITIAL_OPTIONS } from '../src/helpers/Constants';
 import { Popup } from '../src/popup';
@@ -22,7 +22,7 @@ describe('Popup', () => {
         sendMessage: jest.fn(),
       },
     };
-    const tree = renderer.create(<Popup {...props} />).toJSON();
+    const tree = TestRenderer.create(<Popup {...props} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
