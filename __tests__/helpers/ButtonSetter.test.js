@@ -14,9 +14,13 @@ describe('ButtonSetters', () => {
       buttonSetter.setButtonOnTimeline(INITIAL_OPTIONS);
 
       expect(buttonSetter._setButtonOnTimeline).toHaveBeenCalledTimes(1);
-      expect(buttonSetter._setButtonOnTimeline.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
+      expect(buttonSetter._setButtonOnTimeline.mock.calls[0][0]).toStrictEqual(
+        INITIAL_OPTIONS
+      );
 
-      expect(buttonSetter._setButtonOnReactLayoutTimeline).not.toHaveBeenCalled();
+      expect(
+        buttonSetter._setButtonOnReactLayoutTimeline
+      ).not.toHaveBeenCalled();
     });
 
     it('新しいレイアウト(React)', () => {
@@ -31,8 +35,12 @@ describe('ButtonSetters', () => {
 
       expect(buttonSetter._setButtonOnTimeline).not.toHaveBeenCalled();
 
-      expect(buttonSetter._setButtonOnReactLayoutTimeline).toHaveBeenCalledTimes(1);
-      expect(buttonSetter._setButtonOnReactLayoutTimeline.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
+      expect(
+        buttonSetter._setButtonOnReactLayoutTimeline
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        buttonSetter._setButtonOnReactLayoutTimeline.mock.calls[0][0]
+      ).toStrictEqual(INITIAL_OPTIONS);
     });
   });
 
@@ -43,7 +51,9 @@ describe('ButtonSetters', () => {
 
       buttonSetter.setButtonOnTweetDetail(INITIAL_OPTIONS);
       expect(buttonSetter._setButtonOnTweetDetail).toHaveBeenCalledTimes(1);
-      expect(buttonSetter._setButtonOnTweetDetail.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
+      expect(
+        buttonSetter._setButtonOnTweetDetail.mock.calls[0][0]
+      ).toStrictEqual(INITIAL_OPTIONS);
     });
   });
 
@@ -77,7 +87,9 @@ describe('ButtonSetters', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setStyle(element, style);
 
-      expect(element.getAttribute('style')).toBe('display: block; background-color: green');
+      expect(element.getAttribute('style')).toBe(
+        'display: block; background-color: green'
+      );
     });
   });
 
