@@ -12,7 +12,7 @@
     "build:userjs": "./scripts/make_user_script.sh",
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint src --ext js --ext ts --ext tsx",
-    "lint:prettier": "prettier --write src/**/*.ts{,x}",
+    "lint:prettier": "prettier --write src/**/*.{js,ts{,x}}",
     "jest": "jest --verbose",
     "test": "run-s lint:eslint jest"
   },
