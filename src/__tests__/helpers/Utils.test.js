@@ -187,9 +187,7 @@ describe('Utils', () => {
           sendMessage: jest.fn((_, callback) => callback({ data: {} })),
         },
       };
-      getOptions().then((options) => {
-        expect(options).toStrictEqual(expected);
-      });
+      expect(getOptions()).resolves.toStrictEqual(expected);
     });
     it('設定した値を取得できる', () => {
       const expected = {};
@@ -204,6 +202,18 @@ describe('Utils', () => {
       return getOptions().then((options) => {
         return expect(options).toStrictEqual(expected);
       });
+    });
+    it('設定が取得できなかったらreject', () => {
+      const expected = {};
+      Object.keys(INITIAL_OPTIONS).forEach((key) => {
+        expected[key] = isTrue;
+      });
+      window.chrome = {
+        runtime: {
+          sendMessage: jest.fn((_, callback) => callback({})),
+        },
+      };
+      expect(getOptions()).rejects.toBeUndefined();
     });
   });
 });
