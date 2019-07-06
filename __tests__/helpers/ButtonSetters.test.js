@@ -1,10 +1,10 @@
-import ButtonSetters from '../../helpers/ButtonSetters';
+import ButtonSetters from '../../src/helpers/ButtonSetters';
 import {
   HOST_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
-} from '../../helpers/Constants';
-import ButtonSetter from '../../helpers/ButtonSetter';
-import ButtonSetterTweetDeck from '../../helpers/ButtonSetterTweetDeck';
+} from '../../src/helpers/Constants';
+import ButtonSetter from '../../src/helpers/ButtonSetter';
+import ButtonSetterTweetDeck from '../../src/helpers/ButtonSetterTweetDeck';
 
 describe('ButtonSetters', () => {
   it('ホストごとクラスが入っている', () => {
