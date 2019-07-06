@@ -22,9 +22,7 @@ describe('Popup', () => {
         sendMessage: jest.fn(),
       },
     };
-    const tree = renderer
-      .create(<Popup {...props} />)
-      .toJSON();
+    const tree = renderer.create(<Popup {...props} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

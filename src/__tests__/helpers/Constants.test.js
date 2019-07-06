@@ -29,7 +29,9 @@ describe('定数', () => {
   it('TweetDeck', () => {
     expect(HOST_TWEETDECK_TWITTER_COM).toBe('tweetdeck.twitter.com');
     expect(SHOW_ON_TWEETDECK_TIMELINE).toBe('SHOW_ON_TWEETDECK_TIMELINE');
-    expect(SHOW_ON_TWEETDECK_TWEET_DETAIL).toBe('SHOW_ON_TWEETDECK_TWEET_DETAIL');
+    expect(SHOW_ON_TWEETDECK_TWEET_DETAIL).toBe(
+      'SHOW_ON_TWEETDECK_TWEET_DETAIL'
+    );
   });
   it('画像ページ', () => {
     expect(HOST_PBS_TWIMG_COM).toBe('pbs.twimg.com');

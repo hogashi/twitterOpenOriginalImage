@@ -15,13 +15,15 @@ const makeResultParams = ({ format, name }) => {
     format,
     name: name || null,
   };
-}
+};
 
 describe('Utils', () => {
   it('エラーメッセージの表示(予期せぬ状況の確認)', () => {
     console.log = jest.fn();
     printException('exception message');
-    expect(console.log.mock.calls[0][0]).toBe('tooi: exception message at: http://localhost/');
+    expect(console.log.mock.calls[0][0]).toBe(
+      'tooi: exception message at: http://localhost/'
+    );
   });
 
   // URLの変換のテストの場合たち
@@ -110,12 +112,18 @@ describe('Utils', () => {
     cases.forEach(singleCase => {
       const { title, url, params } = singleCase;
       it(title, () => {
-        expect(formatUrl(url)).toBe(`https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`);
+        expect(formatUrl(url)).toBe(
+          `https://pbs.twimg.com/media/hogefuga123?format=${
+            params.format
+          }&name=orig`
+        );
       });
     });
 
     it('twitterの画像URLでないときそのまま', () => {
-      expect(formatUrl('https://twitter.com/tos')).toBe('https://twitter.com/tos');
+      expect(formatUrl('https://twitter.com/tos')).toBe(
+        'https://twitter.com/tos'
+      );
     });
   });
 
@@ -124,7 +132,9 @@ describe('Utils', () => {
       window.open = jest.fn();
       openImages(['https://pbs.twimg.com/media/1st?format=jpg&name=orig']);
       expect(window.open.mock.calls.length).toBe(1);
-      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
+      expect(window.open.mock.calls[0][0]).toBe(
+        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
+      );
     });
     it('画像URLを2つ渡したとき逆順に開く', () => {
       window.open = jest.fn();
@@ -133,8 +143,12 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/2nd?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(2);
-      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
-      expect(window.open.mock.calls[1][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
+      expect(window.open.mock.calls[0][0]).toBe(
+        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
+      );
+      expect(window.open.mock.calls[1][0]).toBe(
+        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
+      );
     });
     it('画像URLを4つ渡したとき逆順に開く', () => {
       window.open = jest.fn();
@@ -145,10 +159,18 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/4th?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(4);
-      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/4th?format=jpg&name=orig');
-      expect(window.open.mock.calls[1][0]).toBe('https://pbs.twimg.com/media/3rd?format=jpg&name=orig');
-      expect(window.open.mock.calls[2][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
-      expect(window.open.mock.calls[3][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
+      expect(window.open.mock.calls[0][0]).toBe(
+        'https://pbs.twimg.com/media/4th?format=jpg&name=orig'
+      );
+      expect(window.open.mock.calls[1][0]).toBe(
+        'https://pbs.twimg.com/media/3rd?format=jpg&name=orig'
+      );
+      expect(window.open.mock.calls[2][0]).toBe(
+        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
+      );
+      expect(window.open.mock.calls[3][0]).toBe(
+        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
+      );
     });
     it('画像URLでないURLを1つ渡したときもそのまま開く', () => {
       window.open = jest.fn();
@@ -170,16 +192,20 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/2nd?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(3);
-      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
+      expect(window.open.mock.calls[0][0]).toBe(
+        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
+      );
       expect(window.open.mock.calls[1][0]).toBe('https://twitter.com/tos');
-      expect(window.open.mock.calls[2][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
+      expect(window.open.mock.calls[2][0]).toBe(
+        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
+      );
     });
   });
 
   describe('設定を取得', () => {
     it('初期設定を取得できる', () => {
       const expected = {};
-      Object.keys(INITIAL_OPTIONS).forEach((key) => {
+      Object.keys(INITIAL_OPTIONS).forEach(key => {
         expected[key] = isTrue;
       });
       window.chrome = {
@@ -199,13 +225,13 @@ describe('Utils', () => {
           sendMessage: jest.fn((_, callback) => callback({ data: expected })),
         },
       };
-      return getOptions().then((options) => {
+      return getOptions().then(options => {
         return expect(options).toStrictEqual(expected);
       });
     });
     it('設定が取得できなかったらreject', () => {
       const expected = {};
-      Object.keys(INITIAL_OPTIONS).forEach((key) => {
+      Object.keys(INITIAL_OPTIONS).forEach(key => {
         expected[key] = isTrue;
       });
       window.chrome = {
