@@ -32,4 +32,15 @@ describe('ButtonSetters', () => {
       expect(buttonSetter._setButtonOnReactLayoutTimeline.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
     });
   });
+
+  describe('setButtonOnTweetDetail', () => {
+    it('詳細ツイートでもボタン置く(従来レイアウトのみ)', () => {
+      const buttonSetter = new ButtonSetter();
+      buttonSetter._setButtonOnTweetDetail = jest.fn();
+
+      buttonSetter.setButtonOnTweetDetail(INITIAL_OPTIONS);
+      expect(buttonSetter._setButtonOnTweetDetail).toHaveBeenCalledTimes(1);
+      expect(buttonSetter._setButtonOnTweetDetail.mock.calls[0][0]).toStrictEqual(INITIAL_OPTIONS);
+    });
+  });
 });
