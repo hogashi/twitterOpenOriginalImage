@@ -13,8 +13,8 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint src --ext js --ext ts --ext tsx",
     "lint:prettier": "prettier --write src/**/*.ts{,x}",
-    "jest": "jest",
-    "test": "run-p lint:eslint jest"
+    "jest": "jest --verbose",
+    "test": "run-s lint:eslint jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
