@@ -14,7 +14,9 @@
     "lint:eslint": "eslint src __tests__ --ext ts --ext tsx --ext js",
     "lint:prettier": "prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
     "jest": "jest --verbose",
-    "test": "run-s lint:eslint jest"
+    "jest:ci": "jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
+    "test": "run-s lint:eslint jest",
+    "test:ci": "run-s lint:eslint jest:ci"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -30,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "babel-loader": "^8.0.5",
+    "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-jest": "^22.7.2",
