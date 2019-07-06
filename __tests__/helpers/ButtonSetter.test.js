@@ -80,4 +80,26 @@ describe('ButtonSetters', () => {
       expect(element.getAttribute('style')).toBe('display: block; background-color: green');
     });
   });
+
+  describe('setButton', () => {
+    const className = 'hogeclass';
+    const imgSrcs = ['src1', 'src2'];
+    const target = document.createElement('div');
+
+    const buttonSetter = new ButtonSetter();
+    buttonSetter.setButton({ className, imgSrcs, target });
+
+    it('ボタン設置される', () => {
+      expect(target.innerHTML).toMatchSnapshot();
+    });
+
+    it('ボタン押すとonClick呼ばれる', () => {
+      buttonSetter.onClick = jest.fn();
+      const button = target.querySelector('input');
+      button.click();
+      expect(buttonSetter.onClick).toHaveBeenCalledTimes(1);
+      expect(buttonSetter.onClick.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
+      expect(buttonSetter.onClick.mock.calls[0][1]).toStrictEqual(imgSrcs);
+    });
+  });
 });
