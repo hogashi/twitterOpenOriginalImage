@@ -49,11 +49,11 @@ export default class ButtonSetter {
 
   protected setButton({
     className,
-    imgSrcs,
+    getImgSrcs,
     target,
   }: {
     className: string;
-    imgSrcs: string[];
+    getImgSrcs: () => (string | null)[];
     target: HTMLElement;
   }) {
     const style = {
@@ -80,7 +80,7 @@ export default class ButtonSetter {
     button.type = 'button';
     button.value = 'Original';
     button.addEventListener('click', e => {
-      this.onClick(e, imgSrcs);
+      this.onClick(e, getImgSrcs());
     });
 
     const container = document.createElement('div');
@@ -92,11 +92,11 @@ export default class ButtonSetter {
 
   protected setReactLayoutButton({
     className,
-    imgSrcs,
+    getImgSrcs,
     target,
   }: {
     className: string;
-    imgSrcs: (string | null)[];
+    getImgSrcs: () => (string | null)[];
     target: HTMLDivElement | null;
   }) {
     if (!target) {
@@ -119,7 +119,7 @@ export default class ButtonSetter {
       cursor: 'pointer',
     });
     button.addEventListener('click', e => {
-      this.onClick(e, imgSrcs);
+      this.onClick(e, getImgSrcs());
     });
 
     const container = document.createElement('div');

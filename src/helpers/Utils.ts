@@ -84,6 +84,10 @@ export const formatUrl = (imgUrl: string | null) => {
 
 // 画像を開く
 export const openImages = (imgSrcs: (string | null)[]) => {
+  if (imgSrcs.length === 0) {
+    printException('zero image urls');
+    return;
+  }
   Array.from(imgSrcs)
     .reverse() // 逆順に開くことで右側のタブから読める
     .forEach(imgSrc => {

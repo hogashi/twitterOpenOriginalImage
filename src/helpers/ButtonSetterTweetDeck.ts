@@ -123,11 +123,11 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
 
   protected setButton({
     className,
-    imgSrcs,
+    getImgSrcs,
     target,
   }: {
     className: string;
-    imgSrcs: (string | null)[];
+    getImgSrcs: () => (string | null)[];
     target: HTMLElement | null;
   }) {
     if (!target) {
@@ -167,7 +167,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     button.className = `pull-left margin-txs txt-mute ${className}`;
     this.setStyle(button, style);
     button.addEventListener('click', e => {
-      this.onClick(e, imgSrcs);
+      this.onClick(e, getImgSrcs());
     });
     button.insertAdjacentText('beforeend', 'Original');
 
