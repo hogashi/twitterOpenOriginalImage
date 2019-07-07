@@ -33,7 +33,11 @@ export default class ButtonSetter {
     openImages(imgSrcs);
   }
 
-  // エレメントへのstyle属性の設定
+  /**
+   * エレメントにスタイル当てる
+   * @param {HTMLElement} element スタイル当てる対象エレメント
+   * @param {Object} propertySet プロパティ名('font-size')と値('10px')のオブジェクト
+   */
   protected setStyle(element: HTMLElement, propertySet: { [key: string]: string }) {
     Object.entries(propertySet)
       .forEach(([key, value]) => element.style.setProperty(key, value));
