@@ -217,7 +217,7 @@ describe('Utils', () => {
     });
   });
 
-  describe('設定を取得', () => {
+  describe('getOptions', () => {
     it('初期設定を取得できる', () => {
       const expected = {};
       Object.keys(INITIAL_OPTIONS).forEach(key => {
