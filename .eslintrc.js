@@ -9,7 +9,9 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
-    "prettier",
+    "plugin:prettier/recommended",
+    "prettier/react",
+    "prettier/standard",
     "prettier/@typescript-eslint",
   ],
   "globals": {
