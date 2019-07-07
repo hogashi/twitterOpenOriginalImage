@@ -160,7 +160,6 @@ export default class ButtonSetter {
         ) ||
         tweet.getElementsByClassName(className).length !== 0
       ) {
-        printException('no image container on timeline');
         return;
       }
       // 操作ボタンの外側は様式にあわせる
