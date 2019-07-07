@@ -34,11 +34,9 @@ export default class ButtonSetter {
   }
 
   // エレメントへのstyle属性の設定
-  protected setStyle(element: HTMLElement, attrSet: { [key: string]: string }) {
-    const style = Object.entries(attrSet)
-      .map(entry => entry.join(': '))
-      .join('; ');
-    element.setAttribute('style', style);
+  protected setStyle(element: HTMLElement, propertySet: { [key: string]: string }) {
+    Object.entries(propertySet)
+      .forEach(([key, value]) => element.style.setProperty(key, value));
   }
 
   protected setButton({
