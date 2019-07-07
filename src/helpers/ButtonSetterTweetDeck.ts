@@ -22,7 +22,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     // is-actionable: タイムラインのみ
     const tweets = document.getElementsByClassName(
       'js-stream-item is-actionable'
-    );
+    ) as HTMLCollectionOf<HTMLElement>;
     if (!tweets.length) {
       return;
     }
@@ -73,7 +73,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     // console.log('TODO, ボタン実装') // TODO, debug
     // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
-    const tweets = document.getElementsByClassName('js-tweet-detail');
+    const tweets = document.getElementsByClassName(
+      'js-tweet-detail'
+    ) as HTMLCollectionOf<HTMLElement>;
     if (!tweets.length) {
       return;
     }

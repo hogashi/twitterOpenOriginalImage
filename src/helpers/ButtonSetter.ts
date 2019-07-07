@@ -248,11 +248,9 @@ export default class ButtonSetter {
     // 各ツイートに対して
     tweets.forEach(tweet => {
       // 画像ツイート かつ まだ処理を行っていないときのみ実行
-      const tweetATags = Array.from(
-        tweet.querySelectorAll<HTMLAnchorElement>(
-          'div div div div div div div div div a'
-        )
-      ).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
+      const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag =>
+        /\/status\/[0-9]+\/photo\//.test(aTag.href)
+      );
       if (
         tweetATags.length === 0 ||
         tweet.getElementsByClassName(className)[0]
@@ -261,17 +259,9 @@ export default class ButtonSetter {
       }
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      const target = tweet.querySelector<HTMLDivElement>(
-        'div div div[role="group"]'
-      );
+      const target = tweet.querySelector<HTMLDivElement>('div[role="group"]');
 
-      const tweetImgs = Array.from(
-        tweet.querySelectorAll<HTMLAnchorElement>(
-          'div div div div div div div a'
-        )
-      )
-        .filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href))
-        .map(aTag => aTag.querySelector('img'));
+      const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
       // 画像エレメントが取得できなかったら終了
       if (tweetImgs.length === 0) {
         printException('no image elements on timeline in react layout');
