@@ -104,12 +104,12 @@ export default class ButtonSetter {
     button.value = 'Original';
     const color = this.getReactLayoutActionButtonColor();
     this.setStyle(button, {
-      fontSize: '13px',
+      'font-size': '13px',
       padding: '4px 8px',
       color,
-      backgroundColor: 'rgba(0, 0, 0, 0)',
+      'background-color': 'rgba(0, 0, 0, 0)',
       border: `1px solid ${color}`,
-      borderRadius: '3px',
+      'border-radius': '3px',
       cursor: 'pointer',
     });
     button.addEventListener('click', e => {
