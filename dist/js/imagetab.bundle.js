@@ -122,10 +122,7 @@ const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
-const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
-
+const isFalse = 'isfalse';
 const INITIAL_OPTIONS = {
   // 公式Web
   SHOW_ON_TIMELINE: isFalse,
@@ -205,7 +202,9 @@ const downloadImage = e => {
   }
 };
 Object(_helpers_Utils__WEBPACK_IMPORTED_MODULE_1__[/* getOptions */ "b"])().then(newOptions => {
-  options = _objectSpread({}, newOptions);
+  Object.keys(newOptions).forEach(key => {
+    options[key] = newOptions[key];
+  });
 }); // キーを押したとき
 
 document.addEventListener('keydown', e => {
@@ -266,20 +265,22 @@ const collectUrlParams = rawUrl => {
     }
   }); // 空文字でもどんな文字列でもマッチする正規表現なのでnon-null
 
-  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:[a-z]+)$/); // どんな文字列でも空文字は最低入るのでnon-null
+  const matched = url.pathname.match(/^(.*?)(?:|\.([^.:]+))(?:|:([a-z]+))$/); // どんな文字列でも空文字は最低入るのでnon-null
 
-  const pathname = matched[1]; // 拡張子はないかもしれないのでundefinedも示しておく
+  const pathnameWithoutExtension = matched[1]; // 拡張子はないかもしれないのでundefinedも示しておく
 
-  const extension = matched[2];
+  const extension = matched[2]; // コロンを使う大きさ指定はないかもしれないのでなかったらnull
+
+  const legacyName = matched[3] || null;
   return {
     protocol: url.protocol,
     host: url.host,
-    pathname,
+    pathname: pathnameWithoutExtension,
     // 2.1.11時点ではクエリパラメータを使うのはTweetDeckのみ
     // TweetDeckのURLでは拡張子を優先する
     // ref: https://hogashi.hatenablog.com/entry/2018/08/15/042044
     format: extension || searchSet.format,
-    name: searchSet.name
+    name: searchSet.name || legacyName
   };
 }; // 画像URLを https～?format=〜&name=orig に揃える
 
@@ -303,6 +304,11 @@ const formatUrl = imgUrl => {
 }; // 画像を開く
 
 const openImages = imgSrcs => {
+  if (imgSrcs.length === 0) {
+    printException('zero image urls');
+    return;
+  }
+
   Array.from(imgSrcs).reverse() // 逆順に開くことで右側のタブから読める
   .forEach(imgSrc => {
     // if 画像URLが取得できたなら

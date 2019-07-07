@@ -121,10 +121,7 @@ const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
-const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
-
+const isFalse = 'isfalse';
 const INITIAL_OPTIONS = {
   // 公式Web
   SHOW_ON_TIMELINE: isFalse,
@@ -3725,6 +3722,7 @@ var _Button = _interopRequireDefault(__webpack_require__(178));
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Popup", function() { return Popup; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
@@ -3778,16 +3776,11 @@ const useState = react__WEBPACK_IMPORTED_MODULE_0__["useState"],
 // ツールバー右に表示される拡張機能のボタンをクリック、または
 // [設定]->[拡張機能]の[オプション]から出る設定画面
 
-const optionsText = _helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* OPTIONS_TEXT */ "f"];
-const optionKeys = Object.keys(_helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* INITIAL_OPTIONS */ "e"]);
-const optionsEnabled = {};
-optionKeys.forEach(key => {
-  // 最初はどっちも機能オンであってほしい
-  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-  optionsEnabled[key] = localStorage[key] !== _helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* isFalse */ "m"];
-});
+const Popup = props => {
+  const optionsText = props.optionsText,
+        optionKeys = props.optionKeys,
+        optionsEnabled = props.optionsEnabled;
 
-const Popup = () => {
   const _useState = useState(optionsEnabled),
         _useState2 = _slicedToArray(_useState, 2),
         enabled = _useState2[0],
@@ -3883,8 +3876,20 @@ const Popup = () => {
     }
   }, "twitter\u753B\u50CF\u539F\u5BF8\u30DC\u30BF\u30F3 - hogashi"));
 };
-
-react_dom__WEBPACK_IMPORTED_MODULE_1__["render"](react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Popup, null), document.querySelector('body'));
+const optionsText = _helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* OPTIONS_TEXT */ "f"];
+const optionKeys = Object.keys(_helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* INITIAL_OPTIONS */ "e"]);
+const optionsEnabled = {};
+optionKeys.forEach(key => {
+  // 最初はどっちも機能オンであってほしい
+  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
+  optionsEnabled[key] = localStorage[key] !== _helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* isFalse */ "m"];
+});
+const props = {
+  optionsText,
+  optionKeys,
+  optionsEnabled
+};
+react_dom__WEBPACK_IMPORTED_MODULE_1__["render"](react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Popup, props), document.querySelector('body'));
 
 /***/ }),
 /* 69 */

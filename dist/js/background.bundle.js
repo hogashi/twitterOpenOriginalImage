@@ -122,10 +122,7 @@ const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX'; // 設定
 // 設定に使う真偽値
 
 const isTrue = 'istrue';
-const isFalse = 'isfalse'; // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
-
+const isFalse = 'isfalse';
 const INITIAL_OPTIONS = {
   // 公式Web
   SHOW_ON_TIMELINE: isFalse,
