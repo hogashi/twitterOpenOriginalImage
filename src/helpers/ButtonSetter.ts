@@ -171,20 +171,19 @@ export default class ButtonSetter {
       // 画像の親が取得できたら
       const mediaContainer = tweet.getElementsByClassName(
         'AdaptiveMedia-container'
-      )[0];
+      )[0] as HTMLElement;
       if (mediaContainer) {
-        const imgSrcs = Array.from(
-          mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
-        ).map(element => element.getElementsByTagName('img')[0].src);
-        if (imgSrcs.length) {
-          this.setButton({
-            className,
-            imgSrcs,
-            target: actionList,
-          });
-        } else {
-          printException('no image urls on timeline');
-        }
+        const getImgSrcs = () =>
+          Array.from(
+            mediaContainer.getElementsByClassName(
+              'AdaptiveMedia-photoContainer'
+            )
+          ).map(element => element.getElementsByTagName('img')[0].src);
+        this.setButton({
+          className,
+          getImgSrcs,
+          target: actionList,
+        });
       }
     });
   }
@@ -215,20 +214,17 @@ export default class ButtonSetter {
       .getElementsByClassName('ProfileTweet-actionList')[0] as HTMLElement;
 
     // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
-    const imgSrcs = Array.from(
-      document
-        .getElementsByClassName('permalink-tweet-container')[0]
-        .getElementsByClassName('AdaptiveMedia-photoContainer')
-    ).map(element => element.getElementsByTagName('img')[0].src);
-    if (imgSrcs.length) {
-      this.setButton({
-        className,
-        imgSrcs,
-        target: actionList,
-      });
-    } else {
-      printException('no image urls on tweet detail');
-    }
+    const getImgSrcs = () =>
+      Array.from(
+        document
+          .getElementsByClassName('permalink-tweet-container')[0]
+          .getElementsByClassName('AdaptiveMedia-photoContainer')
+      ).map(element => element.getElementsByTagName('img')[0].src);
+    this.setButton({
+      className,
+      getImgSrcs,
+      target: actionList,
+    });
   }
 
   private _setButtonOnReactLayoutTimeline(options: Options) {
@@ -261,23 +257,25 @@ export default class ButtonSetter {
       // 操作ボタンの外側は様式にあわせる
       const target = tweet.querySelector<HTMLDivElement>('div[role="group"]');
 
-      const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
-      // 画像エレメントが取得できなかったら終了
-      if (tweetImgs.length === 0) {
-        printException('no image elements on timeline in react layout');
-        return;
-      }
-      if (tweetImgs.length === 4) {
-        // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
-        const tweetimgTmp = tweetImgs[1];
-        tweetImgs[1] = tweetImgs[2];
-        tweetImgs[2] = tweetimgTmp;
-      }
-      const imgSrcs = tweetImgs.map(img => img && img.src);
+      const getImgSrcs = () => {
+        const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
+        // 画像エレメントが取得できなかったら終了
+        if (tweetImgs.length === 0) {
+          printException('no image elements on timeline in react layout');
+          return [];
+        }
+        if (tweetImgs.length === 4) {
+          // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
+          const tweetimgTmp = tweetImgs[1];
+          tweetImgs[1] = tweetImgs[2];
+          tweetImgs[2] = tweetimgTmp;
+        }
+        return tweetImgs.map(img => img && img.src);
+      };
 
       this.setReactLayoutButton({
         className,
-        imgSrcs,
+        getImgSrcs,
         target,
       });
     });
