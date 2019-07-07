@@ -99,10 +99,11 @@ describe('ButtonSetters', () => {
   describe('setButton', () => {
     const className = 'hogeclass';
     const imgSrcs = ['src1', 'src2'];
+    const getImgSrcs = () => imgSrcs;
     const target = document.createElement('div');
 
     const buttonSetter = new ButtonSetter();
-    buttonSetter.setButton({ className, imgSrcs, target });
+    buttonSetter.setButton({ className, getImgSrcs, target });
 
     it('ボタン設置される', () => {
       expect(target.innerHTML).toMatchSnapshot();
