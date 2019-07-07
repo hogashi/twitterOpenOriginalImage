@@ -24,14 +24,20 @@ export const setButton = (_options: Options) => {
 };
 
 let isInterval = false;
+let deferred = false;
 const setButtonWithInterval = () => {
   // 短時間に何回も実行しないようインターバルを設ける
   if (isInterval) {
+    deferred = true;
     return;
   }
   isInterval = true;
   setTimeout(() => {
     isInterval = false;
+    if (deferred) {
+      setButton(options);
+      deferred = false;
+    }
   }, 300);
 
   setButton(options);
