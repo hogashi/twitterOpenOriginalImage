@@ -84,6 +84,10 @@ describe('ButtonSetters', () => {
         'background-color': 'green',
       };
 
+      // 最初はセットされていない
+      expect(element.style.display).toBe('');
+      expect(element.style.backgroundColor).toBe('');
+
       const buttonSetter = new ButtonSetter();
       buttonSetter.setStyle(element, style);
 
