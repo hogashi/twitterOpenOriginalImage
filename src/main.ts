@@ -7,6 +7,9 @@ import {
 } from './helpers/Constants';
 import { getOptions } from './helpers/Utils';
 
+// 実行の間隔(ms)
+const INTERVAL = 300;
+
 // 設定
 let options = { ...INITIAL_OPTIONS };
 
@@ -38,7 +41,7 @@ const setButtonWithInterval = () => {
       setButton(options);
       deferred = false;
     }
-  }, 300);
+  }, INTERVAL);
 
   setButton(options);
 };
