@@ -4,7 +4,7 @@ import { openImages, printException } from '../../src/helpers/Utils';
 
 jest.mock('../../src/helpers/Utils');
 
-describe('ButtonSetters', () => {
+describe('ButtonSetter', () => {
   describe('setButtonOnTimeline', () => {
     it('従来のレイアウト(not React)', () => {
       const buttonSetter = new ButtonSetter();
