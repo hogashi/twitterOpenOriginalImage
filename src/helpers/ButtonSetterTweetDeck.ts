@@ -176,7 +176,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
 
   private getBackgroundImageUrl(element: HTMLElement) {
     if (element.style && element.style.backgroundImage) {
-      return element.style.backgroundImage.replace(/url\("([^"]*)"\)/, '$1');
+      return element.style.backgroundImage.replace(/url\("?([^"]*)"?\);?/, '$1');
     }
     return null;
   }
