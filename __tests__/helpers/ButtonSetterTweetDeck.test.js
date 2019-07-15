@@ -580,5 +580,10 @@ describe('ButtonSetterTweetDeck', () => {
         'http://g.co/img1'
       );
     });
+
+    it('背景画像が空文字', () => {
+      element.style.backgroundImage = '';
+      expect(buttonSetter.getBackgroundImageUrl(element)).toBeNull();
+    });
   });
 });
