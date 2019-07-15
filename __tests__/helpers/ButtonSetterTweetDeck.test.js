@@ -569,4 +569,16 @@ describe('ButtonSetterTweetDeck', () => {
       });
     });
   });
+
+  describe('getBackgroundImageUrl', () => {
+    const buttonSetter = new ButtonSetterTweetDeck();
+    const element = document.createElement('div');
+
+    it('背景画像がURL', () => {
+      element.style.backgroundImage = 'url("http://g.co/img1")';
+      expect(buttonSetter.getBackgroundImageUrl(element)).toStrictEqual(
+        'http://g.co/img1'
+      );
+    });
+  });
 });
