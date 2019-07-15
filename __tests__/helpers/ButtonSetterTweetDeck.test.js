@@ -241,7 +241,7 @@ describe('ButtonSetterTweetDeck', () => {
 
     it('ツイート1つあっても画像なかったらボタンつけない', () => {
       const imgSrcs = [];
-      makeTweet(imgSrcs, [], true);
+      makeTweet(imgSrcs);
 
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -255,7 +255,7 @@ describe('ButtonSetterTweetDeck', () => {
 
     it('footerがなかったらボタンつけない', () => {
       const imgSrcs = ['https://g.co/img1'];
-      makeTweetDetail(imgSrcs, [], true);
+      makeTweet(imgSrcs);
 
       const footer = document.querySelector('footer');
       footer.parentNode.removeChild(footer);
@@ -412,7 +412,7 @@ describe('ButtonSetterTweetDeck', () => {
     describe('ツイート1つあっても画像なかったらボタンつけない', () => {
       it('img.media-imgがない', () => {
         const imgSrcs = ['https://g.co/img1'];
-        makeTweetDetail(imgSrcs, [], true);
+        makeTweetDetail(imgSrcs);
 
         const media = document.querySelector('.media-img');
         media.parentNode.removeChild(media);
@@ -429,7 +429,7 @@ describe('ButtonSetterTweetDeck', () => {
 
       it('a.media-imageがない', () => {
         const imgSrcs = ['https://g.co/img1', 'https://g.co/img2'];
-        makeTweetDetail(imgSrcs, [], true);
+        makeTweetDetail(imgSrcs);
 
         const media = document.querySelectorAll('.media-image');
         Array.from(media).forEach(medium =>
@@ -449,7 +449,7 @@ describe('ButtonSetterTweetDeck', () => {
 
     it('footerがなかったらボタンつけない', () => {
       const imgSrcs = ['https://g.co/img1'];
-      makeTweetDetail(imgSrcs, [], true);
+      makeTweetDetail(imgSrcs);
 
       const footer = document.querySelector('footer');
       footer.parentNode.removeChild(footer);
@@ -458,7 +458,7 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButton = jest.fn();
 
       const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
       buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
@@ -469,7 +469,7 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButton = jest.fn();
 
       const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
       buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
