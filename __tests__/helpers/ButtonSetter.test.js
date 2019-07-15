@@ -1,6 +1,6 @@
 import ButtonSetter from '../../src/helpers/ButtonSetter';
 import { INITIAL_OPTIONS } from '../../src/helpers/Constants';
-import { openImages, printException } from '../../src/helpers/Utils';
+import { openImages } from '../../src/helpers/Utils';
 
 jest.mock('../../src/helpers/Utils');
 
