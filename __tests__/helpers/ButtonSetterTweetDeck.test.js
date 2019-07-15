@@ -239,6 +239,35 @@ describe('ButtonSetterTweetDeck', () => {
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
 
+    it('ツイート1つあっても画像なかったらボタンつけない', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeTweet(imgSrcs, [], true);
+
+      // 画像の部分ない状態を再現する
+      const media = document.querySelector('.js-media');
+      media.parentNode.removeChild(media);
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
+    it('画像ツイートなかったら何もしない', () => {
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
     it('設定がOFFなら何もしない', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -355,7 +384,7 @@ describe('ButtonSetterTweetDeck', () => {
 
     it('画像1枚ツイート1つでも,もうボタンあったらボタンつけない', () => {
       const imgSrcs = ['https://g.co/img1'];
-      makeTweet(imgSrcs, [], true);
+      makeTweetDetail(imgSrcs, [], true);
 
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -363,6 +392,55 @@ describe('ButtonSetterTweetDeck', () => {
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
       buttonSetter.setButtonOnTweetDetail(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
+    describe('ツイート1つあっても画像なかったらボタンつけない', () => {
+      it('img.media-imgがない', () => {
+        const imgSrcs = ['https://g.co/img1'];
+        makeTweetDetail(imgSrcs, [], true);
+
+        // 画像の部分ない状態を再現する
+        const media = document.querySelector('.media-img');
+        media.parentNode.removeChild(media);
+
+        const buttonSetter = new ButtonSetterTweetDeck();
+        buttonSetter.setButton = jest.fn();
+
+        const options = INITIAL_OPTIONS;
+        options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+        buttonSetter.setButtonOnTimeline(options);
+
+        expect(buttonSetter.setButton).not.toHaveBeenCalled();
+      });
+
+      it('a.js-media-image-linkがない', () => {
+        const imgSrcs = ['https://g.co/img1'];
+        makeTweetDetail(imgSrcs, [], true);
+
+        // 画像の部分ない状態を再現する
+        const media = document.querySelector('.js-media-image-link');
+        media.parentNode.removeChild(media);
+
+        const buttonSetter = new ButtonSetterTweetDeck();
+        buttonSetter.setButton = jest.fn();
+
+        const options = INITIAL_OPTIONS;
+        options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+        buttonSetter.setButtonOnTimeline(options);
+
+        expect(buttonSetter.setButton).not.toHaveBeenCalled();
+      });
+    });
+
+    it('画像ツイートなかったら何もしない', () => {
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
