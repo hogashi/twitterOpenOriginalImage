@@ -164,7 +164,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     button.addEventListener('click', e => {
       this.onClick(e, getImgSrcs());
     });
-    button.insertAdjacentText('beforeend', 'Original');
+    button.insertAdjacentHTML('beforeend', 'Original');
 
     target.appendChild(button);
   }
