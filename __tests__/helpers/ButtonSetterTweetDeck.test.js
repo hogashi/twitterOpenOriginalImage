@@ -491,46 +491,82 @@ describe('ButtonSetterTweetDeck', () => {
     const className = 'hogeclass';
     const imgSrcs = ['src1', 'src2'];
     const getImgSrcs = () => imgSrcs;
-    const target = document.createElement('footer');
 
-    document.body.innerHTML = '';
+    describe('txt-muteある', () => {
+      document.body.innerHTML = '';
 
-    const root = document.createElement('div');
-    root.classList.add('txt-mute');
-    root.style.color = '#123456';
+      const root = document.createElement('div');
+      root.classList.add('txt-mute');
+      root.style.color = '#123456';
 
-    root.appendChild(target);
-    document.body.appendChild(root);
+      const target = document.createElement('footer');
+      root.appendChild(target);
+      document.body.appendChild(root);
 
-    const buttonSetter = new ButtonSetterTweetDeck();
-    buttonSetter.setButton({ className, getImgSrcs, target });
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton({ className, getImgSrcs, target });
 
-    const button = target.querySelector(`a.${className}`);
+      const button = target.querySelector(`a.${className}`);
 
-    it('ボタン設置される', () => {
-      expect(button).toBeTruthy();
-      expect(target.innerHTML).toMatchSnapshot();
+      it('ボタン設置される', () => {
+        expect(button).toBeTruthy();
+        expect(target.innerHTML).toMatchSnapshot();
+      });
+
+      it('ボタンにスタイルついている', () => {
+        const styles = button.style;
+        expect(styles.border).toStrictEqual('1px solid rgb(18, 52, 86)'); // #123456 -> rgb(18, 52, 86)
+        expect(styles.borderRadius).toStrictEqual('2px');
+        expect(styles.display).toStrictEqual('inline-block');
+        expect(styles.fontSize).toStrictEqual('0.75em');
+        expect(styles.marginTop).toStrictEqual('5px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.lineHeight).toStrictEqual('1.5em');
+        expect(styles.cursor).toStrictEqual('pointer');
+      });
+
+      it('ボタン押すとonClick呼ばれる', () => {
+        buttonSetter.onClick = jest.fn();
+
+        button.click();
+        expect(buttonSetter.onClick).toHaveBeenCalledTimes(1);
+        expect(buttonSetter.onClick.mock.calls[0][0]).toBeInstanceOf(
+          MouseEvent
+        );
+        expect(buttonSetter.onClick.mock.calls[0][1]).toStrictEqual(imgSrcs);
+      });
     });
 
-    it('ボタンにスタイルついている', () => {
-      const styles = button.style;
-      expect(styles.border).toStrictEqual('1px solid rgb(18, 52, 86)'); // #123456 -> rgb(18, 52, 86)
-      expect(styles.borderRadius).toStrictEqual('2px');
-      expect(styles.display).toStrictEqual('inline-block');
-      expect(styles.fontSize).toStrictEqual('0.75em');
-      expect(styles.marginTop).toStrictEqual('5px');
-      expect(styles.padding).toStrictEqual('1px 1px 0');
-      expect(styles.lineHeight).toStrictEqual('1.5em');
-      expect(styles.cursor).toStrictEqual('pointer');
-    });
+    describe('txt-muteない', () => {
+      document.body.innerHTML = '';
 
-    it('ボタン押すとonClick呼ばれる', () => {
-      buttonSetter.onClick = jest.fn();
+      const root = document.createElement('div');
 
-      button.click();
-      expect(buttonSetter.onClick).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.onClick.mock.calls[0][0]).toBeInstanceOf(MouseEvent);
-      expect(buttonSetter.onClick.mock.calls[0][1]).toStrictEqual(imgSrcs);
+      const target = document.createElement('footer');
+      root.appendChild(target);
+      document.body.appendChild(root);
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton({ className, getImgSrcs, target });
+
+      const button = target.querySelector(`a.${className}`);
+
+      it('ボタン設置される', () => {
+        expect(button).toBeTruthy();
+        expect(target.innerHTML).toMatchSnapshot();
+      });
+
+      it('ボタンにスタイルついている', () => {
+        const styles = button.style;
+        expect(styles.border).toStrictEqual('1px solid #697b8c');
+        expect(styles.borderRadius).toStrictEqual('2px');
+        expect(styles.display).toStrictEqual('inline-block');
+        expect(styles.fontSize).toStrictEqual('0.75em');
+        expect(styles.marginTop).toStrictEqual('5px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.lineHeight).toStrictEqual('1.5em');
+        expect(styles.cursor).toStrictEqual('pointer');
+      });
     });
   });
 });
