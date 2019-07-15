@@ -97,13 +97,8 @@ export default class ButtonSetter {
   }: {
     className: string;
     getImgSrcs: () => (string | null)[];
-    target: HTMLDivElement | null;
+    target: HTMLElement;
   }) {
-    if (!target) {
-      printException('no target');
-      return;
-    }
-
     const button = document.createElement('input');
 
     button.type = 'button';
@@ -163,9 +158,13 @@ export default class ButtonSetter {
         return;
       }
       // 操作ボタンの外側は様式にあわせる
-      const actionList = tweet.getElementsByClassName(
-        'ProfileTweet-actionList'
-      )[0] as HTMLElement;
+      const actionList = tweet.querySelector<HTMLElement>(
+        '.ProfileTweet-actionList'
+      );
+      if (!actionList) {
+        printException('no target');
+        return;
+      }
 
       // 画像の親が取得できたら
       const mediaContainer = tweet.getElementsByClassName(
@@ -208,9 +207,13 @@ export default class ButtonSetter {
       return;
     }
     // Originalボタンの親の親となる枠
-    const actionList = document
-      .getElementsByClassName('permalink-tweet-container')[0]
-      .getElementsByClassName('ProfileTweet-actionList')[0] as HTMLElement;
+    const actionList = document.querySelector<HTMLElement>(
+      '.permalink-tweet-container .ProfileTweet-actionList'
+    );
+    if (!actionList) {
+      printException('no target');
+      return;
+    }
 
     // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
     const getImgSrcs = () =>
@@ -254,7 +257,11 @@ export default class ButtonSetter {
       }
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      const target = tweet.querySelector<HTMLDivElement>('div[role="group"]');
+      const target = tweet.querySelector<HTMLElement>('div[role="group"]');
+      if (!target) {
+        printException('no target');
+        return;
+      }
 
       const getImgSrcs = () => {
         const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
@@ -303,11 +310,16 @@ export default class ButtonSetter {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
     // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-    const actionButton: HTMLElement | null =
-      document.querySelector('.rn-1re7ezh') ||
-      document.querySelector('.rn-111h2gw');
-    if (actionButton && actionButton.style) {
-      const buttonColor = window.getComputedStyle(actionButton).color;
+    const actionButton = document.querySelector<HTMLElement>(
+      'div[role="group"] div[role="button"]'
+    );
+    if (
+      actionButton &&
+      actionButton.children[0] &&
+      (actionButton.children[0] as HTMLElement).style
+    ) {
+      const buttonColor = window.getComputedStyle(actionButton.children[0])
+        .color;
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
       }

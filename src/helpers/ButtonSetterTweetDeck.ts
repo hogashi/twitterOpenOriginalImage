@@ -42,7 +42,14 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         return;
       }
 
-      const target = tweet.getElementsByTagName('footer')[0] as HTMLElement;
+      const target = tweet.querySelector('footer');
+      if (!target) {
+        // ボタンを置く場所がないとき
+        // 何もしない
+        printException('no target');
+        return;
+      }
+
       const getImgSrcs = () => {
         return Array.from(
           tweet.getElementsByClassName('js-media-image-link')
@@ -84,9 +91,13 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         // 何もしない
         return;
       }
-      const target = tweet.getElementsByTagName(
-        'footer'
-      )[0] as HTMLElement | null;
+      const target = tweet.querySelector('footer');
+      if (!target) {
+        // ボタンを置く場所がないとき
+        // 何もしない
+        printException('no target');
+        return;
+      }
 
       const getImgSrcs = () => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
@@ -116,12 +127,8 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
   }: {
     className: string;
     getImgSrcs: () => (string | null)[];
-    target: HTMLElement | null;
+    target: HTMLElement;
   }) {
-    if (!target) {
-      printException('no target');
-      return;
-    }
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
     const borderColor = txtMute

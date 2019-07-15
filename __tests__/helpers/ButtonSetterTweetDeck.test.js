@@ -253,6 +253,23 @@ describe('ButtonSetterTweetDeck', () => {
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
 
+    it('footerがなかったらボタンつけない', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeTweetDetail(imgSrcs, [], true);
+
+      const footer = document.querySelector('footer');
+      footer.parentNode.removeChild(footer);
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
     it('画像ツイートなかったら何もしない', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -404,7 +421,7 @@ describe('ButtonSetterTweetDeck', () => {
         buttonSetter.setButton = jest.fn();
 
         const options = INITIAL_OPTIONS;
-        options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+        options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
         buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
@@ -423,11 +440,28 @@ describe('ButtonSetterTweetDeck', () => {
         buttonSetter.setButton = jest.fn();
 
         const options = INITIAL_OPTIONS;
-        options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+        options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
         buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
       });
+    });
+
+    it('footerがなかったらボタンつけない', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeTweetDetail(imgSrcs, [], true);
+
+      const footer = document.querySelector('footer');
+      footer.parentNode.removeChild(footer);
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTweetDetail(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
 
     it('画像ツイートなかったら何もしない', () => {
