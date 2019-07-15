@@ -43,7 +43,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
       }
 
       const target = tweet.getElementsByTagName('footer')[0] as HTMLElement;
-      if (tweet.getElementsByClassName('js-media')) {
+      if (tweet.getElementsByClassName('js-media').length !== 0) {
         const getImgSrcs = () => {
           return Array.from(
             tweet.getElementsByClassName('js-media-image-link')
