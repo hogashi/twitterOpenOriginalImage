@@ -68,9 +68,7 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
     if (!(options[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
       return;
     }
-    // console.log('TODO, ボタン実装') // TODO, debug
-    // if タイムラインのツイートを取得できたら
-    // is-actionable: タイムラインのみ
+    // if ツイート詳細を取得できたら
     const tweets = document.getElementsByClassName(
       'js-tweet-detail'
     ) as HTMLCollectionOf<HTMLElement>;
@@ -176,7 +174,10 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
 
   private getBackgroundImageUrl(element: HTMLElement) {
     if (element.style && element.style.backgroundImage) {
-      return element.style.backgroundImage.replace(/url\("?([^"]*)"?\);?/, '$1');
+      return element.style.backgroundImage.replace(
+        /url\("?([^"]*)"?\);?/,
+        '$1'
+      );
     }
     return null;
   }
