@@ -43,20 +43,16 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
       }
 
       const target = tweet.getElementsByTagName('footer')[0] as HTMLElement;
-      if (tweet.getElementsByClassName('js-media').length !== 0) {
-        const getImgSrcs = () => {
-          return Array.from(
-            tweet.getElementsByClassName('js-media-image-link')
-          ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
-        };
-        this.setButton({
-          className,
-          getImgSrcs,
-          target,
-        });
-      } else {
-        printException('no image elements on tweetdeck timeline');
-      }
+      const getImgSrcs = () => {
+        return Array.from(
+          tweet.getElementsByClassName('js-media-image-link')
+        ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
+      };
+      this.setButton({
+        className,
+        getImgSrcs,
+        target,
+      });
     });
   }
 
@@ -92,12 +88,6 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
         'footer'
       )[0] as HTMLElement | null;
 
-      // 画像エレメントがなかったら終了
-      if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
-        printException('no image elements on tweetdeck tweet detail');
-        return;
-      }
-
       const getImgSrcs = () => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
           return [
@@ -105,9 +95,9 @@ export default class ButtonSetterTweetDeck extends ButtonSetter {
               .src,
           ];
         } else {
-          return Array.from(
-            tweet.getElementsByClassName('js-media-image-link')
-          ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
+          return Array.from(tweet.getElementsByClassName('media-image')).map(
+            element => this.getBackgroundImageUrl(element as HTMLElement)
+          );
         }
       };
 

@@ -240,12 +240,8 @@ describe('ButtonSetterTweetDeck', () => {
     });
 
     it('ツイート1つあっても画像なかったらボタンつけない', () => {
-      const imgSrcs = ['https://g.co/img1'];
+      const imgSrcs = [];
       makeTweet(imgSrcs, [], true);
-
-      // 画像の部分ない状態を再現する
-      const media = document.querySelector('.js-media');
-      media.parentNode.removeChild(media);
 
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -401,7 +397,6 @@ describe('ButtonSetterTweetDeck', () => {
         const imgSrcs = ['https://g.co/img1'];
         makeTweetDetail(imgSrcs, [], true);
 
-        // 画像の部分ない状態を再現する
         const media = document.querySelector('.media-img');
         media.parentNode.removeChild(media);
 
@@ -410,25 +405,26 @@ describe('ButtonSetterTweetDeck', () => {
 
         const options = INITIAL_OPTIONS;
         options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-        buttonSetter.setButtonOnTimeline(options);
+        buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
       });
 
-      it('a.js-media-image-linkがない', () => {
-        const imgSrcs = ['https://g.co/img1'];
+      it('a.media-imageがない', () => {
+        const imgSrcs = ['https://g.co/img1', 'https://g.co/img2'];
         makeTweetDetail(imgSrcs, [], true);
 
-        // 画像の部分ない状態を再現する
-        const media = document.querySelector('.js-media-image-link');
-        media.parentNode.removeChild(media);
+        const media = document.querySelectorAll('.media-image');
+        Array.from(media).forEach(medium =>
+          medium.parentNode.removeChild(medium)
+        );
 
         const buttonSetter = new ButtonSetterTweetDeck();
         buttonSetter.setButton = jest.fn();
 
         const options = INITIAL_OPTIONS;
         options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-        buttonSetter.setButtonOnTimeline(options);
+        buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
       });
@@ -440,7 +436,7 @@ describe('ButtonSetterTweetDeck', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
