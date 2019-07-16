@@ -9,6 +9,6 @@
     "lint": "prettier --write src/js/*.js tooi*.js"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "prettier": "^1.18.2"
   }
 }
