@@ -235,7 +235,7 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButton = jest.fn();
 
       const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isFalse;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isFalse;
       buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
