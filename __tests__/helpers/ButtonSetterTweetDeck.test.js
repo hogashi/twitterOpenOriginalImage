@@ -9,90 +9,39 @@ import {
 
 jest.mock('../../src/helpers/Utils');
 
-/**
- * @param {string[]} imgSrcs
- * @param {string[]} extraClassNames
- * @param {boolean} hasButton
- */
-const makeTweet = (imgSrcs, extraClassNames = [], hasButton = false) => {
-  const root = document.createElement('div');
-  root.classList.add('js-stream-item', 'is-actionable');
-
-  const media = document.createElement('div');
-  media.classList.add('js-media');
-
-  const footer = document.createElement('footer');
-  if (hasButton) {
-    const button = document.createElement('div');
-    button.classList.add('tooi-button-container-tweetdeck-timeline');
-    footer.appendChild(button);
-  }
-
-  imgSrcs.forEach(src => {
-    const div = document.createElement('div');
-    div.classList.add(...['js-media-image-link', ...extraClassNames]);
-    div.style.backgroundImage = `url("${src}")`;
-    media.appendChild(div);
-  });
-
-  root.appendChild(media);
-  root.appendChild(footer);
-  document.body.appendChild(root);
-};
-
-/**
- * @param {string[]} imgSrcs
- * @param {string[]} extraClassNames
- * @param {boolean} hasButton
- */
-const makeTweetDetail = (imgSrcs, extraClassNames = [], hasButton = false) => {
-  const root = document.createElement('div');
-  root.classList.add('js-tweet-detail');
-
-  const media = document.createElement('div');
-
-  const footer = document.createElement('footer');
-  if (hasButton) {
-    const button = document.createElement('div');
-    button.classList.add('tooi-button-container-tweetdeck-detail');
-    footer.appendChild(button);
-  }
-
-  /**
-   * - 画像が1枚のとき
-   *   - a.js-media-image-link > img.media-img[src="画像URL"]
-   * - 画像が複数枚のとき
-   *   - a.js-media-image-link.media-image[style="background-image: url("画像URL")"]
-   *   - a ...
-   */
-  if (imgSrcs.length === 1) {
-    const aTag = document.createElement('a');
-    aTag.classList.add(...['js-media-image-link', ...extraClassNames]);
-
-    const img = document.createElement('img');
-    img.classList.add('media-img');
-    img.src = imgSrcs[0];
-
-    aTag.appendChild(img);
-    media.appendChild(aTag);
-  } else {
-    imgSrcs.forEach(src => {
-      const aTag = document.createElement('a');
-      aTag.classList.add(
-        ...['js-media-image-link', 'media-image', ...extraClassNames]
-      );
-      aTag.style.backgroundImage = `url("${src}")`;
-      media.appendChild(aTag);
-    });
-  }
-
-  root.appendChild(media);
-  root.appendChild(footer);
-  document.body.appendChild(root);
-};
-
 describe('ButtonSetterTweetDeck', () => {
   describe('setButtonOnTimeline', () => {
+    /**
+     * @param {string[]} imgSrcs
+     * @param {string[]} extraClassNames
+     * @param {boolean} hasButton
+     */
+    const makeTweet = (imgSrcs, extraClassNames = [], hasButton = false) => {
+      const root = document.createElement('div');
+      root.classList.add('js-stream-item', 'is-actionable');
+
+      const media = document.createElement('div');
+      media.classList.add('js-media');
+
+      const footer = document.createElement('footer');
+      if (hasButton) {
+        const button = document.createElement('div');
+        button.classList.add('tooi-button-container-tweetdeck-timeline');
+        footer.appendChild(button);
+      }
+
+      imgSrcs.forEach(src => {
+        const div = document.createElement('div');
+        div.classList.add(...['js-media-image-link', ...extraClassNames]);
+        div.style.backgroundImage = `url("${src}")`;
+        media.appendChild(div);
+      });
+
+      root.appendChild(media);
+      root.appendChild(footer);
+      document.body.appendChild(root);
+    };
+
     beforeEach(() => {
       document.body.innerHTML = '';
     });
@@ -294,6 +243,61 @@ describe('ButtonSetterTweetDeck', () => {
   });
 
   describe('setButtonOnTweetDetail', () => {
+    /**
+     * @param {string[]} imgSrcs
+     * @param {string[]} extraClassNames
+     * @param {boolean} hasButton
+     */
+    const makeTweetDetail = (
+      imgSrcs,
+      extraClassNames = [],
+      hasButton = false
+    ) => {
+      const root = document.createElement('div');
+      root.classList.add('js-tweet-detail');
+
+      const media = document.createElement('div');
+
+      const footer = document.createElement('footer');
+      if (hasButton) {
+        const button = document.createElement('div');
+        button.classList.add('tooi-button-container-tweetdeck-detail');
+        footer.appendChild(button);
+      }
+
+      /**
+       * - 画像が1枚のとき
+       *   - a.js-media-image-link > img.media-img[src="画像URL"]
+       * - 画像が複数枚のとき
+       *   - a.js-media-image-link.media-image[style="background-image: url("画像URL")"]
+       *   - a ...
+       */
+      if (imgSrcs.length === 1) {
+        const aTag = document.createElement('a');
+        aTag.classList.add(...['js-media-image-link', ...extraClassNames]);
+
+        const img = document.createElement('img');
+        img.classList.add('media-img');
+        img.src = imgSrcs[0];
+
+        aTag.appendChild(img);
+        media.appendChild(aTag);
+      } else {
+        imgSrcs.forEach(src => {
+          const aTag = document.createElement('a');
+          aTag.classList.add(
+            ...['js-media-image-link', 'media-image', ...extraClassNames]
+          );
+          aTag.style.backgroundImage = `url("${src}")`;
+          media.appendChild(aTag);
+        });
+      }
+
+      root.appendChild(media);
+      root.appendChild(footer);
+      document.body.appendChild(root);
+    };
+
     beforeEach(() => {
       document.body.innerHTML = '';
     });
