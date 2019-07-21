@@ -241,13 +241,13 @@ export default class ButtonSetter {
     }
     // 各ツイートに対して
     tweets.forEach(tweet => {
-      // 画像ツイート かつ 画像がある かつ まだ処理を行っていないときのみ実行
+      // 画像ツイート かつ 画像が1枚でもある かつ まだ処理を行っていないときのみ実行
       const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag =>
         /\/status\/[0-9]+\/photo\//.test(aTag.href)
       );
       if (
         tweetATags.length === 0 ||
-        !tweetATags.every(aTag => aTag.querySelector('img')) ||
+        !tweetATags.some(aTag => aTag.querySelector('img')) ||
         tweet.getElementsByClassName(className)[0]
       ) {
         return;
