@@ -804,7 +804,7 @@ describe('ButtonSetter', () => {
     });
 
     it('ツイートなかったら何もしない', () => {
-      document.innerHTML =
+      document.body.innerHTML =
         '<div id="react-root"><main><section></section></main></div>';
 
       const buttonSetter = new ButtonSetter();
@@ -861,6 +861,60 @@ describe('ButtonSetter', () => {
       makeActionButton('#123456');
       const buttonSetter = new ButtonSetter();
       expect(buttonSetter.getActionButtonColor()).toStrictEqual(
+        'rgb(18, 52, 86)'
+      );
+    });
+  });
+
+  describe('getReactLayoutActionButtonColor', () => {
+    /**
+     * @argument {string?} color 色
+     */
+    const makeReactActionButton = color => {
+      const group = document.createElement('div');
+      group.setAttribute('role', 'group');
+      const button = document.createElement('div');
+      button.setAttribute('role', 'button');
+      const child = document.createElement('div');
+      if (color) {
+        child.style.color = color;
+      }
+      button.appendChild(child);
+      group.appendChild(button);
+      document.body.appendChild(group);
+    };
+
+    beforeEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    it('actionButtonなかったらデフォルト', () => {
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
+        '#697b8c'
+      );
+    });
+
+    it('actionButtonのcolor空文字ならデフォルト', () => {
+      makeReactActionButton('');
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
+        '#697b8c'
+      );
+    });
+
+    it('actionButtonのcolorなかったらデフォルト', () => {
+      makeReactActionButton(null);
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
+        '#697b8c'
+      );
+    });
+
+    it('actionButtonのcolorあったらその色が返る', () => {
+      makeReactActionButton('#123456');
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
         'rgb(18, 52, 86)'
       );
     });
