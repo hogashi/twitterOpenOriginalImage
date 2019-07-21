@@ -150,7 +150,7 @@ describe('ButtonSetter', () => {
   describe('_setButtonOnTimeline', () => {
     /**
      * @param {string[]} imgSrcs
-     * @param {string[]} extraClassNames
+     * @param {HTMLElement[]} extraElements
      * @param {boolean} hasButton
      */
     const makeTweet = (imgSrcs, extraElements = [], hasButton = false) => {
