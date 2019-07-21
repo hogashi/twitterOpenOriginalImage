@@ -828,4 +828,41 @@ describe('ButtonSetter', () => {
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
   });
+
+  describe('getActionButtonColor', () => {
+    /**
+     * @argument {string?} color 色
+     */
+    const makeActionButton = color => {
+      const button = document.createElement('div');
+      button.classList.add('ProfileTweet-actionButton');
+      if (color) {
+        button.style.color = color;
+      }
+      document.body.appendChild(button);
+    };
+
+    beforeEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    it('actionButtonなかったらデフォルト', () => {
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getActionButtonColor()).toStrictEqual('#697b8c');
+    });
+
+    it('actionButtonのcolorなかったらデフォルト', () => {
+      makeActionButton(null);
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getActionButtonColor()).toStrictEqual('#697b8c');
+    });
+
+    it('actionButtonのcolorあったらその色が返る', () => {
+      makeActionButton('#123456');
+      const buttonSetter = new ButtonSetter();
+      expect(buttonSetter.getActionButtonColor()).toStrictEqual(
+        'rgb(18, 52, 86)'
+      );
+    });
+  });
 });
