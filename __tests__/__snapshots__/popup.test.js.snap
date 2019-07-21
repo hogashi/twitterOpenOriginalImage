@@ -44,7 +44,7 @@ exports[`Popup render 1`] = `
       TwitterWeb公式
     </div>
     <div
-      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96"
+      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96 checkboxListItem SHOW_ON_TIMELINE"
       onBlur={[Function]}
       onClick={[Function]}
       onContextMenu={[Function]}
@@ -95,7 +95,7 @@ exports[`Popup render 1`] = `
             />
           </svg>
           <input
-            checked="isfalse"
+            checked={true}
             className="MuiPrivateSwitchBase-input-111"
             data-indeterminate={false}
             onChange={[Function]}
@@ -118,7 +118,7 @@ exports[`Popup render 1`] = `
       />
     </div>
     <div
-      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96"
+      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96 checkboxListItem SHOW_ON_TWEET_DETAIL"
       onBlur={[Function]}
       onClick={[Function]}
       onContextMenu={[Function]}
@@ -169,7 +169,7 @@ exports[`Popup render 1`] = `
             />
           </svg>
           <input
-            checked="isfalse"
+            checked={true}
             className="MuiPrivateSwitchBase-input-111"
             data-indeterminate={false}
             onChange={[Function]}
@@ -201,7 +201,7 @@ exports[`Popup render 1`] = `
       TweetDeck
     </div>
     <div
-      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96"
+      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96 checkboxListItem SHOW_ON_TWEETDECK_TIMELINE"
       onBlur={[Function]}
       onClick={[Function]}
       onContextMenu={[Function]}
@@ -252,7 +252,7 @@ exports[`Popup render 1`] = `
             />
           </svg>
           <input
-            checked="isfalse"
+            checked={true}
             className="MuiPrivateSwitchBase-input-111"
             data-indeterminate={false}
             onChange={[Function]}
@@ -275,7 +275,7 @@ exports[`Popup render 1`] = `
       />
     </div>
     <div
-      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96"
+      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96 checkboxListItem SHOW_ON_TWEETDECK_TWEET_DETAIL"
       onBlur={[Function]}
       onClick={[Function]}
       onContextMenu={[Function]}
@@ -326,7 +326,7 @@ exports[`Popup render 1`] = `
             />
           </svg>
           <input
-            checked="isfalse"
+            checked={true}
             className="MuiPrivateSwitchBase-input-111"
             data-indeterminate={false}
             onChange={[Function]}
@@ -358,7 +358,7 @@ exports[`Popup render 1`] = `
       画像ページ
     </div>
     <div
-      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96"
+      className="MuiButtonBase-root-99 MuiListItem-root-87 MuiListItem-default-90 MuiListItem-dense-91 MuiListItem-gutters-95 MuiListItem-button-96 checkboxListItem STRIP_IMAGE_SUFFIX"
       onBlur={[Function]}
       onClick={[Function]}
       onContextMenu={[Function]}
@@ -409,7 +409,7 @@ exports[`Popup render 1`] = `
             />
           </svg>
           <input
-            checked="isfalse"
+            checked={true}
             className="MuiPrivateSwitchBase-input-111"
             data-indeterminate={false}
             onChange={[Function]}
@@ -433,7 +433,7 @@ exports[`Popup render 1`] = `
     </div>
   </ul>
   <button
-    className="MuiButtonBase-root-99 MuiButton-root-133 MuiButton-contained-144 MuiButton-containedPrimary-145 MuiButton-raised-147 MuiButton-raisedPrimary-148"
+    className="MuiButtonBase-root-99 MuiButton-root-133 MuiButton-contained-144 MuiButton-containedPrimary-145 MuiButton-raised-147 MuiButton-raisedPrimary-148 saveSettingButton"
     disabled={false}
     onBlur={[Function]}
     onClick={[Function]}
