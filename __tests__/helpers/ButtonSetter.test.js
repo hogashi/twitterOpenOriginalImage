@@ -160,12 +160,12 @@ describe('ButtonSetter', () => {
       const media = document.createElement('div');
       media.classList.add('AdaptiveMedia-container');
 
-      const footer = document.createElement('footer');
-      footer.classList.add('ProfileTweet-actionList');
+      const actionList = document.createElement('div');
+      actionList.classList.add('ProfileTweet-actionList');
       if (hasButton) {
         const button = document.createElement('div');
         button.classList.add('tooi-button-container-timeline');
-        footer.appendChild(button);
+        actionList.appendChild(button);
       }
 
       imgSrcs.forEach(src => {
@@ -180,7 +180,7 @@ describe('ButtonSetter', () => {
       extraElements.forEach(element => media.appendChild(element));
 
       root.appendChild(media);
-      root.appendChild(footer);
+      root.appendChild(actionList);
       document.body.appendChild(root);
     };
 
@@ -207,8 +207,10 @@ describe('ButtonSetter', () => {
         buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
       ).toMatchObject(imgSrcs);
       expect(
-        buttonSetter.setButton.mock.calls[0][0].target.tagName
-      ).toStrictEqual('FOOTER');
+        buttonSetter.setButton.mock.calls[0][0].target.classList.contains(
+          'ProfileTweet-actionList'
+        )
+      ).toBeTruthy();
     });
 
     it('画像1枚ツイート3つにボタンつけようとする', () => {
@@ -237,8 +239,10 @@ describe('ButtonSetter', () => {
           buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
         ).toMatchObject(imgSrcs);
         expect(
-          buttonSetter.setButton.mock.calls[index][0].target.tagName
-        ).toStrictEqual('FOOTER');
+          buttonSetter.setButton.mock.calls[index][0].target.classList.contains(
+            'ProfileTweet-actionList'
+          )
+        ).toBeTruthy();
       });
     });
 
@@ -283,8 +287,10 @@ describe('ButtonSetter', () => {
           buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
         ).toMatchObject(imgSrcs);
         expect(
-          buttonSetter.setButton.mock.calls[index][0].target.tagName
-        ).toStrictEqual('FOOTER');
+          buttonSetter.setButton.mock.calls[index][0].target.classList.contains(
+            'ProfileTweet-actionList'
+          )
+        ).toBeTruthy();
       });
     });
 
@@ -347,12 +353,12 @@ describe('ButtonSetter', () => {
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
 
-    it('footerがなかったらボタンつけない', () => {
+    it('actionList(いいねとか)がなかったらボタンつけない', () => {
       const imgSrcs = ['https://g.co/img1'];
       makeTweet(imgSrcs);
 
-      const footer = document.querySelector('footer');
-      footer.parentNode.removeChild(footer);
+      const actionList = document.querySelector('.ProfileTweet-actionList');
+      actionList.parentNode.removeChild(actionList);
 
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
