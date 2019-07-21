@@ -390,7 +390,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isFalse;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
