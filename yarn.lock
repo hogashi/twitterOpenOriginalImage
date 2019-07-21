@@ -4202,6 +4202,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+make-coverage-badge@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/make-coverage-badge/-/make-coverage-badge-1.1.1.tgz#7e7749fa4cd2128df7e952e66df6f31546053ae8"
+  integrity sha512-e98dYfw6DfCABQxEPGDERq7NcF9bvZ82PIuMDr1WgErLDAHm1b/ur15gDFX04P+yGo3hXpd1RslzkMNIWKkx4A==
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"

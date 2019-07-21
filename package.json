@@ -13,7 +13,7 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
-    "jest": "jest --version && jest --verbose",
+    "jest": "jest --version && jest --verbose --coverage && make-coverage-badge",
     "jest:ci": "jest --version && jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
     "test": "run-s lint:eslint jest",
     "test:ci": "run-s lint:eslint jest:ci"
@@ -39,6 +39,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.8.0",
+    "make-coverage-badge": "^1.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6",
@@ -51,5 +52,12 @@
     "@material-ui/core": "^3.9.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "lcov",
+      "text"
+    ]
   }
 }
