@@ -170,19 +170,15 @@ export default class ButtonSetter {
       const mediaContainer = tweet.getElementsByClassName(
         'AdaptiveMedia-container'
       )[0] as HTMLElement;
-      if (mediaContainer) {
-        const getImgSrcs = () =>
-          Array.from(
-            mediaContainer.getElementsByClassName(
-              'AdaptiveMedia-photoContainer'
-            )
-          ).map(element => element.getElementsByTagName('img')[0].src);
-        this.setButton({
-          className,
-          getImgSrcs,
-          target: actionList,
-        });
-      }
+      const getImgSrcs = () =>
+        Array.from(
+          mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
+        ).map(element => element.getElementsByTagName('img')[0].src);
+      this.setButton({
+        className,
+        getImgSrcs,
+        target: actionList,
+      });
     });
   }
 
