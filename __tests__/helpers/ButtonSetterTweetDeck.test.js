@@ -399,6 +399,28 @@ describe('ButtonSetterTweetDeck', () => {
       });
     });
 
+    it('画像でないツイート1つにボタンつけない', () => {
+      const imgSrcs = ['https://g.co/video1'];
+      makeTweetDetail(imgSrcs, ['is-video']);
+
+      const media = [
+        ...document.querySelectorAll('.media-img'),
+        ...document.querySelectorAll('.media-image'),
+      ];
+      media.forEach(medium =>
+        medium.classList.remove('media-img', 'media-image')
+      );
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
     it('画像1枚ツイート1つでも,もうボタンあったらボタンつけない', () => {
       const imgSrcs = ['https://g.co/img1'];
       makeTweetDetail(imgSrcs, [], true);
