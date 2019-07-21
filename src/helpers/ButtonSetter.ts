@@ -241,12 +241,13 @@ export default class ButtonSetter {
     }
     // 各ツイートに対して
     tweets.forEach(tweet => {
-      // 画像ツイート かつ まだ処理を行っていないときのみ実行
+      // 画像ツイート かつ 画像がある かつ まだ処理を行っていないときのみ実行
       const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag =>
         /\/status\/[0-9]+\/photo\//.test(aTag.href)
       );
       if (
         tweetATags.length === 0 ||
+        !tweetATags.every(aTag => aTag.querySelector('img')) ||
         tweet.getElementsByClassName(className)[0]
       ) {
         return;
@@ -261,11 +262,6 @@ export default class ButtonSetter {
 
       const getImgSrcs = () => {
         const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
-        // 画像エレメントが取得できなかったら終了
-        if (tweetImgs.length === 0) {
-          printException('no image elements on timeline in react layout');
-          return [];
-        }
         if (tweetImgs.length === 4) {
           // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
           const tweetimgTmp = tweetImgs[1];
