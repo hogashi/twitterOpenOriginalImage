@@ -197,7 +197,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -228,7 +228,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -276,7 +276,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -303,7 +303,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -317,7 +317,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -331,7 +331,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -348,7 +348,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -365,7 +365,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -376,7 +376,7 @@ describe('ButtonSetter', () => {
 
       const options = INITIAL_OPTIONS;
       options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(options);
+      buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
