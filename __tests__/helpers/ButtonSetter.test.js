@@ -316,9 +316,26 @@ describe('ButtonSetter', () => {
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
 
-    it('ツイート1つあっても画像なかったらボタンつけない', () => {
+    it('画像ツイート1つあっても画像なかったらボタンつけない', () => {
       const imgSrcs = [];
       makeTweet(imgSrcs);
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter.setButtonOnTimeline(options);
+
+      expect(buttonSetter.setButton).not.toHaveBeenCalled();
+    });
+
+    it('ツイート1つあっても画像ツイートじゃなかったらボタンつけない', () => {
+      const imgSrcs = [];
+      makeTweet(imgSrcs);
+
+      const container = document.querySelector('.AdaptiveMedia-container');
+      container.parentNode.removeChild(container);
 
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
