@@ -116,7 +116,9 @@ describe('Utils', () => {
         const { title, url, params } = singleCase;
         it(title, () => {
           expect(formatUrl(url)).toBe(
-            `https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`
+            `https://pbs.twimg.com/media/hogefuga123?format=${
+              params.format
+            }&name=orig`
           );
         });
       });
