@@ -584,4 +584,248 @@ describe('ButtonSetter', () => {
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
   });
+
+  describe('_setButtonOnReactLayoutTimeline', () => {
+    /**
+     * @param {string[]} imgSrcs
+     * @param {string} type
+     * @param {boolean} hasButton
+     */
+    const makeReactTweet = (imgSrcs, type = 'photo', hasButton = false) => {
+      const reactRoot = document.createElement('div');
+      reactRoot.id = 'react-root';
+      const main = document.createElement('main');
+      const section = document.createElement('section');
+
+      const root = document.createElement('article');
+
+      const actionList = document.createElement('div');
+      actionList.setAttribute('role', 'group');
+      if (hasButton) {
+        const button = document.createElement('div');
+        button.classList.add('tooi-button-container-react-timeline');
+        actionList.appendChild(button);
+      }
+
+      // 4枚のときだけ2,3枚目の順序が(DOMとしては)入れ替わって表示されるのを再現する
+      let imgSrcs2 = [...imgSrcs];
+      if (imgSrcs2.length === 4) {
+        const tmp = imgSrcs2[1];
+        imgSrcs2[1] = imgSrcs2[2];
+        imgSrcs2[2] = tmp;
+      }
+
+      imgSrcs2.forEach((src, index) => {
+        const aTag = document.createElement('a');
+        aTag.href = `https://twitter.com/tos/status/000000/${type}/${index}`;
+
+        const img = document.createElement('img');
+        img.src = src;
+
+        aTag.appendChild(img);
+        root.appendChild(aTag);
+      });
+
+      root.appendChild(actionList);
+
+      section.appendChild(root);
+      main.appendChild(section);
+      reactRoot.appendChild(main);
+      document.body.appendChild(reactRoot);
+    };
+
+    beforeEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    it('画像1枚ツイート1つにボタンつけようとする', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeReactTweet(imgSrcs);
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(1);
+      expect(
+        buttonSetter.setReactLayoutButton.mock.calls[0][0].className
+      ).toStrictEqual('tooi-button-container-react-timeline');
+      expect(
+        buttonSetter.setReactLayoutButton.mock.calls[0][0].getImgSrcs()
+      ).toMatchObject(imgSrcs);
+      expect(
+        buttonSetter.setReactLayoutButton.mock.calls[0][0].target.getAttribute(
+          'role'
+        )
+      ).toStrictEqual('group');
+    });
+
+    it('画像1枚ツイート3つにボタンつけようとする', () => {
+      const imgSrcsSet = [
+        ['https://g.co/img1'],
+        ['https://g.co/img2'],
+        ['https://g.co/img3'],
+      ];
+      imgSrcsSet.forEach(imgSrcs => {
+        makeReactTweet(imgSrcs);
+      });
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
+      imgSrcsSet.forEach((imgSrcs, index) => {
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[index][0].className
+        ).toStrictEqual('tooi-button-container-react-timeline');
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()
+        ).toMatchObject(imgSrcs);
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[
+            index
+          ][0].target.getAttribute('role')
+        ).toStrictEqual('group');
+      });
+    });
+
+    it('画像4枚ツイート3つにボタンつけようとする', () => {
+      const imgSrcsSet = [
+        [
+          'https://g.co/img11',
+          'https://g.co/img12',
+          'https://g.co/img13',
+          'https://g.co/img14',
+        ],
+        [
+          'https://g.co/img21',
+          'https://g.co/img22',
+          'https://g.co/img23',
+          'https://g.co/img24',
+        ],
+        [
+          'https://g.co/img31',
+          'https://g.co/img32',
+          'https://g.co/img33',
+          'https://g.co/img34',
+        ],
+      ];
+      imgSrcsSet.forEach(imgSrcs => {
+        makeReactTweet(imgSrcs);
+      });
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
+      imgSrcsSet.forEach((imgSrcs, index) => {
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[index][0].className
+        ).toStrictEqual('tooi-button-container-react-timeline');
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()
+        ).toMatchObject(imgSrcs);
+        expect(
+          buttonSetter.setReactLayoutButton.mock.calls[
+            index
+          ][0].target.getAttribute('role')
+        ).toStrictEqual('group');
+      });
+    });
+
+    it('画像でないツイート1つにボタンつけない', () => {
+      const imgSrcs = ['https://g.co/video1'];
+      makeReactTweet(imgSrcs, 'video');
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+
+    it('画像1枚ツイート1つでも,もうボタンあったらボタンつけない', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeReactTweet(imgSrcs, 'photo', true);
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+
+    it('画像ツイート1つあっても画像なかったらボタンつけない', () => {
+      const imgSrcs = [];
+      makeReactTweet(imgSrcs);
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+
+    it('actionList(いいねとか)がなかったらボタンつけない', () => {
+      const imgSrcs = ['https://g.co/img1'];
+      makeReactTweet(imgSrcs);
+
+      const actionList = document.querySelector('div[role="group"]');
+      actionList.parentNode.removeChild(actionList);
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+
+    it('ツイートなかったら何もしない', () => {
+      document.innerHTML =
+        '<div id="react-root"><main><section></section></main></div>';
+
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+
+    it('設定がOFFなら何もしない', () => {
+      const buttonSetter = new ButtonSetter();
+      buttonSetter.setReactLayoutButton = jest.fn();
+
+      const options = INITIAL_OPTIONS;
+      options[SHOW_ON_TIMELINE] = isFalse;
+      buttonSetter._setButtonOnReactLayoutTimeline(options);
+
+      expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
+    });
+  });
 });
