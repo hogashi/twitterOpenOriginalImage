@@ -74,6 +74,7 @@ export const Popup = (props: Props) => {
   optionKeys.forEach(key => {
     optionsItems[key] = (
       <ListItem
+        className={`checkboxListItem ${key}`}
         dense
         button
         onClick={() => {
@@ -133,6 +134,7 @@ export const Popup = (props: Props) => {
         {optionsItems[STRIP_IMAGE_SUFFIX]}
       </List>
       <Button
+        className="saveSettingButton"
         variant="contained"
         color="primary"
         onClick={onSave}
