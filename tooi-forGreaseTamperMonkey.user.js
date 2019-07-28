@@ -1,12 +1,12 @@
 // ==UserScript==
 // @author          hogashi
 // @name            twitterOpenOriginalImage
-// @namespace       http://hogashi.hatenablog.com/
-// @description     TwitterページでOriginalボタンを押すと原寸の画像が開きます(http://hogashi.hatenablog.com)
+// @namespace       https://hogashi.hatenablog.com/
+// @description     TwitterページでOriginalボタンを押すと原寸の画像が開きます(詳細: https://hogashi.hatenablog.com)
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         2.1.12
+// @version         2.3
 // ==/UserScript==
 
 // common, main, tweetdeck, imagetab
@@ -41,12 +41,30 @@ const options = {
   STRIP_IMAGE_SUFFIX: 'istrue',
 };
 
+// 実行する間隔(ms)
+const INTERVAL_MSEC = 170;
+
 let observer;
+let isInterval = false;
+let didSetTimeout = false;
 
 function tooiInit(setButtonsCallBack) {
   if (setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
-    observer = new MutationObserver(setButtonsCallBack);
+    observer = new MutationObserver(() => {
+      if (!isInterval) {
+        setButtonsCallBack();
+        isInterval = true;
+        if (!didSetTimeout) {
+          didSetTimeout = true;
+          setTimeout(() => {
+            setButtonsCallBack();
+            isInterval = false;
+            didSetTimeout = false;
+          }, INTERVAL_MSEC);
+        }
+      }
+    });
     const target = document.querySelector('body');
     const config = { childList: true, subtree: true };
     // ページ全体でDOMの変更を検知し都度ボタン設置
@@ -120,28 +138,32 @@ function openImagesInNewTab(imgurls) {
 // https://twitter.com/* で実行される
 
 if (/^https:\/\/twitter\.com/.test(window.location.href)) {
-  tooiInit(setButtons);
+  if (document.querySelector('#react-root')) {
+    tooiInit(setButtonsReactLayout);
+  } else {
+    tooiInit(setButtons);
 
-  // キー押下時
-  document.addEventListener('keydown', function(e) {
-    // if [RETURN(ENTER)]キーなら
-    if (
-      e.key === 'Enter' &&
-      !e.ctrlKey &&
-      !e.metaKey &&
-      !e.altKey &&
-      !e.shiftKey
-    ) {
-      // ツイート詳細にボタン表示する設定がされていたら
-      // かつ ツイート入力ボックスがアクティブでないなら
+    // キー押下時
+    document.addEventListener('keydown', function(e) {
+      // if [RETURN(ENTER)]キーなら
       if (
-        options[OPEN_WITH_KEY_PRESS] !== 'isfalse' &&
-        !document.activeElement.className.match(/rich-editor/)
+        e.key === 'Enter' &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey &&
+        !e.shiftKey
       ) {
-        openFromTweetDetail(e);
+        // ツイート詳細にボタン表示する設定がされていたら
+        // かつ ツイート入力ボックスがアクティブでないなら
+        if (
+          options[OPEN_WITH_KEY_PRESS] !== 'isfalse' &&
+          !document.activeElement.className.match(/rich-editor/)
+        ) {
+          openFromTweetDetail(e);
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 // ボタンを置く
@@ -490,3 +512,115 @@ if (/^https:\/\/pbs\.twimg\.com/.test(window.location.href)) {
     }
   });
 }
+
+/* main_react_layout.js */
+// https://twitter.com/* で実行される
+
+// ボタンを置く
+function setButtonsReactLayout() {
+  // console.log('setButtons: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL'] + ' ' + options['OPEN_WITH_KEY_PRESS']) // debug
+  // if タイムラインにボタン表示する設定がされていたら
+  if (options[SHOW_ON_TIMELINE] !== 'isfalse') {
+    setButtonOnTimelineReactLayout();
+  }
+} // setButtonsReactLayout end
+
+// ドキュメント内からボタンのスタイルを得る
+function getActionButtonStyleReactLayout() {
+  // 文字色
+  // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
+  let color = '#697b8c';
+  // ツイートアクション(返信とか)のボタン
+  const actionButton = document.querySelector('div[role="group"] div[role="button"]').children[0];
+  if (actionButton && actionButton.style) {
+    const buttonColor = window.getComputedStyle(actionButton).color;
+    if (buttonColor && buttonColor.length > 0) {
+      color = buttonColor;
+    }
+  }
+
+  return {
+    fontSize: '13px',
+    padding: '4px 8px',
+    color,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    border: `1px solid ${color}`,
+    borderRadius: '3px',
+    cursor: 'pointer',
+  };
+}
+
+function createOriginalButtonReactLayout(onClick, aTags) {
+  const origButton = document.createElement('input');
+
+  origButton.type = 'button';
+  origButton.value = 'Original';
+  Object.entries(getActionButtonStyleReactLayout()).forEach(
+    ([key, value]) => (origButton.style[key] = value)
+  );
+
+  origButton.addEventListener('click', (e) => onClick(e, aTags));
+  return origButton;
+}
+
+// タイムラインにボタン表示
+function setButtonOnTimelineReactLayout() {
+  const tweets = Array.from(
+    document.querySelectorAll('#react-root main section article')
+  );
+  if (!tweets.length) {
+    return;
+  }
+  // 各ツイートに対して
+  tweets.forEach(tweet => {
+    // if 画像ツイート
+    // かつ まだ処理を行っていないなら
+    const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
+    if (
+      tweetATags.length &&
+      !tweet.getElementsByClassName('tooiDivTimeline')[0]
+    ) {
+      // ボタンを設置
+      // 操作ボタンの外側は様式にあわせる
+      const actionList = tweet.querySelector('div[role="group"]');
+      const parentDiv = document.createElement('div');
+      // parentDiv.id = '' + tweet.id
+      parentDiv.className = 'tooiDivTimeline';
+      Object.entries({
+        display: 'flex',
+        flexFlow: 'column',
+        justifyContent: 'center',
+      }).forEach(([key, value]) => (parentDiv.style[key] = value));
+      actionList.appendChild(parentDiv);
+      // Originalボタン
+      const origButton = createOriginalButtonReactLayout(
+        openFromTimelineReactLayout,
+        tweetATags
+      );
+      tweet
+        .getElementsByClassName('tooiDivTimeline')[0]
+        .appendChild(origButton);
+    }
+  });
+} // setButtonOnTimelineReactLayout end
+
+// タイムラインから画像を新しいタブに開く
+function openFromTimelineReactLayout(e, aTags) {
+  // imgを得る
+  const tweetImgs = aTags.map(aTag => aTag.querySelector('img'));
+  if (tweetImgs.length) {
+    // イベント(MouseEvent)による既定の動作をキャンセル
+    e.preventDefault();
+    // イベント(MouseEvent)の親要素への伝播を停止
+    e.stopPropagation();
+    if (tweetImgs.length === 4) {
+      // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
+      const tweetimgTmp = tweetImgs[1];
+      tweetImgs[1] = tweetImgs[2];
+      tweetImgs[2] = tweetimgTmp;
+    }
+    openImagesInNewTab(tweetImgs.map(img => img.src));
+  } else {
+    printException('no image elements on timeline in react layout');
+  }
+} // openFromTimelineReactLayout end
