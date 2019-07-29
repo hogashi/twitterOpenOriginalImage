@@ -1,5 +1,8 @@
 // common.js
 
+// バージョン
+const VERSION = '2.3.1';
+
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
 const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
@@ -37,6 +40,8 @@ let isInterval = false;
 let didSetTimeout = false;
 
 function tooiInit(setButtonsCallBack) {
+  console.info(`twitter画像原寸ボタン v${VERSION}: calling ${setButtonsCallBack && setButtonsCallBack.name}`);
+
   // 設定読み込み
   updateOptions(setButtonsCallBack);
 

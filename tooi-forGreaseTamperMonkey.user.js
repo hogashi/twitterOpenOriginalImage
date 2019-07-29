@@ -6,12 +6,15 @@
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         2.3
+// @version         2.3.1
 // ==/UserScript==
 
 // common, main, tweetdeck, imagetab
 
 // common.js
+
+// バージョン
+const VERSION = '2.3.1';
 
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
@@ -49,6 +52,7 @@ let isInterval = false;
 let didSetTimeout = false;
 
 function tooiInit(setButtonsCallBack) {
+  console.info(`twitter画像原寸ボタン(monkey用) v${VERSION}: calling ${setButtonsCallBack && setButtonsCallBack.name}`);
   if (setButtonsCallBack) {
     // ページ全体でDOMの変更を検知し都度ボタン設置
     observer = new MutationObserver(() => {
