@@ -6,7 +6,7 @@
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         2.3.1
+// @version         2.3.2
 // ==/UserScript==
 
 // common, main, tweetdeck, imagetab
@@ -14,7 +14,7 @@
 // common.js
 
 // バージョン
-const VERSION = '2.3.1';
+const VERSION = '2.3.2';
 
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
@@ -363,7 +363,12 @@ function setButtonOnTweetdeckTimeline() {
     }
     // ボタンを設置
     const origButton = document.createElement('a');
-    tweet.getElementsByTagName('footer')[0].appendChild(origButton);
+    const footer = tweet.getElementsByTagName('footer');
+    if (footer.length === 0) {
+      // footerなかったら何もしない
+      return;
+    }
+    footer[0].appendChild(origButton);
     // tweetdeckのツイート右上の時刻などに使われているclassを使う
     // 設置の有無の判別用に'tooiATweetdeckTimeline'を付与する
     origButton.className =

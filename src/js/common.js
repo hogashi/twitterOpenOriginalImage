@@ -1,7 +1,7 @@
 // common.js
 
 // バージョン
-const VERSION = '2.3.1';
+const VERSION = '2.3.2';
 
 // 設定取得メッセージ
 const OPTION_UPDATED = 'OPTION_UPDATED';
