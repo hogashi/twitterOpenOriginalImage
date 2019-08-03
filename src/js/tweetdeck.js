@@ -42,7 +42,12 @@ function setButtonOnTweetdeckTimeline() {
     }
     // ボタンを設置
     const origButton = document.createElement('a');
-    tweet.getElementsByTagName('footer')[0].appendChild(origButton);
+    const footer = tweet.getElementsByTagName('footer');
+    if (footer.length === 0) {
+      // footerなかったら何もしない
+      return;
+    }
+    footer[0].appendChild(origButton);
     // tweetdeckのツイート右上の時刻などに使われているclassを使う
     // 設置の有無の判別用に'tooiATweetdeckTimeline'を付与する
     origButton.className =
