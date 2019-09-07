@@ -12,6 +12,7 @@ import {
   isFalse,
   SHOW_ON_TWEETDECK_TIMELINE,
   isTrue,
+  HOST_TWITTER_COM,
 } from '../src/helpers/Constants';
 import { Popup } from '../src/popup';
 
@@ -57,14 +58,40 @@ describe('Popup', () => {
 
     window.chrome = {
       tabs: {
-        query: jest.fn(),
-        sendMessage: jest.fn(),
+        query: jest.fn((_, callback) => {
+          callback([
+            {
+              // 対象タブ
+              id: 1,
+              url: 'http://twitter.com',
+            },
+            {
+              // 対象ではないタブ
+              id: 1,
+              url: 'http://google.com',
+            },
+            {
+              // 対象ではないタブ
+              id: 1,
+            },
+            {
+              // 対象ではないタブ
+              url: 'http://twitter.com',
+            },
+          ]);
+        }),
+        sendMessage: jest.fn((id, option, callback) => {
+          callback('mock ok');
+        }),
       },
     };
     const wrapper = shallow(<Popup {...props} />);
 
     it('渡した設定がそのまま保存される', () => {
       wrapper.find('.saveSettingButton').simulate('click');
+      // 送りたいタブは正しい形式かつ対象ホストなタブのみ
+      expect(window.chrome.tabs.query.mock.calls.length).toBe(1);
+
       expect(window.localStorage).toMatchObject(expectOptions);
     });
 

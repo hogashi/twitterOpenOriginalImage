@@ -13,9 +13,10 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
-    "jest": "jest --version && jest --verbose --coverage && make-coverage-badge",
+    "jest": "jest --version && jest --verbose --coverage",
+    "coverage": "make-coverage-badge",
     "jest:ci": "jest --version && jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
-    "test": "run-s lint:eslint jest",
+    "test": "run-s lint:eslint jest coverage",
     "test:ci": "run-s lint:eslint jest:ci"
   },
   "devDependencies": {
