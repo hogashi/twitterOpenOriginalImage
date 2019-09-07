@@ -12,7 +12,6 @@ import {
   isFalse,
   SHOW_ON_TWEETDECK_TIMELINE,
   isTrue,
-  HOST_TWITTER_COM,
 } from '../src/helpers/Constants';
 import { Popup } from '../src/popup';
 
