@@ -19,8 +19,6 @@ Chromeウェブストアからインストール: [twitter画像原寸ボタン]
   - これは通常の(縮小された)画像のURL ("https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg") に ":orig" を足したものです
   - 縮小の閾値は随時変更されているようなので、":orig"を付けたものが必ず原寸とは限りません
 
-ツイート詳細では、Enterキーを押すと"Original"ボタンをクリックしたのと同じように、原寸画像が新しいタブに開かれます。
-
 ### 設定
 
 1. Chromeのウィンドウ右上にある拡張機能のボタンをクリックする(またはChromeの拡張機能の設定からこの拡張機能の"オプション"をクリックする)
@@ -37,5 +35,5 @@ Chromeウェブストアからインストール: [twitter画像原寸ボタン]
 
 ## 連絡先
 
+- GitHub: [hogashi](https://github.com/hogashi)
 - Twitter: [@hogextend](https://twitter.com/hogextend)
-- Email: hogextend@gmail.com
