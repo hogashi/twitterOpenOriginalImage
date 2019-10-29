@@ -122,6 +122,7 @@ export default class ButtonSetter {
     container.classList.add(className);
     this.setStyle(container, {
       display: 'flex',
+      'margin-left': '20px',
       'flex-flow': 'column',
       'justify-content': 'center',
     });
