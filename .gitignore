@@ -4,3 +4,6 @@ node_modules
 
 /coverage/
 !/coverage/coverage-summary.json
+
+/dist/
+/old/
