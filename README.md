@@ -1,6 +1,6 @@
 # twitter画像原寸ボタン
 
-[![CircleCI](https://circleci.com/gh/hogashi/twitterOpenOriginalImage.svg?style=svg)](https://circleci.com/gh/hogashi/twitterOpenOriginalImage) [![Coverage Status](./coverage/badge.svg)](https://coveralls.io/github/hogashi/twitterOpenOriginalImage)
+[![CircleCI](https://circleci.com/gh/hogashi/twitterOpenOriginalImage.svg?style=svg)](https://circleci.com/gh/hogashi/twitterOpenOriginalImage) [![Coverage Status](./coverage/badge.svg?sanitize=true)](./coverage/badge.svg)
 
 画像ツイートの画像の原寸を新しいタブで開く、GoogleChrome拡張機能です。  
 TwitterWeb公式、TweetDeckで動作します。
