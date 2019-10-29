@@ -250,12 +250,6 @@ class ButtonSetter_ButtonSetter {
     let className = _ref4.className,
         getImgSrcs = _ref4.getImgSrcs,
         target = _ref4.target;
-
-    if (!target) {
-      Object(Utils["d" /* printException */])('no target');
-      return;
-    }
-
     const button = document.createElement('input');
     button.type = 'button';
     button.value = 'Original';
@@ -277,6 +271,7 @@ class ButtonSetter_ButtonSetter {
     container.classList.add(className);
     this.setStyle(container, {
       display: 'flex',
+      'margin-left': '20px',
       'flex-flow': 'column',
       'justify-content': 'center'
     });
@@ -306,19 +301,23 @@ class ButtonSetter_ButtonSetter {
       } // 操作ボタンの外側は様式にあわせる
 
 
-      const actionList = tweet.getElementsByClassName('ProfileTweet-actionList')[0]; // 画像の親が取得できたら
+      const actionList = tweet.querySelector('.ProfileTweet-actionList');
+
+      if (!actionList) {
+        Object(Utils["d" /* printException */])('no target');
+        return;
+      } // 画像の親が取得できたら
+
 
       const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0];
 
-      if (mediaContainer) {
-        const getImgSrcs = () => Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
+      const getImgSrcs = () => Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
 
-        this.setButton({
-          className,
-          getImgSrcs,
-          target: actionList
-        });
-      }
+      this.setButton({
+        className,
+        getImgSrcs,
+        target: actionList
+      });
     });
   }
 
@@ -339,7 +338,13 @@ class ButtonSetter_ButtonSetter {
     } // Originalボタンの親の親となる枠
 
 
-    const actionList = document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('ProfileTweet-actionList')[0]; // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
+    const actionList = document.querySelector('.permalink-tweet-container .ProfileTweet-actionList');
+
+    if (!actionList) {
+      Object(Utils["d" /* printException */])('no target');
+      return;
+    } // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
+
 
     const getImgSrcs = () => Array.from(document.getElementsByClassName('permalink-tweet-container')[0].getElementsByClassName('AdaptiveMedia-photoContainer')).map(element => element.getElementsByTagName('img')[0].src);
 
@@ -366,10 +371,10 @@ class ButtonSetter_ButtonSetter {
 
 
     tweets.forEach(tweet => {
-      // 画像ツイート かつ まだ処理を行っていないときのみ実行
+      // 画像ツイート かつ 画像が1枚でもある かつ まだ処理を行っていないときのみ実行
       const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag => /\/status\/[0-9]+\/photo\//.test(aTag.href));
 
-      if (tweetATags.length === 0 || tweet.getElementsByClassName(className)[0]) {
+      if (tweetATags.length === 0 || !tweetATags.some(aTag => aTag.querySelector('img')) || tweet.getElementsByClassName(className)[0]) {
         return;
       } // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
@@ -377,13 +382,13 @@ class ButtonSetter_ButtonSetter {
 
       const target = tweet.querySelector('div[role="group"]');
 
-      const getImgSrcs = () => {
-        const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img')); // 画像エレメントが取得できなかったら終了
+      if (!target) {
+        Object(Utils["d" /* printException */])('no target');
+        return;
+      }
 
-        if (tweetImgs.length === 0) {
-          Object(Utils["d" /* printException */])('no image elements on timeline in react layout');
-          return [];
-        }
+      const getImgSrcs = () => {
+        const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
 
         if (tweetImgs.length === 4) {
           // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
@@ -427,10 +432,10 @@ class ButtonSetter_ButtonSetter {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c'; // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
 
-    const actionButton = document.querySelector('.rn-1re7ezh') || document.querySelector('.rn-111h2gw');
+    const actionButton = document.querySelector('div[role="group"] div[role="button"]');
 
-    if (actionButton && actionButton.style) {
-      const buttonColor = window.getComputedStyle(actionButton).color;
+    if (actionButton && actionButton.children[0] && actionButton.children[0].style) {
+      const buttonColor = window.getComputedStyle(actionButton.children[0]).color;
 
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
@@ -474,21 +479,24 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
         return;
       }
 
-      const target = tweet.getElementsByTagName('footer')[0];
+      const target = tweet.querySelector('footer');
 
-      if (tweet.getElementsByClassName('js-media')) {
-        const getImgSrcs = () => {
-          return Array.from(tweet.getElementsByClassName('js-media-image-link')).map(element => this.getBackgroundImageUrl(element));
-        };
-
-        this.setButton({
-          className,
-          getImgSrcs,
-          target
-        });
-      } else {
-        Object(Utils["d" /* printException */])('no image elements on tweetdeck timeline');
+      if (!target) {
+        // ボタンを置く場所がないとき
+        // 何もしない
+        Object(Utils["d" /* printException */])('no target');
+        return;
       }
+
+      const getImgSrcs = () => {
+        return Array.from(tweet.getElementsByClassName('js-media-image-link')).map(element => this.getBackgroundImageUrl(element));
+      };
+
+      this.setButton({
+        className,
+        getImgSrcs,
+        target
+      });
     });
   } // ツイート詳細にボタン表示
 
@@ -498,9 +506,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
     // - isTrue か 設定なし のとき ON
     if (!(options[Constants["j" /* SHOW_ON_TWEETDECK_TWEET_DETAIL */]] !== Constants["m" /* isFalse */])) {
       return;
-    } // console.log('TODO, ボタン実装') // TODO, debug
-    // if タイムラインのツイートを取得できたら
-    // is-actionable: タイムラインのみ
+    } // if ツイート詳細を取得できたら
 
 
     const tweets = document.getElementsByClassName('js-tweet-detail');
@@ -519,10 +525,12 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
         return;
       }
 
-      const target = tweet.getElementsByTagName('footer')[0]; // 画像エレメントがなかったら終了
+      const target = tweet.querySelector('footer');
 
-      if (tweet.getElementsByClassName('js-media-image-link').length === 0) {
-        Object(Utils["d" /* printException */])('no image elements on tweetdeck tweet detail');
+      if (!target) {
+        // ボタンを置く場所がないとき
+        // 何もしない
+        Object(Utils["d" /* printException */])('no target');
         return;
       }
 
@@ -530,7 +538,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
         if (tweet.getElementsByClassName('media-img').length !== 0) {
           return [tweet.getElementsByClassName('media-img')[0].src];
         } else {
-          return Array.from(tweet.getElementsByClassName('js-media-image-link')).map(element => this.getBackgroundImageUrl(element));
+          return Array.from(tweet.getElementsByClassName('media-image')).map(element => this.getBackgroundImageUrl(element));
         }
       };
 
@@ -546,13 +554,7 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
     let className = _ref.className,
         getImgSrcs = _ref.getImgSrcs,
         target = _ref.target;
-
-    if (!target) {
-      Object(Utils["d" /* printException */])('no target');
-      return;
-    } // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
-
-
+    // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
     const borderColor = txtMute ? window.getComputedStyle(txtMute).color : '#697b8c'; // ボタンのスタイル設定
 
@@ -583,13 +585,13 @@ class ButtonSetterTweetDeck_ButtonSetterTweetDeck extends ButtonSetter_ButtonSet
     button.addEventListener('click', e => {
       this.onClick(e, getImgSrcs());
     });
-    button.insertAdjacentText('beforeend', 'Original');
+    button.insertAdjacentHTML('beforeend', 'Original');
     target.appendChild(button);
   }
 
   getBackgroundImageUrl(element) {
-    if (element.style && element.style.backgroundImage) {
-      return element.style.backgroundImage.replace(/url\("([^"]*)"\)/, '$1');
+    if (element.style.backgroundImage) {
+      return element.style.backgroundImage.replace(/url\("?([^"]*)"?\)/, '$1');
     }
 
     return null;
@@ -613,7 +615,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- // 設定
+ // 実行の間隔(ms)
+
+const INTERVAL = 300; // 設定
 
 let main_options = _objectSpread({}, Constants["e" /* INITIAL_OPTIONS */]); // ボタンを設置
 
@@ -645,7 +649,7 @@ const setButtonWithInterval = () => {
       setButton(main_options);
       deferred = false;
     }
-  }, 300);
+  }, INTERVAL);
   setButton(main_options);
 }; // ページ全体でDOMの変更を検知し都度ボタン設置
 

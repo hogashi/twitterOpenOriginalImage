@@ -3811,6 +3811,7 @@ const Popup = props => {
   const optionsItems = {};
   optionKeys.forEach(key => {
     optionsItems[key] = react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_6___default.a, {
+      className: "checkboxListItem ".concat(key),
       dense: true,
       button: true,
       onClick: () => {
@@ -3863,6 +3864,7 @@ const Popup = props => {
       component: "div"
     }, "\u753B\u50CF\u30DA\u30FC\u30B8")
   }, optionsItems[_helpers_Constants__WEBPACK_IMPORTED_MODULE_11__[/* STRIP_IMAGE_SUFFIX */ "l"]]), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    className: "saveSettingButton",
     variant: "contained",
     color: "primary",
     onClick: onSave,
