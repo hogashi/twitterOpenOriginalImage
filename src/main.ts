@@ -181,6 +181,20 @@ const openImages = (imgSrcs: (string | null)[]) => {
     });
 };
 
+/**
+ * エレメントにスタイル当てる
+ * @param {HTMLElement} element スタイル当てる対象エレメント
+ * @param {Object} propertySet プロパティ名('font-size')と値('10px')のオブジェクト
+ */
+const setStyle = (
+  element: HTMLElement,
+  propertySet: { [key: string]: string }
+) => {
+  Object.entries(propertySet).forEach(([key, value]) =>
+    element.style.setProperty(key, value)
+  );
+};
+
 // 設定項目更新
 const getOptions = () => {
   console.log('update options'); // debug
@@ -247,20 +261,6 @@ if (isTwitterOrTweetdeck) {
       openImages(imgSrcs);
     }
 
-    /**
-     * エレメントにスタイル当てる
-     * @param {HTMLElement} element スタイル当てる対象エレメント
-     * @param {Object} propertySet プロパティ名('font-size')と値('10px')のオブジェクト
-     */
-    protected setStyle(
-      element: HTMLElement,
-      propertySet: { [key: string]: string }
-    ) {
-      Object.entries(propertySet).forEach(([key, value]) =>
-        element.style.setProperty(key, value)
-      );
-    }
-
     protected setButton({
       className,
       getImgSrcs,
@@ -293,7 +293,7 @@ if (isTwitterOrTweetdeck) {
 
       const button = document.createElement('input');
       button.className = 'tooi-button';
-      this.setStyle(button, style);
+      setStyle(button, style);
       button.type = 'button';
       button.value = 'Original';
       button.addEventListener('click', e => {
@@ -321,7 +321,7 @@ if (isTwitterOrTweetdeck) {
       button.type = 'button';
       button.value = 'Original';
       const color = this.getReactLayoutActionButtonColor();
-      this.setStyle(button, {
+      setStyle(button, {
         'font-size': '13px',
         padding: '4px 8px',
         color,
@@ -337,7 +337,7 @@ if (isTwitterOrTweetdeck) {
       const container = document.createElement('div');
       // container.id = '' + tweet.id
       container.classList.add(className);
-      this.setStyle(container, {
+      setStyle(container, {
         display: 'flex',
         'margin-left': '20px',
         'flex-flow': 'column',
@@ -700,7 +700,7 @@ if (isTwitterOrTweetdeck) {
       // 設置の有無の判別用にclassNameを付与する
       const button = document.createElement('a');
       button.className = `pull-left margin-txs txt-mute ${className}`;
-      this.setStyle(button, style);
+      setStyle(button, style);
       button.addEventListener('click', e => {
         this.onClick(e, getImgSrcs());
       });
