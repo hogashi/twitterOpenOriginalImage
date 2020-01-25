@@ -124,17 +124,17 @@ class ButtonSetter {
 
     /* つくるDOMは以下 */
     /*
-    <div className='ProfileTweet-action tooi-button-container'>
-      <input
-        className='tooi-button'
-        style={style}
-        type='button'
-        value='Original'
-        onClick={(e) => {
-          this.onClick(e, imgSrcs);
-        }}
-      />
-    </div>
+      <div className='ProfileTweet-action tooi-button-container'>
+        <input
+          className='tooi-button'
+          style={style}
+          type='button'
+          value='Original'
+          onClick={(e) => {
+            this.onClick(e, imgSrcs);
+          }}
+        />
+      </div>
     */
 
     const button = document.createElement('input');
@@ -529,15 +529,18 @@ class ButtonSetterTweetDeck extends ButtonSetter {
       cursor: 'pointer',
     };
 
-    // <a
-    //   className={className}
-    //   style={style}
-    //   onClick={(e) => {
-    //     this.onClick(e, imgSrcs);
-    //   }}
-    // >
-    //   Original
-    // </a>
+    /* つくるDOMは以下 */
+    /*
+      <a
+        className={className}
+        style={style}
+        onClick={(e) => {
+          this.onClick(e, imgSrcs);
+        }}
+      >
+        Original
+      </a>
+    */
 
     // tweetdeckのツイート右上の時刻などに使われているclassを使う
     // 設置の有無の判別用にclassNameを付与する
