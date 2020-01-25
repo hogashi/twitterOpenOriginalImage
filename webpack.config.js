@@ -1,28 +1,26 @@
 module.exports = {
   entry: {
-    main: "./src/main.ts",
-    imagetab: "./src/imagetab.ts",
-    background: "./src/background.ts",
-    popup: "./src/popup.tsx",
-    tooiForMonkeys: "./src/tooiForMonkeys.ts",
+    main: './src/main.ts',
+    imagetab: './src/imagetab.ts',
+    background: './src/background.ts',
+    popup: './src/popup.tsx',
+    tooiForMonkeys: './src/tooiForMonkeys.ts',
   },
   output: {
-    filename: "[name].bundle.js",
-    path: __dirname + "/dist/js"
+    filename: '[name].bundle.js',
+    path: __dirname + '/dist/js',
   },
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
 
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [
-          { loader: "babel-loader" },
-        ],
+        use: [{ loader: 'babel-loader' }],
         exclude: /node_modules/,
       },
     ],
@@ -30,7 +28,7 @@ module.exports = {
 
   optimization: {
     // no minimize for chrome extension
-    minimize: false
+    minimize: false,
   },
 
   // When importing a module whose path matches one of the following, just
