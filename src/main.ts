@@ -497,7 +497,7 @@ if (isTwitterOrTweetdeck) {
           target,
         });
       });
-    } // openFromTimeline end
+    }
 
     private getActionButtonColor() {
       // コントラスト比4.5(chromeの推奨する最低ライン)の色
