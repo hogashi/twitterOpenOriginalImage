@@ -210,7 +210,7 @@ const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
 
 // 設定項目更新
 const getOptions = () => {
-  console.log('update options'); // debug
+  console.log('get options'); // debug
   return new Promise((resolve, reject) => {
     const request: MessageRequest = {
       method: GET_LOCAL_STORAGE,
@@ -229,7 +229,7 @@ const getOptions = () => {
       options[key] = data[key] || isTrue;
     });
 
-    console.log('update options: ', options); // debug
+    console.log('get options (then): ', options); // debug
 
     return options;
   });
