@@ -43,12 +43,14 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 // 画像ページ
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
-// 公式WebまたはTweetdeckかどうか
-const isTwitterOrTweetdeck = /^(tweetdeck\.)?twitter\.com/.test(
-  window.location.hostname
-);
+const hostname = new URL(window.location.href).hostname;
+
+// 公式Webかどうか
+const isTwitter = /^twitter\.com/.test(hostname);
+// Tweetdeckかどうか
+const isTweetdeck = /^tweetdeck\.twitter\.com/.test(hostname);
 // 画像ページかどうか
-const isImageTab = /^pbs\.twimg\.com/.test(window.location.hostname);
+const isImageTab = /^pbs\.twimg\.com/.test(hostname);
 
 // 設定
 
@@ -235,7 +237,7 @@ const getOptions = () => {
  * メインの処理
  * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
-if (isTwitterOrTweetdeck) {
+if (isTwitter || isTweetdeck) {
   /**
    * main.tsとその仲間たち
    * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
@@ -721,17 +723,19 @@ if (isTwitterOrTweetdeck) {
   }
 
   /**
-   * ButtonSetters
+   * getButtonSetter
    */
-  interface ButtonSettersType {
-    [key: string]: ButtonSetter | ButtonSetterTweetDeck;
-  }
-
-  // ボタンを設置するクラスのまとめ
-  const ButtonSetters: ButtonSettersType = {};
-
-  ButtonSetters[HOST_TWITTER_COM] = new ButtonSetter();
-  ButtonSetters[HOST_TWEETDECK_TWITTER_COM] = new ButtonSetterTweetDeck();
+  const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
+    if (isTwitter) {
+      return new ButtonSetter();
+    } else if (isTweetdeck) {
+      return new ButtonSetterTweetDeck();
+    } else {
+      // おかしいことを伝えつつフォールバックする
+      printException('none of twitter page');
+      return new ButtonSetter();
+    }
+  };
 
   /**
    * main
@@ -744,12 +748,11 @@ if (isTwitterOrTweetdeck) {
     // console.log('setButton');
 
     // ボタン設置クラス
-    const hostname = new URL(window.location.href).hostname;
-    const buttonSetters = ButtonSetters[hostname];
+    const buttonSetter = getButtonSetter();
 
     // console.log('setButton: ' + _options['SHOW_ON_TIMELINE'] + ' ' + _options['SHOW_ON_TWEET_DETAIL'] + ' ' + _options['OPEN_WITH_KEY_PRESS']) // debug
-    buttonSetters.setButtonOnTimeline(_options);
-    buttonSetters.setButtonOnTweetDetail(_options);
+    buttonSetter.setButtonOnTimeline(_options);
+    buttonSetter.setButtonOnTweetDetail(_options);
   };
 
   let isInterval = false;
