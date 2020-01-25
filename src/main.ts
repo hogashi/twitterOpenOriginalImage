@@ -54,6 +54,12 @@ const isTweetdeck = /^tweetdeck\.twitter\.com/.test(hostname);
 // 画像ページかどうか
 const isImageTab = /^pbs\.twimg\.com/.test(hostname);
 
+// これ自体がChrome拡張機能かどうか
+const isNativeChromeExtension =
+  chrome !== undefined &&
+  chrome.runtime !== undefined &&
+  chrome.runtime.id !== undefined;
+
 // 設定
 
 // 設定に使う真偽値
@@ -211,28 +217,35 @@ const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
 // 設定項目更新
 const getOptions = () => {
   console.log('get options'); // debug
-  return new Promise((resolve, reject) => {
-    const request: MessageRequest = {
-      method: GET_LOCAL_STORAGE,
-    };
-    const callback = (response: MessageResponse) => {
-      if (response.data) {
-        resolve(response.data);
-      } else {
-        reject();
-      }
-    };
-    chrome.runtime.sendMessage(request, callback);
-  }).then((data: OptionsMaybe) => {
-    const options: { [key: string]: string } = {};
-    OPTION_KEYS.map(key => {
-      options[key] = data[key] || isTrue;
+  if (isNativeChromeExtension) {
+    // これ自体がChrome拡張機能のとき
+    return new Promise((resolve, reject) => {
+      const request: MessageRequest = {
+        method: GET_LOCAL_STORAGE,
+      };
+      const callback = (response: MessageResponse) => {
+        if (response.data) {
+          resolve(response.data);
+        } else {
+          reject();
+        }
+      };
+      chrome.runtime.sendMessage(request, callback);
+    }).then((data: OptionsMaybe) => {
+      const options: OptionsMaybe = {};
+      OPTION_KEYS.map(key => {
+        options[key] = data[key] || isTrue;
+      });
+
+      console.log('get options (then): ', options); // debug
+
+      return options as Options;
     });
-
-    console.log('get options (then): ', options); // debug
-
-    return options;
-  });
+  } else {
+    // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
+    // 設定は変わりようがないのでそのまま返す
+    return Promise.resolve(options);
+  }
 };
 
 /**
@@ -793,22 +806,26 @@ if (isTwitter || isTweetdeck) {
   });
 
   // 設定反映のためのリスナー設置
-  chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
-    console.log(chrome.runtime.lastError);
-    if (request.method === OPTION_UPDATED) {
-      getOptions().then(newOptions => {
-        Object.keys(newOptions).forEach((key: keyof Options) => {
-          options[key] = newOptions[key] as TooiBoolean;
+  // これ自体がChrome拡張機能のときだけ設置する
+  // (Chrome拡張機能でないときは設定反映できる機構ないので)
+  if (isNativeChromeExtension) {
+    chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+      console.log(chrome.runtime.lastError);
+      if (request.method === OPTION_UPDATED) {
+        getOptions().then(newOptions => {
+          Object.keys(newOptions).forEach((key: keyof Options) => {
+            options[key] = newOptions[key] as TooiBoolean;
+          });
+          // ボタンを(再)設置
+          setButtonWithInterval();
+          sendResponse({ data: 'done' });
         });
-        // ボタンを(再)設置
-        setButtonWithInterval();
-        sendResponse({ data: 'done' });
-      });
+        return true;
+      }
+      sendResponse({ data: 'yet' });
       return true;
-    }
-    sendResponse({ data: 'yet' });
-    return true;
-  });
+    });
+  }
 } else if (isImageTab) {
   /**
    * imagetab
