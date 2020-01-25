@@ -122,17 +122,20 @@ class ButtonSetter {
       color: this.getActionButtonColor(),
     };
 
-    // <div className='ProfileTweet-action tooi-button-container'>
-    //   <input
-    //     className='tooi-button'
-    //     style={style}
-    //     type='button'
-    //     value='Original'
-    //     onClick={(e) => {
-    //       this.onClick(e, imgSrcs);
-    //     }}
-    //   />
-    // </div>
+    /* つくるDOMは以下 */
+    /*
+    <div className='ProfileTweet-action tooi-button-container'>
+      <input
+        className='tooi-button'
+        style={style}
+        type='button'
+        value='Original'
+        onClick={(e) => {
+          this.onClick(e, imgSrcs);
+        }}
+      />
+    </div>
+    */
 
     const button = document.createElement('input');
     button.className = 'tooi-button';
