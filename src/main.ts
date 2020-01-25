@@ -18,6 +18,12 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 // 画像ページ
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
+// 公式WebまたはTweetdeckかどうか
+const isTwitterOrTweetdeck = /^(tweetdeck\.)?twitter\.com/.test(
+  window.location.hostname
+);
+// 画像ページかどうか
+const isImageTab = /^pbs\.twimg\.com/.test(window.location.hostname);
 
 // 設定
 
@@ -198,7 +204,7 @@ const getOptions = () => {
  * main.tsとその仲間たち
  * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
  */
-if (/^(tweetdeck\.)?twitter\.com/.test(window.location.hostname)) {
+if (isTwitterOrTweetdeck) {
   /**
    * ButtonSetter
    */
@@ -789,7 +795,7 @@ if (/^(tweetdeck\.)?twitter\.com/.test(window.location.hostname)) {
     sendResponse({ data: 'yet' });
     return true;
   });
-} else if (/^pbs\.twimg\.com/.test(window.location.hostname)) {
+} else if (isImageTab) {
   /**
    * imagetab
    * https://pbs.twimg.com/* (画像ページのとき)で実行される
