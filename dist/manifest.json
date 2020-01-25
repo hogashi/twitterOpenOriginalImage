@@ -12,16 +12,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://twitter.com/*"],
+      "matches": [
+        "https://twitter.com/*",
+        "https://tweetdeck.twitter.com/*",
+        "https://pbs.twimg.com/*"
+      ],
       "js": ["js/main.bundle.js"]
-    },
-    {
-      "matches": ["https://tweetdeck.twitter.com/*"],
-      "js": ["js/main.bundle.js"]
-    },
-    {
-      "matches": ["https://pbs.twimg.com/*"],
-      "js": ["js/imagetab.bundle.js"]
     }
   ],
   "background": {
