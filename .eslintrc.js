@@ -15,8 +15,6 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
     chrome: 'readonly',
     window: true,
     document: 'readonly',
