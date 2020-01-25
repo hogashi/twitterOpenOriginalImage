@@ -64,7 +64,14 @@ export const OPTIONS_TEXT: { [key: string]: string } = {
 /**
  * Utils
  */
-import { MessageRequest, MessageResponse } from './background';
+// chrome.runtime.sendMessage で送るメッセージ
+export interface MessageRequest {
+  method: string;
+}
+// chrome.runtime.sendMessage で返るメッセージ
+export interface MessageResponse {
+  data: { [key: string]: string } | null;
+}
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 const printException = (tooiException: string) => {
