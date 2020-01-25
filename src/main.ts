@@ -261,7 +261,7 @@ if (isTwitterOrTweetdeck) {
       this._setButtonOnTweetDetail(options);
     }
 
-    protected setButton({
+    private setButton({
       className,
       getImgSrcs,
       target,
@@ -307,7 +307,7 @@ if (isTwitterOrTweetdeck) {
       container.appendChild(button);
     }
 
-    protected setReactLayoutButton({
+    private setReactLayoutButton({
       className,
       getImgSrcs,
       target,
@@ -546,7 +546,7 @@ if (isTwitterOrTweetdeck) {
    */
   // tweetdeck.twitter.comでボタンを設置するクラス
 
-  class ButtonSetterTweetDeck extends ButtonSetter {
+  class ButtonSetterTweetDeck {
     // タイムラインにボタン表示
     public setButtonOnTimeline(options: Options) {
       // タイムラインにボタン表示する設定がされているときだけ実行する
@@ -657,7 +657,7 @@ if (isTwitterOrTweetdeck) {
       });
     }
 
-    protected setButton({
+    private setButton({
       className,
       getImgSrcs,
       target,
