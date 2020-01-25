@@ -1,7 +1,4 @@
 interface Options {
-  // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-  // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-  // 無効だった場合はそのままボタンは表示されない
   // 公式Web
   SHOW_ON_TIMELINE: TooiBoolean;
   SHOW_ON_TWEET_DETAIL: TooiBoolean;
@@ -12,6 +9,9 @@ interface Options {
   STRIP_IMAGE_SUFFIX: TooiBoolean;
 }
 type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
+// 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
+// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+// 無効だった場合はそのままボタンは表示されない
 let options: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: 'isfalse',
@@ -22,6 +22,8 @@ let options: Options = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: 'isfalse',
 };
+
+// %%% splitter for userjs %%%
 
 /**
  * Constants
