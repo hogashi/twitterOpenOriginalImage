@@ -17,9 +17,8 @@ console.log(`// ==UserScript==
 const options = `
 // 設定
 // 'isfalse' とすると、その設定がオフになる
-const options = {
+var options = {
   // 公式Web
-  OPEN_WITH_KEY_PRESS: 'istrue',
   SHOW_ON_TIMELINE: 'istrue',
   SHOW_ON_TWEET_DETAIL: 'istrue',
   // TweetDeck
