@@ -195,6 +195,15 @@ const setStyle = (
   );
 };
 
+const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
+  // イベント(MouseEvent)による既定の動作をキャンセル
+  e.preventDefault();
+  // イベント(MouseEvent)の親要素への伝播を停止
+  e.stopPropagation();
+
+  openImages(imgSrcs);
+};
+
 // 設定項目更新
 const getOptions = () => {
   console.log('update options'); // debug
@@ -252,15 +261,6 @@ if (isTwitterOrTweetdeck) {
       this._setButtonOnTweetDetail(options);
     }
 
-    protected onClick(e: MouseEvent, imgSrcs: (string | null)[]) {
-      // イベント(MouseEvent)による既定の動作をキャンセル
-      e.preventDefault();
-      // イベント(MouseEvent)の親要素への伝播を停止
-      e.stopPropagation();
-
-      openImages(imgSrcs);
-    }
-
     protected setButton({
       className,
       getImgSrcs,
@@ -285,7 +285,7 @@ if (isTwitterOrTweetdeck) {
             type='button'
             value='Original'
             onClick={(e) => {
-              this.onClick(e, imgSrcs);
+              onOriginalButtonClick(e, imgSrcs);
             }}
           />
         </div>
@@ -297,7 +297,7 @@ if (isTwitterOrTweetdeck) {
       button.type = 'button';
       button.value = 'Original';
       button.addEventListener('click', e => {
-        this.onClick(e, getImgSrcs());
+        onOriginalButtonClick(e, getImgSrcs());
       });
 
       const container = document.createElement('div');
@@ -331,7 +331,7 @@ if (isTwitterOrTweetdeck) {
         cursor: 'pointer',
       });
       button.addEventListener('click', e => {
-        this.onClick(e, getImgSrcs());
+        onOriginalButtonClick(e, getImgSrcs());
       });
 
       const container = document.createElement('div');
@@ -689,7 +689,7 @@ if (isTwitterOrTweetdeck) {
           className={className}
           style={style}
           onClick={(e) => {
-            this.onClick(e, imgSrcs);
+            onOriginalButtonClick(e, imgSrcs);
           }}
         >
           Original
@@ -702,7 +702,7 @@ if (isTwitterOrTweetdeck) {
       button.className = `pull-left margin-txs txt-mute ${className}`;
       setStyle(button, style);
       button.addEventListener('click', e => {
-        this.onClick(e, getImgSrcs());
+        onOriginalButtonClick(e, getImgSrcs());
       });
       button.insertAdjacentHTML('beforeend', 'Original');
 
