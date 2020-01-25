@@ -1,4 +1,4 @@
-import { GET_LOCAL_STORAGE } from './helpers/Constants';
+import { GET_LOCAL_STORAGE } from './main';
 
 // バックグラウンドで実行される
 

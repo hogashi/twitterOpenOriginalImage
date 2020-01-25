@@ -24,7 +24,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
-} from './helpers/Constants';
+} from './main';
 
 const { useState, useCallback } = React;
 
