@@ -459,7 +459,7 @@ if (isTwitterOrTweetdeck) {
         );
         if (
           tweetATags.length === 0 ||
-          !tweetATags.some(aTag => aTag.querySelector('img')) ||
+          tweetATags.every(aTag => !aTag.querySelector('img')) ||
           tweet.getElementsByClassName(className)[0]
         ) {
           return;
