@@ -64,7 +64,7 @@ const OPTIONS_TEXT: { [key: string]: string } = {
 /**
  * Utils
  */
-import { MessageRequest, MessageResponse } from '../background';
+import { MessageRequest, MessageResponse } from './background';
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 const printException = (tooiException: string) => {
