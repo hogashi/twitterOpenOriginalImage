@@ -1,5 +1,6 @@
 /**
- * Constants */
+ * Constants
+ */
 // 定数
 
 // 設定取得メッセージ
@@ -61,9 +62,24 @@ const OPTIONS_TEXT: { [key: string]: string } = {
 };
 
 /**
- * main */
+ * ButtonSetters
+ */
+import ButtonSetter from './ButtonSetter';
+import ButtonSetterTweetDeck from './ButtonSetterTweetDeck';
 
-import ButtonSetters from './helpers/ButtonSetters';
+interface ButtonSettersType {
+  [key: string]: ButtonSetter | ButtonSetterTweetDeck;
+}
+
+// ボタンを設置するクラスのまとめ
+const ButtonSetters: ButtonSettersType = {};
+
+ButtonSetters[HOST_TWITTER_COM] = new ButtonSetter();
+ButtonSetters[HOST_TWEETDECK_TWITTER_COM] = new ButtonSetterTweetDeck();
+
+/**
+ * main
+ */
 import { getOptions } from './helpers/Utils';
 
 // 実行の間隔(ms)
