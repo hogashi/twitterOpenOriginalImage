@@ -688,8 +688,6 @@ class ButtonSetterTweetDeck extends ButtonSetter {
 /**
  * ButtonSetters
  */
-import ButtonSetterTweetDeck from './ButtonSetterTweetDeck';
-
 interface ButtonSettersType {
   [key: string]: ButtonSetter | ButtonSetterTweetDeck;
 }
