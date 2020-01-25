@@ -6,4 +6,4 @@ node_modules
 !/coverage/coverage-summary.json
 
 /dist/js/
-/old/
+/scripts/tmp/
