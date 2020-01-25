@@ -1,3 +1,28 @@
+interface Options {
+  // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
+  // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+  // 無効だった場合はそのままボタンは表示されない
+  // 公式Web
+  SHOW_ON_TIMELINE: TooiBoolean;
+  SHOW_ON_TWEET_DETAIL: TooiBoolean;
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean;
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: TooiBoolean;
+}
+type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
+let options: Options = {
+  // 公式Web
+  SHOW_ON_TIMELINE: 'isfalse',
+  SHOW_ON_TWEET_DETAIL: 'isfalse',
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: 'isfalse',
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'isfalse',
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: 'isfalse',
+};
+
 /**
  * Constants
  */
@@ -32,30 +57,13 @@ export const isTrue = 'istrue';
 export const isFalse = 'isfalse';
 type TooiBoolean = 'istrue' | 'isfalse';
 
-// 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
-interface Options {
-  // 公式Web
-  SHOW_ON_TIMELINE: TooiBoolean;
-  SHOW_ON_TWEET_DETAIL: TooiBoolean;
-  // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean;
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean;
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: TooiBoolean;
-}
-type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
-export const INITIAL_OPTIONS: Options = {
-  // 公式Web
-  SHOW_ON_TIMELINE: isFalse,
-  SHOW_ON_TWEET_DETAIL: isFalse,
-  // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: isFalse,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: isFalse,
-};
+export const OPTION_KEYS = [
+  SHOW_ON_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
+  SHOW_ON_TWEETDECK_TIMELINE,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  STRIP_IMAGE_SUFFIX,
+] as const;
 export const OPTIONS_TEXT: { [key: string]: string } = {
   // 公式Web
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
@@ -190,7 +198,7 @@ const getOptions = () => {
     chrome.runtime.sendMessage(request, callback);
   }).then((data: OptionsMaybe) => {
     const options: { [key: string]: string } = {};
-    Object.keys(INITIAL_OPTIONS).map((key: keyof Options) => {
+    OPTION_KEYS.map(key => {
       options[key] = data[key] || isTrue;
     });
 
@@ -731,9 +739,6 @@ if (isTwitterOrTweetdeck) {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
-  // 設定
-  let options = { ...INITIAL_OPTIONS };
-
   // ボタンを設置
   const setButton = (_options: Options) => {
     // console.log('setButton');
@@ -807,8 +812,6 @@ if (isTwitterOrTweetdeck) {
 
   // twitterの画像を表示したときのC-sを拡張
   // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
-
-  let options = { ...INITIAL_OPTIONS };
 
   const getImageFilenameByUrl = (imgUrl: string) => {
     const params = collectUrlParams(imgUrl);

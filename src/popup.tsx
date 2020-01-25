@@ -15,7 +15,7 @@ import {
   isFalse,
   OPTIONS_TEXT,
   OPTION_UPDATED,
-  INITIAL_OPTIONS,
+  OPTION_KEYS,
   HOST_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_PBS_TWIMG_COM,
@@ -34,7 +34,7 @@ const { useState, useCallback } = React;
 
 interface Props {
   optionsText: { [key: string]: string };
-  optionKeys: string[]; // Array<keyof Options>
+  optionKeys: typeof OPTION_KEYS;
   optionsEnabled: { [key: string]: boolean };
 }
 
@@ -155,7 +155,7 @@ export const Popup = (props: Props) => {
 };
 
 const optionsText = OPTIONS_TEXT;
-const optionKeys = Object.keys(INITIAL_OPTIONS);
+const optionKeys = OPTION_KEYS;
 const optionsEnabled: { [key: string]: boolean } = {};
 optionKeys.forEach(key => {
   // 最初はどっちも機能オンであってほしい
