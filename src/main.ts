@@ -201,10 +201,14 @@ const getOptions = () => {
 };
 
 /**
- * main.tsとその仲間たち
- * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
+ * メインの処理
+ * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
 if (isTwitterOrTweetdeck) {
+  /**
+   * main.tsとその仲間たち
+   * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
+   */
   /**
    * ButtonSetter
    */
