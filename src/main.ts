@@ -48,17 +48,17 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
-const hostname = window.location.hostname;
-
 // 公式Webかどうか
-const isTwitter = /^twitter\.com/.test(hostname);
+export const isTwitter = () => /^twitter\.com/.test(window.location.hostname);
 // Tweetdeckかどうか
-const isTweetdeck = /^tweetdeck\.twitter\.com/.test(hostname);
+export const isTweetdeck = () =>
+  /^tweetdeck\.twitter\.com/.test(window.location.hostname);
 // 画像ページかどうか
-const isImageTab = /^pbs\.twimg\.com/.test(hostname);
+export const isImageTab = () =>
+  /^pbs\.twimg\.com/.test(window.location.hostname);
 
 // これ自体がChrome拡張機能かどうか
-const isNativeChromeExtension =
+export const isNativeChromeExtension = () =>
   window.chrome !== undefined &&
   window.chrome.runtime !== undefined &&
   window.chrome.runtime.id !== undefined;
@@ -255,7 +255,7 @@ const getOptions = () => {
  * メインの処理
  * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
-if (isTwitter || isTweetdeck) {
+if (isTwitter() || isTweetdeck()) {
   /**
    * main.tsとその仲間たち
    * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
@@ -744,9 +744,9 @@ if (isTwitter || isTweetdeck) {
    * getButtonSetter
    */
   const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
-    if (isTwitter) {
+    if (isTwitter()) {
       return new ButtonSetter();
-    } else if (isTweetdeck) {
+    } else if (isTweetdeck()) {
       return new ButtonSetterTweetDeck();
     } else {
       // おかしいことを伝えつつフォールバックする
@@ -829,7 +829,7 @@ if (isTwitter || isTweetdeck) {
       return true;
     });
   }
-} else if (isImageTab) {
+} else if (isImageTab()) {
   /**
    * imagetab
    * https://pbs.twimg.com/* (画像ページのとき)で実行される
