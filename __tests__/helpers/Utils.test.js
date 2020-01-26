@@ -216,48 +216,69 @@ describe('Utils', () => {
   });
 
   describe('getOptions', () => {
-    it('初期設定を取得できる', () => {
-      const expected = {};
-      OPTION_KEYS.forEach(key => {
-        expected[key] = isTrue;
+    describe('Chrome拡張機能のとき', () => {
+      const originalChrome = window.chrome;
+      beforeAll(() => {
+        delete window.chrome;
+        window.chrome = { runtime: { id: 'id' } };
       });
-      window.chrome = {
-        runtime: {
-          id: 'id',
-          sendMessage: jest.fn((_, callback) => callback({ data: {} })),
-        },
-      };
-      expect(getOptions()).resolves.toStrictEqual(expected);
+      afterAll(() => {
+        window.chrome = originalChrome;
+      });
+
+      it('初期設定を取得できる', () => {
+        const expected = {};
+        OPTION_KEYS.forEach(key => {
+          expected[key] = isTrue;
+        });
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
+          callback({ data: {} })
+        );
+        expect(getOptions()).resolves.toStrictEqual(expected);
+      });
+
+      it('設定した値を取得できる', () => {
+        const expected = {};
+        OPTION_KEYS.forEach((key, i) => {
+          expected[key] = i % 2 === 0 ? isTrue : isFalse;
+        });
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
+          callback({ data: { ...expected } })
+        );
+        return getOptions().then(options => {
+          return expect(options).toStrictEqual(expected);
+        });
+      });
+
+      it('設定が取得できなかったらreject', () => {
+        const expected = {};
+        OPTION_KEYS.forEach(key => {
+          expected[key] = isTrue;
+        });
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
+          callback({})
+        );
+        expect(getOptions()).rejects.toBeUndefined();
+      });
     });
 
-    it('設定した値を取得できる', () => {
-      const expected = {};
-      OPTION_KEYS.forEach((key, i) => {
-        expected[key] = i % 2 === 0 ? isTrue : isFalse;
+    describe('Chrome拡張機能でないとき', () => {
+      const originalChrome = window.chrome;
+      beforeAll(() => {
+        delete window.chrome;
+        window.chrome = undefined;
       });
-      window.chrome = {
-        runtime: {
-          id: 'id',
-          sendMessage: jest.fn((_, callback) => callback({ data: expected })),
-        },
-      };
-      return getOptions().then(options => {
-        return expect(options).toStrictEqual(expected);
+      afterAll(() => {
+        window.chrome = originalChrome;
       });
-    });
 
-    it('設定が取得できなかったらreject', () => {
-      const expected = {};
-      OPTION_KEYS.forEach(key => {
-        expected[key] = isTrue;
+      it('初期設定を取得できる', () => {
+        const expected = {};
+        OPTION_KEYS.forEach(key => {
+          expected[key] = isFalse;
+        });
+        expect(getOptions()).resolves.toStrictEqual(expected);
       });
-      window.chrome = {
-        runtime: {
-          id: 'id',
-          sendMessage: jest.fn((_, callback) => callback({})),
-        },
-      };
-      expect(getOptions()).rejects.toBeUndefined();
     });
   });
 });
