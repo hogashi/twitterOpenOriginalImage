@@ -9,17 +9,29 @@ const {
   openImages,
   getOptions,
   setStyle,
+  getImageFilenameByUrl,
+  downloadImage,
   onOriginalButtonClick,
   getButtonSetter,
   ButtonSetter,
   ButtonSetterTweetDeck,
 } = main;
 
+const testParams = {
+  protocol: 'https:',
+  host: 'pbs.twimg.com',
+  pathname: '/media/hogefuga123',
+};
+const makeTestBaseURL = () => {
+  const { protocol, host, pathname } = testParams;
+  return `${protocol}//${host}${pathname}`;
+};
 const makeResultParams = ({ format, name }) => {
+  const { protocol, host, pathname } = testParams;
   return {
-    protocol: 'https:',
-    host: 'pbs.twimg.com',
-    pathname: '/media/hogefuga123',
+    protocol,
+    host,
+    pathname,
     format,
     name: name || null,
   };
@@ -41,67 +53,67 @@ describe('Utils', () => {
     const cases = [
       {
         title: '何もなし',
-        url: 'https://pbs.twimg.com/media/hogefuga123',
+        url: `${makeTestBaseURL()}`,
         params: { format: 'jpg' },
       },
       {
         title: '.jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg',
+        url: `${makeTestBaseURL()}.jpg`,
         params: { format: 'jpg' },
       },
       {
         title: '.png',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png',
+        url: `${makeTestBaseURL()}.png`,
         params: { format: 'png' },
       },
       {
         title: '.jpg:orig',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg:orig',
+        url: `${makeTestBaseURL()}.jpg:orig`,
         params: { format: 'jpg', name: 'orig' },
       },
       {
         title: '.jpg:large',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg:large',
+        url: `${makeTestBaseURL()}.jpg:large`,
         params: { format: 'jpg', name: 'large' },
       },
       {
         title: '?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg',
+        url: `${makeTestBaseURL()}?format=jpg`,
         params: { format: 'jpg' },
       },
       {
         title: '?format=png',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=png',
+        url: `${makeTestBaseURL()}?format=png`,
         params: { format: 'png' },
       },
       {
         title: '.jpg?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=jpg',
+        url: `${makeTestBaseURL()}.jpg?format=jpg`,
         params: { format: 'jpg' },
       },
       {
         title: '.jpg?format=png',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?format=png',
+        url: `${makeTestBaseURL()}.jpg?format=png`,
         params: { format: 'jpg' },
       },
       {
         title: '.png?format=jpg',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg',
+        url: `${makeTestBaseURL()}.png?format=jpg`,
         params: { format: 'png' },
       },
       {
         title: '.jpg?name=large',
-        url: 'https://pbs.twimg.com/media/hogefuga123.jpg?name=large',
+        url: `${makeTestBaseURL()}.jpg?name=large`,
         params: { format: 'jpg', name: 'large' },
       },
       {
         title: '?format=jpg&name=large',
-        url: 'https://pbs.twimg.com/media/hogefuga123?format=jpg&name=large',
+        url: `${makeTestBaseURL()}?format=jpg&name=large`,
         params: { format: 'jpg', name: 'large' },
       },
       {
         title: '.png?format=jpg&name=orig',
-        url: 'https://pbs.twimg.com/media/hogefuga123.png?format=jpg&name=orig',
+        url: `${makeTestBaseURL()}.png?format=jpg&name=orig`,
         params: { format: 'png', name: 'orig' },
       },
     ];
