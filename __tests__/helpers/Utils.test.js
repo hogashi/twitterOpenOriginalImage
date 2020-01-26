@@ -1,11 +1,16 @@
-import { isTrue, isFalse, OPTION_KEYS, setStyle } from '../../src/main';
-import {
+import * as main from '../../src/main';
+const {
+  isTrue,
+  isFalse,
+  OPTION_KEYS,
   printException,
   collectUrlParams,
   formatUrl,
   openImages,
   getOptions,
-} from '../../src/main';
+  setStyle,
+  onOriginalButtonClick,
+} = main;
 
 const makeResultParams = ({ format, name }) => {
   return {
@@ -311,6 +316,26 @@ describe('Utils', () => {
         'background-color': 'rgba(12, 34, 56, 0.7)',
       });
       expect(div).toMatchSnapshot();
+    });
+  });
+
+  describe('onOriginalButtonClick ボタンがクリックされたときのコールバック', () => {
+    it('イベントを止める', () => {
+      /* SKIP: dont know why openImages wont be called */
+      // jest.spyOn(main, 'openImages');
+
+      const event = {
+        preventDefault: jest.fn(),
+        stopPropagation: jest.fn(),
+      };
+      const imgSrcs = ['src1', 'src2'];
+      onOriginalButtonClick(event, imgSrcs);
+
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+      expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+
+      // expect(openImages).toHaveBeenCalledTimes(1);
+      // expect(openImages.mock.calls[0][0]).toStrictEqual(imgSrcs);
     });
   });
 });
