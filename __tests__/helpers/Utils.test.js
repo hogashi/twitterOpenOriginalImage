@@ -1,11 +1,11 @@
-import { INITIAL_OPTIONS, isTrue, isFalse } from '../../src/helpers/Constants';
+import { isTrue, isFalse, OPTION_KEYS } from '../../src/main';
 import {
   printException,
   collectUrlParams,
   formatUrl,
   openImages,
   getOptions,
-} from '../../src/helpers/Utils';
+} from '../../src/main';
 
 const makeResultParams = ({ format, name }) => {
   return {
@@ -218,11 +218,12 @@ describe('Utils', () => {
   describe('getOptions', () => {
     it('初期設定を取得できる', () => {
       const expected = {};
-      Object.keys(INITIAL_OPTIONS).forEach(key => {
+      OPTION_KEYS.forEach(key => {
         expected[key] = isTrue;
       });
       window.chrome = {
         runtime: {
+          id: 'id',
           sendMessage: jest.fn((_, callback) => callback({ data: {} })),
         },
       };
@@ -231,11 +232,12 @@ describe('Utils', () => {
 
     it('設定した値を取得できる', () => {
       const expected = {};
-      Object.keys(INITIAL_OPTIONS).forEach((key, i) => {
+      OPTION_KEYS.forEach((key, i) => {
         expected[key] = i % 2 === 0 ? isTrue : isFalse;
       });
       window.chrome = {
         runtime: {
+          id: 'id',
           sendMessage: jest.fn((_, callback) => callback({ data: expected })),
         },
       };
@@ -246,11 +248,12 @@ describe('Utils', () => {
 
     it('設定が取得できなかったらreject', () => {
       const expected = {};
-      Object.keys(INITIAL_OPTIONS).forEach(key => {
+      OPTION_KEYS.forEach(key => {
         expected[key] = isTrue;
       });
       window.chrome = {
         runtime: {
+          id: 'id',
           sendMessage: jest.fn((_, callback) => callback({})),
         },
       };
