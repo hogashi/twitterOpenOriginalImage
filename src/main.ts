@@ -293,6 +293,8 @@ export const getOptions = () => {
 export class ButtonSetter {
   // タイムラインにボタン表示
   public setButtonOnTimeline(options: Options) {
+    // 昔のビューの処理はしばらく残す
+    // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     if (document.querySelector('#react-root')) {
       this._setButtonOnReactLayoutTimeline(options);
       return;
@@ -302,7 +304,9 @@ export class ButtonSetter {
 
   // ツイート詳細にボタン表示
   public setButtonOnTweetDetail(options: Options) {
+    // 昔のビューの処理はしばらく残す
     // TODO: Reactレイアウトでも実装する必要がある？
+    // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     this._setButtonOnTweetDetail(options);
   }
 
