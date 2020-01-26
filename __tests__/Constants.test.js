@@ -14,6 +14,10 @@ import {
   OPTION_KEYS,
   OPTIONS_TEXT,
   options,
+  isTwitter,
+  isTweetdeck,
+  isImageTab,
+  isNativeChromeExtension,
 } from '../src/main';
 
 describe('定数', () => {
@@ -79,5 +83,58 @@ describe('定数', () => {
       // 画像ページ
       STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
     });
+  });
+
+  describe('どのページかのフラグ', () => {
+    const originalLocation = window.location;
+    beforeAll(() => {
+      delete window.location;
+    });
+    afterAll(() => {
+      window.location = originalLocation;
+    });
+
+    it('公式Web', () => {
+      window.location = new URL('https://twitter.com');
+      expect(isTwitter()).toBeTruthy();
+      expect(isTweetdeck()).toBeFalsy();
+      expect(isImageTab()).toBeFalsy();
+    });
+    it('TweetDeck', () => {
+      window.location = new URL('https://tweetdeck.twitter.com');
+      expect(isTwitter()).toBeFalsy();
+      expect(isTweetdeck()).toBeTruthy();
+      expect(isImageTab()).toBeFalsy();
+    });
+    it('画像ページ', () => {
+      window.location = new URL('https://pbs.twimg.com');
+      expect(isTwitter()).toBeFalsy();
+      expect(isTweetdeck()).toBeFalsy();
+      expect(isImageTab()).toBeTruthy();
+    });
+  });
+
+  describe('Chrome拡張機能かのフラグ', () => {
+    const originalChrome = window.chrome;
+    beforeAll(() => {
+      delete window.chrome;
+    });
+    afterAll(() => {
+      window.chrome = originalChrome;
+    });
+
+    it('Chrome拡張機能のとき真', () => {
+      window.chrome = { runtime: { id: 'id' } };
+      expect(isNativeChromeExtension()).toBeTruthy();
+    });
+    it('Chrome拡張機能でないとき偽', () => {
+      window.chrome = undefined;
+      expect(isNativeChromeExtension()).toBeFalsy();
+      window.chrome = {};
+      expect(isNativeChromeExtension()).toBeFalsy();
+      window.chrome = { runtime: {} };
+      expect(isNativeChromeExtension()).toBeFalsy();
+    });
+    window.chrome = originalChrome;
   });
 });
