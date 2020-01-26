@@ -5,7 +5,7 @@ import {
   isTrue,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   ButtonSetterTweetDeck,
-} from '../../src/main';
+} from '../src/main';
 
 describe('ButtonSetterTweetDeck', () => {
   describe('setButtonOnTimeline', () => {
