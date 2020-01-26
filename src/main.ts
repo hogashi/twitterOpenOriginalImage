@@ -101,12 +101,12 @@ export interface MessageResponse {
 }
 
 // エラーメッセージの表示(予期せぬ状況の確認)
-const printException = (tooiException: string) => {
+export const printException = (tooiException: string) => {
   console.log('tooi: ' + tooiException + ' at: ' + window.location.href);
 };
 
 // 画像urlの要素を集める
-const collectUrlParams = (
+export const collectUrlParams = (
   rawUrl: string
 ): {
   protocol: string;
@@ -160,7 +160,7 @@ const collectUrlParams = (
 };
 
 // 画像URLを https～?format=〜&name=orig に揃える
-const formatUrl = (imgUrl: string | null) => {
+export const formatUrl = (imgUrl: string | null) => {
   if (!imgUrl || imgUrl.length === 0) {
     return null;
   }
@@ -176,7 +176,7 @@ const formatUrl = (imgUrl: string | null) => {
 };
 
 // 画像を開く
-const openImages = (imgSrcs: (string | null)[]) => {
+export const openImages = (imgSrcs: (string | null)[]) => {
   if (imgSrcs.length === 0) {
     printException('zero image urls');
     return;
@@ -199,7 +199,7 @@ const openImages = (imgSrcs: (string | null)[]) => {
  * @param {HTMLElement} element スタイル当てる対象エレメント
  * @param {Object} propertySet プロパティ名('font-size')と値('10px')のオブジェクト
  */
-const setStyle = (
+export const setStyle = (
   element: HTMLElement,
   propertySet: { [key: string]: string }
 ) => {
@@ -208,7 +208,10 @@ const setStyle = (
   );
 };
 
-const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
+export const onOriginalButtonClick = (
+  e: MouseEvent,
+  imgSrcs: (string | null)[]
+) => {
   // イベント(MouseEvent)による既定の動作をキャンセル
   e.preventDefault();
   // イベント(MouseEvent)の親要素への伝播を停止
@@ -218,7 +221,7 @@ const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
 };
 
 // 設定項目更新
-const getOptions = () => {
+export const getOptions = () => {
   console.log('get options'); // debug
   if (isNativeChromeExtension()) {
     // これ自体がChrome拡張機能のとき
