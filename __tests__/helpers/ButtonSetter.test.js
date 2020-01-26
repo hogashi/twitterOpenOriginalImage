@@ -63,45 +63,6 @@ describe('ButtonSetter', () => {
     });
   });
 
-  describe('onClick', () => {
-    it('イベント中断して画像開くメソッド呼ばれる', () => {
-      const event = {
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn(),
-      };
-      const imgSrcs = ['src1', 'src2'];
-
-      const buttonSetter = new ButtonSetter();
-      buttonSetter.onClick(event, imgSrcs);
-
-      expect(event.preventDefault).toHaveBeenCalledTimes(1);
-      expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-
-      expect(openImages).toHaveBeenCalledTimes(1);
-      expect(openImages.mock.calls[0][0]).toBe(imgSrcs);
-    });
-  });
-
-  describe('setStyle', () => {
-    it('objectからエレメントにstyle属性をつける', () => {
-      const element = document.createElement('div');
-      const style = {
-        display: 'block',
-        'background-color': 'green',
-      };
-
-      // 最初はセットされていない
-      expect(element.style.display).toBe('');
-      expect(element.style.backgroundColor).toBe('');
-
-      const buttonSetter = new ButtonSetter();
-      buttonSetter.setStyle(element, style);
-
-      expect(element.style.display).toBe('block');
-      expect(element.style.backgroundColor).toBe('green');
-    });
-  });
-
   describe('setButton', () => {
     const className = 'hogeclass';
     const imgSrcs = ['src1', 'src2'];
