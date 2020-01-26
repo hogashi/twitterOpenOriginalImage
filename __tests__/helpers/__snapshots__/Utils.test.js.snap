@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Utils setStyle DOM要素にスタイルを当てる すでにあるスタイルは上書きされるが消えることはない 1`] = `
+<div
+  style="color: rgb(68, 85, 102); background-color: rgb(120, 154, 188); font-size: 150px;"
+/>
+`;
+
+exports[`Utils setStyle DOM要素にスタイルを当てる すでにあるスタイルは上書きされるが消えることはない 2`] = `
+<div
+  style="color: rgb(17, 34, 51); background-color: rgba(12, 34, 56, 0.7); font-size: 150px; display: none;"
+/>
+`;
+
+exports[`Utils setStyle DOM要素にスタイルを当てる スタイル当たる 1`] = `<div />`;
+
+exports[`Utils setStyle DOM要素にスタイルを当てる スタイル当たる 2`] = `
+<div
+  style="display: none; color: rgb(17, 34, 51); background-color: rgba(12, 34, 56, 0.7);"
+/>
+`;
+
+exports[`Utils setStyle DOM要素にスタイルを当てる 空のスタイル渡すと何もしない 1`] = `<div />`;
+
+exports[`Utils setStyle DOM要素にスタイルを当てる 空のスタイル渡すと何もしない 2`] = `<div />`;
