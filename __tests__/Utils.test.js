@@ -10,6 +10,9 @@ const {
   getOptions,
   setStyle,
   onOriginalButtonClick,
+  getButtonSetter,
+  ButtonSetter,
+  ButtonSetterTweetDeck,
 } = main;
 
 const makeResultParams = ({ format, name }) => {
@@ -336,6 +339,29 @@ describe('Utils', () => {
 
       // expect(openImages).toHaveBeenCalledTimes(1);
       // expect(openImages.mock.calls[0][0]).toStrictEqual(imgSrcs);
+    });
+  });
+
+  describe('getButtonSetter ボタン設置するクラスのゲッタ', () => {
+    const originalLocation = window.location;
+    beforeAll(() => {
+      delete window.location;
+    });
+    afterAll(() => {
+      window.location = originalLocation;
+    });
+
+    it('公式WebではButtonSetter', () => {
+      window.location = new URL('https://twitter.com');
+      expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
+    });
+    it('TweetDeckではButtonSetterTweetDeck', () => {
+      window.location = new URL('https://tweetdeck.twitter.com');
+      expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
+    });
+    it('どちらでもなかったらButtonSetter', () => {
+      window.location = new URL('https://hoge.test');
+      expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
     });
   });
 });
