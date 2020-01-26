@@ -1,4 +1,4 @@
-import { isTrue, isFalse, OPTION_KEYS } from '../../src/main';
+import { isTrue, isFalse, OPTION_KEYS, setStyle } from '../../src/main';
 import {
   printException,
   collectUrlParams,
@@ -279,6 +279,38 @@ describe('Utils', () => {
         });
         expect(getOptions()).resolves.toStrictEqual(expected);
       });
+    });
+  });
+
+  describe('setStyle DOM要素にスタイルを当てる', () => {
+    it('スタイル当たる', () => {
+      const div = document.createElement('div');
+      expect(div).toMatchSnapshot();
+      setStyle(div, {
+        display: 'none',
+        color: '#123',
+        'background-color': 'rgba(12, 34, 56, 0.7)',
+      });
+      expect(div).toMatchSnapshot();
+    });
+    it('空のスタイル渡すと何もしない', () => {
+      const div = document.createElement('div');
+      expect(div).toMatchSnapshot();
+      setStyle(div, {});
+      expect(div).toMatchSnapshot();
+    });
+    it('すでにあるスタイルは上書きされるが消えることはない', () => {
+      const div = document.createElement('div');
+      div.style.color = '#456';
+      div.style.backgroundColor = '#789abc';
+      div.style.fontSize = '150px';
+      expect(div).toMatchSnapshot();
+      setStyle(div, {
+        display: 'none',
+        color: '#123',
+        'background-color': 'rgba(12, 34, 56, 0.7)',
+      });
+      expect(div).toMatchSnapshot();
     });
   });
 });
