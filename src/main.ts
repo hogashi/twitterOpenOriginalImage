@@ -59,9 +59,9 @@ const isImageTab = /^pbs\.twimg\.com/.test(hostname);
 
 // これ自体がChrome拡張機能かどうか
 const isNativeChromeExtension =
-  chrome !== undefined &&
-  chrome.runtime !== undefined &&
-  chrome.runtime.id !== undefined;
+  window.chrome !== undefined &&
+  window.chrome.runtime !== undefined &&
+  window.chrome.runtime.id !== undefined;
 
 // 設定
 
@@ -233,7 +233,7 @@ const getOptions = () => {
           reject();
         }
       };
-      chrome.runtime.sendMessage(request, callback);
+      window.chrome.runtime.sendMessage(request, callback);
     }).then((data: OptionsMaybe) => {
       const options: OptionsMaybe = {};
       OPTION_KEYS.map(key => {
@@ -812,8 +812,8 @@ if (isTwitter || isTweetdeck) {
   // これ自体がChrome拡張機能のときだけ設置する
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
   if (isNativeChromeExtension) {
-    chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
-      console.log(chrome.runtime.lastError);
+    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+      console.log(window.chrome.runtime.lastError);
       if (request.method === OPTION_UPDATED) {
         getOptions().then(newOptions => {
           Object.keys(newOptions).forEach((key: keyof Options) => {

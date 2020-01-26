@@ -2,7 +2,7 @@ import { GET_LOCAL_STORAGE, MessageRequest, MessageResponse } from './main';
 
 // バックグラウンドで実行される
 
-chrome.runtime.onMessage.addListener(
+window.chrome.runtime.onMessage.addListener(
   (
     request: MessageRequest,
     _,

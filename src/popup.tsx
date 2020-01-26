@@ -46,7 +46,7 @@ export const Popup = (props: Props) => {
     optionKeys.forEach(key => {
       localStorage[key] = enabled[key] ? isTrue : isFalse;
     });
-    chrome.tabs.query({}, result =>
+    window.chrome.tabs.query({}, result =>
       result.forEach(tab => {
         // console.log(tab);
         if (!tab.url || !tab.id) {
@@ -63,8 +63,10 @@ export const Popup = (props: Props) => {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;
         }
-        chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, response =>
-          console.log('res:', response)
+        window.chrome.tabs.sendMessage(
+          tab.id,
+          { method: OPTION_UPDATED },
+          response => console.log('res:', response)
         );
       })
     );
