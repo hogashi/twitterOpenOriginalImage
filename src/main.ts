@@ -45,6 +45,7 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 // 画像ページ
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
+
 const hostname = window.location.hostname;
 
 // 公式Webかどうか
