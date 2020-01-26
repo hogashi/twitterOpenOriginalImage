@@ -7,18 +7,18 @@ const { shallow } = Enzyme;
 
 import {
   OPTIONS_TEXT,
-  INITIAL_OPTIONS,
   SHOW_ON_TIMELINE,
   isFalse,
   SHOW_ON_TWEETDECK_TIMELINE,
   isTrue,
-} from '../src/helpers/Constants';
+  OPTION_KEYS,
+} from '../src/main';
 import { Popup } from '../src/popup';
 
 describe('Popup', () => {
   it('render', () => {
     const optionsText = OPTIONS_TEXT;
-    const optionKeys = Object.keys(INITIAL_OPTIONS);
+    const optionKeys = OPTION_KEYS;
     const optionsEnabled = {};
     optionKeys.forEach(key => {
       optionsEnabled[key] = true;
@@ -38,7 +38,7 @@ describe('Popup', () => {
     expect(window.localStorage).toMatchObject({});
 
     const optionsText = OPTIONS_TEXT;
-    const optionKeys = Object.keys(INITIAL_OPTIONS);
+    const optionKeys = OPTION_KEYS;
     const optionsEnabled = {};
     const expectOptions = {};
     optionKeys.forEach(key => {
