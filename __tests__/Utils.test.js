@@ -381,6 +381,65 @@ describe('Utils', () => {
     });
   });
 
+  describe('downloadImage 画像をダウンロードする', () => {
+    let img;
+    let event = {};
+    beforeEach(() => {
+      img = document.createElement('img');
+      img.src = 'https://pbs.twimg.com/media/hogefuga123.jpg';
+      document.querySelector('body').appendChild(img);
+
+      event = {
+        preventDefault: jest.fn(),
+      };
+    });
+    afterEach(() => {
+      img.parentNode.removeChild(img);
+    });
+
+    it('Ctrl-s', () => {
+      event.ctrlKey = true;
+      event.key = 's';
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+    });
+    it('Cmd-s', () => {
+      event.metaKey = true;
+      event.key = 's';
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
+    });
+    it('ただのsなら何もしない', () => {
+      event.key = 's';
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+    it('ただのCtrlなら何もしない', () => {
+      event.ctrlKey = true;
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+    it('ただのCmdなら何もしない', () => {
+      event.metaKey = true;
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+    it('imgのsrcがないときCtrl-sしても何もしない', () => {
+      img.src = '';
+
+      event.ctrlKey = true;
+      event.key = 's';
+      downloadImage(event);
+      // 便宜上event.preventDefaultまで到達したのでダウンロードされているはずとしてテスト
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+  });
+
   describe('getButtonSetter ボタン設置するクラスのゲッタ', () => {
     const originalLocation = window.location;
     beforeAll(() => {
