@@ -321,7 +321,7 @@ describe('Utils', () => {
 
   describe('onOriginalButtonClick ボタンがクリックされたときのコールバック', () => {
     it('イベントを止める', () => {
-      /* SKIP: dont know why openImages wont be called */
+      /* SKIP: なぜかうまくmockできないので飛ばす */
       // jest.spyOn(main, 'openImages');
 
       const event = {
