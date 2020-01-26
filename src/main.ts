@@ -220,7 +220,7 @@ const onOriginalButtonClick = (e: MouseEvent, imgSrcs: (string | null)[]) => {
 // 設定項目更新
 const getOptions = () => {
   console.log('get options'); // debug
-  if (isNativeChromeExtension) {
+  if (isNativeChromeExtension()) {
     // これ自体がChrome拡張機能のとき
     return new Promise((resolve, reject) => {
       const request: MessageRequest = {
@@ -811,7 +811,7 @@ if (isTwitter() || isTweetdeck()) {
   // 設定反映のためのリスナー設置
   // これ自体がChrome拡張機能のときだけ設置する
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
-  if (isNativeChromeExtension) {
+  if (isNativeChromeExtension()) {
     window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       console.log(window.chrome.runtime.lastError);
       if (request.method === OPTION_UPDATED) {

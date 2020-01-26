@@ -135,6 +135,5 @@ describe('定数', () => {
       window.chrome = { runtime: {} };
       expect(isNativeChromeExtension()).toBeFalsy();
     });
-    window.chrome = originalChrome;
   });
 });
