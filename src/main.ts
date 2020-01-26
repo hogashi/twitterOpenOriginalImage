@@ -253,8 +253,8 @@ const getOptions = () => {
 
 /**
  * ButtonSetter
+ * twitter.comでボタンを設置するクラス
  */
-// twitter.comでボタンを設置するクラス
 export class ButtonSetter {
   // タイムラインにボタン表示
   public setButtonOnTimeline(options: Options) {
@@ -551,8 +551,8 @@ export class ButtonSetter {
 
 /**
  * ButtonSetterTweetDeck
+ * tweetdeck.twitter.comでボタンを設置するクラス
  */
-// tweetdeck.twitter.comでボタンを設置するクラス
 export class ButtonSetterTweetDeck {
   // タイムラインにボタン表示
   public setButtonOnTimeline(options: Options) {
