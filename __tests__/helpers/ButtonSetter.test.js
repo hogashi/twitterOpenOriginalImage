@@ -1,14 +1,14 @@
-import ButtonSetter from '../../src/helpers/ButtonSetter';
 import {
-  INITIAL_OPTIONS,
+  options,
   SHOW_ON_TIMELINE,
   isTrue,
   isFalse,
   SHOW_ON_TWEET_DETAIL,
-} from '../../src/helpers/Constants';
-import { openImages } from '../../src/helpers/Utils';
+  openImages,
+  ButtonSetter,
+} from '../../src/main';
 
-jest.mock('../../src/helpers/Utils');
+jest.mock('../../src/main');
 
 describe('ButtonSetter', () => {
   describe('setButtonOnTimeline', () => {
@@ -17,11 +17,11 @@ describe('ButtonSetter', () => {
       buttonSetter._setButtonOnTimeline = jest.fn();
       buttonSetter._setButtonOnReactLayoutTimeline = jest.fn();
 
-      buttonSetter.setButtonOnTimeline(INITIAL_OPTIONS);
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter._setButtonOnTimeline).toHaveBeenCalledTimes(1);
       expect(buttonSetter._setButtonOnTimeline.mock.calls[0][0]).toStrictEqual(
-        INITIAL_OPTIONS
+        options
       );
 
       expect(
@@ -37,7 +37,7 @@ describe('ButtonSetter', () => {
       const root = document.createElement('div');
       root.setAttribute('id', 'react-root');
       document.querySelector('body').appendChild(root);
-      buttonSetter.setButtonOnTimeline(INITIAL_OPTIONS);
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter._setButtonOnTimeline).not.toHaveBeenCalled();
 
@@ -46,7 +46,7 @@ describe('ButtonSetter', () => {
       ).toHaveBeenCalledTimes(1);
       expect(
         buttonSetter._setButtonOnReactLayoutTimeline.mock.calls[0][0]
-      ).toStrictEqual(INITIAL_OPTIONS);
+      ).toStrictEqual(options);
     });
   });
 
@@ -55,11 +55,11 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter._setButtonOnTweetDetail = jest.fn();
 
-      buttonSetter.setButtonOnTweetDetail(INITIAL_OPTIONS);
+      buttonSetter.setButtonOnTweetDetail(options);
       expect(buttonSetter._setButtonOnTweetDetail).toHaveBeenCalledTimes(1);
       expect(
         buttonSetter._setButtonOnTweetDetail.mock.calls[0][0]
-      ).toStrictEqual(INITIAL_OPTIONS);
+      ).toStrictEqual(options);
     });
   });
 
@@ -198,9 +198,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -229,9 +229,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -277,9 +277,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -304,9 +304,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -318,9 +318,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -332,9 +332,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -349,9 +349,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -366,9 +366,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -377,9 +377,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -388,9 +388,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isFalse;
-      buttonSetter._setButtonOnTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isFalse;
+      buttonSetter._setButtonOnTimeline(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -446,9 +446,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -476,9 +476,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -506,9 +506,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -520,9 +520,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -538,9 +538,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -555,9 +555,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -566,9 +566,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isTrue;
-      buttonSetter._setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isTrue;
+      buttonSetter._setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -577,9 +577,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TWEET_DETAIL] = isFalse;
-      buttonSetter.setButtonOnTweetDetail(options);
+      const _options = options;
+      _options[SHOW_ON_TWEET_DETAIL] = isFalse;
+      buttonSetter.setButtonOnTweetDetail(_options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -645,9 +645,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(1);
       expect(
@@ -676,9 +676,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -724,9 +724,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -751,9 +751,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
@@ -765,9 +765,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
@@ -779,9 +779,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
@@ -796,9 +796,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
@@ -810,9 +810,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isTrue;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isTrue;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
@@ -821,9 +821,9 @@ describe('ButtonSetter', () => {
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
 
-      const options = INITIAL_OPTIONS;
-      options[SHOW_ON_TIMELINE] = isFalse;
-      buttonSetter._setButtonOnReactLayoutTimeline(options);
+      const _options = options;
+      _options[SHOW_ON_TIMELINE] = isFalse;
+      buttonSetter._setButtonOnReactLayoutTimeline(_options);
 
       expect(buttonSetter.setReactLayoutButton).not.toHaveBeenCalled();
     });
