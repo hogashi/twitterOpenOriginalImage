@@ -65,7 +65,7 @@ const isNativeChromeExtension =
 // 設定に使う真偽値
 export const isTrue = 'istrue';
 export const isFalse = 'isfalse';
-type TooiBoolean = 'istrue' | 'isfalse';
+type TooiBoolean = typeof isTrue | typeof isFalse;
 
 export const OPTION_KEYS = [
   SHOW_ON_TIMELINE,
