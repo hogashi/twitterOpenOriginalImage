@@ -1,10 +1,8 @@
 module.exports = {
   entry: {
     main: './src/main.ts',
-    imagetab: './src/imagetab.ts',
     background: './src/background.ts',
     popup: './src/popup.tsx',
-    tooiForMonkeys: './src/tooiForMonkeys.ts',
   },
   output: {
     filename: '[name].bundle.js',
