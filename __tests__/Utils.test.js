@@ -20,6 +20,7 @@ const {
 const testParams = {
   protocol: 'https:',
   host: 'pbs.twimg.com',
+  basename: 'hogefuga123',
   pathname: '/media/hogefuga123',
 };
 const makeTestBaseURL = () => {
@@ -55,66 +56,79 @@ describe('Utils', () => {
         title: '何もなし',
         url: `${makeTestBaseURL()}`,
         params: { format: 'jpg' },
+        filename: `${testParams.basename}.jpg`,
       },
       {
         title: '.jpg',
         url: `${makeTestBaseURL()}.jpg`,
         params: { format: 'jpg' },
+        filename: `${testParams.basename}.jpg`,
       },
       {
         title: '.png',
         url: `${makeTestBaseURL()}.png`,
         params: { format: 'png' },
+        filename: `${testParams.basename}.png`,
       },
       {
         title: '.jpg:orig',
         url: `${makeTestBaseURL()}.jpg:orig`,
         params: { format: 'jpg', name: 'orig' },
+        filename: `${testParams.basename}-orig.jpg`,
       },
       {
         title: '.jpg:large',
         url: `${makeTestBaseURL()}.jpg:large`,
         params: { format: 'jpg', name: 'large' },
+        filename: `${testParams.basename}-large.jpg`,
       },
       {
         title: '?format=jpg',
         url: `${makeTestBaseURL()}?format=jpg`,
         params: { format: 'jpg' },
+        filename: `${testParams.basename}.jpg`,
       },
       {
         title: '?format=png',
         url: `${makeTestBaseURL()}?format=png`,
         params: { format: 'png' },
+        filename: `${testParams.basename}.png`,
       },
       {
         title: '.jpg?format=jpg',
         url: `${makeTestBaseURL()}.jpg?format=jpg`,
         params: { format: 'jpg' },
+        filename: `${testParams.basename}.jpg`,
       },
       {
         title: '.jpg?format=png',
         url: `${makeTestBaseURL()}.jpg?format=png`,
         params: { format: 'jpg' },
+        filename: `${testParams.basename}.jpg`,
       },
       {
         title: '.png?format=jpg',
         url: `${makeTestBaseURL()}.png?format=jpg`,
         params: { format: 'png' },
+        filename: `${testParams.basename}.png`,
       },
       {
         title: '.jpg?name=large',
         url: `${makeTestBaseURL()}.jpg?name=large`,
         params: { format: 'jpg', name: 'large' },
+        filename: `${testParams.basename}-large.jpg`,
       },
       {
         title: '?format=jpg&name=large',
         url: `${makeTestBaseURL()}?format=jpg&name=large`,
         params: { format: 'jpg', name: 'large' },
+        filename: `${testParams.basename}-large.jpg`,
       },
       {
         title: '.png?format=jpg&name=orig',
         url: `${makeTestBaseURL()}.png?format=jpg&name=orig`,
         params: { format: 'png', name: 'orig' },
+        filename: `${testParams.basename}-orig.png`,
       },
     ];
 
@@ -145,6 +159,19 @@ describe('Utils', () => {
         expect(formatUrl('https://twitter.com/tos')).toBe(
           'https://twitter.com/tos'
         );
+      });
+    });
+
+    describe('getImageFilenameByUrl 画像のファイル名をつくる', () => {
+      cases.forEach(singleCase => {
+        const { title, url, filename } = singleCase;
+        it(title, () => {
+          expect(getImageFilenameByUrl(url)).toBe(filename);
+        });
+      });
+
+      it('twitterの画像URLでないときnull', () => {
+        expect(getImageFilenameByUrl('https://twitter.com/tos')).toBe(null);
       });
     });
   });
