@@ -14,7 +14,7 @@ import {
   OPTION_KEYS,
   OPTIONS_TEXT,
   options,
-} from '../../src/main';
+} from '../src/main';
 
 describe('定数', () => {
   it('設定取得メッセージ', () => {
