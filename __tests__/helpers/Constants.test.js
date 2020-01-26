@@ -11,9 +11,10 @@ import {
   STRIP_IMAGE_SUFFIX,
   isTrue,
   isFalse,
-  INITIAL_OPTIONS,
+  OPTION_KEYS,
   OPTIONS_TEXT,
-} from '../../src/helpers/Constants';
+  options,
+} from '../../src/main';
 
 describe('定数', () => {
   it('設定取得メッセージ', () => {
@@ -49,7 +50,7 @@ describe('定数', () => {
     // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
     // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
     // 無効だった場合はそのままボタンは表示されない
-    expect(INITIAL_OPTIONS).toStrictEqual({
+    expect(options).toStrictEqual({
       // 公式Web
       SHOW_ON_TIMELINE: 'isfalse',
       SHOW_ON_TWEET_DETAIL: 'isfalse',
@@ -59,6 +60,14 @@ describe('定数', () => {
       // 画像ページ
       STRIP_IMAGE_SUFFIX: 'isfalse',
     });
+
+    expect(OPTION_KEYS).toStrictEqual([
+      SHOW_ON_TIMELINE,
+      SHOW_ON_TWEET_DETAIL,
+      SHOW_ON_TWEETDECK_TIMELINE,
+      SHOW_ON_TWEETDECK_TWEET_DETAIL,
+      STRIP_IMAGE_SUFFIX,
+    ]);
 
     expect(OPTIONS_TEXT).toStrictEqual({
       // 公式Web
