@@ -8,8 +8,6 @@ const {
   ButtonSetter,
 } = main;
 
-// jest.mock('../../src/main');
-
 describe('ButtonSetter', () => {
   describe('setButtonOnTimeline', () => {
     it('従来のレイアウト(not React)', () => {
