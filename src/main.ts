@@ -882,4 +882,6 @@ if (isTwitter || isTweetdeck) {
       downloadImage(e);
     }
   });
+} else {
+  printException('not twitter/tweetdeck/image page');
 }
