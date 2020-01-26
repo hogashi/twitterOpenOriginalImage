@@ -782,12 +782,6 @@ if (isTwitter() || isTweetdeck()) {
     setButton();
   };
 
-  // ページ全体でDOMの変更を検知し都度ボタン設置
-  const observer = new MutationObserver(setButtonWithInterval);
-  const target = document.querySelector('body')!;
-  const config = { childList: true, subtree: true };
-  observer.observe(target, config);
-
   // 設定読み込み
   getOptions().then(newOptions => {
     Object.keys(newOptions).forEach((key: keyof Options) => {
@@ -796,6 +790,12 @@ if (isTwitter() || isTweetdeck()) {
     // ボタンを(再)設置
     setButtonWithInterval();
   });
+
+  // ページ全体でDOMの変更を検知し都度ボタン設置
+  const observer = new MutationObserver(setButtonWithInterval);
+  const target = document.querySelector('body')!;
+  const config = { childList: true, subtree: true };
+  observer.observe(target, config);
 
   // 設定反映のためのリスナー設置
   // これ自体がChrome拡張機能のときだけ設置する
