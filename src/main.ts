@@ -752,16 +752,14 @@ if (isTwitter() || isTweetdeck()) {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
+  // ボタン設置クラス
+  const buttonSetter = getButtonSetter();
+
   // ボタンを設置
-  const setButton = (_options: Options) => {
-    // console.log('setButton');
-
-    // ボタン設置クラス
-    const buttonSetter = getButtonSetter();
-
-    // console.log('setButton: ' + _options['SHOW_ON_TIMELINE'] + ' ' + _options['SHOW_ON_TWEET_DETAIL'] + ' ' + _options['OPEN_WITH_KEY_PRESS']) // debug
-    buttonSetter.setButtonOnTimeline(_options);
-    buttonSetter.setButtonOnTweetDetail(_options);
+  const setButton = () => {
+    // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
+    buttonSetter.setButtonOnTimeline(options);
+    buttonSetter.setButtonOnTweetDetail(options);
   };
 
   let isInterval = false;
@@ -776,12 +774,12 @@ if (isTwitter() || isTweetdeck()) {
     setTimeout(() => {
       isInterval = false;
       if (deferred) {
-        setButton(options);
+        setButton();
         deferred = false;
       }
     }, INTERVAL);
 
-    setButton(options);
+    setButton();
   };
 
   // ページ全体でDOMの変更を検知し都度ボタン設置
