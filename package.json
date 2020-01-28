@@ -16,7 +16,8 @@
     "jest": "jest --version && jest --verbose --coverage",
     "coverage": "make-coverage-badge",
     "jest:ci": "jest --version && jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
-    "test": "run-s lint:eslint jest coverage",
+    "test": "run-s lint:eslint test:ts jest coverage",
+    "test:ts": "tsc --noEmit",
     "test:ci": "run-s lint:eslint jest:ci"
   },
   "devDependencies": {
