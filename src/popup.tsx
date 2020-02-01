@@ -171,4 +171,10 @@ const props = {
   optionsEnabled,
 };
 
+let root = document.getElementById('root');
+if (!root) {
+  root = document.createElement('div');
+  root.id = 'root';
+  document.querySelector('body')?.appendChild(root);
+}
 ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
