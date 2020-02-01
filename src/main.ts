@@ -102,7 +102,11 @@ export interface MessageResponse {
 
 // エラーメッセージの表示(予期せぬ状況の確認)
 export const printException = (tooiException: string) => {
-  console.log('tooi: ' + tooiException + ' at: ' + window.location.href);
+  try {
+    throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // 画像urlの要素を集める
