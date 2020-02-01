@@ -1,5 +1,6 @@
 # twitter画像原寸ボタン
 
+![Node.js CI](https://github.com/hogashi/twitterOpenOriginalImage/workflows/Node.js%20CI/badge.svg)
 [![CircleCI](https://circleci.com/gh/hogashi/twitterOpenOriginalImage.svg?style=svg)](https://circleci.com/gh/hogashi/twitterOpenOriginalImage)
 [![Coverage Status](https://circleci.com/api/v1.1/project/github/hogashi/twitterOpenOriginalImage/latest/artifacts/0/home/circleci/repo/coverage/badge.svg?sanitize=true)](https://circleci.com/api/v1.1/project/github/hogashi/twitterOpenOriginalImage/latest/artifacts/0/home/circleci/repo/coverage/lcov-report/index.html)
 
