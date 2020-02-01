@@ -2,3 +2,8 @@
 node_modules
 *.log
 
+/coverage/
+!/coverage/coverage-summary.json
+
+/dist/js/
+/scripts/tmp/

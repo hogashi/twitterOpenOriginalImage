@@ -1,14 +1,67 @@
 {
-  "name": "twitterOpenOriginalImage",
-  "version": "2.3",
+  "name": "twitter-open-original-image",
   "description": "opens images in original size at twitter",
   "repository": "git@github.com:hogashi/twitterOpenOriginalImage.git",
-  "author": "hogashi <i1511015@edu.cc.uec.ac.jp>",
+  "author": "hogashi <azuma.ginkakuji@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "prettier --write src/js/*.js tooi*.js"
+    "build": "run-s build:js build:userjs",
+    "build:js": "webpack --version && webpack --mode production",
+    "build-dev": "run-s build-dev:js build:userjs",
+    "build-dev:js": "webpack --version && webpack --mode development",
+    "build:userjs": "./scripts/make_user_script.sh",
+    "lint": "run-s lint:prettier lint:eslint",
+    "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
+    "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
+    "jest": "jest --version && jest --verbose --coverage",
+    "coverage": "make-coverage-badge",
+    "jest:ci": "jest --version && jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
+    "test": "run-s lint:eslint test:ts jest coverage",
+    "test:ts": "tsc --noEmit",
+    "test:ci": "run-s lint:eslint jest:ci"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/chrome": "^0.0.83",
+    "@types/jest": "^24.0.15",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-test-renderer": "^16.8.2",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
+    "babel-loader": "^8.0.5",
+    "coveralls": "^3.0.4",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-jest": "^22.7.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.8.0",
+    "make-coverage-badge": "^1.1.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "react-test-renderer": "^16.8.6",
+    "typescript": "^3.4.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@material-ui/core": "^3.9.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "lcov",
+      "text"
+    ]
   }
 }

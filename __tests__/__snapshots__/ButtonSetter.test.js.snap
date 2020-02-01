@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonSetter setButton ボタン設置される 1`] = `"<div class=\\"ProfileTweet-action hogeclass\\"><input class=\\"tooi-button\\" style=\\"width: 70px; font-size: 13px; color: rgb(105, 123, 140);\\" type=\\"button\\" value=\\"Original\\"></div>"`;
+
+exports[`ButtonSetter setReactLayoutButton ボタン設置される 1`] = `"<div class=\\"hogeclass\\" style=\\"display: flex; margin-left: 20px; flex-flow: column; justify-content: center;\\"><input type=\\"button\\" value=\\"Original\\" style=\\"font-size: 13px; padding: 4px 8px; color: rgb(105, 123, 140); background-color: rgba(0, 0, 0, 0); border: 1px solid #697b8c; border-radius: 3px; cursor: pointer;\\"></div>"`;
