@@ -21,11 +21,11 @@
     "test:ci": "run-s lint:eslint jest:ci"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.4",
-    "@babel/preset-env": "7.4.4",
-    "@babel/preset-react": "7.0.0",
-    "@babel/preset-typescript": "7.3.3",
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.4",
+    "@babel/preset-env": "7.8.4",
+    "@babel/preset-react": "7.8.3",
+    "@babel/preset-typescript": "7.8.3",
     "@types/chrome": "0.0.83",
     "@types/jest": "24.0.15",
     "@types/react": "16.8.17",
@@ -52,7 +52,7 @@
     "webpack-cli": "3.3.2"
   },
   "dependencies": {
-    "@babel/polyfill": "7.4.4",
+    "@babel/polyfill": "7.8.3",
     "@material-ui/core": "3.9.3",
     "react": "16.8.6",
     "react-dom": "16.8.6"
