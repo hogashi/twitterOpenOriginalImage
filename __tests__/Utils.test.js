@@ -43,7 +43,7 @@ describe('Utils', () => {
     it('エラーメッセージの表示(予期せぬ状況の確認)', () => {
       console.log = jest.fn();
       printException('exception message');
-      expect(console.log.mock.calls[0][0]).toBe(
+      expect(console.log.mock.calls[0][0]).toMatch(
         'tooi: exception message at: http://localhost/'
       );
     });
