@@ -171,4 +171,4 @@ const props = {
   optionsEnabled,
 };
 
-ReactDOM.render(<Popup {...props} />, document.querySelector('body'));
+ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
