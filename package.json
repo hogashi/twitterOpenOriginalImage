@@ -34,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "babel-loader": "8.0.6",
-    "coveralls": "3.0.4",
+    "coveralls": "3.0.9",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
     "eslint": "5.16.0",
