@@ -24,6 +24,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
+  printException,
 } from './main';
 
 const { useState, useCallback } = React;
@@ -175,6 +176,11 @@ let root = document.getElementById('root');
 if (!root) {
   root = document.createElement('div');
   root.id = 'root';
-  document.querySelector('body')?.appendChild(root);
+  const body = document.querySelector('body');
+  if (body) {
+    body.appendChild(root);
+  } else {
+    printException('cant find body');
+  }
 }
 ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
