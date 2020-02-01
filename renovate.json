@@ -1,6 +1,7 @@
 {
   "extends": ["config:base"],
   "masterIssueApproval": true,
+  "rebaseConflictedPrs": true,
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
