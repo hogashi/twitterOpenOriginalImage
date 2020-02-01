@@ -84,7 +84,12 @@ var OPTIONS_TEXT = {
 };
 // エラーメッセージの表示(予期せぬ状況の確認)
 var printException = function (tooiException) {
-    console.log('tooi: ' + tooiException + ' at: ' + window.location.href);
+    try {
+        throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
+    }
+    catch (err) {
+        console.log(err);
+    }
 };
 // 画像urlの要素を集める
 var collectUrlParams = function (rawUrl) {
@@ -652,7 +657,7 @@ var getButtonSetter = function () {
  * メインの処理
  * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
-var main = function () {
+var tooiMain = function () {
     if (isTwitter() || isTweetdeck()) {
         /**
          * main
@@ -746,4 +751,6 @@ var main = function () {
         printException('not twitter/tweetdeck/image page');
     }
 };
-main();
+if (isTwitter() || isTweetdeck() || isImageTab()) {
+    tooiMain();
+}
