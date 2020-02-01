@@ -693,9 +693,9 @@ export class ButtonSetterTweetDeck {
               .src,
           ];
         } else {
-          return Array.from(tweet.getElementsByClassName('media-image')).map(
-            element => this.getBackgroundImageUrl(element as HTMLElement)
-          );
+          return Array.from(
+            tweet.getElementsByClassName('media-image')
+          ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
         }
       };
 
