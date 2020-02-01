@@ -786,7 +786,7 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
  * メインの処理
  * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
-export const main = () => {
+const tooiMain = () => {
   if (isTwitter() || isTweetdeck()) {
     /**
      * main
@@ -892,4 +892,6 @@ export const main = () => {
   }
 };
 
-main();
+if (isTwitter() || isTweetdeck() || isImageTab()) {
+  tooiMain();
+}
