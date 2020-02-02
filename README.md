@@ -34,6 +34,7 @@ Chromeウェブストアからインストール: [twitter画像原寸ボタン]
 タブ間の設定共有のために、タブ操作の権限を使っているため、それが「閲覧履歴の読み取り」と表示されています。
 
 - 公式ドキュメント: [chrome.tabs - Google Chrome](https://developer.chrome.com/extensions/tabs)
+- プライバシーポリシー: [./privacy-policy.md](./privacy-policy.md)
 
 ## 連絡先
 
