@@ -26,3 +26,6 @@ This Chrome extension does not:
 
 - 何かのデータをインターネットのどこかに送ること
 
+## Changelog / 更新
+
+- 2020/02/03 create this document / この文書を作成
