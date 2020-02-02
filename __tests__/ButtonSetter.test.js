@@ -577,7 +577,7 @@ describe('ButtonSetter', () => {
       }
 
       // 4枚のときだけ2,3枚目の順序が(DOMとしては)入れ替わって表示されるのを再現する
-      let imgSrcs2 = [...imgSrcs];
+      const imgSrcs2 = [...imgSrcs];
       if (imgSrcs2.length === 4) {
         const tmp = imgSrcs2[1];
         imgSrcs2[1] = imgSrcs2[2];
