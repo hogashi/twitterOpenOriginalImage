@@ -11,7 +11,7 @@
     "build-dev:js": "webpack --version && webpack --mode development",
     "build:userjs": "./scripts/make_user_script.sh",
     "lint": "run-s lint:prettier lint:eslint",
-    "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
+    "lint:eslint": "eslint --version && eslint src --ext ts --ext tsx && eslint __tests__ --ext js",
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
     "jest": "jest --version && jest --verbose --coverage",
     "coverage": "make-coverage-badge",
