@@ -7,5 +7,5 @@
     "target": "es2017",
     "jsx": "react"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/"]
 }
