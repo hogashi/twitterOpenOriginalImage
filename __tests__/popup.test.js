@@ -35,7 +35,9 @@ describe('Popup', () => {
 
   describe('保存ボタン押すと設定が保存される', () => {
     window.localStorage = {};
-    expect(window.localStorage).toMatchObject({});
+    it('最初は空', () => {
+      expect(window.localStorage).toMatchObject({});
+    });
 
     const optionsText = OPTIONS_TEXT;
     const optionKeys = OPTION_KEYS;

@@ -279,7 +279,7 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({ data: {} })
         );
-        expect(getOptions()).resolves.toStrictEqual(expected);
+        return expect(getOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定した値を取得できる', () => {
@@ -303,7 +303,7 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({})
         );
-        expect(getOptions()).rejects.toBeUndefined();
+        return expect(getOptions()).rejects.toBeUndefined();
       });
     });
 
@@ -322,7 +322,7 @@ describe('Utils', () => {
         OPTION_KEYS.forEach(key => {
           expected[key] = isFalse;
         });
-        expect(getOptions()).resolves.toStrictEqual(expected);
+        return expect(getOptions()).resolves.toStrictEqual(expected);
       });
     });
   });
