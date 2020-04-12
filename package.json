@@ -15,10 +15,8 @@
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
     "jest": "jest --version && jest --verbose --coverage",
     "coverage": "make-coverage-badge",
-    "jest:ci": "jest --version && jest --verbose --coverage && cat ./coverage/lcov.info | coveralls",
     "test": "run-s lint:eslint test:ts jest coverage",
-    "test:ts": "tsc --noEmit",
-    "test:ci": "run-s lint:eslint jest:ci"
+    "test:ts": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/cli": "7.8.4",
