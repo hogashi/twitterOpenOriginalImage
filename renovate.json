@@ -8,6 +8,10 @@
       "updateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
       "postUpdateOptions": ["yarnDedupeHighest"]
+    },
+    {
+      "packagePatterns": ["^@types/react(|-dom)$"],
+      "groupName": "@types/react, @types/react-dom"
     }
   ]
 }
