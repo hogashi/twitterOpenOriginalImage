@@ -19,11 +19,11 @@
     "test:ts": "tsc --noEmit"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.9.6",
-    "@babel/preset-env": "7.9.6",
-    "@babel/preset-react": "7.9.4",
-    "@babel/preset-typescript": "7.9.0",
+    "@babel/cli": "7.10.1",
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "@babel/preset-react": "7.10.1",
+    "@babel/preset-typescript": "7.10.1",
     "@types/chrome": "0.0.114",
     "@types/jest": "26.0.0",
     "@types/react": "16.9.36",
@@ -49,7 +49,7 @@
     "webpack-cli": "3.3.11"
   },
   "dependencies": {
-    "@babel/polyfill": "7.8.7",
+    "@babel/polyfill": "7.10.1",
     "@material-ui/core": "4.9.12",
     "react": "16.13.1",
     "react-dom": "16.13.1"
