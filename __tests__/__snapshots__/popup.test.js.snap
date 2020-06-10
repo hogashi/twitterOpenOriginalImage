@@ -63,7 +63,7 @@ exports[`Popup render 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-105 Mui-checked MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -87,14 +87,14 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-107"
+            className="PrivateSwitchBase-input-4"
             data-indeterminate={false}
             onChange={[Function]}
             tabIndex={-1}
             type="checkbox"
           />
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
             viewBox="0 0 24 24"
@@ -135,7 +135,7 @@ exports[`Popup render 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-105 Mui-checked MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -159,14 +159,14 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-107"
+            className="PrivateSwitchBase-input-4"
             data-indeterminate={false}
             onChange={[Function]}
             tabIndex={-1}
             type="checkbox"
           />
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
             viewBox="0 0 24 24"
@@ -216,7 +216,7 @@ exports[`Popup render 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-105 Mui-checked MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -240,14 +240,14 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-107"
+            className="PrivateSwitchBase-input-4"
             data-indeterminate={false}
             onChange={[Function]}
             tabIndex={-1}
             type="checkbox"
           />
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
             viewBox="0 0 24 24"
@@ -288,7 +288,7 @@ exports[`Popup render 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-105 Mui-checked MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -312,14 +312,14 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-107"
+            className="PrivateSwitchBase-input-4"
             data-indeterminate={false}
             onChange={[Function]}
             tabIndex={-1}
             type="checkbox"
           />
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
             viewBox="0 0 24 24"
@@ -369,7 +369,7 @@ exports[`Popup render 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-105 Mui-checked MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -393,14 +393,14 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-107"
+            className="PrivateSwitchBase-input-4"
             data-indeterminate={false}
             onChange={[Function]}
             tabIndex={-1}
             type="checkbox"
           />
           <svg
-            aria-hidden="true"
+            aria-hidden={true}
             className="MuiSvgIcon-root"
             focusable="false"
             viewBox="0 0 24 24"
