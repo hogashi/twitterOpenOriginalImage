@@ -3,7 +3,7 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  install:
+  check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -11,10 +11,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: yarn install
 
-  build:
-    - run: yarn build
+      run: yarn install
 
-  test:
-    - run: yarn test
+    - name: build
+      run: yarn build
+
+    - name: test
+      run: yarn test
