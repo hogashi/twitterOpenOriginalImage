@@ -9,3 +9,4 @@ node_modules
 /scripts/tmp/
 /.pnp.js
 /.pnp/
+/.yarn/
