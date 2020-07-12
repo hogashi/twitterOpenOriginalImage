@@ -1,3 +1,5 @@
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
+
 module.exports = {
   entry: {
     main: './src/main.ts',
@@ -12,13 +14,21 @@ module.exports = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],
+    plugins: [
+      PnpWebpackPlugin,
+    ],
+  },
+  resolveLoader: {
+    plugins: [
+      PnpWebpackPlugin.moduleLoader(module),
+    ],
   },
 
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [{ loader: 'babel-loader' }],
+        use: [{ loader: require.resolve('babel-loader') }],
         exclude: /node_modules/,
       },
     ],
