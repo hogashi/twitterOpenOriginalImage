@@ -27,7 +27,7 @@
     "@babel/preset-typescript": "7.10.4",
     "@types/chrome": "0.0.122",
     "@types/jest": "26.0.10",
-    "@types/react": "16.9.45",
+    "@types/react": "16.9.48",
     "@types/react-dom": "16.9.8",
     "@types/react-test-renderer": "16.9.3",
     "@typescript-eslint/eslint-plugin": "3.10.1",
