@@ -16,7 +16,8 @@
     "jest": "jest --version && jest --verbose --coverage",
     "coverage": "make-coverage-badge",
     "test": "run-s lint:eslint test:ts jest coverage",
-    "test:ts": "tsc --noEmit"
+    "test:ts": "tsc --noEmit",
+    "compress": "zip -r dist.zip dist"
   },
   "devDependencies": {
     "@babel/cli": "7.10.5",
