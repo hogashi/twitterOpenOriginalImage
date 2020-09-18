@@ -133,7 +133,7 @@ describe('Utils', () => {
     describe('collectUrlParams 画像urlの要素を集める', () => {
       cases.forEach(singleCase => {
         const { title, url, params } = singleCase;
-        it(title, () => {
+        it(`${title}`, () => {
           expect(collectUrlParams(url)).toStrictEqual(makeResultParams(params));
         });
       });
@@ -146,7 +146,7 @@ describe('Utils', () => {
     describe('formatUrl 画像URLを https～?format=〜&name=orig に揃える', () => {
       cases.forEach(singleCase => {
         const { title, url, params } = singleCase;
-        it(title, () => {
+        it(`${title}`, () => {
           expect(formatUrl(url)).toBe(
             `https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`
           );
@@ -163,7 +163,7 @@ describe('Utils', () => {
     describe('getImageFilenameByUrl 画像のファイル名をつくる', () => {
       cases.forEach(singleCase => {
         const { title, url, filename } = singleCase;
-        it(title, () => {
+        it(`${title}`, () => {
           expect(getImageFilenameByUrl(url)).toBe(filename);
         });
       });
