@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TestRenderer from 'react-test-renderer';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
