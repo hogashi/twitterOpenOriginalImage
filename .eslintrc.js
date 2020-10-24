@@ -33,6 +33,7 @@ module.exports = {
     'no-console': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {
