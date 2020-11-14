@@ -5,7 +5,8 @@
     "strictNullChecks": true,
     "module": "commonjs",
     "target": "es2017",
-    "jsx": "react"
+    "jsx": "react",
+    "esModuleInterop": true
   },
   "include": ["./src/", "./__tests__/"]
 }
