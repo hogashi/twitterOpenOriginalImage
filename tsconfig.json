@@ -2,6 +2,8 @@
   "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist/js/",
+    // add `dom` over tsconfig/bases
+    "lib": ["es2020", "dom"],
     "jsx": "react"
   },
   "include": ["./src/", "./__tests__/"]
