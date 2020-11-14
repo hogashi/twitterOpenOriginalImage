@@ -37,7 +37,7 @@ interface Props {
   optionsEnabled: { [key: string]: boolean };
 }
 
-export const Popup = (props: Props) => {
+export const Popup = (props: Props): JSX.Element => {
   const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
 

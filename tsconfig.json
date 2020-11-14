@@ -1,12 +1,10 @@
 {
+  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist/js/",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "module": "commonjs",
-    "target": "es2017",
-    "jsx": "react",
-    "esModuleInterop": true
+    // add `dom` over tsconfig/bases
+    "lib": ["es2020", "dom"],
+    "jsx": "react"
   },
   "include": ["./src/", "./__tests__/"]
 }
