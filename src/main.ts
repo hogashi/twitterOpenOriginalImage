@@ -49,16 +49,17 @@ export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 公式Webかどうか
-export const isTwitter = () => /^twitter\.com/.test(window.location.hostname);
+export const isTwitter = (): boolean =>
+  /^twitter\.com/.test(window.location.hostname);
 // Tweetdeckかどうか
-export const isTweetdeck = () =>
+export const isTweetdeck = (): boolean =>
   /^tweetdeck\.twitter\.com/.test(window.location.hostname);
 // 画像ページかどうか
-export const isImageTab = () =>
+export const isImageTab = (): boolean =>
   /^pbs\.twimg\.com/.test(window.location.hostname);
 
 // これ自体がChrome拡張機能かどうか
-export const isNativeChromeExtension = () =>
+export const isNativeChromeExtension = (): boolean =>
   window.chrome !== undefined &&
   window.chrome.runtime !== undefined &&
   window.chrome.runtime.id !== undefined;
