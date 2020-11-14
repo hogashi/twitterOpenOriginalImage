@@ -258,7 +258,7 @@ export const downloadImage = (e: KeyboardEvent): void => {
 };
 
 // 設定項目更新
-export const getOptions = () => {
+export const getOptions = (): Promise<Options> => {
   console.log('get options'); // debug
   if (isNativeChromeExtension()) {
     // これ自体がChrome拡張機能のとき
