@@ -261,7 +261,7 @@ export const getOptions = () => {
   console.log('get options'); // debug
   if (isNativeChromeExtension()) {
     // これ自体がChrome拡張機能のとき
-    return new Promise((resolve, reject) => {
+    return new Promise<OptionsMaybe>((resolve, reject) => {
       const request: MessageRequest = {
         method: GET_LOCAL_STORAGE,
       };
@@ -828,8 +828,8 @@ const tooiMain = () => {
 
     // 設定読み込み
     getOptions().then(newOptions => {
-      Object.keys(newOptions).forEach((key: keyof Options) => {
-        options[key] = newOptions[key] as TooiBoolean;
+      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+        options[key] = newOptions[key];
       });
       // ボタンを(再)設置
       setButtonWithInterval();
@@ -850,8 +850,8 @@ const tooiMain = () => {
           console.log(window.chrome.runtime.lastError);
           if (request.method === OPTION_UPDATED) {
             getOptions().then(newOptions => {
-              Object.keys(newOptions).forEach((key: keyof Options) => {
-                options[key] = newOptions[key] as TooiBoolean;
+              (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+                options[key] = newOptions[key];
               });
               // ボタンを(再)設置
               setButtonWithInterval();
@@ -874,8 +874,8 @@ const tooiMain = () => {
     // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
 
     getOptions().then(newOptions => {
-      Object.keys(newOptions).forEach((key: keyof Options) => {
-        options[key] = newOptions[key] as TooiBoolean;
+      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+        options[key] = newOptions[key];
       });
     });
 
