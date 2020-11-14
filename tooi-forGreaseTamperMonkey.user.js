@@ -46,7 +46,9 @@ var SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 var HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 var STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 // 公式Webかどうか
-var isTwitter = function () { return /^twitter\.com/.test(window.location.hostname); };
+var isTwitter = function () {
+    return /^twitter\.com/.test(window.location.hostname);
+};
 // Tweetdeckかどうか
 var isTweetdeck = function () {
     return /^tweetdeck\.twitter\.com/.test(window.location.hostname);
