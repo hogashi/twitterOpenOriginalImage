@@ -165,7 +165,7 @@ export const collectUrlParams = (
 };
 
 // 画像URLを https～?format=〜&name=orig に揃える
-export const formatUrl = (imgUrl: string | null) => {
+export const formatUrl = (imgUrl: string | null): string | null => {
   if (!imgUrl || imgUrl.length === 0) {
     return null;
   }
@@ -225,7 +225,7 @@ export const onOriginalButtonClick = (
   openImages(imgSrcs);
 };
 
-export const getImageFilenameByUrl = (imgUrl: string) => {
+export const getImageFilenameByUrl = (imgUrl: string): string | null => {
   const params = collectUrlParams(imgUrl);
   if (!params) {
     return null;
