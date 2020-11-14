@@ -102,7 +102,7 @@ export interface MessageResponse {
 }
 
 // エラーメッセージの表示(予期せぬ状況の確認)
-export const printException = (tooiException: string) => {
+export const printException = (tooiException: string): void => {
   try {
     throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
   } catch (err) {
@@ -181,7 +181,7 @@ export const formatUrl = (imgUrl: string | null) => {
 };
 
 // 画像を開く
-export const openImages = (imgSrcs: (string | null)[]) => {
+export const openImages = (imgSrcs: (string | null)[]): void => {
   if (imgSrcs.length === 0) {
     printException('zero image urls');
     return;
@@ -207,7 +207,7 @@ export const openImages = (imgSrcs: (string | null)[]) => {
 export const setStyle = (
   element: HTMLElement,
   propertySet: { [key: string]: string }
-) => {
+): void => {
   Object.entries(propertySet).forEach(([key, value]) =>
     element.style.setProperty(key, value)
   );
@@ -216,7 +216,7 @@ export const setStyle = (
 export const onOriginalButtonClick = (
   e: MouseEvent,
   imgSrcs: (string | null)[]
-) => {
+): void => {
   // イベント(MouseEvent)による既定の動作をキャンセル
   e.preventDefault();
   // イベント(MouseEvent)の親要素への伝播を停止
@@ -237,7 +237,7 @@ export const getImageFilenameByUrl = (imgUrl: string) => {
   return `${basename}${name ? `-${name}` : ''}.${format}`;
 };
 
-export const downloadImage = (e: KeyboardEvent) => {
+export const downloadImage = (e: KeyboardEvent): void => {
   // if 押されたキーがC-s の状態なら
   // かつ 開いているURLが画像URLの定形なら(pbs.twimg.comを使うものは他にも存在するので)
   if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
@@ -297,7 +297,7 @@ export const getOptions = () => {
  */
 export class ButtonSetter {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options) {
+  public setButtonOnTimeline(options: Options): void {
     // 昔のビューの処理はしばらく残す
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     if (document.querySelector('#react-root')) {
@@ -308,7 +308,7 @@ export class ButtonSetter {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options) {
+  public setButtonOnTweetDetail(options: Options): void {
     // 昔のビューの処理はしばらく残す
     // TODO: Reactレイアウトでも実装する必要がある？
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
@@ -599,7 +599,7 @@ export class ButtonSetter {
  */
 export class ButtonSetterTweetDeck {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options) {
+  public setButtonOnTimeline(options: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
@@ -652,7 +652,7 @@ export class ButtonSetterTweetDeck {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options) {
+  public setButtonOnTweetDetail(options: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
