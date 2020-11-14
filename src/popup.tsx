@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { useState, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -26,8 +26,6 @@ import {
   STRIP_IMAGE_SUFFIX,
   printException,
 } from './main';
-
-const { useState, useCallback } = React;
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または
