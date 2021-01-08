@@ -526,7 +526,7 @@ export class ButtonSetter {
       }
       // ボタンを設置
       // 操作ボタンの外側は様式にあわせる
-      const target = tweet.querySelector<HTMLElement>('div[role="group"]');
+      const target = tweet.querySelector('div[role="group"]');
       if (!target) {
         printException('no target');
         return;
@@ -555,9 +555,9 @@ export class ButtonSetter {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
     const contrastLimitColor = '#697b8c';
 
-    const actionButton = document.querySelector(
+    const actionButton = document.querySelector<HTMLElement>(
       '.ProfileTweet-actionButton'
-    ) as HTMLElement;
+    );
     if (!(actionButton && actionButton.style)) {
       return contrastLimitColor;
     }
@@ -574,7 +574,7 @@ export class ButtonSetter {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
     // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-    const actionButton = document.querySelector<HTMLElement>(
+    const actionButton = document.querySelector(
       'div[role="group"] div[role="button"]'
     );
     if (
