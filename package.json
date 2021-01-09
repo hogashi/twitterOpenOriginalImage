@@ -20,10 +20,10 @@
     "compress": "zip -r dist.zip dist"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.7",
-    "@babel/core": "7.12.7",
-    "@babel/preset-env": "7.12.7",
-    "@babel/preset-react": "7.12.7",
+    "@babel/cli": "7.12.10",
+    "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.11",
+    "@babel/preset-react": "7.12.10",
     "@babel/preset-typescript": "7.12.7",
     "@tsconfig/node14": "1.0.0",
     "@types/chrome": "0.0.126",
@@ -33,7 +33,7 @@
     "@types/react-test-renderer": "17.0.0",
     "@typescript-eslint/eslint-plugin": "4.8.1",
     "@typescript-eslint/parser": "4.8.1",
-    "babel-loader": "8.2.1",
+    "babel-loader": "8.2.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
     "eslint": "7.14.0",
