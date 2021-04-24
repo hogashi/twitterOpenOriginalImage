@@ -10,9 +10,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:jest/recommended',
     'plugin:prettier/recommended',
-    'prettier/react',
-    'prettier/standard',
-    'prettier/@typescript-eslint',
   ],
   globals: {
     chrome: 'readonly',
