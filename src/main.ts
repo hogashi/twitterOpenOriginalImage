@@ -38,6 +38,7 @@ export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
 
 // 公式Web
 export const HOST_TWITTER_COM = 'twitter.com';
+export const HOST_MOBILE_TWITTER_COM = 'mobile.twitter.com';
 export const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 // TweetDeck
@@ -50,13 +51,14 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 公式Webかどうか
 export const isTwitter = (): boolean =>
-  /^twitter\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_TWITTER_COM ||
+  window.location.hostname === HOST_MOBILE_TWITTER_COM;
 // Tweetdeckかどうか
 export const isTweetdeck = (): boolean =>
-  /^tweetdeck\.twitter\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
 // 画像ページかどうか
 export const isImageTab = (): boolean =>
-  /^pbs\.twimg\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_PBS_TWIMG_COM;
 
 // これ自体がChrome拡張機能かどうか
 export const isNativeChromeExtension = (): boolean =>
