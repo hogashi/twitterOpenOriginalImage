@@ -542,7 +542,12 @@ export class ButtonSetter {
           tweetImgs[1] = tweetImgs[2];
           tweetImgs[2] = tweetimgTmp;
         }
-        return tweetImgs.map(img => img && img.src);
+        return tweetImgs
+          .map(img =>
+            // filter で string[] にするためにここで string[] にする……
+            img ? img.src : ''
+          )
+          .filter(src => src != '');
       };
 
       this.setReactLayoutButton({
@@ -640,10 +645,14 @@ export class ButtonSetterTweetDeck {
         return;
       }
 
-      const getImgSrcs = (): (string | null)[] => {
-        return Array.from(
-          tweet.getElementsByClassName('js-media-image-link')
-        ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
+      const getImgSrcs = (): string[] => {
+        return Array.from(tweet.getElementsByClassName('js-media-image-link'))
+          .map(element => {
+            const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
+            // filter で string[] にするためにここで string[] にする……
+            return urlstr ? urlstr : '';
+          })
+          .filter(urlstr => urlstr != '');
       };
       this.setButton({
         className,
@@ -689,16 +698,20 @@ export class ButtonSetterTweetDeck {
         return;
       }
 
-      const getImgSrcs = (): (string | null)[] => {
+      const getImgSrcs = (): string[] => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
           return [
             (tweet.getElementsByClassName('media-img')[0] as HTMLImageElement)
               .src,
           ];
         } else {
-          return Array.from(
-            tweet.getElementsByClassName('media-image')
-          ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
+          return Array.from(tweet.getElementsByClassName('media-image'))
+            .map(element => {
+              const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
+              // filter で string[] にするためにここで string[] にする……
+              return urlstr ? urlstr : '';
+            })
+            .filter(urlstr => urlstr != '');
         }
       };
 
