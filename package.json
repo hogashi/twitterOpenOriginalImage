@@ -13,7 +13,7 @@
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
-    "jest": "jest --version && jest --verbose --coverage",
+    "jest": "jest --version && jest --verbose --testEnvironment=jsdom --coverage",
     "coverage": "make-coverage-badge",
     "test": "run-s lint:eslint test:ts jest coverage",
     "test:ts": "tsc --noEmit",
