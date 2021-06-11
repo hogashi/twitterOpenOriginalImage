@@ -167,8 +167,8 @@ export const collectUrlParams = (
 };
 
 // 画像URLを https～?format=〜&name=orig に揃える
-export const formatUrl = (imgUrl: string | null): string | null => {
-  if (!imgUrl || imgUrl.length === 0) {
+export const formatUrl = (imgUrl: string): string | null => {
+  if (imgUrl.length === 0) {
     return null;
   }
 
@@ -183,7 +183,7 @@ export const formatUrl = (imgUrl: string | null): string | null => {
 };
 
 // 画像を開く
-export const openImages = (imgSrcs: (string | null)[]): void => {
+export const openImages = (imgSrcs: string[]): void => {
   if (imgSrcs.length === 0) {
     printException('zero image urls');
     return;
@@ -217,7 +217,7 @@ export const setStyle = (
 
 export const onOriginalButtonClick = (
   e: MouseEvent,
-  imgSrcs: (string | null)[]
+  imgSrcs: string[]
 ): void => {
   // イベント(MouseEvent)による既定の動作をキャンセル
   e.preventDefault();
@@ -323,7 +323,7 @@ export class ButtonSetter {
     target,
   }: {
     className: string;
-    getImgSrcs: () => (string | null)[];
+    getImgSrcs: () => string[];
     target: HTMLElement;
   }): void {
     const style = {
@@ -369,7 +369,7 @@ export class ButtonSetter {
     target,
   }: {
     className: string;
-    getImgSrcs: () => (string | null)[];
+    getImgSrcs: () => string[];
     target: HTMLElement;
   }): void {
     const button = document.createElement('input');
@@ -534,7 +534,7 @@ export class ButtonSetter {
         return;
       }
 
-      const getImgSrcs = (): (string | null)[] => {
+      const getImgSrcs = (): string[] => {
         const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
         if (tweetImgs.length === 4) {
           // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
@@ -729,7 +729,7 @@ export class ButtonSetterTweetDeck {
     target,
   }: {
     className: string;
-    getImgSrcs: () => (string | null)[];
+    getImgSrcs: () => string[];
     target: HTMLElement;
   }): void {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
