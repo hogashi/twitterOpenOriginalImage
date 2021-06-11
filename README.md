@@ -9,7 +9,8 @@ TwitterWeb公式、TweetDeckで動作します。
 
 ## インストール
 
-Chromeウェブストアからインストール: [twitter画像原寸ボタン](https://chrome.google.com/webstore/detail/kmcomcgcopagkhcbmcmcfhpcmdolfijg)
+- Chromeウェブストアからインストール: https://chrome.google.com/webstore/detail/kmcomcgcopagkhcbmcmcfhpcmdolfijg
+- Edge Addons websiteからインストール: https://microsoftedge.microsoft.com/addons/detail/dkooamjhbcblfbjabpnhefbajlbjoilb
 
 ## 使い方
 
