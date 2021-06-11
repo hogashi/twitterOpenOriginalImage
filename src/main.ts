@@ -589,8 +589,9 @@ export class ButtonSetter {
       actionButton.children[0] &&
       (actionButton.children[0] as HTMLElement).style
     ) {
-      const buttonColor = window.getComputedStyle(actionButton.children[0])
-        .color;
+      const buttonColor = window.getComputedStyle(
+        actionButton.children[0]
+      ).color;
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
       }
