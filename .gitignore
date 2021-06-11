@@ -4,6 +4,7 @@ node_modules
 
 /coverage/
 !/coverage/coverage-summary.json
+!/coverage/badge.svg
 
 /dist/js/
 /scripts/tmp/
