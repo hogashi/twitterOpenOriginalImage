@@ -51,14 +51,14 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 公式Webかどうか
 export const isTwitter = (): boolean =>
-  /^twitter\.com/.test(window.location.hostname) ||
-  /^mobile\.twitter\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_TWITTER_COM ||
+  window.location.hostname === HOST_MOBILE_TWITTER_COM;
 // Tweetdeckかどうか
 export const isTweetdeck = (): boolean =>
-  /^tweetdeck\.twitter\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
 // 画像ページかどうか
 export const isImageTab = (): boolean =>
-  /^pbs\.twimg\.com/.test(window.location.hostname);
+  window.location.hostname === HOST_PBS_TWIMG_COM;
 
 // これ自体がChrome拡張機能かどうか
 export const isNativeChromeExtension = (): boolean =>
