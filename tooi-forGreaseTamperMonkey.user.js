@@ -485,8 +485,7 @@ var ButtonSetter = /** @class */ (function () {
         if (actionButton &&
             actionButton.children[0] &&
             actionButton.children[0].style) {
-            var buttonColor = window.getComputedStyle(actionButton.children[0])
-                .color;
+            var buttonColor = window.getComputedStyle(actionButton.children[0]).color;
             if (buttonColor && buttonColor.length > 0) {
                 color = buttonColor;
             }
