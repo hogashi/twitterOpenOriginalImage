@@ -18,9 +18,9 @@ TwitterWeb公式、TweetDeckで動作します。
 <img alt="usage3" src="./images/timeline1.jpg" style="height: 350px" />  
 <img alt="usage4" src="./images/timeline2.jpg" style="height: 350px" />
 
-- "原寸画像"とは、次のような画像を指します: "https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg:orig"
-  - これは通常の(縮小された)画像のURL ("https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg") に ":orig" を足したものです
-  - 縮小の閾値は随時変更されているようなので、":orig"を付けたものが必ず原寸とは限りません
+- "原寸画像"とは、次のような画像を指します: `https://pbs.twimg.com/media/CE-1mwkVAAE6Rop?format=jpg&name=orig`
+  - これは通常の(縮小された)画像のURL ( `https://pbs.twimg.com/media/CE-1mwkVAAE6Rop.jpg` ) に `?name=orig` を足したものです
+  - 縮小の閾値は随時変更されているようなので、 `?name=orig` を付けたものが必ず原寸とは限りません
 
 ### 設定
 
