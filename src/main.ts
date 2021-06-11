@@ -268,7 +268,7 @@ export const getOptions = (): Promise<Options> => {
       const request: MessageRequest = {
         method: GET_LOCAL_STORAGE,
       };
-      const callback = (response: MessageResponse) => {
+      const callback = (response: MessageResponse): void => {
         if (response.data) {
           resolve(response.data);
         } else {
@@ -325,7 +325,7 @@ export class ButtonSetter {
     className: string;
     getImgSrcs: () => (string | null)[];
     target: HTMLElement;
-  }) {
+  }): void {
     const style = {
       width: '70px',
       'font-size': '13px',
@@ -371,7 +371,7 @@ export class ButtonSetter {
     className: string;
     getImgSrcs: () => (string | null)[];
     target: HTMLElement;
-  }) {
+  }): void {
     const button = document.createElement('input');
 
     button.type = 'button';
@@ -404,7 +404,7 @@ export class ButtonSetter {
     container.appendChild(button);
   }
 
-  private _setButtonOnTimeline(options: Options) {
+  private _setButtonOnTimeline(options: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
@@ -444,7 +444,7 @@ export class ButtonSetter {
       const mediaContainer = tweet.getElementsByClassName(
         'AdaptiveMedia-container'
       )[0] as HTMLElement;
-      const getImgSrcs = () =>
+      const getImgSrcs = (): string[] =>
         Array.from(
           mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
         ).map(element => element.getElementsByTagName('img')[0].src);
@@ -456,7 +456,7 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnTweetDetail(options: Options) {
+  private _setButtonOnTweetDetail(options: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
@@ -486,7 +486,7 @@ export class ButtonSetter {
     }
 
     // .AdaptiveMedia-photoContainer: 画像のエレメントからURLを取得する
-    const getImgSrcs = () =>
+    const getImgSrcs = (): string[] =>
       Array.from(
         document
           .getElementsByClassName('permalink-tweet-container')[0]
@@ -499,7 +499,7 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnReactLayoutTimeline(options: Options) {
+  private _setButtonOnReactLayoutTimeline(options: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
@@ -534,7 +534,7 @@ export class ButtonSetter {
         return;
       }
 
-      const getImgSrcs = () => {
+      const getImgSrcs = (): (string | null)[] => {
         const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
         if (tweetImgs.length === 4) {
           // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
@@ -553,7 +553,7 @@ export class ButtonSetter {
     });
   }
 
-  private getActionButtonColor() {
+  private getActionButtonColor(): string {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
     const contrastLimitColor = '#697b8c';
 
@@ -571,7 +571,7 @@ export class ButtonSetter {
     return contrastLimitColor;
   }
 
-  private getReactLayoutActionButtonColor() {
+  private getReactLayoutActionButtonColor(): string {
     // 文字色
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
@@ -640,7 +640,7 @@ export class ButtonSetterTweetDeck {
         return;
       }
 
-      const getImgSrcs = () => {
+      const getImgSrcs = (): (string | null)[] => {
         return Array.from(
           tweet.getElementsByClassName('js-media-image-link')
         ).map(element => this.getBackgroundImageUrl(element as HTMLElement));
@@ -689,7 +689,7 @@ export class ButtonSetterTweetDeck {
         return;
       }
 
-      const getImgSrcs = () => {
+      const getImgSrcs = (): (string | null)[] => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
           return [
             (tweet.getElementsByClassName('media-img')[0] as HTMLImageElement)
@@ -718,7 +718,7 @@ export class ButtonSetterTweetDeck {
     className: string;
     getImgSrcs: () => (string | null)[];
     target: HTMLElement;
-  }) {
+  }): void {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
     const borderColor = txtMute
@@ -762,7 +762,7 @@ export class ButtonSetterTweetDeck {
     target.appendChild(button);
   }
 
-  private getBackgroundImageUrl(element: HTMLElement) {
+  private getBackgroundImageUrl(element: HTMLElement): string | null {
     if (element.style.backgroundImage) {
       return element.style.backgroundImage.replace(/url\("?([^"]*)"?\)/, '$1');
     }
@@ -789,7 +789,7 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
  * メインの処理
  * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
  */
-const tooiMain = () => {
+const tooiMain = (): void => {
   if (isTwitter() || isTweetdeck()) {
     /**
      * main
@@ -803,7 +803,7 @@ const tooiMain = () => {
     const buttonSetter = getButtonSetter();
 
     // ボタンを設置
-    const setButton = () => {
+    const setButton = (): void => {
       // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
       buttonSetter.setButtonOnTimeline(options);
       buttonSetter.setButtonOnTweetDetail(options);
@@ -811,7 +811,7 @@ const tooiMain = () => {
 
     let isInterval = false;
     let deferred = false;
-    const setButtonWithInterval = () => {
+    const setButtonWithInterval = (): void => {
       // 短時間に何回も実行しないようインターバルを設ける
       if (isInterval) {
         deferred = true;
