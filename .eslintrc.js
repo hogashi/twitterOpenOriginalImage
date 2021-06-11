@@ -32,6 +32,14 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react/react-in-jsx-scope': 'off',
   },
+  overrides: [
+    {
+      files: ['src/**/*.ts', 'src/**/*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'error',
+      },
+    },
+  ],
   settings: {
     react: {
       version: 'detect',

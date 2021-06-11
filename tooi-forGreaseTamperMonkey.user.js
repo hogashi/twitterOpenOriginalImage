@@ -136,7 +136,7 @@ var collectUrlParams = function (rawUrl) {
 };
 // 画像URLを https～?format=〜&name=orig に揃える
 var formatUrl = function (imgUrl) {
-    if (!imgUrl || imgUrl.length === 0) {
+    if (imgUrl.length === 0) {
         return null;
     }
     var params = collectUrlParams(imgUrl);
@@ -449,7 +449,12 @@ var ButtonSetter = /** @class */ (function () {
                     tweetImgs[1] = tweetImgs[2];
                     tweetImgs[2] = tweetimgTmp;
                 }
-                return tweetImgs.map(function (img) { return img && img.src; });
+                return tweetImgs
+                    .map(function (img) {
+                    // filter で string[] にするためにここで string[] にする……
+                    return img ? img.src : '';
+                })
+                    .filter(function (src) { return src != ''; });
             };
             _this.setReactLayoutButton({
                 className: className,
@@ -533,7 +538,13 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
                 return;
             }
             var getImgSrcs = function () {
-                return Array.from(tweet.getElementsByClassName('js-media-image-link')).map(function (element) { return _this.getBackgroundImageUrl(element); });
+                return Array.from(tweet.getElementsByClassName('js-media-image-link'))
+                    .map(function (element) {
+                    var urlstr = _this.getBackgroundImageUrl(element);
+                    // filter で string[] にするためにここで string[] にする……
+                    return urlstr ? urlstr : '';
+                })
+                    .filter(function (urlstr) { return urlstr != ''; });
             };
             _this.setButton({
                 className: className,
@@ -582,7 +593,13 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
                     ];
                 }
                 else {
-                    return Array.from(tweet.getElementsByClassName('media-image')).map(function (element) { return _this.getBackgroundImageUrl(element); });
+                    return Array.from(tweet.getElementsByClassName('media-image'))
+                        .map(function (element) {
+                        var urlstr = _this.getBackgroundImageUrl(element);
+                        // filter で string[] にするためにここで string[] にする……
+                        return urlstr ? urlstr : '';
+                    })
+                        .filter(function (urlstr) { return urlstr != ''; });
                 }
             };
             _this.setButton({

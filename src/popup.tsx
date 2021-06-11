@@ -78,7 +78,7 @@ export const Popup = (props: Props): JSX.Element => {
         className={`checkboxListItem ${key}`}
         dense
         button
-        onClick={() => {
+        onClick={(): void => {
           setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
         }}
       >
