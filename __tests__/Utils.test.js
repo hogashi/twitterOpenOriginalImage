@@ -229,30 +229,6 @@ describe('Utils', () => {
       expect(window.open.mock.calls[0][0]).toBe('https://twitter.com/tos');
     });
 
-    it('undefinedを1つ渡したとき開かない', () => {
-      window.open = jest.fn();
-      openImages([undefined]);
-      expect(window.open.mock.calls.length).toBe(0);
-    });
-
-    it('URLとundefinedを混ぜたときURLだけ開いてundefinedは開かない', () => {
-      window.open = jest.fn();
-      openImages([
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig',
-        undefined,
-        'https://twitter.com/tos',
-        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig',
-      ]);
-      expect(window.open.mock.calls.length).toBe(3);
-      expect(window.open.mock.calls[0][0]).toBe(
-        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
-      );
-      expect(window.open.mock.calls[1][0]).toBe('https://twitter.com/tos');
-      expect(window.open.mock.calls[2][0]).toBe(
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
-      );
-    });
-
     it('要素0個の配列を渡したとき開かない', () => {
       window.open = jest.fn();
       openImages([]);
