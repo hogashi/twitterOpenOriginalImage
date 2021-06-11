@@ -48,16 +48,16 @@ var HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 var STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 // 公式Webかどうか
 var isTwitter = function () {
-    return /^twitter\.com/.test(window.location.hostname) ||
-        /^mobile\.twitter\.com/.test(window.location.hostname);
+    return window.location.hostname === HOST_TWITTER_COM ||
+        window.location.hostname === HOST_MOBILE_TWITTER_COM;
 };
 // Tweetdeckかどうか
 var isTweetdeck = function () {
-    return /^tweetdeck\.twitter\.com/.test(window.location.hostname);
+    return window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
 };
 // 画像ページかどうか
 var isImageTab = function () {
-    return /^pbs\.twimg\.com/.test(window.location.hostname);
+    return window.location.hostname === HOST_PBS_TWIMG_COM;
 };
 // これ自体がChrome拡張機能かどうか
 var isNativeChromeExtension = function () {
