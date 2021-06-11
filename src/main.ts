@@ -38,6 +38,7 @@ export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
 
 // 公式Web
 export const HOST_TWITTER_COM = 'twitter.com';
+export const HOST_MOBILE_TWITTER_COM = 'mobile.twitter.com';
 export const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 // TweetDeck
@@ -50,7 +51,8 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 // 公式Webかどうか
 export const isTwitter = (): boolean =>
-  /^twitter\.com/.test(window.location.hostname);
+  /^twitter\.com/.test(window.location.hostname) ||
+  /^mobile\.twitter\.com/.test(window.location.hostname);
 // Tweetdeckかどうか
 export const isTweetdeck = (): boolean =>
   /^tweetdeck\.twitter\.com/.test(window.location.hostname);
