@@ -17,6 +17,7 @@ import {
   OPTION_UPDATED,
   OPTION_KEYS,
   HOST_TWITTER_COM,
+  HOST_MOBILE_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_PBS_TWIMG_COM,
   SHOW_ON_TIMELINE,
@@ -55,6 +56,7 @@ export const Popup = (props: Props): JSX.Element => {
         if (
           ![
             HOST_TWITTER_COM,
+            HOST_MOBILE_TWITTER_COM,
             HOST_TWEETDECK_TWITTER_COM,
             HOST_PBS_TWIMG_COM,
           ].some(url => url === tabUrl)
