@@ -14,6 +14,7 @@
       "groupName": "@types/react, @types/react-dom"
     },
     {
+      // don't create node patch update p-r
       "matchPackagePatterns": ["^node$"],
       "matchUpdateTypes": ["patch"],
       "enabled": false
