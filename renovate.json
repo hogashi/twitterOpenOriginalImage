@@ -12,6 +12,15 @@
     {
       "packagePatterns": ["^@types/react(|-dom)$"],
       "groupName": "@types/react, @types/react-dom"
+    },
+    {
+      "matchPackagePatterns": ["^node$"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    },
+    {
+      "matchPackagePatterns": ["^node$"],
+      "prCreation": "immediate"
     }
   ]
 }
