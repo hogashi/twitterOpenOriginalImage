@@ -2,6 +2,8 @@ name: Node.js CI
 
 on: [push]
 
+permissions:
+  contents: read
 jobs:
   check:
     runs-on: ubuntu-latest
