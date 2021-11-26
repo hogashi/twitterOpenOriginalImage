@@ -25,7 +25,7 @@ export const options: Options = {
   STRIP_IMAGE_SUFFIX: 'isfalse',
 };
 
-// %%% splitter for userjs %%%
+//! %%% splitter for userjs %%%
 
 /**
  * Constants

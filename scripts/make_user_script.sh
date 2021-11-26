@@ -19,9 +19,9 @@ mkdir -p "${TMP_DIRNAME}"
 node "${SCRIPT_DIRNAME}/make_user_script.js" > "${HEADER_FILENAME}"
 cat src/main.ts | perl -pe 's/^export //g' > "${MAIN_TS_FILENAME}"
 
-echo "tsc-ing..." 1>&2
-node_modules/.bin/tsc --outFile "${MAIN_JS_FILENAME}" "${MAIN_TS_FILENAME}"
-SPLITTER_LINE_NUMBER="$(grep -n '// %%% splitter for userjs %%%' -- ${MAIN_JS_FILENAME} | perl -pe 's/^([0-9]+).*$/$1/')"
+echo "build-ing..." 1>&2
+node_modules/.bin/esbuild --outfile="${MAIN_JS_FILENAME}" --bundle --legal-comments=inline "${MAIN_TS_FILENAME}"
+SPLITTER_LINE_NUMBER="$(grep -n '//! %%% splitter for userjs %%%' -- ${MAIN_JS_FILENAME} | perl -pe 's/^([0-9]+).*$/$1/')"
 test "$SPLITTER_LINE_NUMBER" -ge 0
 cat "${HEADER_FILENAME}" > "${TARGET_FILENAME}"
 tail -n+"${SPLITTER_LINE_NUMBER}" "${MAIN_JS_FILENAME}" >> "${TARGET_FILENAME}"
