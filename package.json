@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "run-s build:js build:userjs",
-    "build:js": "for name in {main,popup,background}; do esbuild src/${name}.ts* --bundle --outfile=dist/js/${name}.bundle.js; done",
+    "build:js": "for name in main popup background; do esbuild src/${name}.ts* --bundle --outfile=dist/js/${name}.bundle.js; done",
     "build-dev": "run-s build-dev:js build:userjs",
     "build-dev:js": "webpack --version && webpack --mode development",
     "build:userjs": "./scripts/make_user_script.sh",
