@@ -145,7 +145,7 @@ var formatUrl = function (imgUrl) {
         return imgUrl;
     }
     var protocol = params.protocol, host = params.host, pathname = params.pathname, format = params.format;
-    return protocol + "//" + host + pathname + "?format=" + format + "&name=orig";
+    return "".concat(protocol, "//").concat(host).concat(pathname, "?format=").concat(format, "&name=orig");
 };
 // 画像を開く
 var openImages = function (imgSrcs) {
@@ -191,7 +191,7 @@ var getImageFilenameByUrl = function (imgUrl) {
     }
     var pathname = params.pathname, format = params.format, name = params.name;
     var basename = pathname.match(/([^/.]*)$/)[1];
-    return "" + basename + (name ? "-" + name : '') + "." + format;
+    return "".concat(basename).concat(name ? "-".concat(name) : '', ".").concat(format);
 };
 var downloadImage = function (e) {
     // if 押されたキーがC-s の状態なら
@@ -313,7 +313,7 @@ var ButtonSetter = /** @class */ (function () {
             padding: '4px 8px',
             color: color,
             'background-color': 'rgba(0, 0, 0, 0)',
-            border: "1px solid " + color,
+            border: "1px solid ".concat(color),
             'border-radius': '3px',
             cursor: 'pointer'
         });
@@ -617,7 +617,7 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
             : '#697b8c';
         // ボタンのスタイル設定
         var style = {
-            border: "1px solid " + borderColor,
+            border: "1px solid ".concat(borderColor),
             'border-radius': '2px',
             display: 'inline-block',
             'font-size': '0.75em',
@@ -641,7 +641,7 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
         // tweetdeckのツイート右上の時刻などに使われているclassを使う
         // 設置の有無の判別用にclassNameを付与する
         var button = document.createElement('a');
-        button.className = "pull-left margin-txs txt-mute " + className;
+        button.className = "pull-left margin-txs txt-mute ".concat(className);
         setStyle(button, style);
         button.addEventListener('click', function (e) {
             onOriginalButtonClick(e, getImgSrcs());
