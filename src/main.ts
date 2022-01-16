@@ -11,9 +11,11 @@ interface Options {
 
 type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
-// 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
+/**
+ * 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
+ * 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+ * 無効だった場合はそのままボタンは表示されない
+ */
 export const options: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: 'isfalse',
@@ -49,18 +51,18 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
-// 公式Webかどうか
+/** 公式Webかどうか */
 export const isTwitter = (): boolean =>
   window.location.hostname === HOST_TWITTER_COM ||
   window.location.hostname === HOST_MOBILE_TWITTER_COM;
-// Tweetdeckかどうか
+/** Tweetdeckかどうか */
 export const isTweetdeck = (): boolean =>
   window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
-// 画像ページかどうか
+/** 画像ページかどうか */
 export const isImageTab = (): boolean =>
   window.location.hostname === HOST_PBS_TWIMG_COM;
 
-// これ自体がChrome拡張機能かどうか
+/** これ自体がChrome拡張機能かどうか */
 export const isNativeChromeExtension = (): boolean =>
   window.chrome !== undefined &&
   window.chrome.runtime !== undefined &&
@@ -94,16 +96,16 @@ export const OPTIONS_TEXT: { [key: string]: string } = {
 /**
  * Utils
  */
-// chrome.runtime.sendMessage で送るメッセージ
+/** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
   method: string;
 }
-// chrome.runtime.sendMessage で返るメッセージ
+/** chrome.runtime.sendMessage で返るメッセージ */
 export interface MessageResponse {
   data: { [key: string]: string } | null;
 }
 
-// エラーメッセージの表示(予期せぬ状況の確認)
+/** エラーメッセージの表示(予期せぬ状況の確認) */
 export const printException = (tooiException: string): void => {
   try {
     throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
@@ -112,7 +114,7 @@ export const printException = (tooiException: string): void => {
   }
 };
 
-// 画像urlの要素を集める
+/** 画像urlの要素を集める */
 export const collectUrlParams = (
   rawUrl: string
 ): {
@@ -166,7 +168,7 @@ export const collectUrlParams = (
   };
 };
 
-// 画像URLを https～?format=〜&name=orig に揃える
+/** 画像URLを https～?format=〜&name=orig に揃える */
 export const formatUrl = (imgUrl: string): string | null => {
   if (imgUrl.length === 0) {
     return null;
@@ -182,7 +184,7 @@ export const formatUrl = (imgUrl: string): string | null => {
   return `${protocol}//${host}${pathname}?format=${format}&name=orig`;
 };
 
-// 画像を開く
+/** 画像を開く */
 export const openImages = (imgSrcs: string[]): void => {
   if (imgSrcs.length === 0) {
     printException('zero image urls');
@@ -294,7 +296,6 @@ export const getOptions = (): Promise<Options> => {
 };
 
 /**
- * ButtonSetter
  * twitter.comでボタンを設置するクラス
  */
 export class ButtonSetter {
@@ -602,7 +603,6 @@ export class ButtonSetter {
 }
 
 /**
- * ButtonSetterTweetDeck
  * tweetdeck.twitter.comでボタンを設置するクラス
  */
 export class ButtonSetterTweetDeck {
@@ -784,9 +784,6 @@ export class ButtonSetterTweetDeck {
   }
 }
 
-/**
- * getButtonSetter
- */
 export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
   if (isTwitter()) {
     return new ButtonSetter();
