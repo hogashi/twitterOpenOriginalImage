@@ -279,14 +279,14 @@ export const getOptions = (): Promise<Options> => {
       };
       window.chrome.runtime.sendMessage(request, callback);
     }).then((data: OptionsMaybe) => {
-      const options: OptionsMaybe = {};
+      const newOptions: OptionsMaybe = {};
       OPTION_KEYS.map(key => {
-        options[key] = data[key] || isTrue;
+        newOptions[key] = data[key] || isTrue;
       });
 
-      console.log('get options (then): ', options); // debug
+      console.log('get options (then): ', newOptions); // debug
 
-      return options as Options;
+      return newOptions as Options;
     });
   } else {
     // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
@@ -300,22 +300,22 @@ export const getOptions = (): Promise<Options> => {
  */
 export class ButtonSetter {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options): void {
+  public setButtonOnTimeline(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     if (document.querySelector('#react-root')) {
-      this._setButtonOnReactLayoutTimeline(options);
+      this._setButtonOnReactLayoutTimeline(currentOptions);
       return;
     }
-    this._setButtonOnTimeline(options);
+    this._setButtonOnTimeline(currentOptions);
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options): void {
+  public setButtonOnTweetDetail(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
     // TODO: Reactレイアウトでも実装する必要がある？
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
-    this._setButtonOnTweetDetail(options);
+    this._setButtonOnTweetDetail(currentOptions);
   }
 
   private setButton({
@@ -405,11 +405,11 @@ export class ButtonSetter {
     container.appendChild(button);
   }
 
-  private _setButtonOnTimeline(options: Options): void {
+  private _setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
       return;
     }
     const tweets = document.getElementsByClassName('js-stream-tweet');
@@ -457,11 +457,11 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnTweetDetail(options: Options): void {
+  private _setButtonOnTweetDetail(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
       return;
     }
     const className = 'tooi-button-container-detail';
@@ -500,11 +500,11 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnReactLayoutTimeline(options: Options): void {
+  private _setButtonOnReactLayoutTimeline(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
       return;
     }
     const className = 'tooi-button-container-react-timeline';
@@ -607,11 +607,11 @@ export class ButtonSetter {
  */
 export class ButtonSetterTweetDeck {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options): void {
+  public setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
       return;
     }
     // if タイムラインのツイートを取得できたら
@@ -664,11 +664,11 @@ export class ButtonSetterTweetDeck {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options): void {
+  public setButtonOnTweetDetail(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
       return;
     }
     // if ツイート詳細を取得できたら
