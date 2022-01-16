@@ -5,6 +5,7 @@ on:
     types: [closed]
   release: # Automatically close the latest issue when release is published.
     types: [published]
+  workflow_dispatch:
 
 jobs:
   action:
