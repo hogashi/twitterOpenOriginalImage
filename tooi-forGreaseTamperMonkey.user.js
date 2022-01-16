@@ -6,7 +6,7 @@
 // @include         https://twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         3.2.0
+// @version         3.2.1
 // ==/UserScript==
 
 
