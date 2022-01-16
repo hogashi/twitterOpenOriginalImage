@@ -796,116 +796,108 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
   }
 };
 
-/**
- * メインの処理
- * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
- */
-const tooiMain = (): void => {
-  if (isTwitter() || isTweetdeck()) {
-    /**
-     * main
-     * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
-     */
+/** Originalボタンおく */
+const setOriginalButton = (): void => {
+  // 実行の間隔(ms)
+  const INTERVAL = 300;
 
-    // 実行の間隔(ms)
-    const INTERVAL = 300;
+  // ボタン設置クラス
+  const buttonSetter = getButtonSetter();
 
-    // ボタン設置クラス
-    const buttonSetter = getButtonSetter();
+  // ボタンを設置
+  const setButton = (): void => {
+    // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
+    buttonSetter.setButtonOnTimeline(options);
+    buttonSetter.setButtonOnTweetDetail(options);
+  };
 
-    // ボタンを設置
-    const setButton = (): void => {
-      // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
-      buttonSetter.setButtonOnTimeline(options);
-      buttonSetter.setButtonOnTweetDetail(options);
-    };
-
-    let isInterval = false;
-    let deferred = false;
-    const setButtonWithInterval = (): void => {
-      // 短時間に何回も実行しないようインターバルを設ける
-      if (isInterval) {
-        deferred = true;
-        return;
-      }
-      isInterval = true;
-      setTimeout(() => {
-        isInterval = false;
-        if (deferred) {
-          setButton();
-          deferred = false;
-        }
-      }, INTERVAL);
-
-      setButton();
-    };
-
-    // 設定読み込み
-    getOptions().then(newOptions => {
-      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-        options[key] = newOptions[key];
-      });
-      // ボタンを(再)設置
-      setButtonWithInterval();
-    });
-
-    // ページ全体でDOMの変更を検知し都度ボタン設置
-    const observer = new MutationObserver(setButtonWithInterval);
-    const target = document.querySelector('body')!;
-    const config = { childList: true, subtree: true };
-    observer.observe(target, config);
-
-    // 設定反映のためのリスナー設置
-    // これ自体がChrome拡張機能のときだけ設置する
-    // (Chrome拡張機能でないときは設定反映できる機構ないので)
-    if (isNativeChromeExtension()) {
-      window.chrome.runtime.onMessage.addListener(
-        (request, _, sendResponse) => {
-          console.log(window.chrome.runtime.lastError);
-          if (request.method === OPTION_UPDATED) {
-            getOptions().then(newOptions => {
-              (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-                options[key] = newOptions[key];
-              });
-              // ボタンを(再)設置
-              setButtonWithInterval();
-              sendResponse({ data: 'done' });
-            });
-            return true;
-          }
-          sendResponse({ data: 'yet' });
-          return true;
-        }
-      );
+  let isInterval = false;
+  let deferred = false;
+  const setButtonWithInterval = (): void => {
+    // 短時間に何回も実行しないようインターバルを設ける
+    if (isInterval) {
+      deferred = true;
+      return;
     }
-  } else if (isImageTab()) {
-    /**
-     * imagetab
-     * https://pbs.twimg.com/* (画像ページのとき)で実行される
-     */
-
-    // twitterの画像を表示したときのC-sを拡張
-    // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
-
-    getOptions().then(newOptions => {
-      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-        options[key] = newOptions[key];
-      });
-    });
-
-    // キーを押したとき
-    document.addEventListener('keydown', e => {
-      console.log(options[STRIP_IMAGE_SUFFIX]);
-      // 設定が有効なら
-      if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
-        downloadImage(e);
+    isInterval = true;
+    setTimeout(() => {
+      isInterval = false;
+      if (deferred) {
+        setButton();
+        deferred = false;
       }
+    }, INTERVAL);
+
+    setButton();
+  };
+
+  // 設定読み込み
+  getOptions().then(newOptions => {
+    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+      options[key] = newOptions[key];
     });
-  } else {
-    printException('not twitter/tweetdeck/image page');
+    // ボタンを(再)設置
+    setButtonWithInterval();
+  });
+
+  // ページ全体でDOMの変更を検知し都度ボタン設置
+  const observer = new MutationObserver(setButtonWithInterval);
+  const target = document.querySelector('body')!;
+  const config = { childList: true, subtree: true };
+  observer.observe(target, config);
+
+  // 設定反映のためのリスナー設置
+  // これ自体がChrome拡張機能のときだけ設置する
+  // (Chrome拡張機能でないときは設定反映できる機構ないので)
+  if (isNativeChromeExtension()) {
+    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+      console.log(window.chrome.runtime.lastError);
+      if (request.method === OPTION_UPDATED) {
+        getOptions().then(newOptions => {
+          (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+            options[key] = newOptions[key];
+          });
+          // ボタンを(再)設置
+          setButtonWithInterval();
+          sendResponse({ data: 'done' });
+        });
+        return true;
+      }
+      sendResponse({ data: 'yet' });
+      return true;
+    });
   }
 };
 
-if (isTwitter() || isTweetdeck() || isImageTab()) {
-  tooiMain();
+/**
+ * twitterの画像を表示したときのC-sを拡張
+ * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
+ */
+const fixFileNameOnSaveCommand = (): void => {
+  getOptions().then(newOptions => {
+    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+      options[key] = newOptions[key];
+    });
+  });
+
+  // キーを押したとき
+  document.addEventListener('keydown', e => {
+    console.log(options[STRIP_IMAGE_SUFFIX]);
+    // 設定が有効なら
+    if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
+      downloadImage(e);
+    }
+  });
+};
+
+/** メインの処理 */
+if (isTwitter() || isTweetdeck()) {
+  /** 公式Web/TweetDeck */
+  setOriginalButton();
+} else if (isImageTab()) {
+  /** 画像ページ(https://pbs.twimg.com/*) */
+  fixFileNameOnSaveCommand();
+} else {
+  /** 実行されるはずのないページで実行されている */
+  printException('not twitter/tweetdeck/image page');
 }
