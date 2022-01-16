@@ -1,0 +1,19 @@
+name: git-issue-release
+
+on:
+  pull_request: # Automatically create or update issues when pull request is merged.
+    types: [closed]
+  release: # Automatically close the latest issue when release is published.
+    types: [published]
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-issue-release
+        uses: kouki-dan/git-issue-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release-tag-pattern: ^v # Use it to find the latest release. `^v` means starts with v.
+          release-label: 'release' # Use it to find release issues. Labels are not created automatically, so create them before use it.
