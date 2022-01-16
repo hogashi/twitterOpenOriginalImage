@@ -4,6 +4,7 @@
 // @namespace       https://hogashi.hatenablog.com/
 // @description     TwitterページでOriginalボタンを押すと原寸の画像が開きます(https://hogashi.hatenablog.com)
 // @include         https://twitter.com*
+// @include         https://mobile.twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
 // @version         3.2.1
