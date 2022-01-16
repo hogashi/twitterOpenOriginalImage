@@ -261,40 +261,6 @@ export const downloadImage = (e: KeyboardEvent): void => {
   }
 };
 
-// 設定項目更新
-export const getOptions = (): Promise<Options> => {
-  console.log('get options'); // debug
-  if (isNativeChromeExtension()) {
-    // これ自体がChrome拡張機能のとき
-    return new Promise<OptionsMaybe>((resolve, reject) => {
-      const request: MessageRequest = {
-        method: GET_LOCAL_STORAGE,
-      };
-      const callback = (response: MessageResponse): void => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject();
-        }
-      };
-      window.chrome.runtime.sendMessage(request, callback);
-    }).then((data: OptionsMaybe) => {
-      const newOptions: OptionsMaybe = {};
-      OPTION_KEYS.map(key => {
-        newOptions[key] = data[key] || isTrue;
-      });
-
-      console.log('get options (then): ', newOptions); // debug
-
-      return newOptions as Options;
-    });
-  } else {
-    // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
-    // 設定は変わりようがないのでそのまま返す
-    return Promise.resolve(options);
-  }
-};
-
 /**
  * twitter.comでボタンを設置するクラス
  */
@@ -793,6 +759,40 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
     // おかしいことを伝えつつフォールバックする
     printException('none of twitter page');
     return new ButtonSetter();
+  }
+};
+
+// 設定項目更新
+export const getOptions = (): Promise<Options> => {
+  console.log('get options'); // debug
+  if (isNativeChromeExtension()) {
+    // これ自体がChrome拡張機能のとき
+    return new Promise<OptionsMaybe>((resolve, reject) => {
+      const request: MessageRequest = {
+        method: GET_LOCAL_STORAGE,
+      };
+      const callback = (response: MessageResponse): void => {
+        if (response.data) {
+          resolve(response.data);
+        } else {
+          reject();
+        }
+      };
+      window.chrome.runtime.sendMessage(request, callback);
+    }).then((data: OptionsMaybe) => {
+      const newOptions: OptionsMaybe = {};
+      OPTION_KEYS.map(key => {
+        newOptions[key] = data[key] || isTrue;
+      });
+
+      console.log('get options (then): ', newOptions); // debug
+
+      return newOptions as Options;
+    });
+  } else {
+    // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
+    // 設定は変わりようがないのでそのまま返す
+    return Promise.resolve(options);
   }
 };
 
