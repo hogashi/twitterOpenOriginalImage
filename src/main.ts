@@ -762,38 +762,42 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
   }
 };
 
-// 設定項目更新
-export const getOptions = (): Promise<Options> => {
+/**
+ * 設定項目更新
+ * background script に問い合わせて返ってきた値で options を書き換える
+ */
+export const updateOptions = (): Promise<void> => {
   console.log('get options'); // debug
-  if (isNativeChromeExtension()) {
-    // これ自体がChrome拡張機能のとき
-    return new Promise<OptionsMaybe>((resolve, reject) => {
-      const request: MessageRequest = {
-        method: GET_LOCAL_STORAGE,
-      };
-      const callback = (response: MessageResponse): void => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject();
-        }
-      };
-      window.chrome.runtime.sendMessage(request, callback);
-    }).then((data: OptionsMaybe) => {
-      const newOptions: OptionsMaybe = {};
-      OPTION_KEYS.map(key => {
-        newOptions[key] = data[key] || isTrue;
-      });
-
-      console.log('get options (then): ', newOptions); // debug
-
-      return newOptions as Options;
-    });
-  } else {
-    // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
-    // 設定は変わりようがないのでそのまま返す
-    return Promise.resolve(options);
+  // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
+  // 設定は変わりようがないので何もしない
+  if (!isNativeChromeExtension()) {
+    return Promise.resolve();
   }
+  return new Promise<OptionsMaybe>((resolve, reject) => {
+    const request: MessageRequest = {
+      method: GET_LOCAL_STORAGE,
+    };
+    const callback = (response: MessageResponse): void => {
+      if (response.data) {
+        resolve(response.data);
+      } else {
+        reject();
+      }
+    };
+    window.chrome.runtime.sendMessage(request, callback);
+  }).then((data: OptionsMaybe) => {
+    const newOptions: OptionsMaybe = {};
+    // ここで全部埋めるので newOptions は Options になる
+    OPTION_KEYS.forEach(key => {
+      newOptions[key] = data[key] || isTrue;
+    });
+
+    console.log('get options (then): ', newOptions); // debug
+
+    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+      options[key] = (newOptions as Options)[key];
+    });
+  });
 };
 
 /** Originalボタンおく */
@@ -831,14 +835,8 @@ const setOriginalButton = (): void => {
     setButton();
   };
 
-  // 設定読み込み
-  getOptions().then(newOptions => {
-    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-      options[key] = newOptions[key];
-    });
-    // ボタンを(再)設置
-    setButtonWithInterval();
-  });
+  // ボタンを(再)設置
+  setButtonWithInterval();
 
   // ページ全体でDOMの変更を検知し都度ボタン設置
   const observer = new MutationObserver(setButtonWithInterval);
@@ -853,10 +851,7 @@ const setOriginalButton = (): void => {
     window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       console.log(window.chrome.runtime.lastError);
       if (request.method === OPTION_UPDATED) {
-        getOptions().then(newOptions => {
-          (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-            options[key] = newOptions[key];
-          });
+        updateOptions().then(() => {
           // ボタンを(再)設置
           setButtonWithInterval();
           sendResponse({ data: 'done' });
@@ -874,12 +869,6 @@ const setOriginalButton = (): void => {
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
 const fixFileNameOnSaveCommand = (): void => {
-  getOptions().then(newOptions => {
-    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-      options[key] = newOptions[key];
-    });
-  });
-
   // キーを押したとき
   document.addEventListener('keydown', e => {
     console.log(options[STRIP_IMAGE_SUFFIX]);
@@ -891,13 +880,15 @@ const fixFileNameOnSaveCommand = (): void => {
 };
 
 /** メインの処理 */
-if (isTwitter() || isTweetdeck()) {
-  /** 公式Web/TweetDeck */
-  setOriginalButton();
-} else if (isImageTab()) {
-  /** 画像ページ(https://pbs.twimg.com/*) */
-  fixFileNameOnSaveCommand();
-} else {
-  /** 実行されるはずのないページで実行されている */
-  printException('not twitter/tweetdeck/image page');
-}
+updateOptions().then(() => {
+  if (isTwitter() || isTweetdeck()) {
+    /** 公式Web/TweetDeck */
+    setOriginalButton();
+  } else if (isImageTab()) {
+    /** 画像ページ(https://pbs.twimg.com/*) */
+    fixFileNameOnSaveCommand();
+  } else {
+    /** 実行されるはずのないページで実行されている */
+    printException('not twitter/tweetdeck/image page');
+  }
+});
