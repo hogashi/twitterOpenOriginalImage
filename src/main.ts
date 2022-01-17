@@ -843,8 +843,10 @@ const setOriginalButton = (): void => {
     window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
       // ひとまず console.log で出すようにしてみている
-      // eslint-disable-next-line no-console
-      console.log(window.chrome.runtime.lastError);
+      if (window.chrome.runtime.lastError !== undefined) {
+        // eslint-disable-next-line no-console
+        console.log(window.chrome.runtime.lastError);
+      }
       if (request.method === OPTION_UPDATED) {
         updateOptions().then(() => {
           // ボタンを(再)設置
