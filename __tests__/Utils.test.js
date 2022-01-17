@@ -7,7 +7,8 @@ const {
   collectUrlParams,
   formatUrl,
   openImages,
-  getOptions,
+  options,
+  updateOptions,
   setStyle,
   getImageFilenameByUrl,
   downloadImage,
@@ -41,9 +42,11 @@ const makeResultParams = ({ format, name }) => {
 describe('Utils', () => {
   describe('printException', () => {
     it('エラーメッセージの表示(予期せぬ状況の確認)', () => {
+      /* eslint-disable no-console */
       console.log = jest.fn();
       printException('exception message');
       expect(console.log.mock.calls[0][0]).toBeInstanceOf(Error);
+      /* eslint-enable no-console */
     });
   });
 
@@ -264,7 +267,7 @@ describe('Utils', () => {
     });
   });
 
-  describe('getOptions', () => {
+  describe('updateOptions', () => {
     describe('Chrome拡張機能のとき', () => {
       const originalChrome = window.chrome;
       beforeAll(() => {
@@ -275,7 +278,7 @@ describe('Utils', () => {
         window.chrome = originalChrome;
       });
 
-      it('初期設定を取得できる', () => {
+      it('初期設定を取得できる', async () => {
         const expected = {};
         OPTION_KEYS.forEach(key => {
           expected[key] = isTrue;
@@ -283,10 +286,11 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({ data: {} })
         );
-        return expect(getOptions()).resolves.toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toBeUndefined();
+        expect(options).toStrictEqual(expected);
       });
 
-      it('設定した値を取得できる', () => {
+      it('設定した値を取得できる', async () => {
         const expected = {};
         OPTION_KEYS.forEach((key, i) => {
           expected[key] = i % 2 === 0 ? isTrue : isFalse;
@@ -294,12 +298,11 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({ data: { ...expected } })
         );
-        return getOptions().then(options => {
-          return expect(options).toStrictEqual(expected);
-        });
+        await expect(updateOptions()).resolves.toBeUndefined();
+        expect(options).toStrictEqual(expected);
       });
 
-      it('設定が取得できなかったらreject', () => {
+      it('設定が取得できなかったら初期設定', async () => {
         const expected = {};
         OPTION_KEYS.forEach(key => {
           expected[key] = isTrue;
@@ -307,7 +310,8 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({})
         );
-        return expect(getOptions()).rejects.toBeUndefined();
+        await expect(updateOptions()).resolves.toBeUndefined();
+        expect(options).toStrictEqual(expected);
       });
     });
 
@@ -321,12 +325,13 @@ describe('Utils', () => {
         window.chrome = originalChrome;
       });
 
-      it('初期設定を取得できる', () => {
+      it('初期設定を取得できる', async () => {
         const expected = {};
         OPTION_KEYS.forEach(key => {
-          expected[key] = isFalse;
+          expected[key] = isTrue;
         });
-        return expect(getOptions()).resolves.toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toBeUndefined();
+        expect(options).toStrictEqual(expected);
       });
     });
   });
