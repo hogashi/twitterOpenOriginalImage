@@ -773,16 +773,13 @@ export const updateOptions = (): Promise<void> => {
   if (!isNativeChromeExtension()) {
     return Promise.resolve();
   }
-  return new Promise<OptionsMaybe>((resolve, reject) => {
+  return new Promise<OptionsMaybe>(resolve => {
     const request: MessageRequest = {
       method: GET_LOCAL_STORAGE,
     };
     const callback = (response: MessageResponse): void => {
-      if (response.data) {
-        resolve(response.data);
-      } else {
-        reject();
-      }
+      // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
+      resolve(response && response.data ? response.data : {});
     };
     window.chrome.runtime.sendMessage(request, callback);
   }).then((data: OptionsMaybe) => {
