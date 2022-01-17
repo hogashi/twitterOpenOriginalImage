@@ -887,8 +887,5 @@ updateOptions().then(() => {
   } else if (isImageTab()) {
     /** 画像ページ(https://pbs.twimg.com/*) */
     fixFileNameOnSaveCommand();
-  } else {
-    /** 実行されるはずのないページで実行されている */
-    printException('not twitter/tweetdeck/image page');
   }
 });
