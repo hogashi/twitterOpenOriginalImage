@@ -11,9 +11,11 @@ interface Options {
 
 type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
-// 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-// 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-// 無効だった場合はそのままボタンは表示されない
+/**
+ * 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
+ * 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
+ * 無効だった場合はそのままボタンは表示されない
+ */
 export const options: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: 'isfalse',
@@ -49,18 +51,18 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
-// 公式Webかどうか
+/** 公式Webかどうか */
 export const isTwitter = (): boolean =>
   window.location.hostname === HOST_TWITTER_COM ||
   window.location.hostname === HOST_MOBILE_TWITTER_COM;
-// Tweetdeckかどうか
+/** Tweetdeckかどうか */
 export const isTweetdeck = (): boolean =>
   window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
-// 画像ページかどうか
+/** 画像ページかどうか */
 export const isImageTab = (): boolean =>
   window.location.hostname === HOST_PBS_TWIMG_COM;
 
-// これ自体がChrome拡張機能かどうか
+/** これ自体がChrome拡張機能かどうか */
 export const isNativeChromeExtension = (): boolean =>
   window.chrome !== undefined &&
   window.chrome.runtime !== undefined &&
@@ -94,25 +96,26 @@ export const OPTIONS_TEXT: { [key: string]: string } = {
 /**
  * Utils
  */
-// chrome.runtime.sendMessage で送るメッセージ
+/** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
   method: string;
 }
-// chrome.runtime.sendMessage で返るメッセージ
+/** chrome.runtime.sendMessage で返るメッセージ */
 export interface MessageResponse {
   data: { [key: string]: string } | null;
 }
 
-// エラーメッセージの表示(予期せぬ状況の確認)
+/** エラーメッセージの表示(予期せぬ状況の確認) */
 export const printException = (tooiException: string): void => {
   try {
     throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
   }
 };
 
-// 画像urlの要素を集める
+/** 画像urlの要素を集める */
 export const collectUrlParams = (
   rawUrl: string
 ): {
@@ -166,7 +169,7 @@ export const collectUrlParams = (
   };
 };
 
-// 画像URLを https～?format=〜&name=orig に揃える
+/** 画像URLを https～?format=〜&name=orig に揃える */
 export const formatUrl = (imgUrl: string): string | null => {
   if (imgUrl.length === 0) {
     return null;
@@ -182,7 +185,7 @@ export const formatUrl = (imgUrl: string): string | null => {
   return `${protocol}//${host}${pathname}?format=${format}&name=orig`;
 };
 
-// 画像を開く
+/** 画像を開く */
 export const openImages = (imgSrcs: string[]): void => {
   if (imgSrcs.length === 0) {
     printException('zero image urls');
@@ -259,62 +262,27 @@ export const downloadImage = (e: KeyboardEvent): void => {
   }
 };
 
-// 設定項目更新
-export const getOptions = (): Promise<Options> => {
-  console.log('get options'); // debug
-  if (isNativeChromeExtension()) {
-    // これ自体がChrome拡張機能のとき
-    return new Promise<OptionsMaybe>((resolve, reject) => {
-      const request: MessageRequest = {
-        method: GET_LOCAL_STORAGE,
-      };
-      const callback = (response: MessageResponse): void => {
-        if (response.data) {
-          resolve(response.data);
-        } else {
-          reject();
-        }
-      };
-      window.chrome.runtime.sendMessage(request, callback);
-    }).then((data: OptionsMaybe) => {
-      const options: OptionsMaybe = {};
-      OPTION_KEYS.map(key => {
-        options[key] = data[key] || isTrue;
-      });
-
-      console.log('get options (then): ', options); // debug
-
-      return options as Options;
-    });
-  } else {
-    // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
-    // 設定は変わりようがないのでそのまま返す
-    return Promise.resolve(options);
-  }
-};
-
 /**
- * ButtonSetter
  * twitter.comでボタンを設置するクラス
  */
 export class ButtonSetter {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options): void {
+  public setButtonOnTimeline(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     if (document.querySelector('#react-root')) {
-      this._setButtonOnReactLayoutTimeline(options);
+      this._setButtonOnReactLayoutTimeline(currentOptions);
       return;
     }
-    this._setButtonOnTimeline(options);
+    this._setButtonOnTimeline(currentOptions);
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options): void {
+  public setButtonOnTweetDetail(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
     // TODO: Reactレイアウトでも実装する必要がある？
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
-    this._setButtonOnTweetDetail(options);
+    this._setButtonOnTweetDetail(currentOptions);
   }
 
   private setButton({
@@ -404,11 +372,11 @@ export class ButtonSetter {
     container.appendChild(button);
   }
 
-  private _setButtonOnTimeline(options: Options): void {
+  private _setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
       return;
     }
     const tweets = document.getElementsByClassName('js-stream-tweet');
@@ -456,11 +424,11 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnTweetDetail(options: Options): void {
+  private _setButtonOnTweetDetail(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
       return;
     }
     const className = 'tooi-button-container-detail';
@@ -499,11 +467,11 @@ export class ButtonSetter {
     });
   }
 
-  private _setButtonOnReactLayoutTimeline(options: Options): void {
+  private _setButtonOnReactLayoutTimeline(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
       return;
     }
     const className = 'tooi-button-container-react-timeline';
@@ -602,16 +570,15 @@ export class ButtonSetter {
 }
 
 /**
- * ButtonSetterTweetDeck
  * tweetdeck.twitter.comでボタンを設置するクラス
  */
 export class ButtonSetterTweetDeck {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(options: Options): void {
+  public setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
       return;
     }
     // if タイムラインのツイートを取得できたら
@@ -664,11 +631,11 @@ export class ButtonSetterTweetDeck {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(options: Options): void {
+  public setButtonOnTweetDetail(currentOptions: Options): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     // - isTrue か 設定なし のとき ON
     // - isFalse のとき OFF
-    if (!(options[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
+    if (!(currentOptions[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
       return;
     }
     // if ツイート詳細を取得できたら
@@ -784,131 +751,137 @@ export class ButtonSetterTweetDeck {
   }
 }
 
-/**
- * getButtonSetter
- */
 export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
-  if (isTwitter()) {
-    return new ButtonSetter();
-  } else if (isTweetdeck()) {
+  if (isTweetdeck()) {
     return new ButtonSetterTweetDeck();
-  } else {
-    // おかしいことを伝えつつフォールバックする
-    printException('none of twitter page');
-    return new ButtonSetter();
+  }
+  return new ButtonSetter();
+};
+
+/**
+ * 設定項目更新
+ * background script に問い合わせて返ってきた値で options を書き換える
+ */
+export const updateOptions = (): Promise<void> => {
+  // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
+  // 設定は変わりようがないので何もしない
+  if (!isNativeChromeExtension()) {
+    return Promise.resolve();
+  }
+  return new Promise<OptionsMaybe>(resolve => {
+    const request: MessageRequest = {
+      method: GET_LOCAL_STORAGE,
+    };
+    const callback = (response: MessageResponse): void => {
+      // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
+      resolve(response && response.data ? response.data : {});
+    };
+    window.chrome.runtime.sendMessage(request, callback);
+  }).then((data: OptionsMaybe) => {
+    const newOptions: OptionsMaybe = {};
+    // ここで全部埋めるので newOptions は Options になる
+    OPTION_KEYS.forEach(key => {
+      newOptions[key] = data[key] || isTrue;
+    });
+
+    // console.log('get options (then): ', newOptions); // debug
+
+    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
+      options[key] = (newOptions as Options)[key];
+    });
+  });
+};
+
+/** Originalボタンおく */
+const setOriginalButton = (): void => {
+  // 実行の間隔(ms)
+  const INTERVAL = 300;
+
+  // ボタン設置クラス
+  const buttonSetter = getButtonSetter();
+
+  // ボタンを設置
+  const setButton = (): void => {
+    // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
+    buttonSetter.setButtonOnTimeline(options);
+    buttonSetter.setButtonOnTweetDetail(options);
+  };
+
+  let isInterval = false;
+  let deferred = false;
+  const setButtonWithInterval = (): void => {
+    // 短時間に何回も実行しないようインターバルを設ける
+    if (isInterval) {
+      deferred = true;
+      return;
+    }
+    isInterval = true;
+    setTimeout(() => {
+      isInterval = false;
+      if (deferred) {
+        setButton();
+        deferred = false;
+      }
+    }, INTERVAL);
+
+    setButton();
+  };
+
+  // ボタンを(再)設置
+  setButtonWithInterval();
+
+  // ページ全体でDOMの変更を検知し都度ボタン設置
+  const observer = new MutationObserver(setButtonWithInterval);
+  const target = document.querySelector('body')!;
+  const config = { childList: true, subtree: true };
+  observer.observe(target, config);
+
+  // 設定反映のためのリスナー設置
+  // これ自体がChrome拡張機能のときだけ設置する
+  // (Chrome拡張機能でないときは設定反映できる機構ないので)
+  if (isNativeChromeExtension()) {
+    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+      // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
+      // ひとまず console.log で出すようにしてみている
+      if (window.chrome.runtime.lastError !== undefined) {
+        // eslint-disable-next-line no-console
+        console.log(window.chrome.runtime.lastError);
+      }
+      if (request.method === OPTION_UPDATED) {
+        updateOptions().then(() => {
+          // ボタンを(再)設置
+          setButtonWithInterval();
+          sendResponse({ data: 'done' });
+        });
+        return true;
+      }
+      sendResponse({ data: 'yet' });
+      return true;
+    });
   }
 };
 
 /**
- * メインの処理
- * 公式Web/TweetDeckと, 画像ページで, それぞれやることを変える
+ * twitterの画像を表示したときのC-sを拡張
+ * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-const tooiMain = (): void => {
-  if (isTwitter() || isTweetdeck()) {
-    /**
-     * main
-     * https://twitter.com/*, https://tweetdeck.twitter.com/* で実行される
-     */
-
-    // 実行の間隔(ms)
-    const INTERVAL = 300;
-
-    // ボタン設置クラス
-    const buttonSetter = getButtonSetter();
-
-    // ボタンを設置
-    const setButton = (): void => {
-      // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
-      buttonSetter.setButtonOnTimeline(options);
-      buttonSetter.setButtonOnTweetDetail(options);
-    };
-
-    let isInterval = false;
-    let deferred = false;
-    const setButtonWithInterval = (): void => {
-      // 短時間に何回も実行しないようインターバルを設ける
-      if (isInterval) {
-        deferred = true;
-        return;
-      }
-      isInterval = true;
-      setTimeout(() => {
-        isInterval = false;
-        if (deferred) {
-          setButton();
-          deferred = false;
-        }
-      }, INTERVAL);
-
-      setButton();
-    };
-
-    // 設定読み込み
-    getOptions().then(newOptions => {
-      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-        options[key] = newOptions[key];
-      });
-      // ボタンを(再)設置
-      setButtonWithInterval();
-    });
-
-    // ページ全体でDOMの変更を検知し都度ボタン設置
-    const observer = new MutationObserver(setButtonWithInterval);
-    const target = document.querySelector('body')!;
-    const config = { childList: true, subtree: true };
-    observer.observe(target, config);
-
-    // 設定反映のためのリスナー設置
-    // これ自体がChrome拡張機能のときだけ設置する
-    // (Chrome拡張機能でないときは設定反映できる機構ないので)
-    if (isNativeChromeExtension()) {
-      window.chrome.runtime.onMessage.addListener(
-        (request, _, sendResponse) => {
-          console.log(window.chrome.runtime.lastError);
-          if (request.method === OPTION_UPDATED) {
-            getOptions().then(newOptions => {
-              (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-                options[key] = newOptions[key];
-              });
-              // ボタンを(再)設置
-              setButtonWithInterval();
-              sendResponse({ data: 'done' });
-            });
-            return true;
-          }
-          sendResponse({ data: 'yet' });
-          return true;
-        }
-      );
+const fixFileNameOnSaveCommand = (): void => {
+  // キーを押したとき
+  document.addEventListener('keydown', e => {
+    // 設定が有効なら
+    if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
+      downloadImage(e);
     }
-  } else if (isImageTab()) {
-    /**
-     * imagetab
-     * https://pbs.twimg.com/* (画像ページのとき)で実行される
-     */
-
-    // twitterの画像を表示したときのC-sを拡張
-    // 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
-
-    getOptions().then(newOptions => {
-      (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-        options[key] = newOptions[key];
-      });
-    });
-
-    // キーを押したとき
-    document.addEventListener('keydown', e => {
-      console.log(options[STRIP_IMAGE_SUFFIX]);
-      // 設定が有効なら
-      if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
-        downloadImage(e);
-      }
-    });
-  } else {
-    printException('not twitter/tweetdeck/image page');
-  }
+  });
 };
 
-if (isTwitter() || isTweetdeck() || isImageTab()) {
-  tooiMain();
-}
+/** メインの処理 */
+updateOptions().then(() => {
+  if (isTwitter() || isTweetdeck()) {
+    /** 公式Web/TweetDeck */
+    setOriginalButton();
+  } else if (isImageTab()) {
+    /** 画像ページ(https://pbs.twimg.com/*) */
+    fixFileNameOnSaveCommand();
+  }
+});
