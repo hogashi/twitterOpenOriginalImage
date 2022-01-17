@@ -67,7 +67,10 @@ export const Popup = (props: Props): JSX.Element => {
         window.chrome.tabs.sendMessage(
           tab.id,
           { method: OPTION_UPDATED },
-          response => console.log('res:', response)
+          response => {
+            // eslint-disable-next-line no-console
+            console.log('res:', response);
+          }
         );
       })
     );
