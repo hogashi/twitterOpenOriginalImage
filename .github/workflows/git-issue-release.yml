@@ -17,6 +17,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release-issue-title: 'Next release'
-          release-issue-title-published: 'Next release: :tag-name: released'
+          release-issue-title-published: 'Next release: :tag_name: released'
           release-tag-pattern: ^v # Use it to find the latest release. `^v` means starts with v.
           release-label: 'release' # Use it to find release issues. Labels are not created automatically, so create them before use it.
