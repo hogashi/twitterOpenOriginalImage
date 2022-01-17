@@ -110,6 +110,7 @@ export const printException = (tooiException: string): void => {
   try {
     throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
   }
 };
@@ -762,7 +763,6 @@ export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
  * background script に問い合わせて返ってきた値で options を書き換える
  */
 export const updateOptions = (): Promise<void> => {
-  console.log('get options'); // debug
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
@@ -784,7 +784,7 @@ export const updateOptions = (): Promise<void> => {
       newOptions[key] = data[key] || isTrue;
     });
 
-    console.log('get options (then): ', newOptions); // debug
+    // console.log('get options (then): ', newOptions); // debug
 
     (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
       options[key] = (newOptions as Options)[key];
@@ -841,6 +841,9 @@ const setOriginalButton = (): void => {
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
   if (isNativeChromeExtension()) {
     window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+      // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
+      // ひとまず console.log で出すようにしてみている
+      // eslint-disable-next-line no-console
       console.log(window.chrome.runtime.lastError);
       if (request.method === OPTION_UPDATED) {
         updateOptions().then(() => {
@@ -863,7 +866,6 @@ const setOriginalButton = (): void => {
 const fixFileNameOnSaveCommand = (): void => {
   // キーを押したとき
   document.addEventListener('keydown', e => {
-    console.log(options[STRIP_IMAGE_SUFFIX]);
     // 設定が有効なら
     if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
       downloadImage(e);
