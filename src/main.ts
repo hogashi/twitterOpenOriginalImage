@@ -751,15 +751,10 @@ export class ButtonSetterTweetDeck {
 }
 
 export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
-  if (isTwitter()) {
-    return new ButtonSetter();
-  } else if (isTweetdeck()) {
+  if (isTweetdeck()) {
     return new ButtonSetterTweetDeck();
-  } else {
-    // おかしいことを伝えつつフォールバックする
-    printException('none of twitter page');
-    return new ButtonSetter();
   }
+  return new ButtonSetter();
 };
 
 /**
