@@ -10,24 +10,20 @@
 // @version         3.2.2
 // ==/UserScript==
 
-
-// 設定
-// 'isfalse' とすると、その設定がオフになる
-var options = {
-  // 公式Web
-  SHOW_ON_TIMELINE: 'istrue',
-  SHOW_ON_TWEET_DETAIL: 'istrue',
-  // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: 'istrue'
+/**
+ * userjs 用の設定項目
+ * 'isfalse' とすると、その設定がオフになる
+ */
+var userjsOptions = {
+    // 公式Web
+    SHOW_ON_TIMELINE: 'istrue',
+    SHOW_ON_TWEET_DETAIL: 'istrue',
+    // TweetDeck
+    SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
+    SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
+    // 画像ページ
+    STRIP_IMAGE_SUFFIX: 'istrue'
 };
-
-// --- 以下は編集しない ---
-
-
-// %%% splitter for userjs %%%
 /**
  * Constants
  */
@@ -625,20 +621,17 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
     return ButtonSetterTweetDeck;
 }());
 var getButtonSetter = function () {
-    if (isTweetdeck()) {
-        return new ButtonSetterTweetDeck();
-    }
-    return new ButtonSetter();
+    return isTweetdeck() ? new ButtonSetterTweetDeck() : new ButtonSetter();
 };
 /**
  * 設定項目更新
- * background script に問い合わせて返ってきた値で options を書き換える
+ * background script に問い合わせて返ってきた値で options をつくって返す
  */
 var updateOptions = function () {
     // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
     // 設定は変わりようがないので何もしない
     if (!isNativeChromeExtension()) {
-        return Promise.resolve();
+        return Promise.resolve(userjsOptions);
     }
     return new Promise(function (resolve) {
         var request = {
@@ -656,13 +649,11 @@ var updateOptions = function () {
             newOptions[key] = data[key] || isTrue;
         });
         // console.log('get options (then): ', newOptions); // debug
-        Object.keys(newOptions).forEach(function (key) {
-            options[key] = newOptions[key];
-        });
+        return newOptions;
     });
 };
 /** Originalボタンおく */
-var setOriginalButton = function () {
+var setOriginalButton = function (options) {
     // 実行の間隔(ms)
     var INTERVAL = 300;
     // ボタン設置クラス
@@ -726,7 +717,7 @@ var setOriginalButton = function () {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-var fixFileNameOnSaveCommand = function () {
+var fixFileNameOnSaveCommand = function (options) {
     // キーを押したとき
     document.addEventListener('keydown', function (e) {
         // 設定が有効なら
@@ -735,14 +726,17 @@ var fixFileNameOnSaveCommand = function () {
         }
     });
 };
-/** メインの処理 */
-updateOptions().then(function () {
+/**
+ * メインの処理
+ * 設定を取得できたらそれに沿ってやっていく
+ */
+updateOptions().then(function (options) {
     if (isTwitter() || isTweetdeck()) {
         /** 公式Web/TweetDeck */
-        setOriginalButton();
+        setOriginalButton(options);
     }
     else if (isImageTab()) {
         /** 画像ページ(https://pbs.twimg.com/*) */
-        fixFileNameOnSaveCommand();
+        fixFileNameOnSaveCommand(options);
     }
 });
