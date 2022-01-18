@@ -82,7 +82,7 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
 ] as const;
-export const OPTIONS_TEXT: { [key: string]: string } = {
+export const OPTIONS_TEXT: { [key in keyof Options]: string } = {
   // 公式Web
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
@@ -756,12 +756,8 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
   }
 }
 
-export const getButtonSetter = (): ButtonSetterType => {
-  if (isTweetdeck()) {
-    return new ButtonSetterTweetDeck();
-  }
-  return new ButtonSetter();
-};
+export const getButtonSetter = (): ButtonSetterType =>
+  isTweetdeck() ? new ButtonSetterTweetDeck() : new ButtonSetter();
 
 /**
  * 設定項目更新
