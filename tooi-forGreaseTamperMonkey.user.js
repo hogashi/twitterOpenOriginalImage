@@ -659,14 +659,14 @@ var setOriginalButton = function (options) {
     // ボタン設置クラス
     var buttonSetter = getButtonSetter();
     // ボタンを設置
-    var setButton = function () {
-        // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
-        buttonSetter.setButtonOnTimeline(options);
-        buttonSetter.setButtonOnTweetDetail(options);
+    var setButton = function (currentOptions) {
+        // console.log('setButton: ' + currentOptions['SHOW_ON_TIMELINE'] + ' ' + currentOptions['SHOW_ON_TWEET_DETAIL']) // debug
+        buttonSetter.setButtonOnTimeline(currentOptions);
+        buttonSetter.setButtonOnTweetDetail(currentOptions);
     };
     var isInterval = false;
     var deferred = false;
-    var setButtonWithInterval = function () {
+    var setButtonWithInterval = function (currentOptions) {
         // 短時間に何回も実行しないようインターバルを設ける
         if (isInterval) {
             deferred = true;
@@ -676,16 +676,16 @@ var setOriginalButton = function (options) {
         setTimeout(function () {
             isInterval = false;
             if (deferred) {
-                setButton();
+                setButton(currentOptions);
                 deferred = false;
             }
         }, INTERVAL);
-        setButton();
+        setButton(currentOptions);
     };
     // ボタンを(再)設置
-    setButtonWithInterval();
+    setButtonWithInterval(options);
     // ページ全体でDOMの変更を検知し都度ボタン設置
-    var observer = new MutationObserver(setButtonWithInterval);
+    var observer = new MutationObserver(function () { return setButtonWithInterval(options); });
     var target = document.querySelector('body');
     var config = { childList: true, subtree: true };
     observer.observe(target, config);
@@ -701,9 +701,9 @@ var setOriginalButton = function (options) {
                 console.log(window.chrome.runtime.lastError);
             }
             if (request.method === OPTION_UPDATED) {
-                updateOptions().then(function () {
+                updateOptions().then(function (options) {
                     // ボタンを(再)設置
-                    setButtonWithInterval();
+                    setButtonWithInterval(options);
                     sendResponse({ data: 'done' });
                 });
                 return true;

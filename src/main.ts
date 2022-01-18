@@ -797,15 +797,15 @@ const setOriginalButton = (options: Options): void => {
   const buttonSetter = getButtonSetter();
 
   // ボタンを設置
-  const setButton = (): void => {
-    // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
-    buttonSetter.setButtonOnTimeline(options);
-    buttonSetter.setButtonOnTweetDetail(options);
+  const setButton = (currentOptions: Options): void => {
+    // console.log('setButton: ' + currentOptions['SHOW_ON_TIMELINE'] + ' ' + currentOptions['SHOW_ON_TWEET_DETAIL']) // debug
+    buttonSetter.setButtonOnTimeline(currentOptions);
+    buttonSetter.setButtonOnTweetDetail(currentOptions);
   };
 
   let isInterval = false;
   let deferred = false;
-  const setButtonWithInterval = (): void => {
+  const setButtonWithInterval = (currentOptions: Options): void => {
     // 短時間に何回も実行しないようインターバルを設ける
     if (isInterval) {
       deferred = true;
@@ -815,19 +815,19 @@ const setOriginalButton = (options: Options): void => {
     setTimeout(() => {
       isInterval = false;
       if (deferred) {
-        setButton();
+        setButton(currentOptions);
         deferred = false;
       }
     }, INTERVAL);
 
-    setButton();
+    setButton(currentOptions);
   };
 
   // ボタンを(再)設置
-  setButtonWithInterval();
+  setButtonWithInterval(options);
 
   // ページ全体でDOMの変更を検知し都度ボタン設置
-  const observer = new MutationObserver(setButtonWithInterval);
+  const observer = new MutationObserver(() => setButtonWithInterval(options));
   const target = document.querySelector('body')!;
   const config = { childList: true, subtree: true };
   observer.observe(target, config);
@@ -844,9 +844,9 @@ const setOriginalButton = (options: Options): void => {
         console.log(window.chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
-        updateOptions().then(() => {
+        updateOptions().then(options => {
           // ボタンを(再)設置
-          setButtonWithInterval();
+          setButtonWithInterval(options);
           sendResponse({ data: 'done' });
         });
         return true;
