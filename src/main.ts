@@ -262,10 +262,15 @@ export const downloadImage = (e: KeyboardEvent): void => {
   }
 };
 
+interface ButtonSetterType {
+  setButtonOnTimeline: (currentOptions: Options) => void;
+  setButtonOnTweetDetail: (currentOptions: Options) => void;
+}
+
 /**
  * twitter.comでボタンを設置するクラス
  */
-export class ButtonSetter {
+export class ButtonSetter implements ButtonSetterType {
   // タイムラインにボタン表示
   public setButtonOnTimeline(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
@@ -572,7 +577,7 @@ export class ButtonSetter {
 /**
  * tweetdeck.twitter.comでボタンを設置するクラス
  */
-export class ButtonSetterTweetDeck {
+export class ButtonSetterTweetDeck implements ButtonSetterType {
   // タイムラインにボタン表示
   public setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
@@ -751,7 +756,7 @@ export class ButtonSetterTweetDeck {
   }
 }
 
-export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
+export const getButtonSetter = (): ButtonSetterType => {
   if (isTweetdeck()) {
     return new ButtonSetterTweetDeck();
   }
