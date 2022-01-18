@@ -12,22 +12,19 @@ interface Options {
 type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
 /**
- * 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
- * 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
- * 無効だった場合はそのままボタンは表示されない
+ * userjs 用の設定項目
+ * 'isfalse' とすると、その設定がオフになる
  */
-export const options: Options = {
+export const userjsOptions: Options = {
   // 公式Web
-  SHOW_ON_TIMELINE: 'isfalse',
-  SHOW_ON_TWEET_DETAIL: 'isfalse',
+  SHOW_ON_TIMELINE: 'istrue',
+  SHOW_ON_TWEET_DETAIL: 'istrue',
   // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: 'isfalse',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'isfalse',
+  SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
   // 画像ページ
-  STRIP_IMAGE_SUFFIX: 'isfalse',
+  STRIP_IMAGE_SUFFIX: 'istrue',
 };
-
-// %%% splitter for userjs %%%
 
 /**
  * Constants
@@ -82,7 +79,7 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
 ] as const;
-export const OPTIONS_TEXT: { [key: string]: string } = {
+export const OPTIONS_TEXT: { [key in keyof Options]: string } = {
   // 公式Web
   SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
   SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
@@ -262,10 +259,15 @@ export const downloadImage = (e: KeyboardEvent): void => {
   }
 };
 
+interface ButtonSetterType {
+  setButtonOnTimeline: (currentOptions: Options) => void;
+  setButtonOnTweetDetail: (currentOptions: Options) => void;
+}
+
 /**
  * twitter.comでボタンを設置するクラス
  */
-export class ButtonSetter {
+export class ButtonSetter implements ButtonSetterType {
   // タイムラインにボタン表示
   public setButtonOnTimeline(currentOptions: Options): void {
     // 昔のビューの処理はしばらく残す
@@ -572,7 +574,7 @@ export class ButtonSetter {
 /**
  * tweetdeck.twitter.comでボタンを設置するクラス
  */
-export class ButtonSetterTweetDeck {
+export class ButtonSetterTweetDeck implements ButtonSetterType {
   // タイムラインにボタン表示
   public setButtonOnTimeline(currentOptions: Options): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
@@ -751,22 +753,18 @@ export class ButtonSetterTweetDeck {
   }
 }
 
-export const getButtonSetter = (): ButtonSetter | ButtonSetterTweetDeck => {
-  if (isTweetdeck()) {
-    return new ButtonSetterTweetDeck();
-  }
-  return new ButtonSetter();
-};
+export const getButtonSetter = (): ButtonSetterType =>
+  isTweetdeck() ? new ButtonSetterTweetDeck() : new ButtonSetter();
 
 /**
  * 設定項目更新
- * background script に問い合わせて返ってきた値で options を書き換える
+ * background script に問い合わせて返ってきた値で options をつくって返す
  */
-export const updateOptions = (): Promise<void> => {
+export const updateOptions = (): Promise<Options> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
-    return Promise.resolve();
+    return Promise.resolve(userjsOptions);
   }
   return new Promise<OptionsMaybe>(resolve => {
     const request: MessageRequest = {
@@ -786,14 +784,12 @@ export const updateOptions = (): Promise<void> => {
 
     // console.log('get options (then): ', newOptions); // debug
 
-    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-      options[key] = (newOptions as Options)[key];
-    });
+    return newOptions as Options;
   });
 };
 
 /** Originalボタンおく */
-const setOriginalButton = (): void => {
+const setOriginalButton = (options: Options): void => {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
@@ -801,15 +797,15 @@ const setOriginalButton = (): void => {
   const buttonSetter = getButtonSetter();
 
   // ボタンを設置
-  const setButton = (): void => {
-    // console.log('setButton: ' + options['SHOW_ON_TIMELINE'] + ' ' + options['SHOW_ON_TWEET_DETAIL']) // debug
-    buttonSetter.setButtonOnTimeline(options);
-    buttonSetter.setButtonOnTweetDetail(options);
+  const setButton = (currentOptions: Options): void => {
+    // console.log('setButton: ' + currentOptions['SHOW_ON_TIMELINE'] + ' ' + currentOptions['SHOW_ON_TWEET_DETAIL']) // debug
+    buttonSetter.setButtonOnTimeline(currentOptions);
+    buttonSetter.setButtonOnTweetDetail(currentOptions);
   };
 
   let isInterval = false;
   let deferred = false;
-  const setButtonWithInterval = (): void => {
+  const setButtonWithInterval = (currentOptions: Options): void => {
     // 短時間に何回も実行しないようインターバルを設ける
     if (isInterval) {
       deferred = true;
@@ -819,19 +815,19 @@ const setOriginalButton = (): void => {
     setTimeout(() => {
       isInterval = false;
       if (deferred) {
-        setButton();
+        setButton(currentOptions);
         deferred = false;
       }
     }, INTERVAL);
 
-    setButton();
+    setButton(currentOptions);
   };
 
   // ボタンを(再)設置
-  setButtonWithInterval();
+  setButtonWithInterval(options);
 
   // ページ全体でDOMの変更を検知し都度ボタン設置
-  const observer = new MutationObserver(setButtonWithInterval);
+  const observer = new MutationObserver(() => setButtonWithInterval(options));
   const target = document.querySelector('body')!;
   const config = { childList: true, subtree: true };
   observer.observe(target, config);
@@ -848,9 +844,9 @@ const setOriginalButton = (): void => {
         console.log(window.chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
-        updateOptions().then(() => {
+        updateOptions().then(options => {
           // ボタンを(再)設置
-          setButtonWithInterval();
+          setButtonWithInterval(options);
           sendResponse({ data: 'done' });
         });
         return true;
@@ -865,7 +861,7 @@ const setOriginalButton = (): void => {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-const fixFileNameOnSaveCommand = (): void => {
+const fixFileNameOnSaveCommand = (options: Options): void => {
   // キーを押したとき
   document.addEventListener('keydown', e => {
     // 設定が有効なら
@@ -875,13 +871,16 @@ const fixFileNameOnSaveCommand = (): void => {
   });
 };
 
-/** メインの処理 */
-updateOptions().then(() => {
+/**
+ * メインの処理
+ * 設定を取得できたらそれに沿ってやっていく
+ */
+updateOptions().then(options => {
   if (isTwitter() || isTweetdeck()) {
     /** 公式Web/TweetDeck */
-    setOriginalButton();
+    setOriginalButton(options);
   } else if (isImageTab()) {
     /** 画像ページ(https://pbs.twimg.com/*) */
-    fixFileNameOnSaveCommand();
+    fixFileNameOnSaveCommand(options);
   }
 });

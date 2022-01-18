@@ -7,7 +7,6 @@ const {
   collectUrlParams,
   formatUrl,
   openImages,
-  options,
   updateOptions,
   setStyle,
   getImageFilenameByUrl,
@@ -286,8 +285,7 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({ data: {} })
         );
-        await expect(updateOptions()).resolves.toBeUndefined();
-        expect(options).toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定した値を取得できる', async () => {
@@ -298,8 +296,7 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({ data: { ...expected } })
         );
-        await expect(updateOptions()).resolves.toBeUndefined();
-        expect(options).toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定が取得できなかったら初期設定', async () => {
@@ -310,8 +307,7 @@ describe('Utils', () => {
         window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
           callback({})
         );
-        await expect(updateOptions()).resolves.toBeUndefined();
-        expect(options).toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
     });
 
@@ -330,8 +326,7 @@ describe('Utils', () => {
         OPTION_KEYS.forEach(key => {
           expected[key] = isTrue;
         });
-        await expect(updateOptions()).resolves.toBeUndefined();
-        expect(options).toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
     });
   });

@@ -1,11 +1,19 @@
 import {
-  options,
   SHOW_ON_TWEETDECK_TIMELINE,
   isFalse,
-  isTrue,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   ButtonSetterTweetDeck,
 } from '../src/main';
+
+function makeAllEnabledOptions() {
+  return {
+    SHOW_ON_TIMELINE: 'istrue',
+    SHOW_ON_TWEET_DETAIL: 'istrue',
+    SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
+    SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
+    STRIP_IMAGE_SUFFIX: 'istrue',
+  };
+}
 
 describe('ButtonSetterTweetDeck', () => {
   describe('setButtonOnTimeline', () => {
@@ -51,9 +59,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -80,9 +87,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -126,9 +132,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -151,9 +156,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -165,9 +169,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -179,9 +182,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -193,9 +195,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -210,9 +211,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -221,9 +221,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -232,9 +231,9 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isFalse;
-      buttonSetter.setButtonOnTimeline(_options);
+      const options = makeAllEnabledOptions();
+      options[SHOW_ON_TWEETDECK_TIMELINE] = isFalse;
+      buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -307,9 +306,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -335,9 +333,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
@@ -379,9 +376,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
@@ -412,9 +408,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TIMELINE] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -426,9 +421,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -444,9 +438,8 @@ describe('ButtonSetterTweetDeck', () => {
         const buttonSetter = new ButtonSetterTweetDeck();
         buttonSetter.setButton = jest.fn();
 
-        const _options = options;
-        _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-        buttonSetter.setButtonOnTweetDetail(_options);
+        const options = makeAllEnabledOptions();
+        buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
       });
@@ -463,9 +456,8 @@ describe('ButtonSetterTweetDeck', () => {
         const buttonSetter = new ButtonSetterTweetDeck();
         buttonSetter.setButton = jest.fn();
 
-        const _options = options;
-        _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-        buttonSetter.setButtonOnTweetDetail(_options);
+        const options = makeAllEnabledOptions();
+        buttonSetter.setButtonOnTweetDetail(options);
 
         expect(buttonSetter.setButton).not.toHaveBeenCalled();
       });
@@ -481,9 +473,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -492,9 +483,8 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isTrue;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
@@ -503,9 +493,9 @@ describe('ButtonSetterTweetDeck', () => {
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
 
-      const _options = options;
-      _options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isFalse;
-      buttonSetter.setButtonOnTweetDetail(_options);
+      const options = makeAllEnabledOptions();
+      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isFalse;
+      buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
     });
