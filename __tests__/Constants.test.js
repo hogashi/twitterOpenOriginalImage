@@ -13,7 +13,7 @@ import {
   isFalse,
   OPTION_KEYS,
   OPTIONS_TEXT,
-  options,
+  userjsOptions,
   isTwitter,
   isTweetdeck,
   isImageTab,
@@ -50,19 +50,16 @@ describe('定数', () => {
     expect(isFalse).toBe('isfalse');
   });
 
-  it('設定項目の初期値', () => {
-    // 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
-    // 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
-    // 無効だった場合はそのままボタンは表示されない
-    expect(options).toStrictEqual({
+  it('userjs用の設定項目の初期値は全部真', () => {
+    expect(userjsOptions).toStrictEqual({
       // 公式Web
-      SHOW_ON_TIMELINE: 'isfalse',
-      SHOW_ON_TWEET_DETAIL: 'isfalse',
+      SHOW_ON_TIMELINE: 'istrue',
+      SHOW_ON_TWEET_DETAIL: 'istrue',
       // TweetDeck
-      SHOW_ON_TWEETDECK_TIMELINE: 'isfalse',
-      SHOW_ON_TWEETDECK_TWEET_DETAIL: 'isfalse',
+      SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
+      SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
       // 画像ページ
-      STRIP_IMAGE_SUFFIX: 'isfalse',
+      STRIP_IMAGE_SUFFIX: 'istrue',
     });
 
     expect(OPTION_KEYS).toStrictEqual([
