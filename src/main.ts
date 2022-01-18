@@ -12,22 +12,19 @@ interface Options {
 type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
 /**
- * 設定項目の初期値は「無効」(最初のボタン表示が早過ぎる/一旦表示すると消さないため)
- * 有効だった場合はDOMが変更される間に設定が読み込まれて有効になる
- * 無効だった場合はそのままボタンは表示されない
+ * userjs 用の設定項目
+ * 'isfalse' とすると、その設定がオフになる
  */
-export const options: Options = {
+export const userjsOptions: Options = {
   // 公式Web
-  SHOW_ON_TIMELINE: 'isfalse',
-  SHOW_ON_TWEET_DETAIL: 'isfalse',
+  SHOW_ON_TIMELINE: 'istrue',
+  SHOW_ON_TWEET_DETAIL: 'istrue',
   // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: 'isfalse',
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'isfalse',
+  SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
   // 画像ページ
-  STRIP_IMAGE_SUFFIX: 'isfalse',
+  STRIP_IMAGE_SUFFIX: 'istrue',
 };
-
-// %%% splitter for userjs %%%
 
 /**
  * Constants
@@ -761,13 +758,13 @@ export const getButtonSetter = (): ButtonSetterType =>
 
 /**
  * 設定項目更新
- * background script に問い合わせて返ってきた値で options を書き換える
+ * background script に問い合わせて返ってきた値で options をつくって返す
  */
-export const updateOptions = (): Promise<void> => {
+export const updateOptions = (): Promise<Options> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
-    return Promise.resolve();
+    return Promise.resolve(userjsOptions);
   }
   return new Promise<OptionsMaybe>(resolve => {
     const request: MessageRequest = {
@@ -787,14 +784,12 @@ export const updateOptions = (): Promise<void> => {
 
     // console.log('get options (then): ', newOptions); // debug
 
-    (Object.keys(newOptions) as Array<keyof Options>).forEach(key => {
-      options[key] = (newOptions as Options)[key];
-    });
+    return newOptions as Options;
   });
 };
 
 /** Originalボタンおく */
-const setOriginalButton = (): void => {
+const setOriginalButton = (options: Options): void => {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
@@ -866,7 +861,7 @@ const setOriginalButton = (): void => {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-const fixFileNameOnSaveCommand = (): void => {
+const fixFileNameOnSaveCommand = (options: Options): void => {
   // キーを押したとき
   document.addEventListener('keydown', e => {
     // 設定が有効なら
@@ -876,13 +871,16 @@ const fixFileNameOnSaveCommand = (): void => {
   });
 };
 
-/** メインの処理 */
-updateOptions().then(() => {
+/**
+ * メインの処理
+ * 設定を取得できたらそれに沿ってやっていく
+ */
+updateOptions().then(options => {
   if (isTwitter() || isTweetdeck()) {
     /** 公式Web/TweetDeck */
-    setOriginalButton();
+    setOriginalButton(options);
   } else if (isImageTab()) {
     /** 画像ページ(https://pbs.twimg.com/*) */
-    fixFileNameOnSaveCommand();
+    fixFileNameOnSaveCommand(options);
   }
 });
