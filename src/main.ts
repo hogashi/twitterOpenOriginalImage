@@ -50,20 +50,20 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 /** 公式Webかどうか */
 export const isTwitter = (): boolean =>
-  window.location.hostname === HOST_TWITTER_COM ||
-  window.location.hostname === HOST_MOBILE_TWITTER_COM;
+  location.hostname === HOST_TWITTER_COM ||
+  location.hostname === HOST_MOBILE_TWITTER_COM;
 /** Tweetdeckかどうか */
 export const isTweetdeck = (): boolean =>
-  window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
+  location.hostname === HOST_TWEETDECK_TWITTER_COM;
 /** 画像ページかどうか */
 export const isImageTab = (): boolean =>
-  window.location.hostname === HOST_PBS_TWIMG_COM;
+  location.hostname === HOST_PBS_TWIMG_COM;
 
 /** これ自体がChrome拡張機能かどうか */
 export const isNativeChromeExtension = (): boolean =>
-  window.chrome !== undefined &&
-  window.chrome.runtime !== undefined &&
-  window.chrome.runtime.id !== undefined;
+  chrome !== undefined &&
+  chrome.runtime !== undefined &&
+  chrome.runtime.id !== undefined;
 
 // 設定
 
@@ -105,7 +105,7 @@ export interface MessageResponse {
 /** エラーメッセージの表示(予期せぬ状況の確認) */
 export const printException = (tooiException: string): void => {
   try {
-    throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
+    throw new Error('tooi: ' + tooiException + ' at: ' + location.href);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err);
@@ -194,7 +194,7 @@ export const openImages = (imgSrcs: string[]): void => {
       // if 画像URLが取得できたなら
       const url = formatUrl(imgSrc);
       if (url) {
-        window.open(url);
+        open(url);
       } else {
         printException('no image url');
       }
@@ -253,7 +253,7 @@ export const downloadImage = (e: KeyboardEvent): void => {
 
     // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
     const a = document.createElement('a');
-    a.href = window.location.href;
+    a.href = location.href;
     a.setAttribute('download', filename);
     a.dispatchEvent(new MouseEvent('click'));
   }
@@ -539,7 +539,7 @@ export class ButtonSetter implements ButtonSetterType {
       return contrastLimitColor;
     }
 
-    const buttonColor = window.getComputedStyle(actionButton).color;
+    const buttonColor = getComputedStyle(actionButton).color;
     if (buttonColor && buttonColor.length > 0) {
       return buttonColor;
     }
@@ -559,9 +559,7 @@ export class ButtonSetter implements ButtonSetterType {
       actionButton.children[0] &&
       (actionButton.children[0] as HTMLElement).style
     ) {
-      const buttonColor = window.getComputedStyle(
-        actionButton.children[0]
-      ).color;
+      const buttonColor = getComputedStyle(actionButton.children[0]).color;
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
       }
@@ -704,9 +702,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
   }): void {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
-    const borderColor = txtMute
-      ? window.getComputedStyle(txtMute).color
-      : '#697b8c';
+    const borderColor = txtMute ? getComputedStyle(txtMute).color : '#697b8c';
     // ボタンのスタイル設定
     const style = {
       border: `1px solid ${borderColor}`,
@@ -774,7 +770,7 @@ export const updateOptions = (): Promise<Options> => {
       // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
       resolve(response && response.data ? response.data : {});
     };
-    window.chrome.runtime.sendMessage(request, callback);
+    chrome.runtime.sendMessage(request, callback);
   }).then((data: OptionsMaybe) => {
     const newOptions: OptionsMaybe = {};
     // ここで全部埋めるので newOptions は Options になる
@@ -836,12 +832,12 @@ const setOriginalButton = (options: Options): void => {
   // これ自体がChrome拡張機能のときだけ設置する
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
   if (isNativeChromeExtension()) {
-    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+    chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
       // ひとまず console.log で出すようにしてみている
-      if (window.chrome.runtime.lastError !== undefined) {
+      if (chrome.runtime.lastError !== undefined) {
         // eslint-disable-next-line no-console
-        console.log(window.chrome.runtime.lastError);
+        console.log(chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
         updateOptions().then(options => {
@@ -874,13 +870,18 @@ const fixFileNameOnSaveCommand = (options: Options): void => {
 /**
  * メインの処理
  * 設定を取得できたらそれに沿ってやっていく
+ * bundleの感じがイマイチでbackground scriptでもここが実行されてしまう,
+ * background scriptでupdateOptionsが実行されるとおかしくなるので,
+ * 対象のページじゃなかったらupdateOptions実行しないようにifとの順序に気をつける
  */
-updateOptions().then(options => {
-  if (isTwitter() || isTweetdeck()) {
-    /** 公式Web/TweetDeck */
+if (isTwitter() || isTweetdeck()) {
+  /** 公式Web/TweetDeck */
+  updateOptions().then(options => {
     setOriginalButton(options);
-  } else if (isImageTab()) {
-    /** 画像ページ(https://pbs.twimg.com/*) */
+  });
+} else if (isImageTab()) {
+  /** 画像ページ(https://pbs.twimg.com/*) */
+  updateOptions().then(options => {
     fixFileNameOnSaveCommand(options);
-  }
-});
+  });
+}

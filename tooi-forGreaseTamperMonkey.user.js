@@ -7,7 +7,7 @@
 // @include         https://mobile.twitter.com*
 // @include         https://tweetdeck.twitter.com*
 // @include         https://pbs.twimg.com/media*
-// @version         3.2.2
+// @version         4.0.0
 // ==/UserScript==
 
 /**
@@ -45,22 +45,22 @@ var HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 var STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 /** 公式Webかどうか */
 var isTwitter = function () {
-    return window.location.hostname === HOST_TWITTER_COM ||
-        window.location.hostname === HOST_MOBILE_TWITTER_COM;
+    return location.hostname === HOST_TWITTER_COM ||
+        location.hostname === HOST_MOBILE_TWITTER_COM;
 };
 /** Tweetdeckかどうか */
 var isTweetdeck = function () {
-    return window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
+    return location.hostname === HOST_TWEETDECK_TWITTER_COM;
 };
 /** 画像ページかどうか */
 var isImageTab = function () {
-    return window.location.hostname === HOST_PBS_TWIMG_COM;
+    return location.hostname === HOST_PBS_TWIMG_COM;
 };
 /** これ自体がChrome拡張機能かどうか */
 var isNativeChromeExtension = function () {
-    return window.chrome !== undefined &&
-        window.chrome.runtime !== undefined &&
-        window.chrome.runtime.id !== undefined;
+    return chrome !== undefined &&
+        chrome.runtime !== undefined &&
+        chrome.runtime.id !== undefined;
 };
 // 設定
 // 設定に使う真偽値
@@ -86,7 +86,7 @@ var OPTIONS_TEXT = {
 /** エラーメッセージの表示(予期せぬ状況の確認) */
 var printException = function (tooiException) {
     try {
-        throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
+        throw new Error('tooi: ' + tooiException + ' at: ' + location.href);
     }
     catch (err) {
         // eslint-disable-next-line no-console
@@ -157,7 +157,7 @@ var openImages = function (imgSrcs) {
         // if 画像URLが取得できたなら
         var url = formatUrl(imgSrc);
         if (url) {
-            window.open(url);
+            open(url);
         }
         else {
             printException('no image url');
@@ -204,7 +204,7 @@ var downloadImage = function (e) {
         e.preventDefault();
         // download属性に正しい拡張子の画像名を入れたaタグをつくってクリックする
         var a = document.createElement('a');
-        a.href = window.location.href;
+        a.href = location.href;
         a.setAttribute('download', filename);
         a.dispatchEvent(new MouseEvent('click'));
     }
@@ -434,7 +434,7 @@ var ButtonSetter = /** @class */ (function () {
         if (!(actionButton && actionButton.style)) {
             return contrastLimitColor;
         }
-        var buttonColor = window.getComputedStyle(actionButton).color;
+        var buttonColor = getComputedStyle(actionButton).color;
         if (buttonColor && buttonColor.length > 0) {
             return buttonColor;
         }
@@ -449,7 +449,7 @@ var ButtonSetter = /** @class */ (function () {
         if (actionButton &&
             actionButton.children[0] &&
             actionButton.children[0].style) {
-            var buttonColor = window.getComputedStyle(actionButton.children[0]).color;
+            var buttonColor = getComputedStyle(actionButton.children[0]).color;
             if (buttonColor && buttonColor.length > 0) {
                 color = buttonColor;
             }
@@ -575,9 +575,7 @@ var ButtonSetterTweetDeck = /** @class */ (function () {
         var className = _a.className, getImgSrcs = _a.getImgSrcs, target = _a.target;
         // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
         var txtMute = document.querySelector('.txt-mute');
-        var borderColor = txtMute
-            ? window.getComputedStyle(txtMute).color
-            : '#697b8c';
+        var borderColor = txtMute ? getComputedStyle(txtMute).color : '#697b8c';
         // ボタンのスタイル設定
         var style = {
             border: "1px solid ".concat(borderColor),
@@ -641,7 +639,7 @@ var updateOptions = function () {
             // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
             resolve(response && response.data ? response.data : {});
         };
-        window.chrome.runtime.sendMessage(request, callback);
+        chrome.runtime.sendMessage(request, callback);
     }).then(function (data) {
         var newOptions = {};
         // ここで全部埋めるので newOptions は Options になる
@@ -693,12 +691,12 @@ var setOriginalButton = function (options) {
     // これ自体がChrome拡張機能のときだけ設置する
     // (Chrome拡張機能でないときは設定反映できる機構ないので)
     if (isNativeChromeExtension()) {
-        window.chrome.runtime.onMessage.addListener(function (request, _, sendResponse) {
+        chrome.runtime.onMessage.addListener(function (request, _, sendResponse) {
             // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
             // ひとまず console.log で出すようにしてみている
-            if (window.chrome.runtime.lastError !== undefined) {
+            if (chrome.runtime.lastError !== undefined) {
                 // eslint-disable-next-line no-console
-                console.log(window.chrome.runtime.lastError);
+                console.log(chrome.runtime.lastError);
             }
             if (request.method === OPTION_UPDATED) {
                 updateOptions().then(function (options) {
@@ -729,14 +727,19 @@ var fixFileNameOnSaveCommand = function (options) {
 /**
  * メインの処理
  * 設定を取得できたらそれに沿ってやっていく
+ * bundleの感じがイマイチでbackground scriptでもここが実行されてしまう,
+ * background scriptでupdateOptionsが実行されるとおかしくなるので,
+ * 対象のページじゃなかったらupdateOptions実行しないようにifとの順序に気をつける
  */
-updateOptions().then(function (options) {
-    if (isTwitter() || isTweetdeck()) {
-        /** 公式Web/TweetDeck */
+if (isTwitter() || isTweetdeck()) {
+    /** 公式Web/TweetDeck */
+    updateOptions().then(function (options) {
         setOriginalButton(options);
-    }
-    else if (isImageTab()) {
-        /** 画像ページ(https://pbs.twimg.com/*) */
+    });
+}
+else if (isImageTab()) {
+    /** 画像ページ(https://pbs.twimg.com/*) */
+    updateOptions().then(function (options) {
         fixFileNameOnSaveCommand(options);
-    }
-});
+    });
+}

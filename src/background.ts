@@ -1,8 +1,13 @@
-import { GET_LOCAL_STORAGE, MessageRequest, MessageResponse } from './main';
+import {
+  GET_LOCAL_STORAGE,
+  OPTION_KEYS,
+  MessageRequest,
+  MessageResponse,
+} from './main';
 
 // バックグラウンドで実行される
 
-window.chrome.runtime.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
   (
     request: MessageRequest,
     _,
@@ -10,7 +15,9 @@ window.chrome.runtime.onMessage.addListener(
   ) => {
     // console.log(chrome.runtime.lastError);
     if (request.method === GET_LOCAL_STORAGE) {
-      sendResponse({ data: localStorage });
+      chrome.storage.local.get(OPTION_KEYS, res => {
+        sendResponse({ data: res });
+      });
     } else {
       sendResponse({ data: null });
     }
