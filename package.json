@@ -42,7 +42,7 @@
     "enzyme-adapter-react-16": "1.15.6",
     "eslint": "8.7.0",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-jest": "25.7.0",
+    "eslint-plugin-jest": "26.2.2",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.30.0",
     "jest": "27.4.7",
