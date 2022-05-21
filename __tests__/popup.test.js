@@ -12,21 +12,21 @@ import {
   isTrue,
   OPTION_KEYS,
 } from '../src/main';
-import { Popup } from '../src/popup';
+import { Popup } from '../src/components/Popup';
 
 describe('Popup', () => {
   it('render', () => {
     const optionsText = OPTIONS_TEXT;
     const optionKeys = OPTION_KEYS;
-    const optionsEnabled = {};
+    const options = {};
     optionKeys.forEach(key => {
-      optionsEnabled[key] = true;
+      options[key] = isTrue;
     });
 
     const props = {
       optionsText,
       optionKeys,
-      optionsEnabled,
+      options,
     };
     const tree = TestRenderer.create(<Popup {...props} />).toJSON();
     expect(tree).toMatchSnapshot();
@@ -40,20 +40,20 @@ describe('Popup', () => {
 
     const optionsText = OPTIONS_TEXT;
     const optionKeys = OPTION_KEYS;
-    const optionsEnabled = {};
+    const options = {};
     const expectOptions = {};
     optionKeys.forEach(key => {
-      optionsEnabled[key] = true;
+      options[key] = isTrue;
       expectOptions[key] = isTrue;
     });
     // 初期設定いっこOFFにしてみる
-    optionsEnabled[SHOW_ON_TIMELINE] = false;
+    options[SHOW_ON_TIMELINE] = isFalse;
     expectOptions[SHOW_ON_TIMELINE] = isFalse;
 
     const props = {
       optionsText,
       optionKeys,
-      optionsEnabled,
+      options,
     };
 
     window.chrome = {

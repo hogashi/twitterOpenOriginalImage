@@ -734,7 +734,6 @@ var fixFileNameOnSaveCommand = function (options) {
 if (isTwitter() || isTweetdeck()) {
     /** 公式Web/TweetDeck */
     updateOptions().then(function (options) {
-        console.log(options);
         setOriginalButton(options);
     });
 }

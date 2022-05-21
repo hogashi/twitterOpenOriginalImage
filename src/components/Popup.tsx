@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import ReactDOM from 'react-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -13,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import {
   isTrue,
   isFalse,
-  OPTIONS_TEXT,
   OPTION_UPDATED,
   OPTION_KEYS,
   HOST_TWITTER_COM,
@@ -25,10 +23,8 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
-  printException,
-  updateOptions,
   Options,
-} from './main';
+} from '../main';
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または
@@ -165,30 +161,3 @@ export const Popup = (props: Props): JSX.Element => {
     </div>
   );
 };
-
-const optionsText = OPTIONS_TEXT;
-const optionKeys = OPTION_KEYS;
-
-const props = {
-  optionsText,
-  optionKeys,
-};
-
-let root = document.getElementById('root');
-if (!root) {
-  root = document.createElement('div');
-  root.id = 'root';
-  const body = document.querySelector('body');
-  if (body) {
-    body.appendChild(root);
-  } else {
-    printException('cant find body');
-  }
-}
-
-updateOptions().then(options => {
-  ReactDOM.render(
-    <Popup {...props} options={options} />,
-    document.getElementById('root')
-  );
-});
