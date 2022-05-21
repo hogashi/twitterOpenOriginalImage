@@ -29,7 +29,7 @@
     "@babel/preset-react": "7.17.12",
     "@babel/preset-typescript": "7.17.12",
     "@tsconfig/node14": "1.0.1",
-    "@types/chrome": "0.0.176",
+    "@types/chrome": "0.0.188",
     "@types/filesystem": "0.0.32",
     "@types/jest": "27.5.1",
     "@types/react": "17.0.45",
