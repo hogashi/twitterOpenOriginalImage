@@ -1,4 +1,4 @@
-interface Options {
+export interface Options {
   // 公式Web
   SHOW_ON_TIMELINE: TooiBoolean;
   SHOW_ON_TWEET_DETAIL: TooiBoolean;
@@ -760,6 +760,7 @@ export const updateOptions = (): Promise<Options> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
+    console.log({ isNativeChromeExtension: isNativeChromeExtension() });
     return Promise.resolve(userjsOptions);
   }
   return new Promise<OptionsMaybe>(resolve => {
@@ -772,6 +773,7 @@ export const updateOptions = (): Promise<Options> => {
     };
     chrome.runtime.sendMessage(request, callback);
   }).then((data: OptionsMaybe) => {
+    console.log(data);
     const newOptions: OptionsMaybe = {};
     // ここで全部埋めるので newOptions は Options になる
     OPTION_KEYS.forEach(key => {
@@ -877,6 +879,7 @@ const fixFileNameOnSaveCommand = (options: Options): void => {
 if (isTwitter() || isTweetdeck()) {
   /** 公式Web/TweetDeck */
   updateOptions().then(options => {
+    console.log(options);
     setOriginalButton(options);
   });
 } else if (isImageTab()) {

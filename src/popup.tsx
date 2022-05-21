@@ -26,6 +26,8 @@ import {
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
   printException,
+  updateOptions,
+  Options,
 } from './main';
 
 /* popup.js */
@@ -35,45 +37,44 @@ import {
 interface Props {
   optionsText: { [key: string]: string };
   optionKeys: typeof OPTION_KEYS;
-  optionsEnabled: { [key: string]: boolean };
+  options: Options;
 }
 
 export const Popup = (props: Props): JSX.Element => {
-  const { optionsText, optionKeys, optionsEnabled } = props;
-  const [enabled, setEnabled] = useState(optionsEnabled);
+  const { optionsText, optionKeys, options } = props;
+  const [enabled, setEnabled] = useState(options);
 
   const onSave = useCallback(() => {
-    optionKeys.forEach(key => {
-      localStorage[key] = enabled[key] ? isTrue : isFalse;
-    });
-    chrome.tabs.query({}, result =>
-      result.forEach(tab => {
-        // console.log(tab);
-        if (!tab.url || !tab.id) {
-          return;
-        }
-        const tabUrl = new URL(tab.url).hostname;
-        if (
-          ![
-            HOST_TWITTER_COM,
-            HOST_MOBILE_TWITTER_COM,
-            HOST_TWEETDECK_TWITTER_COM,
-            HOST_PBS_TWIMG_COM,
-          ].some(url => url === tabUrl)
-        ) {
-          // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
-          return;
-        }
-        chrome.tabs.sendMessage(
-          tab.id,
-          { method: OPTION_UPDATED },
-          response => {
-            // eslint-disable-next-line no-console
-            console.log('res:', response);
+    chrome.storage.local.set(enabled).then(() => {
+      chrome.tabs.query({}, result =>
+        result.forEach(tab => {
+          // console.log(tab);
+          if (!tab.url || !tab.id) {
+            return;
           }
-        );
-      })
-    );
+          const tabUrl = new URL(tab.url).hostname;
+          if (
+            ![
+              HOST_TWITTER_COM,
+              HOST_MOBILE_TWITTER_COM,
+              HOST_TWEETDECK_TWITTER_COM,
+              HOST_PBS_TWIMG_COM,
+            ].some(url => url === tabUrl)
+          ) {
+            // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
+            return;
+          }
+          chrome.tabs.sendMessage(
+            tab.id,
+            { method: OPTION_UPDATED },
+            response => {
+              // eslint-disable-next-line no-console
+              console.log('res:', response);
+            }
+          );
+        })
+      );
+    });
   }, [enabled]);
 
   const optionsItems: { [key: string]: JSX.Element } = {};
@@ -84,11 +85,16 @@ export const Popup = (props: Props): JSX.Element => {
         dense
         button
         onClick={(): void => {
-          setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
+          setEnabled(
+            Object.assign(
+              { ...enabled },
+              { [key]: enabled[key] !== isFalse ? isFalse : isTrue }
+            )
+          );
         }}
       >
         <Checkbox
-          checked={enabled[key]}
+          checked={enabled[key] === isTrue}
           style={{ padding: '4px 12px' }}
           tabIndex={-1}
           disableRipple
@@ -162,17 +168,10 @@ export const Popup = (props: Props): JSX.Element => {
 
 const optionsText = OPTIONS_TEXT;
 const optionKeys = OPTION_KEYS;
-const optionsEnabled: { [key: string]: boolean } = {};
-optionKeys.forEach(key => {
-  // 最初はどっちも機能オンであってほしい
-  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-  optionsEnabled[key] = localStorage[key] !== isFalse;
-});
 
 const props = {
   optionsText,
   optionKeys,
-  optionsEnabled,
 };
 
 let root = document.getElementById('root');
@@ -186,4 +185,10 @@ if (!root) {
     printException('cant find body');
   }
 }
-ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+
+updateOptions().then(options => {
+  ReactDOM.render(
+    <Popup {...props} options={options} />,
+    document.getElementById('root')
+  );
+});
