@@ -1,6 +1,18 @@
-/**
- * Utils
- */
+import { ButtonSetter, ButtonSetterType } from './ButtonSetter';
+import { ButtonSetterTweetDeck } from './ButtonSetterTweetDeck';
+import {
+  GET_LOCAL_STORAGE,
+  isNativeChromeExtension,
+  isTrue,
+  isTweetdeck,
+  Options,
+  OptionsMaybe,
+  OPTION_KEYS,
+  OPTION_UPDATED,
+  STRIP_IMAGE_SUFFIX,
+  userjsOptions,
+} from './constants';
+
 /** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
   method: string;
@@ -203,7 +215,7 @@ export const updateOptions = (): Promise<Options> => {
 };
 
 /** Originalボタンおく */
-const setOriginalButton = (options: Options): void => {
+export const setOriginalButton = (options: Options): void => {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
@@ -275,7 +287,7 @@ const setOriginalButton = (options: Options): void => {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-const fixFileNameOnSaveCommand = (options: Options): void => {
+export const fixFileNameOnSaveCommand = (options: Options): void => {
   // キーを押したとき
   document.addEventListener('keydown', e => {
     // 設定が有効なら

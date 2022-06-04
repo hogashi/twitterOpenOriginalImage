@@ -9,24 +9,23 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
 import {
+  OPTION_KEYS,
   isTrue,
   isFalse,
-  OPTIONS_TEXT,
-  OPTION_UPDATED,
-  OPTION_KEYS,
   HOST_TWITTER_COM,
   HOST_MOBILE_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_PBS_TWIMG_COM,
+  OPTION_UPDATED,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
-  printException,
-} from './main';
+  OPTIONS_TEXT,
+} from './constants';
+import { printException } from './utils';
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または

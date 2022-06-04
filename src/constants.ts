@@ -1,4 +1,4 @@
-interface Options {
+export interface Options {
   // 公式Web
   SHOW_ON_TIMELINE: TooiBoolean;
   SHOW_ON_TWEET_DETAIL: TooiBoolean;
@@ -9,7 +9,7 @@ interface Options {
   STRIP_IMAGE_SUFFIX: TooiBoolean;
 }
 
-type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
+export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
 /**
  * userjs 用の設定項目

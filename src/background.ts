@@ -1,4 +1,5 @@
-import { GET_LOCAL_STORAGE, MessageRequest, MessageResponse } from './main';
+import { GET_LOCAL_STORAGE } from './constants';
+import { MessageRequest, MessageResponse } from './utils';
 
 // バックグラウンドで実行される
 

@@ -1,4 +1,12 @@
-interface ButtonSetterType {
+import {
+  isFalse,
+  Options,
+  SHOW_ON_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
+} from './constants';
+import { onOriginalButtonClick, printException, setStyle } from './utils';
+
+export interface ButtonSetterType {
   setButtonOnTimeline: (currentOptions: Options) => void;
   setButtonOnTweetDetail: (currentOptions: Options) => void;
 }
