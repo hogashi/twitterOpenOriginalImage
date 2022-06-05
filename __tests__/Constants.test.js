@@ -18,7 +18,7 @@ import {
   isTweetdeck,
   isImageTab,
   isNativeChromeExtension,
-} from '../src/main';
+} from '../src/constants';
 
 describe('定数', () => {
   it('設定取得メッセージ', () => {

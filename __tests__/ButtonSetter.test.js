@@ -1,5 +1,10 @@
-import * as main from '../src/main';
-const { SHOW_ON_TIMELINE, isFalse, SHOW_ON_TWEET_DETAIL, ButtonSetter } = main;
+// import * as main from '../src/main';
+import {
+  SHOW_ON_TIMELINE,
+  isFalse,
+  SHOW_ON_TWEET_DETAIL,
+} from '../src/constants';
+import { ButtonSetter } from '../src/ButtonSetter';
 
 function makeAllEnabledOptions() {
   return {
