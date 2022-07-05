@@ -1,8 +1,6 @@
-import * as main from '../src/main';
-const {
-  isTrue,
-  isFalse,
-  OPTION_KEYS,
+// import * as main from '../src/main';
+import { isTrue, isFalse, OPTION_KEYS } from '../src/constants';
+import {
   printException,
   collectUrlParams,
   formatUrl,
@@ -13,9 +11,9 @@ const {
   downloadImage,
   onOriginalButtonClick,
   getButtonSetter,
-  ButtonSetter,
-  ButtonSetterTweetDeck,
-} = main;
+} from '../src/utils';
+import { ButtonSetter } from '../src/ButtonSetter';
+import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
 
 const testParams = {
   protocol: 'https:',

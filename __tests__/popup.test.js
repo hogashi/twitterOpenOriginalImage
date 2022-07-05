@@ -11,7 +11,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   isTrue,
   OPTION_KEYS,
-} from '../src/main';
+} from '../src/constants';
 import { Popup } from '../src/popup';
 
 describe('Popup', () => {

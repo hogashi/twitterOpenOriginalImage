@@ -5,11 +5,8 @@
   "author": "hogashi <azuma.ginkakuji@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "run-s build:js build:userjs",
-    "build:js": "webpack --version && webpack --mode production",
-    "build-dev": "run-s build-dev:js build:userjs",
-    "build-dev:js": "webpack --version && webpack --mode development",
-    "build:userjs": "./scripts/make_user_script.sh",
+    "build": "webpack --version && webpack --mode production",
+    "build-dev": "webpack --version && webpack --mode development",
     "lint": "run-s lint:prettier lint:eslint",
     "lint:eslint": "eslint --version && eslint src __tests__ --ext ts --ext tsx --ext js",
     "lint:prettier": "prettier --version && prettier --write 'src/**/*.ts{,x}' '__tests__/**/*.js'",
