@@ -1,0 +1,4 @@
+1. open https://twitter.com/ or https://tweetdeck.twitter.com/
+2. this extension adds "Original" button to image-attached-tweets.
+3. click "Original" button on any tweet
+4. this extension opens image(s) of that tweet in new tab(s)
