@@ -58,7 +58,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
             // filter で string[] にするためにここで string[] にする……
             return urlstr ? urlstr : '';
           })
-          .filter(urlstr => urlstr != '');
+          .filter(urlstr => urlstr !== '');
       };
       this.setButton({
         className,
@@ -117,7 +117,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
               // filter で string[] にするためにここで string[] にする……
               return urlstr ? urlstr : '';
             })
-            .filter(urlstr => urlstr != '');
+            .filter(urlstr => urlstr !== '');
         }
       };
 
