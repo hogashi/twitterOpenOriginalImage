@@ -264,7 +264,7 @@ export class ButtonSetter implements ButtonSetterType {
             // filter で string[] にするためにここで string[] にする……
             img ? img.src : ''
           )
-          .filter(src => src != '');
+          .filter(src => src !== '');
       };
 
       this.setReactLayoutButton({
