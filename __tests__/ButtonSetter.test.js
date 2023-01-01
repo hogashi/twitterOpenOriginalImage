@@ -558,15 +558,7 @@ describe('ButtonSetter', () => {
         actionList.appendChild(button);
       }
 
-      // 4枚のときだけ2,3枚目の順序が(DOMとしては)入れ替わって表示されるのを再現する
-      const imgSrcs2 = [...imgSrcs];
-      if (imgSrcs2.length === 4) {
-        const tmp = imgSrcs2[1];
-        imgSrcs2[1] = imgSrcs2[2];
-        imgSrcs2[2] = tmp;
-      }
-
-      imgSrcs2.forEach((src, index) => {
+      imgSrcs.forEach((src, index) => {
         const aTag = document.createElement('a');
         aTag.href = `https://twitter.com/tos/status/000000/${type}/${index}`;
 
