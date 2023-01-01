@@ -253,12 +253,6 @@ export class ButtonSetter implements ButtonSetterType {
 
       const getImgSrcs = (): string[] => {
         const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
-        if (tweetImgs.length === 4) {
-          // 4枚のとき2枚目と3枚目のDOMの順序が前後するので直す
-          const tweetimgTmp = tweetImgs[1];
-          tweetImgs[1] = tweetImgs[2];
-          tweetImgs[2] = tweetimgTmp;
-        }
         return tweetImgs
           .map(img =>
             // filter で string[] にするためにここで string[] にする……
