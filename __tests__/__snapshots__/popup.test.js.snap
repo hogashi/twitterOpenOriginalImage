@@ -3,7 +3,7 @@
 exports[`Popup render 1`] = `
 <div
   style={
-    Object {
+    {
       "display": "flex",
       "flexFlow": "column",
       "justifyContent": "center",
@@ -17,7 +17,7 @@ exports[`Popup render 1`] = `
     <div
       className="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
       style={
-        Object {
+        {
           "display": "flex",
           "justifyContent": "center",
         }
@@ -26,7 +26,7 @@ exports[`Popup render 1`] = `
       <h5
         className="MuiTypography-root MuiTypography-h5 MuiTypography-colorInherit"
         style={
-          Object {
+          {
             "flex": "0 1 auto",
           }
         }
@@ -76,7 +76,7 @@ exports[`Popup render 1`] = `
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         style={
-          Object {
+          {
             "padding": "4px 12px",
           }
         }
@@ -148,7 +148,7 @@ exports[`Popup render 1`] = `
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         style={
-          Object {
+          {
             "padding": "4px 12px",
           }
         }
@@ -229,7 +229,7 @@ exports[`Popup render 1`] = `
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         style={
-          Object {
+          {
             "padding": "4px 12px",
           }
         }
@@ -301,7 +301,7 @@ exports[`Popup render 1`] = `
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         style={
-          Object {
+          {
             "padding": "4px 12px",
           }
         }
@@ -382,7 +382,7 @@ exports[`Popup render 1`] = `
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         style={
-          Object {
+          {
             "padding": "4px 12px",
           }
         }
@@ -438,7 +438,7 @@ exports[`Popup render 1`] = `
     onTouchMove={[Function]}
     onTouchStart={[Function]}
     style={
-      Object {
+      {
         "flex": "0 1 auto",
       }
     }
@@ -453,7 +453,7 @@ exports[`Popup render 1`] = `
   </button>
   <footer
     style={
-      Object {
+      {
         "marginTop": "3px",
         "textAlign": "center",
       }
