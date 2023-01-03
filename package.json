@@ -12,7 +12,7 @@
     "rome:fix": "run-s lint format",
     "jest": "jest --version && jest --verbose --testEnvironment=jsdom --coverage",
     "coverage": "make-coverage-badge",
-    "test": "run-s rome:ci test:ts jest coverage",
+    "test": "run-s lint test:ts jest coverage",
     "test:lint-format": "rome check src __tests__ && rome format src __tests__",
     "test:ts": "tsc --noEmit",
     "compress": "zip -r dist.zip dist",
