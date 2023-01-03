@@ -1,3 +1,14 @@
+export interface OptionsBool {
+  // 公式Web
+  SHOW_ON_TIMELINE: boolean;
+  SHOW_ON_TWEET_DETAIL: boolean;
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: boolean;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: boolean;
+}
+
 export interface Options {
   // 公式Web
   SHOW_ON_TIMELINE: TooiBoolean;
@@ -10,6 +21,20 @@ export interface Options {
 }
 
 export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
+
+/**
+ * 設定項目
+ */
+export const initialOptionsBool: OptionsBool = {
+  // 公式Web
+  SHOW_ON_TIMELINE: true,
+  SHOW_ON_TWEET_DETAIL: true,
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: true,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: true,
+};
 
 /**
  * 設定項目
