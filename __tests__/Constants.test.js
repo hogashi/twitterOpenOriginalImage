@@ -51,13 +51,13 @@ describe('定数', () => {
   it('userjs用の設定項目の初期値は全部真', () => {
     expect(initialOptions).toStrictEqual({
       // 公式Web
-      SHOW_ON_TIMELINE: 'istrue',
-      SHOW_ON_TWEET_DETAIL: 'istrue',
+      SHOW_ON_TIMELINE: isTrue,
+      SHOW_ON_TWEET_DETAIL: isTrue,
       // TweetDeck
-      SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
-      SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
+      SHOW_ON_TWEETDECK_TIMELINE: isTrue,
+      SHOW_ON_TWEETDECK_TWEET_DETAIL: isTrue,
       // 画像ページ
-      STRIP_IMAGE_SUFFIX: 'istrue',
+      STRIP_IMAGE_SUFFIX: isTrue,
     });
 
     expect(OPTION_KEYS).toStrictEqual([

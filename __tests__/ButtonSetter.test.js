@@ -1,14 +1,14 @@
 // import * as main from '../src/main';
-import { SHOW_ON_TIMELINE, isFalse, SHOW_ON_TWEET_DETAIL } from '../src/constants';
+import { SHOW_ON_TIMELINE, isFalse, SHOW_ON_TWEET_DETAIL, isTrue } from '../src/constants';
 import { ButtonSetter } from '../src/ButtonSetter';
 
 function makeAllEnabledOptions() {
   return {
-    SHOW_ON_TIMELINE: 'istrue',
-    SHOW_ON_TWEET_DETAIL: 'istrue',
-    SHOW_ON_TWEETDECK_TIMELINE: 'istrue',
-    SHOW_ON_TWEETDECK_TWEET_DETAIL: 'istrue',
-    STRIP_IMAGE_SUFFIX: 'istrue',
+    SHOW_ON_TIMELINE: isTrue,
+    SHOW_ON_TWEET_DETAIL: isTrue,
+    SHOW_ON_TWEETDECK_TIMELINE: isTrue,
+    SHOW_ON_TWEETDECK_TWEET_DETAIL: isTrue,
+    STRIP_IMAGE_SUFFIX: isTrue,
   };
 }
 
