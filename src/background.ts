@@ -9,6 +9,7 @@ window.chrome.runtime.onMessage.addListener(
     if (request.method === GET_LOCAL_STORAGE) {
       // chrome.storageから取ってきつつ,
       // ない値はlocalStorageあるいは初期値で埋める
+      // TODO: むずい感じになってきたので, テストできるようにlocalStorageとchrome.storageだけ返すことにしたい
       chrome.storage.sync.get(OPTION_KEYS, (got) => {
         const newOptions = { ...initialOptions, ...localStorage };
         // 真偽値にして返す
