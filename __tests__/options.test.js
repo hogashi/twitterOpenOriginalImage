@@ -2,7 +2,7 @@ import { initialOptionsBool, SHOW_ON_TIMELINE } from '../src/constants';
 import { getOptions } from '../src/options';
 
 let storageOptions = {};
-chrome.storage.sync.get = jest.fn(() => storageOptions);
+chrome.storage.sync.get = jest.fn((_keys, callback) => callback(storageOptions));
 
 describe('設定とってくるヘルパ', () => {
   it('最初は初期値', () => {
