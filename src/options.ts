@@ -7,12 +7,13 @@ export const getOptions = (): Promise<OptionsBool> => {
     // ない値はlocalStorageあるいは初期値で埋める
     chrome.storage.sync.get(OPTION_KEYS, (got) => {
       updateOptions().then((localStorageOptions) => {
-        const newOptions = { ...initialOptions, ...localStorageOptions, ...got };
+        const newOptions = { ...initialOptions, ...localStorageOptions };
+        // 真偽値にして返す
         const newOptionsBool = { ...initialOptionsBool };
         OPTION_KEYS.forEach((key) => {
           newOptionsBool[key] = newOptions[key] === isTrue;
         });
-        resolve(newOptionsBool);
+        resolve({ ...newOptionsBool, ...got });
       });
     }),
   );
