@@ -1,7 +1,8 @@
 import { isImageTab, isTweetdeck, isTwitter } from './constants';
-import { fixFileNameOnSaveCommand, setOriginalButton, updateOptions } from './utils';
+import { fixFileNameOnSaveCommand, setOriginalButton } from './utils';
+import { getOptions } from './options';
 
-updateOptions().then((options) => {
+getOptions().then((options) => {
   if (isTwitter() || isTweetdeck()) {
     /** 公式Web/TweetDeck */
     setOriginalButton(options);

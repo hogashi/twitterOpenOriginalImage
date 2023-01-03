@@ -12,7 +12,9 @@ import {
   STRIP_IMAGE_SUFFIX,
   initialOptions,
   isFalse,
+  OptionsBool,
 } from './constants';
+import { getOptions } from './options';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
@@ -208,7 +210,7 @@ export const updateOptions = (): Promise<Options> => {
 };
 
 /** Originalボタンおく */
-export const setOriginalButton = (options: Options): void => {
+export const setOriginalButton = (options: OptionsBool): void => {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
@@ -216,7 +218,7 @@ export const setOriginalButton = (options: Options): void => {
   const buttonSetter = getButtonSetter();
 
   // ボタンを設置
-  const setButton = (currentOptions: Options): void => {
+  const setButton = (currentOptions: OptionsBool): void => {
     // console.log('setButton: ' + currentOptions['SHOW_ON_TIMELINE'] + ' ' + currentOptions['SHOW_ON_TWEET_DETAIL']) // debug
     buttonSetter.setButtonOnTimeline(currentOptions);
     buttonSetter.setButtonOnTweetDetail(currentOptions);
@@ -224,7 +226,7 @@ export const setOriginalButton = (options: Options): void => {
 
   let isInterval = false;
   let deferred = false;
-  const setButtonWithInterval = (currentOptions: Options): void => {
+  const setButtonWithInterval = (currentOptions: OptionsBool): void => {
     // 短時間に何回も実行しないようインターバルを設ける
     if (isInterval) {
       deferred = true;
@@ -263,7 +265,7 @@ export const setOriginalButton = (options: Options): void => {
         console.log(window.chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
-        updateOptions().then((options) => {
+        getOptions().then((options) => {
           // ボタンを(再)設置
           setButtonWithInterval(options);
           sendResponse({ data: 'done' });
@@ -280,11 +282,11 @@ export const setOriginalButton = (options: Options): void => {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-export const fixFileNameOnSaveCommand = (options: Options): void => {
+export const fixFileNameOnSaveCommand = (options: OptionsBool): void => {
   // キーを押したとき
   document.addEventListener('keydown', (e) => {
     // 設定が有効なら
-    if (options[STRIP_IMAGE_SUFFIX] !== isFalse) {
+    if (options[STRIP_IMAGE_SUFFIX]) {
       downloadImage(e);
     }
   });
