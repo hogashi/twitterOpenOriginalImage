@@ -87,8 +87,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
     // 各ツイートに対して
     Array.from(tweets).forEach(tweet => {
       if (
-        (!tweet.getElementsByClassName('media-img').length &&
-          !tweet.getElementsByClassName('media-image').length) ||
+        (!(tweet.getElementsByClassName('media-img').length ||tweet.getElementsByClassName('media-image').length)) ||
         tweet.getElementsByClassName(className).length
       ) {
         // メディアツイートでない (画像のタグが取得できない)

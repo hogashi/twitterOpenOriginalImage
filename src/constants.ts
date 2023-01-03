@@ -56,9 +56,7 @@ export const isImageTab = (): boolean =>
 
 /** これ自体がChrome拡張機能かどうか */
 export const isNativeChromeExtension = (): boolean =>
-  window.chrome !== undefined &&
-  window.chrome.runtime !== undefined &&
-  window.chrome.runtime.id !== undefined;
+  window.chrome?.runtime?.id !== undefined;
 
 // 設定
 

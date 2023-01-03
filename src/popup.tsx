@@ -48,7 +48,7 @@ export const Popup = (props: Props): JSX.Element => {
     window.chrome.tabs.query({}, result =>
       result.forEach(tab => {
         // console.log(tab);
-        if (!tab.url || !tab.id) {
+        if (!(tab.url && tab.id)) {
           return;
         }
         const tabUrl = new URL(tab.url).hostname;

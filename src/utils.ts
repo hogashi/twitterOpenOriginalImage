@@ -25,7 +25,7 @@ export interface MessageResponse {
 /** エラーメッセージの表示(予期せぬ状況の確認) */
 export const printException = (tooiException: string): void => {
   try {
-    throw new Error('tooi: ' + tooiException + ' at: ' + window.location.href);
+    throw new Error(`tooi: ${tooiException} at: ${window.location.href}`);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err);
@@ -198,7 +198,7 @@ export const updateOptions = (): Promise<Options> => {
     };
     const callback = (response: MessageResponse): void => {
       // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
-      resolve(response && response.data ? response.data : {});
+      resolve(response?.data ? response.data : {});
     };
     window.chrome.runtime.sendMessage(request, callback);
   }).then((data: OptionsMaybe) => {

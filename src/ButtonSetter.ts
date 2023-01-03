@@ -182,10 +182,9 @@ export class ButtonSetter implements ButtonSetterType {
     }
     const className = 'tooi-button-container-detail';
     if (
-      !document.getElementsByClassName('permalink-tweet-container')[0] ||
-      !document
+      !(document
         .getElementsByClassName('permalink-tweet-container')[0]
-        .getElementsByClassName('AdaptiveMedia-photoContainer')[0] ||
+        ?.getElementsByClassName('AdaptiveMedia-photoContainer')[0] ) ||
       document.getElementsByClassName(className).length !== 0
     ) {
       // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
@@ -276,7 +275,7 @@ export class ButtonSetter implements ButtonSetterType {
     const actionButton = document.querySelector(
       '.ProfileTweet-actionButton'
     ) as HTMLElement;
-    if (!(actionButton && actionButton.style)) {
+    if (!(actionButton?.style)) {
       return contrastLimitColor;
     }
 
@@ -296,8 +295,7 @@ export class ButtonSetter implements ButtonSetterType {
       'div[role="group"] div[role="button"]'
     );
     if (
-      actionButton &&
-      actionButton.children[0] &&
+      actionButton?.children[0] &&
       (actionButton.children[0] as HTMLElement).style
     ) {
       const buttonColor = window.getComputedStyle(
