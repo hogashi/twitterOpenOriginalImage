@@ -34,7 +34,7 @@ export const printException = (tooiException: string): void => {
 
 /** 画像urlの要素を集める */
 export const collectUrlParams = (
-  rawUrl: string
+  rawUrl: string,
 ): {
   protocol: string;
   host: string;
@@ -58,7 +58,7 @@ export const collectUrlParams = (
   url.search
     .slice(1)
     .split('&')
-    .forEach(set => {
+    .forEach((set) => {
       const [key, value] = set.split('=');
       if (key === 'format' || key === 'name') {
         searchSet[key] = value;
@@ -110,7 +110,7 @@ export const openImages = (imgSrcs: string[]): void => {
   }
   Array.from(imgSrcs)
     .reverse() // 逆順に開くことで右側のタブから読める
-    .forEach(imgSrc => {
+    .forEach((imgSrc) => {
       // if 画像URLが取得できたなら
       const url = formatUrl(imgSrc);
       if (url) {
@@ -126,19 +126,11 @@ export const openImages = (imgSrcs: string[]): void => {
  * @param {HTMLElement} element スタイル当てる対象エレメント
  * @param {Object} propertySet プロパティ名('font-size')と値('10px')のオブジェクト
  */
-export const setStyle = (
-  element: HTMLElement,
-  propertySet: { [key: string]: string }
-): void => {
-  Object.entries(propertySet).forEach(([key, value]) =>
-    element.style.setProperty(key, value)
-  );
+export const setStyle = (element: HTMLElement, propertySet: { [key: string]: string }): void => {
+  Object.entries(propertySet).forEach(([key, value]) => element.style.setProperty(key, value));
 };
 
-export const onOriginalButtonClick = (
-  e: MouseEvent,
-  imgSrcs: string[]
-): void => {
+export const onOriginalButtonClick = (e: MouseEvent, imgSrcs: string[]): void => {
   // イベント(MouseEvent)による既定の動作をキャンセル
   e.preventDefault();
   // イベント(MouseEvent)の親要素への伝播を停止
@@ -192,7 +184,7 @@ export const updateOptions = (): Promise<Options> => {
   if (!isNativeChromeExtension()) {
     return Promise.resolve(userjsOptions);
   }
-  return new Promise<OptionsMaybe>(resolve => {
+  return new Promise<OptionsMaybe>((resolve) => {
     const request: MessageRequest = {
       method: GET_LOCAL_STORAGE,
     };
@@ -204,7 +196,7 @@ export const updateOptions = (): Promise<Options> => {
   }).then((data: OptionsMaybe) => {
     const newOptions: OptionsMaybe = {};
     // ここで全部埋めるので newOptions は Options になる
-    OPTION_KEYS.forEach(key => {
+    OPTION_KEYS.forEach((key) => {
       newOptions[key] = data[key] || isTrue;
     });
 
@@ -270,7 +262,7 @@ export const setOriginalButton = (options: Options): void => {
         console.log(window.chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
-        updateOptions().then(options => {
+        updateOptions().then((options) => {
           // ボタンを(再)設置
           setButtonWithInterval(options);
           sendResponse({ data: 'done' });
@@ -289,7 +281,7 @@ export const setOriginalButton = (options: Options): void => {
  */
 export const fixFileNameOnSaveCommand = (options: Options): void => {
   // キーを押したとき
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', (e) => {
     // 設定が有効なら
     if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
       downloadImage(e);

@@ -1,10 +1,5 @@
 import { ButtonSetterType } from './ButtonSetter';
-import {
-  SHOW_ON_TWEETDECK_TIMELINE,
-  isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  Options,
-} from './constants';
+import { SHOW_ON_TWEETDECK_TIMELINE, isFalse, SHOW_ON_TWEETDECK_TWEET_DETAIL, Options } from './constants';
 import { printException, setStyle, onOriginalButtonClick } from './utils';
 
 /**
@@ -21,15 +16,13 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
     }
     // if タイムラインのツイートを取得できたら
     // is-actionable: タイムラインのみ
-    const tweets = document.getElementsByClassName(
-      'js-stream-item is-actionable'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tweets = document.getElementsByClassName('js-stream-item is-actionable') as HTMLCollectionOf<HTMLElement>;
     if (!tweets.length) {
       return;
     }
     const className = 'tooi-button-container-tweetdeck-timeline';
     // 各ツイートに対して
-    Array.from(tweets).forEach(tweet => {
+    Array.from(tweets).forEach((tweet) => {
       if (
         !tweet.getElementsByClassName('js-media-image-link').length ||
         tweet.getElementsByClassName('is-video').length ||
@@ -53,12 +46,12 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
 
       const getImgSrcs = (): string[] => {
         return Array.from(tweet.getElementsByClassName('js-media-image-link'))
-          .map(element => {
+          .map((element) => {
             const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
             // filter で string[] にするためにここで string[] にする……
             return urlstr ? urlstr : '';
           })
-          .filter(urlstr => urlstr !== '');
+          .filter((urlstr) => urlstr !== '');
       };
       this.setButton({
         className,
@@ -77,17 +70,15 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
       return;
     }
     // if ツイート詳細を取得できたら
-    const tweets = document.getElementsByClassName(
-      'js-tweet-detail'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tweets = document.getElementsByClassName('js-tweet-detail') as HTMLCollectionOf<HTMLElement>;
     if (!tweets.length) {
       return;
     }
     const className = 'tooi-button-container-tweetdeck-detail';
     // 各ツイートに対して
-    Array.from(tweets).forEach(tweet => {
+    Array.from(tweets).forEach((tweet) => {
       if (
-        (!(tweet.getElementsByClassName('media-img').length ||tweet.getElementsByClassName('media-image').length)) ||
+        !(tweet.getElementsByClassName('media-img').length || tweet.getElementsByClassName('media-image').length) ||
         tweet.getElementsByClassName(className).length
       ) {
         // メディアツイートでない (画像のタグが取得できない)
@@ -105,18 +96,15 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
 
       const getImgSrcs = (): string[] => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
-          return [
-            (tweet.getElementsByClassName('media-img')[0] as HTMLImageElement)
-              .src,
-          ];
+          return [(tweet.getElementsByClassName('media-img')[0] as HTMLImageElement).src];
         } else {
           return Array.from(tweet.getElementsByClassName('media-image'))
-            .map(element => {
+            .map((element) => {
               const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
               // filter で string[] にするためにここで string[] にする……
               return urlstr ? urlstr : '';
             })
-            .filter(urlstr => urlstr !== '');
+            .filter((urlstr) => urlstr !== '');
         }
       };
 
@@ -139,9 +127,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
   }): void {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
-    const borderColor = txtMute
-      ? window.getComputedStyle(txtMute).color
-      : '#697b8c';
+    const borderColor = txtMute ? window.getComputedStyle(txtMute).color : '#697b8c';
     // ボタンのスタイル設定
     const style = {
       border: `1px solid ${borderColor}`,
@@ -172,7 +158,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
     const button = document.createElement('a');
     button.className = `pull-left margin-txs txt-mute ${className}`;
     setStyle(button, style);
-    button.addEventListener('click', e => {
+    button.addEventListener('click', (e) => {
       onOriginalButtonClick(e, getImgSrcs());
     });
     button.insertAdjacentHTML('beforeend', 'Original');

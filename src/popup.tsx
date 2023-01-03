@@ -42,41 +42,34 @@ export const Popup = (props: Props): JSX.Element => {
   const [enabled, setEnabled] = useState(optionsEnabled);
 
   const onSave = useCallback(() => {
-    optionKeys.forEach(key => {
+    optionKeys.forEach((key) => {
       localStorage[key] = enabled[key] ? isTrue : isFalse;
     });
-    window.chrome.tabs.query({}, result =>
-      result.forEach(tab => {
+    window.chrome.tabs.query({}, (result) =>
+      result.forEach((tab) => {
         // console.log(tab);
         if (!(tab.url && tab.id)) {
           return;
         }
         const tabUrl = new URL(tab.url).hostname;
         if (
-          ![
-            HOST_TWITTER_COM,
-            HOST_MOBILE_TWITTER_COM,
-            HOST_TWEETDECK_TWITTER_COM,
-            HOST_PBS_TWIMG_COM,
-          ].some(url => url === tabUrl)
+          ![HOST_TWITTER_COM, HOST_MOBILE_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM, HOST_PBS_TWIMG_COM].some(
+            (url) => url === tabUrl,
+          )
         ) {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;
         }
-        window.chrome.tabs.sendMessage(
-          tab.id,
-          { method: OPTION_UPDATED },
-          response => {
-            // eslint-disable-next-line no-console
-            console.log('res:', response);
-          }
-        );
-      })
+        window.chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, (response) => {
+          // eslint-disable-next-line no-console
+          console.log('res:', response);
+        });
+      }),
     );
   }, [enabled]);
 
   const optionsItems: { [key: string]: JSX.Element } = {};
-  optionKeys.forEach(key => {
+  optionKeys.forEach((key) => {
     optionsItems[key] = (
       <ListItem
         className={`checkboxListItem ${key}`}
@@ -86,12 +79,7 @@ export const Popup = (props: Props): JSX.Element => {
           setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
         }}
       >
-        <Checkbox
-          checked={enabled[key]}
-          style={{ padding: '4px 12px' }}
-          tabIndex={-1}
-          disableRipple
-        />
+        <Checkbox checked={enabled[key]} style={{ padding: '4px 12px' }} tabIndex={-1} disableRipple />
         <ListItemText primary={optionsText[key]} />
       </ListItem>
     );
@@ -119,23 +107,15 @@ export const Popup = (props: Props): JSX.Element => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <List
-        subheader={
-          <ListSubheader component="div">TwitterWeb公式</ListSubheader>
-        }
-      >
+      <List subheader={<ListSubheader component="div">TwitterWeb公式</ListSubheader>}>
         {optionsItems[SHOW_ON_TIMELINE]}
         {optionsItems[SHOW_ON_TWEET_DETAIL]}
       </List>
-      <List
-        subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}
-      >
+      <List subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}>
         {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
         {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
       </List>
-      <List
-        subheader={<ListSubheader component="div">画像ページ</ListSubheader>}
-      >
+      <List subheader={<ListSubheader component="div">画像ページ</ListSubheader>}>
         {optionsItems[STRIP_IMAGE_SUFFIX]}
       </List>
       <Button
@@ -162,7 +142,7 @@ export const Popup = (props: Props): JSX.Element => {
 const optionsText = OPTIONS_TEXT;
 const optionKeys = OPTION_KEYS;
 const optionsEnabled: { [key: string]: boolean } = {};
-optionKeys.forEach(key => {
+optionKeys.forEach((key) => {
   // 最初はどっちも機能オンであってほしい
   // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
   optionsEnabled[key] = localStorage[key] !== isFalse;
