@@ -11,6 +11,7 @@ import {
   OPTION_UPDATED,
   STRIP_IMAGE_SUFFIX,
   initialOptions,
+  isFalse,
 } from './constants';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
@@ -283,7 +284,7 @@ export const fixFileNameOnSaveCommand = (options: Options): void => {
   // キーを押したとき
   document.addEventListener('keydown', (e) => {
     // 設定が有効なら
-    if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
+    if (options[STRIP_IMAGE_SUFFIX] !== isFalse) {
       downloadImage(e);
     }
   });
