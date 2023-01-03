@@ -13,7 +13,7 @@ import {
   isFalse,
   OPTION_KEYS,
   OPTIONS_TEXT,
-  userjsOptions,
+  initialOptions,
   isTwitter,
   isTweetdeck,
   isImageTab,
@@ -49,7 +49,7 @@ describe('定数', () => {
   });
 
   it('userjs用の設定項目の初期値は全部真', () => {
-    expect(userjsOptions).toStrictEqual({
+    expect(initialOptions).toStrictEqual({
       // 公式Web
       SHOW_ON_TIMELINE: 'istrue',
       SHOW_ON_TWEET_DETAIL: 'istrue',

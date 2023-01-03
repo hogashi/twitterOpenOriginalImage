@@ -12,10 +12,10 @@ export interface Options {
 export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
 /**
- * userjs 用の設定項目
+ * 設定項目
  * 'isfalse' とすると、その設定がオフになる
  */
-export const userjsOptions: Options = {
+export const initialOptions: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: 'istrue',
   SHOW_ON_TWEET_DETAIL: 'istrue',

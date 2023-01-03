@@ -10,7 +10,7 @@ import {
   OPTION_KEYS,
   OPTION_UPDATED,
   STRIP_IMAGE_SUFFIX,
-  userjsOptions,
+  initialOptions,
 } from './constants';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
@@ -182,7 +182,7 @@ export const updateOptions = (): Promise<Options> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
-    return Promise.resolve(userjsOptions);
+    return Promise.resolve(initialOptions);
   }
   return new Promise<OptionsMaybe>((resolve) => {
     const request: MessageRequest = {
