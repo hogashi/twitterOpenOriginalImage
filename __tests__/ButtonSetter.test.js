@@ -1,9 +1,5 @@
 // import * as main from '../src/main';
-import {
-  SHOW_ON_TIMELINE,
-  isFalse,
-  SHOW_ON_TWEET_DETAIL,
-} from '../src/constants';
+import { SHOW_ON_TIMELINE, isFalse, SHOW_ON_TWEET_DETAIL } from '../src/constants';
 import { ButtonSetter } from '../src/ButtonSetter';
 
 function makeAllEnabledOptions() {
@@ -26,9 +22,7 @@ describe('ButtonSetter', () => {
       buttonSetter.setButtonOnTimeline(makeAllEnabledOptions());
 
       expect(buttonSetter._setButtonOnTimeline).toHaveBeenCalledTimes(1);
-      expect(
-        buttonSetter._setButtonOnReactLayoutTimeline
-      ).not.toHaveBeenCalled();
+      expect(buttonSetter._setButtonOnReactLayoutTimeline).not.toHaveBeenCalled();
     });
 
     it('新しいレイアウト(React)', () => {
@@ -43,9 +37,7 @@ describe('ButtonSetter', () => {
 
       expect(buttonSetter._setButtonOnTimeline).not.toHaveBeenCalled();
 
-      expect(
-        buttonSetter._setButtonOnReactLayoutTimeline
-      ).toHaveBeenCalledTimes(1);
+      expect(buttonSetter._setButtonOnReactLayoutTimeline).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -136,7 +128,7 @@ describe('ButtonSetter', () => {
         actionList.appendChild(button);
       }
 
-      imgSrcs.forEach(src => {
+      imgSrcs.forEach((src) => {
         const div = document.createElement('div');
         div.classList.add('AdaptiveMedia-photoContainer');
 
@@ -147,7 +139,7 @@ describe('ButtonSetter', () => {
         media.appendChild(div);
       });
 
-      extraElements.forEach(element => media.appendChild(element));
+      extraElements.forEach((element) => media.appendChild(element));
 
       root.appendChild(media);
       root.appendChild(actionList);
@@ -169,26 +161,14 @@ describe('ButtonSetter', () => {
       buttonSetter._setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-timeline'
-      );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.classList.contains(
-          'ProfileTweet-actionList'
-        )
-      ).toBeTruthy();
+      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual('tooi-button-container-timeline');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.classList.contains('ProfileTweet-actionList')).toBeTruthy();
     });
 
     it('画像1枚ツイート3つにボタンつけようとする', () => {
-      const imgSrcsSet = [
-        ['https://g.co/img1'],
-        ['https://g.co/img2'],
-        ['https://g.co/img3'],
-      ];
-      imgSrcsSet.forEach(imgSrcs => {
+      const imgSrcsSet = [['https://g.co/img1'], ['https://g.co/img2'], ['https://g.co/img3']];
+      imgSrcsSet.forEach((imgSrcs) => {
         makeTweet(imgSrcs);
       });
 
@@ -200,42 +180,21 @@ describe('ButtonSetter', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
+        expect(buttonSetter.setButton.mock.calls[index][0].className).toStrictEqual('tooi-button-container-timeline');
+        expect(buttonSetter.setButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
         expect(
-          buttonSetter.setButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-timeline');
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].target.classList.contains(
-            'ProfileTweet-actionList'
-          )
+          buttonSetter.setButton.mock.calls[index][0].target.classList.contains('ProfileTweet-actionList'),
         ).toBeTruthy();
       });
     });
 
     it('画像4枚ツイート3つにボタンつけようとする', () => {
       const imgSrcsSet = [
-        [
-          'https://g.co/img11',
-          'https://g.co/img12',
-          'https://g.co/img13',
-          'https://g.co/img14',
-        ],
-        [
-          'https://g.co/img21',
-          'https://g.co/img22',
-          'https://g.co/img23',
-          'https://g.co/img24',
-        ],
-        [
-          'https://g.co/img31',
-          'https://g.co/img32',
-          'https://g.co/img33',
-          'https://g.co/img34',
-        ],
+        ['https://g.co/img11', 'https://g.co/img12', 'https://g.co/img13', 'https://g.co/img14'],
+        ['https://g.co/img21', 'https://g.co/img22', 'https://g.co/img23', 'https://g.co/img24'],
+        ['https://g.co/img31', 'https://g.co/img32', 'https://g.co/img33', 'https://g.co/img34'],
       ];
-      imgSrcsSet.forEach(imgSrcs => {
+      imgSrcsSet.forEach((imgSrcs) => {
         makeTweet(imgSrcs);
       });
 
@@ -247,16 +206,10 @@ describe('ButtonSetter', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
+        expect(buttonSetter.setButton.mock.calls[index][0].className).toStrictEqual('tooi-button-container-timeline');
+        expect(buttonSetter.setButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
         expect(
-          buttonSetter.setButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-timeline');
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].target.classList.contains(
-            'ProfileTweet-actionList'
-          )
+          buttonSetter.setButton.mock.calls[index][0].target.classList.contains('ProfileTweet-actionList'),
         ).toBeTruthy();
       });
     });
@@ -360,11 +313,7 @@ describe('ButtonSetter', () => {
      * @param {HTMLElement[]} extraElements
      * @param {boolean} hasButton
      */
-    const makeTweetDetail = (
-      imgSrcs,
-      extraElements = [],
-      hasButton = false
-    ) => {
+    const makeTweetDetail = (imgSrcs, extraElements = [], hasButton = false) => {
       const root = document.createElement('div');
       root.classList.add('permalink-tweet-container');
 
@@ -376,7 +325,7 @@ describe('ButtonSetter', () => {
         actionList.appendChild(button);
       }
 
-      imgSrcs.forEach(src => {
+      imgSrcs.forEach((src) => {
         const media = document.createElement('div');
         media.classList.add('AdaptiveMedia-photoContainer');
 
@@ -387,7 +336,7 @@ describe('ButtonSetter', () => {
         root.appendChild(media);
       });
 
-      extraElements.forEach(element => root.appendChild(element));
+      extraElements.forEach((element) => root.appendChild(element));
 
       root.appendChild(actionList);
       document.body.appendChild(root);
@@ -408,26 +357,13 @@ describe('ButtonSetter', () => {
       buttonSetter._setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-detail'
-      );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.classList.contains(
-          'ProfileTweet-actionList'
-        )
-      ).toBeTruthy();
+      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual('tooi-button-container-detail');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.classList.contains('ProfileTweet-actionList')).toBeTruthy();
     });
 
     it('画像4枚ツイート詳細にボタンつけようとする', () => {
-      const imgSrcs = [
-        'https://g.co/img1',
-        'https://g.co/img2',
-        'https://g.co/img3',
-        'https://g.co/img4',
-      ];
+      const imgSrcs = ['https://g.co/img1', 'https://g.co/img2', 'https://g.co/img3', 'https://g.co/img4'];
       makeTweetDetail(imgSrcs);
 
       const buttonSetter = new ButtonSetter();
@@ -437,17 +373,9 @@ describe('ButtonSetter', () => {
       buttonSetter._setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-detail'
-      );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.classList.contains(
-          'ProfileTweet-actionList'
-        )
-      ).toBeTruthy();
+      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual('tooi-button-container-detail');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.classList.contains('ProfileTweet-actionList')).toBeTruthy();
     });
 
     it('画像でないツイート1つにボタンつけない', () => {
@@ -455,9 +383,7 @@ describe('ButtonSetter', () => {
       makeTweetDetail(imgSrcs);
 
       const media = document.querySelectorAll('.AdaptiveMedia-photoContainer');
-      media.forEach(medium =>
-        medium.classList.remove('AdaptiveMedia-photoContainer')
-      );
+      media.forEach((medium) => medium.classList.remove('AdaptiveMedia-photoContainer'));
 
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
@@ -487,7 +413,7 @@ describe('ButtonSetter', () => {
 
       // 画像を全部消す
       const media = document.querySelectorAll('.AdaptiveMedia-photoContainer');
-      media.forEach(medium => medium.parentNode.removeChild(medium));
+      media.forEach((medium) => medium.parentNode.removeChild(medium));
 
       const buttonSetter = new ButtonSetter();
       buttonSetter.setButton = jest.fn();
@@ -592,26 +518,16 @@ describe('ButtonSetter', () => {
       buttonSetter._setButtonOnReactLayoutTimeline(options);
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(1);
-      expect(
-        buttonSetter.setReactLayoutButton.mock.calls[0][0].className
-      ).toStrictEqual('tooi-button-container-react-timeline');
-      expect(
-        buttonSetter.setReactLayoutButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setReactLayoutButton.mock.calls[0][0].target.getAttribute(
-          'role'
-        )
-      ).toStrictEqual('group');
+      expect(buttonSetter.setReactLayoutButton.mock.calls[0][0].className).toStrictEqual(
+        'tooi-button-container-react-timeline',
+      );
+      expect(buttonSetter.setReactLayoutButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setReactLayoutButton.mock.calls[0][0].target.getAttribute('role')).toStrictEqual('group');
     });
 
     it('画像1枚ツイート3つにボタンつけようとする', () => {
-      const imgSrcsSet = [
-        ['https://g.co/img1'],
-        ['https://g.co/img2'],
-        ['https://g.co/img3'],
-      ];
-      imgSrcsSet.forEach(imgSrcs => {
+      const imgSrcsSet = [['https://g.co/img1'], ['https://g.co/img2'], ['https://g.co/img3']];
+      imgSrcsSet.forEach((imgSrcs) => {
         makeReactTweet(imgSrcs);
       });
 
@@ -623,42 +539,23 @@ describe('ButtonSetter', () => {
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-react-timeline');
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[
-            index
-          ][0].target.getAttribute('role')
-        ).toStrictEqual('group');
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].className).toStrictEqual(
+          'tooi-button-container-react-timeline',
+        );
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].target.getAttribute('role')).toStrictEqual(
+          'group',
+        );
       });
     });
 
     it('画像4枚ツイート3つにボタンつけようとする', () => {
       const imgSrcsSet = [
-        [
-          'https://g.co/img11',
-          'https://g.co/img12',
-          'https://g.co/img13',
-          'https://g.co/img14',
-        ],
-        [
-          'https://g.co/img21',
-          'https://g.co/img22',
-          'https://g.co/img23',
-          'https://g.co/img24',
-        ],
-        [
-          'https://g.co/img31',
-          'https://g.co/img32',
-          'https://g.co/img33',
-          'https://g.co/img34',
-        ],
+        ['https://g.co/img11', 'https://g.co/img12', 'https://g.co/img13', 'https://g.co/img14'],
+        ['https://g.co/img21', 'https://g.co/img22', 'https://g.co/img23', 'https://g.co/img24'],
+        ['https://g.co/img31', 'https://g.co/img32', 'https://g.co/img33', 'https://g.co/img34'],
       ];
-      imgSrcsSet.forEach(imgSrcs => {
+      imgSrcsSet.forEach((imgSrcs) => {
         makeReactTweet(imgSrcs);
       });
 
@@ -670,17 +567,13 @@ describe('ButtonSetter', () => {
 
       expect(buttonSetter.setReactLayoutButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-react-timeline');
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setReactLayoutButton.mock.calls[
-            index
-          ][0].target.getAttribute('role')
-        ).toStrictEqual('group');
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].className).toStrictEqual(
+          'tooi-button-container-react-timeline',
+        );
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
+        expect(buttonSetter.setReactLayoutButton.mock.calls[index][0].target.getAttribute('role')).toStrictEqual(
+          'group',
+        );
       });
     });
 
@@ -740,8 +633,7 @@ describe('ButtonSetter', () => {
     });
 
     it('ツイートなかったら何もしない', () => {
-      document.body.innerHTML =
-        '<div id="react-root"><main><section></section></main></div>';
+      document.body.innerHTML = '<div id="react-root"><main><section></section></main></div>';
 
       const buttonSetter = new ButtonSetter();
       buttonSetter.setReactLayoutButton = jest.fn();
@@ -768,7 +660,7 @@ describe('ButtonSetter', () => {
     /**
      * @argument {string?} color 色
      */
-    const makeActionButton = color => {
+    const makeActionButton = (color) => {
       const button = document.createElement('div');
       button.classList.add('ProfileTweet-actionButton');
       if (color) {
@@ -795,9 +687,7 @@ describe('ButtonSetter', () => {
     it('actionButtonのcolorあったらその色が返る', () => {
       makeActionButton('#123456');
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getActionButtonColor()).toStrictEqual(
-        'rgb(18, 52, 86)'
-      );
+      expect(buttonSetter.getActionButtonColor()).toStrictEqual('rgb(18, 52, 86)');
     });
   });
 
@@ -805,7 +695,7 @@ describe('ButtonSetter', () => {
     /**
      * @argument {string?} color 色
      */
-    const makeReactActionButton = color => {
+    const makeReactActionButton = (color) => {
       const group = document.createElement('div');
       group.setAttribute('role', 'group');
       const button = document.createElement('div');
@@ -825,33 +715,25 @@ describe('ButtonSetter', () => {
 
     it('actionButtonなかったらデフォルト', () => {
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
-        '#697b8c'
-      );
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('#697b8c');
     });
 
     it('actionButtonのcolor空文字ならデフォルト', () => {
       makeReactActionButton('');
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
-        '#697b8c'
-      );
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('#697b8c');
     });
 
     it('actionButtonのcolorなかったらデフォルト', () => {
       makeReactActionButton(null);
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
-        '#697b8c'
-      );
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('#697b8c');
     });
 
     it('actionButtonのcolorあったらその色が返る', () => {
       makeReactActionButton('#123456');
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual(
-        'rgb(18, 52, 86)'
-      );
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('rgb(18, 52, 86)');
     });
   });
 });

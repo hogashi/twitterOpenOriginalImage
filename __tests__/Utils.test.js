@@ -131,7 +131,7 @@ describe('Utils', () => {
     ];
 
     describe('collectUrlParams 画像urlの要素を集める', () => {
-      cases.forEach(singleCase => {
+      cases.forEach((singleCase) => {
         const { title, url, params } = singleCase;
         it(`${title}`, () => {
           expect(collectUrlParams(url)).toStrictEqual(makeResultParams(params));
@@ -144,19 +144,15 @@ describe('Utils', () => {
     });
 
     describe('formatUrl 画像URLを https～?format=〜&name=orig に揃える', () => {
-      cases.forEach(singleCase => {
+      cases.forEach((singleCase) => {
         const { title, url, params } = singleCase;
         it(`${title}`, () => {
-          expect(formatUrl(url)).toBe(
-            `https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`
-          );
+          expect(formatUrl(url)).toBe(`https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`);
         });
       });
 
       it('twitterの画像URLでないときそのまま', () => {
-        expect(formatUrl('https://twitter.com/tos')).toBe(
-          'https://twitter.com/tos'
-        );
+        expect(formatUrl('https://twitter.com/tos')).toBe('https://twitter.com/tos');
       });
 
       it('空文字渡すと null が返る', () => {
@@ -165,7 +161,7 @@ describe('Utils', () => {
     });
 
     describe('getImageFilenameByUrl 画像のファイル名をつくる', () => {
-      cases.forEach(singleCase => {
+      cases.forEach((singleCase) => {
         const { title, url, filename } = singleCase;
         it(`${title}`, () => {
           expect(getImageFilenameByUrl(url)).toBe(filename);
@@ -183,9 +179,7 @@ describe('Utils', () => {
       window.open = jest.fn();
       openImages(['https://pbs.twimg.com/media/1st?format=jpg&name=orig']);
       expect(window.open.mock.calls.length).toBe(1);
-      expect(window.open.mock.calls[0][0]).toBe(
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
-      );
+      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
     });
 
     it('画像URLを2つ渡したとき逆順に開く', () => {
@@ -195,12 +189,8 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/2nd?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(2);
-      expect(window.open.mock.calls[0][0]).toBe(
-        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
-      );
-      expect(window.open.mock.calls[1][0]).toBe(
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
-      );
+      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
+      expect(window.open.mock.calls[1][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
     });
 
     it('画像URLを4つ渡したとき逆順に開く', () => {
@@ -212,18 +202,10 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/4th?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(4);
-      expect(window.open.mock.calls[0][0]).toBe(
-        'https://pbs.twimg.com/media/4th?format=jpg&name=orig'
-      );
-      expect(window.open.mock.calls[1][0]).toBe(
-        'https://pbs.twimg.com/media/3rd?format=jpg&name=orig'
-      );
-      expect(window.open.mock.calls[2][0]).toBe(
-        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
-      );
-      expect(window.open.mock.calls[3][0]).toBe(
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
-      );
+      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/4th?format=jpg&name=orig');
+      expect(window.open.mock.calls[1][0]).toBe('https://pbs.twimg.com/media/3rd?format=jpg&name=orig');
+      expect(window.open.mock.calls[2][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
+      expect(window.open.mock.calls[3][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
     });
 
     it('画像URLでないURLを1つ渡したときもそのまま開く', () => {
@@ -248,13 +230,9 @@ describe('Utils', () => {
         'https://pbs.twimg.com/media/2nd?format=jpg&name=orig',
       ]);
       expect(window.open.mock.calls.length).toBe(3);
-      expect(window.open.mock.calls[0][0]).toBe(
-        'https://pbs.twimg.com/media/2nd?format=jpg&name=orig'
-      );
+      expect(window.open.mock.calls[0][0]).toBe('https://pbs.twimg.com/media/2nd?format=jpg&name=orig');
       expect(window.open.mock.calls[1][0]).toBe('https://twitter.com/tos');
-      expect(window.open.mock.calls[2][0]).toBe(
-        'https://pbs.twimg.com/media/1st?format=jpg&name=orig'
-      );
+      expect(window.open.mock.calls[2][0]).toBe('https://pbs.twimg.com/media/1st?format=jpg&name=orig');
     });
 
     it('要素0個の配列を渡したとき開かない', () => {
@@ -277,12 +255,10 @@ describe('Utils', () => {
 
       it('初期設定を取得できる', async () => {
         const expected = {};
-        OPTION_KEYS.forEach(key => {
+        OPTION_KEYS.forEach((key) => {
           expected[key] = isTrue;
         });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
-          callback({ data: {} })
-        );
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: {} }));
         await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
@@ -291,20 +267,16 @@ describe('Utils', () => {
         OPTION_KEYS.forEach((key, i) => {
           expected[key] = i % 2 === 0 ? isTrue : isFalse;
         });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
-          callback({ data: { ...expected } })
-        );
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: { ...expected } }));
         await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定が取得できなかったら初期設定', async () => {
         const expected = {};
-        OPTION_KEYS.forEach(key => {
+        OPTION_KEYS.forEach((key) => {
           expected[key] = isTrue;
         });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) =>
-          callback({})
-        );
+        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({}));
         await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
     });
@@ -321,7 +293,7 @@ describe('Utils', () => {
 
       it('初期設定を取得できる', async () => {
         const expected = {};
-        OPTION_KEYS.forEach(key => {
+        OPTION_KEYS.forEach((key) => {
           expected[key] = isTrue;
         });
         await expect(updateOptions()).resolves.toStrictEqual(expected);

@@ -19,7 +19,7 @@ describe('Popup', () => {
     const optionsText = OPTIONS_TEXT;
     const optionKeys = OPTION_KEYS;
     const optionsEnabled = {};
-    optionKeys.forEach(key => {
+    optionKeys.forEach((key) => {
       optionsEnabled[key] = true;
     });
 
@@ -42,7 +42,7 @@ describe('Popup', () => {
     const optionKeys = OPTION_KEYS;
     const optionsEnabled = {};
     const expectOptions = {};
-    optionKeys.forEach(key => {
+    optionKeys.forEach((key) => {
       optionsEnabled[key] = true;
       expectOptions[key] = isTrue;
     });

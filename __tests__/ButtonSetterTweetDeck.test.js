@@ -1,8 +1,4 @@
-import {
-  SHOW_ON_TWEETDECK_TIMELINE,
-  isFalse,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL,
-} from '../src/constants';
+import { SHOW_ON_TWEETDECK_TIMELINE, isFalse, SHOW_ON_TWEETDECK_TWEET_DETAIL } from '../src/constants';
 import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
 
 function makeAllEnabledOptions() {
@@ -36,7 +32,7 @@ describe('ButtonSetterTweetDeck', () => {
         footer.appendChild(button);
       }
 
-      imgSrcs.forEach(src => {
+      imgSrcs.forEach((src) => {
         const div = document.createElement('div');
         div.classList.add(...['js-media-image-link', ...extraClassNames]);
         div.style.backgroundImage = `url("${src}")`;
@@ -64,23 +60,15 @@ describe('ButtonSetterTweetDeck', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
       expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-tweetdeck-timeline'
+        'tooi-button-container-tweetdeck-timeline',
       );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.tagName
-      ).toStrictEqual('FOOTER');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.tagName).toStrictEqual('FOOTER');
     });
 
     it('画像1枚ツイート3つにボタンつけようとする', () => {
-      const imgSrcsSet = [
-        ['https://g.co/img1'],
-        ['https://g.co/img2'],
-        ['https://g.co/img3'],
-      ];
-      imgSrcsSet.forEach(imgSrcs => {
+      const imgSrcsSet = [['https://g.co/img1'], ['https://g.co/img2'], ['https://g.co/img3']];
+      imgSrcsSet.forEach((imgSrcs) => {
         makeTweet(imgSrcs);
       });
 
@@ -92,40 +80,21 @@ describe('ButtonSetterTweetDeck', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-tweetdeck-timeline');
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].target.tagName
-        ).toStrictEqual('FOOTER');
+        expect(buttonSetter.setButton.mock.calls[index][0].className).toStrictEqual(
+          'tooi-button-container-tweetdeck-timeline',
+        );
+        expect(buttonSetter.setButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
+        expect(buttonSetter.setButton.mock.calls[index][0].target.tagName).toStrictEqual('FOOTER');
       });
     });
 
     it('画像4枚ツイート3つにボタンつけようとする', () => {
       const imgSrcsSet = [
-        [
-          'https://g.co/img11',
-          'https://g.co/img12',
-          'https://g.co/img13',
-          'https://g.co/img14',
-        ],
-        [
-          'https://g.co/img21',
-          'https://g.co/img22',
-          'https://g.co/img23',
-          'https://g.co/img24',
-        ],
-        [
-          'https://g.co/img31',
-          'https://g.co/img32',
-          'https://g.co/img33',
-          'https://g.co/img34',
-        ],
+        ['https://g.co/img11', 'https://g.co/img12', 'https://g.co/img13', 'https://g.co/img14'],
+        ['https://g.co/img21', 'https://g.co/img22', 'https://g.co/img23', 'https://g.co/img24'],
+        ['https://g.co/img31', 'https://g.co/img32', 'https://g.co/img33', 'https://g.co/img34'],
       ];
-      imgSrcsSet.forEach(imgSrcs => {
+      imgSrcsSet.forEach((imgSrcs) => {
         makeTweet(imgSrcs);
       });
 
@@ -137,15 +106,11 @@ describe('ButtonSetterTweetDeck', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-tweetdeck-timeline');
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].target.tagName
-        ).toStrictEqual('FOOTER');
+        expect(buttonSetter.setButton.mock.calls[index][0].className).toStrictEqual(
+          'tooi-button-container-tweetdeck-timeline',
+        );
+        expect(buttonSetter.setButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
+        expect(buttonSetter.setButton.mock.calls[index][0].target.tagName).toStrictEqual('FOOTER');
       });
     });
 
@@ -245,11 +210,7 @@ describe('ButtonSetterTweetDeck', () => {
      * @param {string[]} extraClassNames
      * @param {boolean} hasButton
      */
-    const makeTweetDetail = (
-      imgSrcs,
-      extraClassNames = [],
-      hasButton = false
-    ) => {
+    const makeTweetDetail = (imgSrcs, extraClassNames = [], hasButton = false) => {
       const root = document.createElement('div');
       root.classList.add('js-tweet-detail');
 
@@ -280,11 +241,9 @@ describe('ButtonSetterTweetDeck', () => {
         aTag.appendChild(img);
         media.appendChild(aTag);
       } else {
-        imgSrcs.forEach(src => {
+        imgSrcs.forEach((src) => {
           const aTag = document.createElement('a');
-          aTag.classList.add(
-            ...['js-media-image-link', 'media-image', ...extraClassNames]
-          );
+          aTag.classList.add(...['js-media-image-link', 'media-image', ...extraClassNames]);
           aTag.style.backgroundImage = `url("${src}")`;
           media.appendChild(aTag);
         });
@@ -310,24 +269,13 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-tweetdeck-detail'
-      );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.tagName
-      ).toStrictEqual('FOOTER');
+      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual('tooi-button-container-tweetdeck-detail');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.tagName).toStrictEqual('FOOTER');
     });
 
     it('画像4枚ツイート詳細にボタンつけようとする', () => {
-      const imgSrcs = [
-        'https://g.co/img1',
-        'https://g.co/img2',
-        'https://g.co/img3',
-        'https://g.co/img4',
-      ];
+      const imgSrcs = ['https://g.co/img1', 'https://g.co/img2', 'https://g.co/img3', 'https://g.co/img4'];
       makeTweetDetail(imgSrcs);
 
       const buttonSetter = new ButtonSetterTweetDeck();
@@ -337,39 +285,18 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(1);
-      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual(
-        'tooi-button-container-tweetdeck-detail'
-      );
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].getImgSrcs()
-      ).toMatchObject(imgSrcs);
-      expect(
-        buttonSetter.setButton.mock.calls[0][0].target.tagName
-      ).toStrictEqual('FOOTER');
+      expect(buttonSetter.setButton.mock.calls[0][0].className).toStrictEqual('tooi-button-container-tweetdeck-detail');
+      expect(buttonSetter.setButton.mock.calls[0][0].getImgSrcs()).toMatchObject(imgSrcs);
+      expect(buttonSetter.setButton.mock.calls[0][0].target.tagName).toStrictEqual('FOOTER');
     });
 
     it('画像4枚ツイート詳細3つにボタンつけようとする', () => {
       const imgSrcsSet = [
-        [
-          'https://g.co/img11',
-          'https://g.co/img12',
-          'https://g.co/img13',
-          'https://g.co/img14',
-        ],
-        [
-          'https://g.co/img21',
-          'https://g.co/img22',
-          'https://g.co/img23',
-          'https://g.co/img24',
-        ],
-        [
-          'https://g.co/img31',
-          'https://g.co/img32',
-          'https://g.co/img33',
-          'https://g.co/img34',
-        ],
+        ['https://g.co/img11', 'https://g.co/img12', 'https://g.co/img13', 'https://g.co/img14'],
+        ['https://g.co/img21', 'https://g.co/img22', 'https://g.co/img23', 'https://g.co/img24'],
+        ['https://g.co/img31', 'https://g.co/img32', 'https://g.co/img33', 'https://g.co/img34'],
       ];
-      imgSrcsSet.forEach(imgSrcs => {
+      imgSrcsSet.forEach((imgSrcs) => {
         makeTweetDetail(imgSrcs);
       });
 
@@ -381,15 +308,11 @@ describe('ButtonSetterTweetDeck', () => {
 
       expect(buttonSetter.setButton).toHaveBeenCalledTimes(3);
       imgSrcsSet.forEach((imgSrcs, index) => {
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].className
-        ).toStrictEqual('tooi-button-container-tweetdeck-detail');
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].getImgSrcs()
-        ).toMatchObject(imgSrcs);
-        expect(
-          buttonSetter.setButton.mock.calls[index][0].target.tagName
-        ).toStrictEqual('FOOTER');
+        expect(buttonSetter.setButton.mock.calls[index][0].className).toStrictEqual(
+          'tooi-button-container-tweetdeck-detail',
+        );
+        expect(buttonSetter.setButton.mock.calls[index][0].getImgSrcs()).toMatchObject(imgSrcs);
+        expect(buttonSetter.setButton.mock.calls[index][0].target.tagName).toStrictEqual('FOOTER');
       });
     });
 
@@ -397,13 +320,8 @@ describe('ButtonSetterTweetDeck', () => {
       const imgSrcs = ['https://g.co/video1'];
       makeTweetDetail(imgSrcs, ['is-video']);
 
-      const media = [
-        ...document.querySelectorAll('.media-img'),
-        ...document.querySelectorAll('.media-image'),
-      ];
-      media.forEach(medium =>
-        medium.classList.remove('media-img', 'media-image')
-      );
+      const media = [...document.querySelectorAll('.media-img'), ...document.querySelectorAll('.media-image')];
+      media.forEach((medium) => medium.classList.remove('media-img', 'media-image'));
 
       const buttonSetter = new ButtonSetterTweetDeck();
       buttonSetter.setButton = jest.fn();
@@ -449,9 +367,7 @@ describe('ButtonSetterTweetDeck', () => {
         makeTweetDetail(imgSrcs);
 
         const media = document.querySelectorAll('.media-image');
-        Array.from(media).forEach(medium =>
-          medium.parentNode.removeChild(medium)
-        );
+        Array.from(media).forEach((medium) => medium.parentNode.removeChild(medium));
 
         const buttonSetter = new ButtonSetterTweetDeck();
         buttonSetter.setButton = jest.fn();
@@ -592,9 +508,7 @@ describe('ButtonSetterTweetDeck', () => {
 
     it('背景画像がURL', () => {
       element.style.backgroundImage = 'url("http://g.co/img1")';
-      expect(buttonSetter.getBackgroundImageUrl(element)).toStrictEqual(
-        'http://g.co/img1'
-      );
+      expect(buttonSetter.getBackgroundImageUrl(element)).toStrictEqual('http://g.co/img1');
     });
 
     it('背景画像が空文字', () => {
