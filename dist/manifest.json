@@ -4,7 +4,7 @@
   "version": "4.1.0",
   "description": "twitterの画像ツイートにボタンを追加する拡張機能。追加されたボタンを押すとツイートの画像を原寸で新しいタブに表示する。連絡先: @hogextend",
   "author": "hogashi",
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "storage"],
   "icons": {
     "16": "icons/icon.png",
     "48": "icons/icon.png",

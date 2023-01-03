@@ -13,12 +13,16 @@ import {
   initialOptions,
   isFalse,
   OptionsBool,
+  initialOptionsBool,
 } from './constants';
-import { getOptions } from './options';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
   method: string;
+}
+/** chrome.runtime.sendMessage で返るメッセージ(真偽値版) */
+export interface MessageResponseBool {
+  data: OptionsBool | null;
 }
 /** chrome.runtime.sendMessage で返るメッセージ */
 export interface MessageResponse {
@@ -179,33 +183,23 @@ export const getButtonSetter = (): ButtonSetterType =>
 
 /**
  * 設定項目更新
- * background script に問い合わせて返ってきた値で options をつくって返す
+ * background script に問い合わせて返ってきた値で options (真偽値) をつくって返す
  */
-export const updateOptions = (): Promise<Options> => {
+export const updateOptions = (): Promise<OptionsBool> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
-    return Promise.resolve(initialOptions);
+    return Promise.resolve(initialOptionsBool);
   }
-  return new Promise<OptionsMaybe>((resolve) => {
+  return new Promise<OptionsBool>((resolve) => {
     const request: MessageRequest = {
       method: GET_LOCAL_STORAGE,
     };
-    const callback = (response: MessageResponse): void => {
+    const callback = (response: MessageResponseBool): void => {
       // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
-      resolve(response?.data ? response.data : {});
+      resolve(response?.data ? response.data : initialOptionsBool);
     };
     window.chrome.runtime.sendMessage(request, callback);
-  }).then((data: OptionsMaybe) => {
-    const newOptions: OptionsMaybe = {};
-    // ここで全部埋めるので newOptions は Options になる
-    OPTION_KEYS.forEach((key) => {
-      newOptions[key] = data[key] || isTrue;
-    });
-
-    // console.log('get options (then): ', newOptions); // debug
-
-    return newOptions as Options;
   });
 };
 
@@ -265,7 +259,7 @@ export const setOriginalButton = (options: OptionsBool): void => {
         console.log(window.chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
-        getOptions().then((options) => {
+        updateOptions().then((options) => {
           // ボタンを(再)設置
           setButtonWithInterval(options);
           sendResponse({ data: 'done' });
