@@ -4,6 +4,17 @@
     "enabled": true,
     "rules": {
       "recommended": true
+    },
+    "ignore": ["__tests__/**/*.snap"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "ignore": ["__tests__/**/*.snap"]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
     }
   }
 }
