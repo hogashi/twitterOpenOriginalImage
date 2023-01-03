@@ -45,20 +45,14 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 /** 公式Webかどうか */
 export const isTwitter = (): boolean =>
-  window.location.hostname === HOST_TWITTER_COM ||
-  window.location.hostname === HOST_MOBILE_TWITTER_COM;
+  window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
 /** Tweetdeckかどうか */
-export const isTweetdeck = (): boolean =>
-  window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
+export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
 /** 画像ページかどうか */
-export const isImageTab = (): boolean =>
-  window.location.hostname === HOST_PBS_TWIMG_COM;
+export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
 /** これ自体がChrome拡張機能かどうか */
-export const isNativeChromeExtension = (): boolean =>
-  window.chrome !== undefined &&
-  window.chrome.runtime !== undefined &&
-  window.chrome.runtime.id !== undefined;
+export const isNativeChromeExtension = (): boolean => window.chrome?.runtime?.id !== undefined;
 
 // 設定
 

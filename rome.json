@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/rome/configuration_schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "performance": {
+        "noDelete": "off"
+      }
+    },
+    "ignore": ["__tests__/**/*.snap"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "ignore": ["__tests__/**/*.snap"]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

@@ -1,9 +1,4 @@
-import {
-  isFalse,
-  Options,
-  SHOW_ON_TIMELINE,
-  SHOW_ON_TWEET_DETAIL,
-} from './constants';
+import { isFalse, Options, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL } from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
 export interface ButtonSetterType {
@@ -69,7 +64,7 @@ export class ButtonSetter implements ButtonSetterType {
     setStyle(button, style);
     button.type = 'button';
     button.value = 'Original';
-    button.addEventListener('click', e => {
+    button.addEventListener('click', (e) => {
       onOriginalButtonClick(e, getImgSrcs());
     });
 
@@ -103,7 +98,7 @@ export class ButtonSetter implements ButtonSetterType {
       'border-radius': '3px',
       cursor: 'pointer',
     });
-    button.addEventListener('click', e => {
+    button.addEventListener('click', (e) => {
       onOriginalButtonClick(e, getImgSrcs());
     });
 
@@ -134,37 +129,30 @@ export class ButtonSetter implements ButtonSetterType {
     }
     const className = 'tooi-button-container-timeline';
     // 各ツイートに対して
-    Array.from(tweets).forEach(tweet => {
+    Array.from(tweets).forEach((tweet) => {
       // 画像ツイートかつまだ処理を行っていないときのみ行う
       if (
         !(
-          tweet.getElementsByClassName('AdaptiveMedia-container').length !==
-            0 &&
-          tweet
-            .getElementsByClassName('AdaptiveMedia-container')[0]
-            .getElementsByTagName('img').length !== 0
+          tweet.getElementsByClassName('AdaptiveMedia-container').length !== 0 &&
+          tweet.getElementsByClassName('AdaptiveMedia-container')[0].getElementsByTagName('img').length !== 0
         ) ||
         tweet.getElementsByClassName(className).length !== 0
       ) {
         return;
       }
       // 操作ボタンの外側は様式にあわせる
-      const actionList = tweet.querySelector<HTMLElement>(
-        '.ProfileTweet-actionList'
-      );
+      const actionList = tweet.querySelector<HTMLElement>('.ProfileTweet-actionList');
       if (!actionList) {
         printException('no target');
         return;
       }
 
       // 画像の親が取得できたら
-      const mediaContainer = tweet.getElementsByClassName(
-        'AdaptiveMedia-container'
-      )[0] as HTMLElement;
+      const mediaContainer = tweet.getElementsByClassName('AdaptiveMedia-container')[0] as HTMLElement;
       const getImgSrcs = (): string[] =>
-        Array.from(
-          mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')
-        ).map(element => element.getElementsByTagName('img')[0].src);
+        Array.from(mediaContainer.getElementsByClassName('AdaptiveMedia-photoContainer')).map(
+          (element) => element.getElementsByTagName('img')[0].src,
+        );
       this.setButton({
         className,
         getImgSrcs,
@@ -182,10 +170,9 @@ export class ButtonSetter implements ButtonSetterType {
     }
     const className = 'tooi-button-container-detail';
     if (
-      !document.getElementsByClassName('permalink-tweet-container')[0] ||
       !document
         .getElementsByClassName('permalink-tweet-container')[0]
-        .getElementsByClassName('AdaptiveMedia-photoContainer')[0] ||
+        ?.getElementsByClassName('AdaptiveMedia-photoContainer')[0] ||
       document.getElementsByClassName(className).length !== 0
     ) {
       // ツイート詳細ページでない、または、メインツイートが画像ツイートでないとき
@@ -194,9 +181,7 @@ export class ButtonSetter implements ButtonSetterType {
       return;
     }
     // Originalボタンの親の親となる枠
-    const actionList = document.querySelector<HTMLElement>(
-      '.permalink-tweet-container .ProfileTweet-actionList'
-    );
+    const actionList = document.querySelector<HTMLElement>('.permalink-tweet-container .ProfileTweet-actionList');
     if (!actionList) {
       printException('no target');
       return;
@@ -207,8 +192,8 @@ export class ButtonSetter implements ButtonSetterType {
       Array.from(
         document
           .getElementsByClassName('permalink-tweet-container')[0]
-          .getElementsByClassName('AdaptiveMedia-photoContainer')
-      ).map(element => element.getElementsByTagName('img')[0].src);
+          .getElementsByClassName('AdaptiveMedia-photoContainer'),
+      ).map((element) => element.getElementsByTagName('img')[0].src);
     this.setButton({
       className,
       getImgSrcs,
@@ -224,21 +209,19 @@ export class ButtonSetter implements ButtonSetterType {
       return;
     }
     const className = 'tooi-button-container-react-timeline';
-    const tweets = Array.from(
-      document.querySelectorAll('#react-root main section article')
-    );
+    const tweets = Array.from(document.querySelectorAll('#react-root main section article'));
     if (!tweets.length) {
       return;
     }
     // 各ツイートに対して
-    tweets.forEach(tweet => {
+    tweets.forEach((tweet) => {
       // 画像ツイート かつ 画像が1枚でもある かつ まだ処理を行っていないときのみ実行
-      const tweetATags = Array.from(tweet.querySelectorAll('a')).filter(aTag =>
-        /\/status\/[0-9]+\/photo\//.test(aTag.href)
+      const tweetATags = Array.from(tweet.querySelectorAll('a')).filter((aTag) =>
+        /\/status\/[0-9]+\/photo\//.test(aTag.href),
       );
       if (
         tweetATags.length === 0 ||
-        tweetATags.every(aTag => !aTag.querySelector('img')) ||
+        tweetATags.every((aTag) => !aTag.querySelector('img')) ||
         tweet.getElementsByClassName(className)[0]
       ) {
         return;
@@ -252,13 +235,13 @@ export class ButtonSetter implements ButtonSetterType {
       }
 
       const getImgSrcs = (): string[] => {
-        const tweetImgs = tweetATags.map(aTag => aTag.querySelector('img'));
+        const tweetImgs = tweetATags.map((aTag) => aTag.querySelector('img'));
         return tweetImgs
-          .map(img =>
+          .map((img) =>
             // filter で string[] にするためにここで string[] にする……
-            img ? img.src : ''
+            img ? img.src : '',
           )
-          .filter(src => src !== '');
+          .filter((src) => src !== '');
       };
 
       this.setReactLayoutButton({
@@ -273,10 +256,8 @@ export class ButtonSetter implements ButtonSetterType {
     // コントラスト比4.5(chromeの推奨する最低ライン)の色
     const contrastLimitColor = '#697b8c';
 
-    const actionButton = document.querySelector(
-      '.ProfileTweet-actionButton'
-    ) as HTMLElement;
-    if (!(actionButton && actionButton.style)) {
+    const actionButton = document.querySelector('.ProfileTweet-actionButton') as HTMLElement;
+    if (!actionButton?.style) {
       return contrastLimitColor;
     }
 
@@ -292,17 +273,9 @@ export class ButtonSetter implements ButtonSetterType {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
     // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-    const actionButton = document.querySelector<HTMLElement>(
-      'div[role="group"] div[role="button"]'
-    );
-    if (
-      actionButton &&
-      actionButton.children[0] &&
-      (actionButton.children[0] as HTMLElement).style
-    ) {
-      const buttonColor = window.getComputedStyle(
-        actionButton.children[0]
-      ).color;
+    const actionButton = document.querySelector<HTMLElement>('div[role="group"] div[role="button"]');
+    if (actionButton?.children[0] && (actionButton.children[0] as HTMLElement).style) {
+      const buttonColor = window.getComputedStyle(actionButton.children[0]).color;
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
       }
