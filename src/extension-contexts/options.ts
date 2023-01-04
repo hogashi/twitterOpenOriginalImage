@@ -1,6 +1,11 @@
-import { OptionsBool, initialOptions, initialOptionsBool, OPTION_KEYS, isTrue } from '../constants';
-
-const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
+import {
+  OptionsBool,
+  initialOptions,
+  initialOptionsBool,
+  OPTION_KEYS,
+  isTrue,
+  MIGRATED_TO_CHROME_STORAGE,
+} from '../constants';
 
 export const setOptions = (options: OptionsBool): void => {
   chrome.storage.sync.set(options, () => {

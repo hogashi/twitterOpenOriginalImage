@@ -103,3 +103,6 @@ export const OPTIONS_TEXT: { [key in keyof Options]: string } = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
 };
+
+// chrome.storateへの移行が済んだかどうかのキー
+export const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
