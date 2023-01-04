@@ -2,6 +2,12 @@ import { OptionsBool, initialOptions, initialOptionsBool, OPTION_KEYS, isTrue } 
 
 const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
 
+export const setOptions = (options: OptionsBool): void => {
+  chrome.storage.sync.set(options, () => {
+    console.log('options set');
+  });
+};
+
 export const getOptions = (): Promise<OptionsBool> => {
   return new Promise((resolve) => {
     // chrome.storageから取ってきつつ,

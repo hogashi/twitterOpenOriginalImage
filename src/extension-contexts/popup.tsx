@@ -25,7 +25,7 @@ import {
   OptionsBool,
 } from '../constants';
 import { printException } from '../utils';
-import { getOptions } from './options';
+import { getOptions, setOptions } from './options';
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または
@@ -42,8 +42,8 @@ export const Popup = (props: Props): JSX.Element => {
   const [enabled, setEnabled] = useState(optionsEnabled);
 
   const onSave = useCallback(() => {
-    chrome.storage.sync.set(enabled);
-    window.chrome.tabs.query({}, (result) =>
+    setOptions(enabled);
+    chrome.tabs.query({}, (result) =>
       result.forEach((tab) => {
         // console.log(tab);
         if (!(tab.url && tab.id)) {
@@ -58,7 +58,7 @@ export const Popup = (props: Props): JSX.Element => {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;
         }
-        window.chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, (response) => {
+        chrome.tabs.sendMessage(tab.id, { method: OPTION_UPDATED }, (response) => {
           // eslint-disable-next-line no-console
           console.log('res:', response);
         });
@@ -137,7 +137,7 @@ export const Popup = (props: Props): JSX.Element => {
   );
 };
 
-getOptions().then(optionsEnabled => {
+getOptions().then((optionsEnabled) => {
   const props = {
     optionsText: OPTIONS_TEXT,
     optionKeys: OPTION_KEYS,
@@ -156,4 +156,4 @@ getOptions().then(optionsEnabled => {
     }
   }
   ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
-  });
+});
