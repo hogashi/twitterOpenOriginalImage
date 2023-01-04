@@ -1,5 +1,5 @@
 // import * as main from '../src/main';
-import { isTrue, isFalse, OPTION_KEYS, initialOptionsBool } from '../src/constants';
+import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
 import {
   printException,
   collectUrlParams,

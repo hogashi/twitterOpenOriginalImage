@@ -3,15 +3,9 @@ import { ButtonSetterTweetDeck } from './ButtonSetterTweetDeck';
 import {
   GET_LOCAL_STORAGE,
   isNativeChromeExtension,
-  isTrue,
   isTweetdeck,
-  Options,
-  OptionsMaybe,
-  OPTION_KEYS,
   OPTION_UPDATED,
   STRIP_IMAGE_SUFFIX,
-  initialOptions,
-  isFalse,
   OptionsBool,
   initialOptionsBool,
 } from './constants';
