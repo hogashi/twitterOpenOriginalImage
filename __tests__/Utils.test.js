@@ -1,4 +1,7 @@
 // import * as main from '../src/main';
+
+import { chrome } from 'jest-chrome';
+
 import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
 import {
   printException,
@@ -254,7 +257,7 @@ describe('Utils', () => {
       });
 
       it('初期設定を取得できる', async () => {
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: initialOptionsBool }));
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: initialOptionsBool }));
         await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
       });
 
@@ -263,12 +266,12 @@ describe('Utils', () => {
         OPTION_KEYS.forEach((key, i) => {
           expected[key] = i % 2 === 0;
         });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: { ...expected } }));
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: { ...expected } }));
         await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定が取得できなかったら初期設定', async () => {
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({}));
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({}));
         await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
       });
     });
