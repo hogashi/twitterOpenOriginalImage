@@ -11,8 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {
   OPTION_KEYS,
-  isTrue,
-  isFalse,
   HOST_TWITTER_COM,
   HOST_MOBILE_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
@@ -24,8 +22,10 @@ import {
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
   OPTIONS_TEXT,
+  OptionsBool,
 } from './constants';
 import { printException } from './utils';
+import { getOptions } from './options';
 
 /* popup.js */
 // ツールバー右に表示される拡張機能のボタンをクリック、または
@@ -34,7 +34,7 @@ import { printException } from './utils';
 interface Props {
   optionsText: { [key: string]: string };
   optionKeys: typeof OPTION_KEYS;
-  optionsEnabled: { [key: string]: boolean };
+  optionsEnabled: OptionsBool;
 }
 
 export const Popup = (props: Props): JSX.Element => {
@@ -42,9 +42,7 @@ export const Popup = (props: Props): JSX.Element => {
   const [enabled, setEnabled] = useState(optionsEnabled);
 
   const onSave = useCallback(() => {
-    optionKeys.forEach((key) => {
-      localStorage[key] = enabled[key] ? isTrue : isFalse;
-    });
+    chrome.storage.sync.set(enabled);
     window.chrome.tabs.query({}, (result) =>
       result.forEach((tab) => {
         // console.log(tab);
@@ -139,30 +137,23 @@ export const Popup = (props: Props): JSX.Element => {
   );
 };
 
-const optionsText = OPTIONS_TEXT;
-const optionKeys = OPTION_KEYS;
-const optionsEnabled: { [key: string]: boolean } = {};
-optionKeys.forEach((key) => {
-  // 最初はどっちも機能オンであってほしい
-  // 最初は値が入っていないので、「if isfalseでないなら機能オン」とする
-  optionsEnabled[key] = localStorage[key] !== isFalse;
-});
+getOptions().then(optionsEnabled => {
+  const props = {
+    optionsText: OPTIONS_TEXT,
+    optionKeys: OPTION_KEYS,
+    optionsEnabled,
+  };
 
-const props = {
-  optionsText,
-  optionKeys,
-  optionsEnabled,
-};
-
-let root = document.getElementById('root');
-if (!root) {
-  root = document.createElement('div');
-  root.id = 'root';
-  const body = document.querySelector('body');
-  if (body) {
-    body.appendChild(root);
-  } else {
-    printException('cant find body');
+  let root = document.getElementById('root');
+  if (!root) {
+    root = document.createElement('div');
+    root.id = 'root';
+    const body = document.querySelector('body');
+    if (body) {
+      body.appendChild(root);
+    } else {
+      printException('cant find body');
+    }
   }
-}
-ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+  ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+  });
