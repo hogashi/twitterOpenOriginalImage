@@ -3,21 +3,38 @@ import { MessageRequest, MessageResponseBool } from './utils';
 
 // バックグラウンドで実行される
 
+const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
+
 window.chrome.runtime.onMessage.addListener(
   (request: MessageRequest, _, sendResponse: (res: MessageResponseBool) => void) => {
     // console.log(chrome.runtime.lastError);
     if (request.method === GET_LOCAL_STORAGE) {
       // chrome.storageから取ってきつつ,
-      // ない値はlocalStorageあるいは初期値で埋める
-      // TODO: むずい感じになってきたので, テストできるようにlocalStorageとchrome.storageだけ返すことにしたい
-      chrome.storage.sync.get(OPTION_KEYS, (got) => {
-        const newOptions = { ...initialOptions, ...localStorage };
-        // 真偽値にして返す
-        const newOptionsBool = { ...initialOptionsBool };
-        OPTION_KEYS.forEach((key) => {
-          newOptionsBool[key] = newOptions[key] === isTrue;
-        });
-        sendResponse({ data: { ...newOptionsBool, ...got } });
+      // まだ移行してないときはlocalStorageあるいは初期値を移行
+      chrome.storage.sync.get(MIGRATED_TO_CHROME_STORAGE, (isMigrated) => {
+        if (!isMigrated[MIGRATED_TO_CHROME_STORAGE]) {
+          const newOptions = { ...initialOptions, ...localStorage };
+          // 真偽値にして移行する
+          const newOptionsBool = { ...initialOptionsBool };
+          OPTION_KEYS.forEach((key) => {
+            newOptionsBool[key] = newOptions[key] === isTrue;
+          });
+          chrome.storage.sync.set(
+            {
+              ...newOptionsBool,
+              [MIGRATED_TO_CHROME_STORAGE]: true,
+            },
+            () => {
+              // 移行できたら新しい値を返す
+              sendResponse({ data: newOptionsBool });
+            },
+          );
+        } else {
+          chrome.storage.sync.get(OPTION_KEYS, (got) => {
+            // 初期値をフォールバックとしておく
+            sendResponse({ data: { ...initialOptionsBool, ...got } });
+          });
+        }
       });
     } else {
       sendResponse({ data: null });
