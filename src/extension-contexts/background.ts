@@ -1,6 +1,6 @@
-import { GET_LOCAL_STORAGE } from './constants';
+import { GET_LOCAL_STORAGE } from '../constants';
 import { getOptions } from './options';
-import { MessageRequest, MessageResponseBool } from './utils';
+import { MessageRequest, MessageResponseBool } from '../utils';
 
 // バックグラウンドで実行される
 

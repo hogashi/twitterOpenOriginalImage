@@ -12,7 +12,7 @@ import {
   isTrue,
   OPTION_KEYS,
 } from '../src/constants';
-import { Popup } from '../src/popup';
+import { Popup } from '../src/extension-contexts/popup';
 
 describe('Popup', () => {
   it('render', () => {

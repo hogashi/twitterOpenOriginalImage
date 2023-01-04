@@ -1,8 +1,8 @@
 module.exports = {
   entry: {
     main: './src/main.ts',
-    background: './src/background.ts',
-    popup: './src/popup.tsx',
+    background: './src/extension-contexts/background.ts',
+    popup: './src/extension-contexts/popup.tsx',
   },
   output: {
     filename: '[name].bundle.js',

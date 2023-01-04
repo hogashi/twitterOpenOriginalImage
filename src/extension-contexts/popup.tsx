@@ -23,8 +23,8 @@ import {
   STRIP_IMAGE_SUFFIX,
   OPTIONS_TEXT,
   OptionsBool,
-} from './constants';
-import { printException } from './utils';
+} from '../constants';
+import { printException } from '../utils';
 import { getOptions } from './options';
 
 /* popup.js */

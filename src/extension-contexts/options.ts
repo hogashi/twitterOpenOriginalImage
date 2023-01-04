@@ -1,4 +1,4 @@
-import { OptionsBool, initialOptions, initialOptionsBool, OPTION_KEYS, isTrue } from './constants';
+import { OptionsBool, initialOptions, initialOptionsBool, OPTION_KEYS, isTrue } from '../constants';
 
 const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
 
