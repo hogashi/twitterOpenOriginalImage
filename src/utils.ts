@@ -193,7 +193,7 @@ export const updateOptions = (): Promise<OptionsBool> => {
       // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
       resolve(response?.data ? response.data : initialOptionsBool);
     };
-    window.chrome.runtime.sendMessage(request, callback);
+    chrome.runtime.sendMessage(request, callback);
   });
 };
 
@@ -245,12 +245,12 @@ export const setOriginalButton = (options: OptionsBool): void => {
   // これ自体がChrome拡張機能のときだけ設置する
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
   if (isNativeChromeExtension()) {
-    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+    chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
       // ひとまず console.log で出すようにしてみている
-      if (window.chrome.runtime.lastError !== undefined) {
+      if (chrome.runtime.lastError !== undefined) {
         // eslint-disable-next-line no-console
-        console.log(window.chrome.runtime.lastError);
+        console.log(chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
         updateOptions().then((options) => {
