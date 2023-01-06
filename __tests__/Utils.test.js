@@ -247,15 +247,6 @@ describe('Utils', () => {
 
   describe('updateOptions', () => {
     describe('Chrome拡張機能のとき', () => {
-      const originalChrome = window.chrome;
-      beforeAll(() => {
-        delete window.chrome;
-        window.chrome = { runtime: { id: 'id' } };
-      });
-      afterAll(() => {
-        window.chrome = originalChrome;
-      });
-
       it('初期設定を取得できる', async () => {
         chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: initialOptionsBool }));
         await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
