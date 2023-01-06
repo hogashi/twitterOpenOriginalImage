@@ -10,7 +10,7 @@
     "lint": "rome check --apply-suggested src __tests__",
     "format": "rome format --write src __tests__",
     "rome:fix": "run-s lint format",
-    "jest": "jest --version && jest --verbose --colors --testEnvironment=jsdom --coverage",
+    "jest": "jest --version && jest --verbose --testEnvironment=jsdom --coverage",
     "coverage": "make-coverage-badge",
     "test": "run-s lint test:ts jest coverage",
     "test:lint-format": "rome check src __tests__ && rome format src __tests__",
