@@ -1,5 +1,11 @@
 import { chrome } from 'jest-chrome';
-import { initialOptionsBool, MIGRATED_TO_CHROME_STORAGE } from '../src/constants';
+import {
+  initialOptions,
+  initialOptionsBool,
+  isFalse,
+  MIGRATED_TO_CHROME_STORAGE,
+  SHOW_ON_TWEETDECK_TIMELINE,
+} from '../src/constants';
 
 import { getOptions, setOptions } from '../src/extension-contexts/options';
 
@@ -16,7 +22,7 @@ chrome.storage.sync.get.mockImplementation((keys, callback) => {
 });
 beforeEach(() => {
   chromeStorage = {};
-  window.localStorage = {};
+  localStorage.clear();
 });
 
 describe('options', () => {
@@ -28,7 +34,17 @@ describe('options', () => {
         [MIGRATED_TO_CHROME_STORAGE]: true,
       });
     });
-    it('未移行で, localStorageに設定があったら, localStorageの内容が移行されつつ返って, 移行済みになる', () => {});
+    it('未移行で, localStorageに設定があったら, localStorageの内容が移行されつつ返って, 移行済みになる', () => {
+      Object.entries({ ...initialOptions, [SHOW_ON_TWEETDECK_TIMELINE]: isFalse }).map(([k, v]) => {
+        localStorage.setItem(k, v);
+      });
+      const expected = { ...initialOptionsBool, [SHOW_ON_TWEETDECK_TIMELINE]: false };
+      expect(getOptions()).resolves.toMatchObject(expected);
+      expect(chromeStorage).toMatchObject({
+        ...expected,
+        [MIGRATED_TO_CHROME_STORAGE]: true,
+      });
+    });
     it('移行済みなら, 保存された設定が返る', () => {});
   });
   describe('setOptions', () => {});
