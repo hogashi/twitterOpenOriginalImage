@@ -6,6 +6,7 @@ import {
   MIGRATED_TO_CHROME_STORAGE,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TIMELINE,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL,
 } from '../src/constants';
 
 import { getOptions, setOptions } from '../src/extension-contexts/options';
@@ -64,6 +65,9 @@ describe('options', () => {
     });
   });
   describe('setOptions', () => {
-    // TODO
+    const expected = { ...initialOptionsBool, [SHOW_ON_TWEETDECK_TWEET_DETAIL]: false };
+    setOptions(expected);
+    expect(chrome.storage.sync.set.mock.calls.length).toBe(1);
+    expect(chrome.storage.sync.set.mock.lastCall[0]).toBe(expected);
   });
 });
