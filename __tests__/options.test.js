@@ -7,7 +7,13 @@ let chromeStorage = {};
 chrome.storage.sync.set.mockImplementation((items) => {
   chromeStorage = { ...chromeStorage, ...items };
 });
-chrome.storage.sync.get.mockImplementation(() => chromeStorage);
+chrome.storage.sync.get.mockImplementation((keys, callback) => {
+  if (typeof keys === 'string') {
+    callback({ [keys]: chromeStorage[keys] });
+  } else {
+    callback(Object.fromEntries(Object.entries(chromeStorage).filter(([k, _]) => keys.find(k))));
+  }
+});
 beforeEach(() => {
   chromeStorage = {};
   window.localStorage = {};
