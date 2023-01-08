@@ -5,6 +5,7 @@ import {
   isFalse,
   MIGRATED_TO_CHROME_STORAGE,
   SHOW_ON_TWEETDECK_TIMELINE,
+  SHOW_ON_TIMELINE,
 } from '../src/constants';
 
 import { getOptions, setOptions } from '../src/extension-contexts/options';
@@ -17,7 +18,7 @@ chrome.storage.sync.get.mockImplementation((keys, callback) => {
   if (typeof keys === 'string') {
     callback({ [keys]: chromeStorage[keys] });
   } else {
-    callback(Object.fromEntries(Object.entries(chromeStorage).filter(([k, _]) => keys.find(k))));
+    callback(Object.fromEntries(Object.entries(chromeStorage).filter(([k, _]) => keys.find((key) => k === key))));
   }
 });
 beforeEach(() => {
@@ -45,7 +46,22 @@ describe('options', () => {
         [MIGRATED_TO_CHROME_STORAGE]: true,
       });
     });
-    it('移行済みなら, 保存された設定が返る', () => {});
+    it('移行済みなら, 保存された設定が返る', () => {
+      Object.entries({ ...initialOptions, [SHOW_ON_TWEETDECK_TIMELINE]: isFalse }).map(([k, v]) => {
+        localStorage.setItem(k, v);
+      });
+      chromeStorage = {
+        ...initialOptionsBool,
+        [SHOW_ON_TIMELINE]: false,
+        [MIGRATED_TO_CHROME_STORAGE]: true,
+      };
+      const expected = { ...initialOptionsBool, [SHOW_ON_TIMELINE]: false };
+      expect(getOptions()).resolves.toMatchObject(expected);
+      expect(chromeStorage).toMatchObject({
+        ...expected,
+        [MIGRATED_TO_CHROME_STORAGE]: true,
+      });
+    });
   });
   describe('setOptions', () => {});
 });
