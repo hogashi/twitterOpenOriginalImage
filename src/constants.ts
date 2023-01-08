@@ -77,7 +77,7 @@ export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEE
 export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
 /** これ自体がChrome拡張機能かどうか */
-export const isNativeChromeExtension = (): boolean => window.chrome?.runtime?.id !== undefined;
+export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== undefined;
 
 // 設定
 
