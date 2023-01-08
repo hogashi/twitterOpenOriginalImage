@@ -247,6 +247,8 @@ describe('Utils', () => {
 
   describe('updateOptions', () => {
     describe('Chrome拡張機能のとき', () => {
+      chrome.runtime.id = 'mock';
+
       it('初期設定を取得できる', async () => {
         chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: initialOptionsBool }));
         await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
