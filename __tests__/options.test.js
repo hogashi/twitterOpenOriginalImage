@@ -30,6 +30,6 @@ describe('options', () => {
     });
     it('未移行で, localStorageに設定があったら, localStorageの内容が移行されつつ返って, 移行済みになる', () => {});
     it('移行済みなら, 保存された設定が返る', () => {});
-    describe('setOptions', () => {});
   });
+  describe('setOptions', () => {});
 });
