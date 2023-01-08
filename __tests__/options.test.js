@@ -63,5 +63,7 @@ describe('options', () => {
       });
     });
   });
-  describe('setOptions', () => {});
+  describe('setOptions', () => {
+    // TODO
+  });
 });
