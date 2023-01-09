@@ -3,19 +3,20 @@ import { ButtonSetterTweetDeck } from './ButtonSetterTweetDeck';
 import {
   GET_LOCAL_STORAGE,
   isNativeChromeExtension,
-  isTrue,
   isTweetdeck,
-  Options,
-  OptionsMaybe,
-  OPTION_KEYS,
   OPTION_UPDATED,
   STRIP_IMAGE_SUFFIX,
-  userjsOptions,
+  OptionsBool,
+  initialOptionsBool,
 } from './constants';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
 export interface MessageRequest {
   method: string;
+}
+/** chrome.runtime.sendMessage で返るメッセージ(真偽値版) */
+export interface MessageResponseBool {
+  data: OptionsBool | null;
 }
 /** chrome.runtime.sendMessage で返るメッセージ */
 export interface MessageResponse {
@@ -176,38 +177,28 @@ export const getButtonSetter = (): ButtonSetterType =>
 
 /**
  * 設定項目更新
- * background script に問い合わせて返ってきた値で options をつくって返す
+ * background script に問い合わせて返ってきた値で options (真偽値) をつくって返す
  */
-export const updateOptions = (): Promise<Options> => {
+export const updateOptions = (): Promise<OptionsBool> => {
   // これ自体はChrome拡張機能でない(UserScriptとして読み込まれている)とき
   // 設定は変わりようがないので何もしない
   if (!isNativeChromeExtension()) {
-    return Promise.resolve(userjsOptions);
+    return Promise.resolve(initialOptionsBool);
   }
-  return new Promise<OptionsMaybe>((resolve) => {
+  return new Promise<OptionsBool>((resolve) => {
     const request: MessageRequest = {
       method: GET_LOCAL_STORAGE,
     };
-    const callback = (response: MessageResponse): void => {
+    const callback = (response: MessageResponseBool): void => {
       // 何かおかしくて設定内容取ってこれなかったらデフォルトということにする
-      resolve(response?.data ? response.data : {});
+      resolve(response?.data ? response.data : initialOptionsBool);
     };
-    window.chrome.runtime.sendMessage(request, callback);
-  }).then((data: OptionsMaybe) => {
-    const newOptions: OptionsMaybe = {};
-    // ここで全部埋めるので newOptions は Options になる
-    OPTION_KEYS.forEach((key) => {
-      newOptions[key] = data[key] || isTrue;
-    });
-
-    // console.log('get options (then): ', newOptions); // debug
-
-    return newOptions as Options;
+    chrome.runtime.sendMessage(request, callback);
   });
 };
 
 /** Originalボタンおく */
-export const setOriginalButton = (options: Options): void => {
+export const setOriginalButton = (options: OptionsBool): void => {
   // 実行の間隔(ms)
   const INTERVAL = 300;
 
@@ -215,7 +206,7 @@ export const setOriginalButton = (options: Options): void => {
   const buttonSetter = getButtonSetter();
 
   // ボタンを設置
-  const setButton = (currentOptions: Options): void => {
+  const setButton = (currentOptions: OptionsBool): void => {
     // console.log('setButton: ' + currentOptions['SHOW_ON_TIMELINE'] + ' ' + currentOptions['SHOW_ON_TWEET_DETAIL']) // debug
     buttonSetter.setButtonOnTimeline(currentOptions);
     buttonSetter.setButtonOnTweetDetail(currentOptions);
@@ -223,7 +214,7 @@ export const setOriginalButton = (options: Options): void => {
 
   let isInterval = false;
   let deferred = false;
-  const setButtonWithInterval = (currentOptions: Options): void => {
+  const setButtonWithInterval = (currentOptions: OptionsBool): void => {
     // 短時間に何回も実行しないようインターバルを設ける
     if (isInterval) {
       deferred = true;
@@ -254,12 +245,12 @@ export const setOriginalButton = (options: Options): void => {
   // これ自体がChrome拡張機能のときだけ設置する
   // (Chrome拡張機能でないときは設定反映できる機構ないので)
   if (isNativeChromeExtension()) {
-    window.chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
+    chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
       // Unchecked runtime.lastError みたいなエラーが出ることがあるので,
       // ひとまず console.log で出すようにしてみている
-      if (window.chrome.runtime.lastError !== undefined) {
+      if (chrome.runtime.lastError !== undefined) {
         // eslint-disable-next-line no-console
-        console.log(window.chrome.runtime.lastError);
+        console.log(chrome.runtime.lastError);
       }
       if (request.method === OPTION_UPDATED) {
         updateOptions().then((options) => {
@@ -279,11 +270,11 @@ export const setOriginalButton = (options: Options): void => {
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
-export const fixFileNameOnSaveCommand = (options: Options): void => {
+export const fixFileNameOnSaveCommand = (options: OptionsBool): void => {
   // キーを押したとき
   document.addEventListener('keydown', (e) => {
     // 設定が有効なら
-    if (options[STRIP_IMAGE_SUFFIX] !== 'isfalse') {
+    if (options[STRIP_IMAGE_SUFFIX]) {
       downloadImage(e);
     }
   });

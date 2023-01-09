@@ -24,3 +24,5 @@ jobs:
       run: yarn test
       env:
         CI: true
+        # for jest
+        FORCE_COLOR: true

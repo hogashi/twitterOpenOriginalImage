@@ -1,9 +1,9 @@
-import { isFalse, Options, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL } from './constants';
+import { OptionsBool, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL } from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
 export interface ButtonSetterType {
-  setButtonOnTimeline: (currentOptions: Options) => void;
-  setButtonOnTweetDetail: (currentOptions: Options) => void;
+  setButtonOnTimeline: (currentOptions: OptionsBool) => void;
+  setButtonOnTweetDetail: (currentOptions: OptionsBool) => void;
 }
 
 /**
@@ -11,7 +11,7 @@ export interface ButtonSetterType {
  */
 export class ButtonSetter implements ButtonSetterType {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(currentOptions: Options): void {
+  public setButtonOnTimeline(currentOptions: OptionsBool): void {
     // 昔のビューの処理はしばらく残す
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
     if (document.querySelector('#react-root')) {
@@ -22,7 +22,7 @@ export class ButtonSetter implements ButtonSetterType {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(currentOptions: Options): void {
+  public setButtonOnTweetDetail(currentOptions: OptionsBool): void {
     // 昔のビューの処理はしばらく残す
     // TODO: Reactレイアウトでも実装する必要がある？
     // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
@@ -116,11 +116,9 @@ export class ButtonSetter implements ButtonSetterType {
     container.appendChild(button);
   }
 
-  private _setButtonOnTimeline(currentOptions: Options): void {
+  private _setButtonOnTimeline(currentOptions: OptionsBool): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    // - isFalse のとき OFF
-    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!currentOptions[SHOW_ON_TIMELINE]) {
       return;
     }
     const tweets = document.getElementsByClassName('js-stream-tweet');
@@ -161,11 +159,9 @@ export class ButtonSetter implements ButtonSetterType {
     });
   }
 
-  private _setButtonOnTweetDetail(currentOptions: Options): void {
+  private _setButtonOnTweetDetail(currentOptions: OptionsBool): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    // - isFalse のとき OFF
-    if (!(currentOptions[SHOW_ON_TWEET_DETAIL] !== isFalse)) {
+    if (!currentOptions[SHOW_ON_TWEET_DETAIL]) {
       return;
     }
     const className = 'tooi-button-container-detail';
@@ -201,11 +197,9 @@ export class ButtonSetter implements ButtonSetterType {
     });
   }
 
-  private _setButtonOnReactLayoutTimeline(currentOptions: Options): void {
+  private _setButtonOnReactLayoutTimeline(currentOptions: OptionsBool): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    // - isFalse のとき OFF
-    if (!(currentOptions[SHOW_ON_TIMELINE] !== isFalse)) {
+    if (!currentOptions[SHOW_ON_TIMELINE]) {
       return;
     }
     const className = 'tooi-button-container-react-timeline';

@@ -1,5 +1,8 @@
 // import * as main from '../src/main';
-import { isTrue, isFalse, OPTION_KEYS } from '../src/constants';
+
+import { chrome } from 'jest-chrome';
+
+import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
 import {
   printException,
   collectUrlParams,
@@ -244,40 +247,25 @@ describe('Utils', () => {
 
   describe('updateOptions', () => {
     describe('Chrome拡張機能のとき', () => {
-      const originalChrome = window.chrome;
-      beforeAll(() => {
-        delete window.chrome;
-        window.chrome = { runtime: { id: 'id' } };
-      });
-      afterAll(() => {
-        window.chrome = originalChrome;
-      });
+      chrome.runtime.id = 'mock';
 
       it('初期設定を取得できる', async () => {
-        const expected = {};
-        OPTION_KEYS.forEach((key) => {
-          expected[key] = isTrue;
-        });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: {} }));
-        await expect(updateOptions()).resolves.toStrictEqual(expected);
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: initialOptionsBool }));
+        await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
       });
 
       it('設定した値を取得できる', async () => {
-        const expected = {};
+        const expected = { ...initialOptionsBool };
         OPTION_KEYS.forEach((key, i) => {
-          expected[key] = i % 2 === 0 ? isTrue : isFalse;
+          expected[key] = i % 2 === 0;
         });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({ data: { ...expected } }));
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({ data: { ...expected } }));
         await expect(updateOptions()).resolves.toStrictEqual(expected);
       });
 
       it('設定が取得できなかったら初期設定', async () => {
-        const expected = {};
-        OPTION_KEYS.forEach((key) => {
-          expected[key] = isTrue;
-        });
-        window.chrome.runtime.sendMessage = jest.fn((_, callback) => callback({}));
-        await expect(updateOptions()).resolves.toStrictEqual(expected);
+        chrome.runtime.sendMessage.mockImplementation((_, callback) => callback({}));
+        await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
       });
     });
 
@@ -292,11 +280,7 @@ describe('Utils', () => {
       });
 
       it('初期設定を取得できる', async () => {
-        const expected = {};
-        OPTION_KEYS.forEach((key) => {
-          expected[key] = isTrue;
-        });
-        await expect(updateOptions()).resolves.toStrictEqual(expected);
+        await expect(updateOptions()).resolves.toStrictEqual(initialOptionsBool);
       });
     });
   });

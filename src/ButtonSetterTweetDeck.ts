@@ -1,5 +1,5 @@
 import { ButtonSetterType } from './ButtonSetter';
-import { SHOW_ON_TWEETDECK_TIMELINE, isFalse, SHOW_ON_TWEETDECK_TWEET_DETAIL, Options } from './constants';
+import { SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, OptionsBool } from './constants';
 import { printException, setStyle, onOriginalButtonClick } from './utils';
 
 /**
@@ -7,11 +7,9 @@ import { printException, setStyle, onOriginalButtonClick } from './utils';
  */
 export class ButtonSetterTweetDeck implements ButtonSetterType {
   // タイムラインにボタン表示
-  public setButtonOnTimeline(currentOptions: Options): void {
+  public setButtonOnTimeline(currentOptions: OptionsBool): void {
     // タイムラインにボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    // - isFalse のとき OFF
-    if (!(currentOptions[SHOW_ON_TWEETDECK_TIMELINE] !== isFalse)) {
+    if (!currentOptions[SHOW_ON_TWEETDECK_TIMELINE]) {
       return;
     }
     // if タイムラインのツイートを取得できたら
@@ -62,11 +60,9 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
   }
 
   // ツイート詳細にボタン表示
-  public setButtonOnTweetDetail(currentOptions: Options): void {
+  public setButtonOnTweetDetail(currentOptions: OptionsBool): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
-    // - isTrue か 設定なし のとき ON
-    // - isFalse のとき OFF
-    if (!(currentOptions[SHOW_ON_TWEETDECK_TWEET_DETAIL] !== isFalse)) {
+    if (!currentOptions[SHOW_ON_TWEETDECK_TWEET_DETAIL]) {
       return;
     }
     // if ツイート詳細を取得できたら

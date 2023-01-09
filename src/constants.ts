@@ -1,3 +1,14 @@
+export interface OptionsBool {
+  // 公式Web
+  SHOW_ON_TIMELINE: boolean;
+  SHOW_ON_TWEET_DETAIL: boolean;
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: boolean;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: boolean;
+}
+
 export interface Options {
   // 公式Web
   SHOW_ON_TIMELINE: TooiBoolean;
@@ -12,10 +23,24 @@ export interface Options {
 export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
 
 /**
- * userjs 用の設定項目
+ * 設定項目
+ */
+export const initialOptionsBool: OptionsBool = {
+  // 公式Web
+  SHOW_ON_TIMELINE: true,
+  SHOW_ON_TWEET_DETAIL: true,
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: true,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: true,
+};
+
+/**
+ * 設定項目
  * 'isfalse' とすると、その設定がオフになる
  */
-export const userjsOptions: Options = {
+export const initialOptions: Options = {
   // 公式Web
   SHOW_ON_TIMELINE: 'istrue',
   SHOW_ON_TWEET_DETAIL: 'istrue',
@@ -52,7 +77,7 @@ export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEE
 export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
 /** これ自体がChrome拡張機能かどうか */
-export const isNativeChromeExtension = (): boolean => window.chrome?.runtime?.id !== undefined;
+export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== undefined;
 
 // 設定
 
@@ -78,3 +103,6 @@ export const OPTIONS_TEXT: { [key in keyof Options]: string } = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
 };
+
+// chrome.storateへの移行が済んだかどうかのキー
+export const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
