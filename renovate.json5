@@ -25,6 +25,6 @@
     {
       "matchPackagePatterns": ["^node$"],
       "prCreation": "immediate"
-    },
+    }
   ]
 }
