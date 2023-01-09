@@ -1,6 +1,9 @@
 {
-  "extends": ["config:base"],
-  "masterIssueApproval": true,
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":automergeMinor"
+  ],
   "rebaseConflictedPrs": true,
   "labels": ["renovate"],
   "packageRules": [
@@ -14,14 +17,14 @@
       "groupName": "@types/react, @types/react-dom"
     },
     {
-      // don't create node patch update p-r
-      "matchPackagePatterns": ["^node$"],
+      // don't create types and node patch update p-r
+      "matchPackagePatterns": ["^@types/", "^node$"],
       "matchUpdateTypes": ["patch"],
       "enabled": false
     },
     {
       "matchPackagePatterns": ["^node$"],
       "prCreation": "immediate"
-    }
+    },
   ]
 }
