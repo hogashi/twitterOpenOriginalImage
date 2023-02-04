@@ -4,8 +4,9 @@ import { initialOptionsBool, SHOW_ON_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL } 
 import { getOptions, setOptions } from '../src/extension-contexts/options';
 
 let chromeStorage = {};
-chrome.storage.sync.set.mockImplementation((items) => {
+chrome.storage.sync.set.mockImplementation((items, callback) => {
   chromeStorage = { ...chromeStorage, ...items };
+  callback();
 });
 chrome.storage.sync.get.mockImplementation((keys, callback) => {
   if (typeof keys === 'string') {
