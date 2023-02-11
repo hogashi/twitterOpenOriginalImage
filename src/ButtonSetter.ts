@@ -107,10 +107,13 @@ export class ButtonSetter implements ButtonSetterType {
     container.classList.add(className);
     setStyle(container, {
       display: 'flex',
-      'margin-left': '20px',
       'flex-flow': 'column',
       'justify-content': 'center',
     });
+
+    // 新しいTweetDeckで, カラムの幅によってはボタンがはみ出るので,
+    // 折り返してボタンを表示する
+    setStyle(target, { 'flex-wrap': 'wrap' });
 
     target.appendChild(container);
     container.appendChild(button);
