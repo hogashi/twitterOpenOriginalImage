@@ -8,6 +8,7 @@ import {
   STRIP_IMAGE_SUFFIX,
   OptionsBool,
   initialOptionsBool,
+  isReactView,
 } from './constants';
 
 /** chrome.runtime.sendMessage で送るメッセージ */
@@ -172,8 +173,14 @@ export const downloadImage = (e: KeyboardEvent): void => {
   }
 };
 
-export const getButtonSetter = (): ButtonSetterType =>
-  isTweetdeck() ? new ButtonSetterTweetDeck() : new ButtonSetter();
+export const getButtonSetter = (): ButtonSetterType => {
+  // 新しいTweetDeckは公式Webと同じReactビュー
+  // 古いTweetDeckのときだけ専用クラスを使う
+  if (isTweetdeck() && !isReactView()) {
+    return new ButtonSetterTweetDeck();
+  }
+  return new ButtonSetter();
+};
 
 /**
  * 設定項目更新
