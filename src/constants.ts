@@ -76,6 +76,9 @@ export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEE
 /** 画像ページかどうか */
 export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
+/** Reactビューかどうか */
+export const isReactView = (): boolean => !!document.getElementById('react-root');
+
 /** これ自体がChrome拡張機能かどうか */
 export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== undefined;
 

@@ -16,6 +16,7 @@ import {
   initialOptions,
   isTwitter,
   isTweetdeck,
+  isReactView,
   isImageTab,
   isNativeChromeExtension,
 } from '../src/constants';
@@ -106,6 +107,14 @@ describe('定数', () => {
       expect(isTwitter()).toBeFalsy();
       expect(isTweetdeck()).toBeFalsy();
       expect(isImageTab()).toBeTruthy();
+    });
+  });
+
+  describe('Reactビューかどうかのフラグ', () => {
+    it('isReactView', () => {
+      expect(isReactView()).toBeFalsy();
+      document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
+      expect(isReactView()).toBeTruthy();
     });
   });
 
