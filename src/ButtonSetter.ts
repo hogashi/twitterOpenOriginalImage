@@ -1,4 +1,11 @@
-import { OptionsBool, SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL } from './constants';
+import {
+  isTweetdeck,
+  isTwitter,
+  OptionsBool,
+  SHOW_ON_TIMELINE,
+  SHOW_ON_TWEETDECK_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
+} from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
 export interface ButtonSetterType {
@@ -201,8 +208,12 @@ export class ButtonSetter implements ButtonSetterType {
   }
 
   private _setButtonOnReactLayoutTimeline(currentOptions: OptionsBool): void {
-    // ツイート詳細にボタン表示する設定がされているときだけ実行する
-    if (!currentOptions[SHOW_ON_TIMELINE]) {
+    // タイムラインにボタン表示する設定がされているときだけ実行する
+    // 公式Webと, 新しいTweetDeckで呼ばれる
+    if (
+      (isTwitter() && !currentOptions[SHOW_ON_TIMELINE]) ||
+      (isTweetdeck() && !currentOptions[SHOW_ON_TWEETDECK_TIMELINE])
+    ) {
       return;
     }
     const className = 'tooi-button-container-react-timeline';
