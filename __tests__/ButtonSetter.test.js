@@ -701,9 +701,14 @@ describe('ButtonSetter', () => {
       const button = document.createElement('div');
       button.setAttribute('role', 'button');
       const child = document.createElement('div');
+      const svg = document.createElement('svg');
       if (color) {
         child.style.color = color;
+        // 本来はsvgにはcolorは当たっていなくて, 親のcolorをgetComputedStyleで取得すると自然ととれる
+        // テストでは再現できなかったのでstyleを当ててしまう
+        svg.style.color = color;
       }
+      child.appendChild(svg);
       button.appendChild(child);
       group.appendChild(button);
       document.body.appendChild(group);
