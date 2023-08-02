@@ -101,6 +101,11 @@ export const formatUrl = (imgUrl: string): string | null => {
   }
 
   const { protocol, host, pathname, format } = params;
+  // webpの場合name=origが見られないので, 見られるname=4096x4096にする
+  // TODO: 対処を整理する
+  if (format === 'webp') {
+    return `${protocol}//${host}${pathname}?format=${format}&name=4096x4096`;
+  }
   return `${protocol}//${host}${pathname}?format=${format}&name=orig`;
 };
 

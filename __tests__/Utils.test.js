@@ -131,6 +131,12 @@ describe('Utils', () => {
         params: { format: 'png', name: 'orig' },
         filename: `${testParams.basename}-orig.png`,
       },
+      {
+        title: '?format=webp&name=4096x4096',
+        url: `${makeTestBaseURL()}?format=webp&name=4096x4096`,
+        params: { format: 'webp', name: '4096x4096' },
+        filename: `${testParams.basename}-4096x4096.webp`,
+      },
     ];
 
     describe('collectUrlParams 画像urlの要素を集める', () => {
@@ -150,7 +156,13 @@ describe('Utils', () => {
       cases.forEach((singleCase) => {
         const { title, url, params } = singleCase;
         it(`${title}`, () => {
-          expect(formatUrl(url)).toBe(`https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`);
+          if (params.format === 'webp') {
+            expect(formatUrl(url)).toBe(
+              `https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=4096x4096`,
+            );
+          } else {
+            expect(formatUrl(url)).toBe(`https://pbs.twimg.com/media/hogefuga123?format=${params.format}&name=orig`);
+          }
         });
       });
 

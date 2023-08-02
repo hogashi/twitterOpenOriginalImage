@@ -7,8 +7,8 @@ export const setOptions = (options: OptionsBool): void => {
 };
 
 export const getOptions = (): Promise<OptionsBool> => {
-  return new Promise(resolve => {
-    chrome.storage.sync.get(OPTION_KEYS, got => {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(OPTION_KEYS, (got) => {
       // 初期値をフォールバックとしておく
       resolve({ ...initialOptionsBool, ...got });
     });
