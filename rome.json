@@ -6,6 +6,9 @@
       "recommended": true,
       "performance": {
         "noDelete": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
       }
     },
     "ignore": ["__tests__/**/*.snap"]
