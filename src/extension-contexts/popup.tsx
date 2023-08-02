@@ -92,34 +92,34 @@ export const Popup = (props: Props): JSX.Element => {
         minWidth: '300px',
       }}
     >
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar
-          variant="dense"
+          variant='dense'
           style={{
             display: 'flex',
             justifyContent: 'center',
           }}
         >
-          <Typography color="inherit" variant="h5" style={{ flex: '0 1 auto' }}>
+          <Typography color='inherit' variant='h5' style={{ flex: '0 1 auto' }}>
             Options - 設定
           </Typography>
         </Toolbar>
       </AppBar>
-      <List subheader={<ListSubheader component="div">TwitterWeb公式</ListSubheader>}>
+      <List subheader={<ListSubheader component='div'>TwitterWeb公式</ListSubheader>}>
         {optionsItems[SHOW_ON_TIMELINE]}
         {optionsItems[SHOW_ON_TWEET_DETAIL]}
       </List>
-      <List subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}>
+      <List subheader={<ListSubheader component='div'>TweetDeck</ListSubheader>}>
         {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
         {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
       </List>
-      <List subheader={<ListSubheader component="div">画像ページ</ListSubheader>}>
+      <List subheader={<ListSubheader component='div'>画像ページ</ListSubheader>}>
         {optionsItems[STRIP_IMAGE_SUFFIX]}
       </List>
       <Button
-        className="saveSettingButton"
-        variant="contained"
-        color="primary"
+        className='saveSettingButton'
+        variant='contained'
+        color='primary'
         onClick={onSave}
         style={{ flex: '0 1 auto' }}
       >
