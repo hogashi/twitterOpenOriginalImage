@@ -281,9 +281,9 @@ export class ButtonSetter implements ButtonSetterType {
     // 初期値: コントラスト比4.5(chromeの推奨する最低ライン)の色
     let color = '#697b8c';
     // ツイートアクション(返信とか)のボタンのクラス(夜間モードか否かでクラス名が違う)
-    const actionButton = document.querySelector<HTMLElement>('div[role="group"] div[role="button"]');
-    if (actionButton?.children[0] && (actionButton.children[0] as HTMLElement).style) {
-      const buttonColor = window.getComputedStyle(actionButton.children[0]).color;
+    const actionButtonSvg = document.querySelector<SVGSVGElement>('div[role="group"] div[role="button"] svg');
+    if (actionButtonSvg) {
+      const buttonColor = window.getComputedStyle(actionButtonSvg).color;
       if (buttonColor && buttonColor.length > 0) {
         color = buttonColor;
       }
