@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --version && webpack --mode production",
     "build-dev": "webpack --version && webpack --mode development",
-    "lint": "rome check --apply-suggested src __tests__",
+    "lint": "rome check --apply-unsafe src __tests__",
     "format": "rome format --write src __tests__",
     "rome:fix": "run-s lint format",
     "jest": "jest --version && jest --verbose --testEnvironment=jsdom --coverage",
