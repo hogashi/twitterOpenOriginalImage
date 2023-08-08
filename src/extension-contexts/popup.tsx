@@ -20,7 +20,6 @@ import {
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  STRIP_IMAGE_SUFFIX,
   OPTIONS_TEXT,
   OptionsBool,
 } from '../constants';
@@ -112,9 +111,6 @@ export const Popup = (props: Props): JSX.Element => {
       <List subheader={<ListSubheader component='div'>TweetDeck</ListSubheader>}>
         {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
         {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
-      </List>
-      <List subheader={<ListSubheader component='div'>画像ページ</ListSubheader>}>
-        {optionsItems[STRIP_IMAGE_SUFFIX]}
       </List>
       <Button
         className='saveSettingButton'
