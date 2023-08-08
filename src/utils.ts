@@ -279,6 +279,7 @@ export const setOriginalButton = (options: OptionsBool): void => {
 };
 
 /**
+ * @deprecated
  * twitterの画像を表示したときのC-sを拡張
  * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
  */
