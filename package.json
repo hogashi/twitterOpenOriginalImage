@@ -22,10 +22,10 @@
   },
   "devDependencies": {
     "@babel/cli": "7.22.10",
-    "@babel/core": "7.22.10",
+    "@babel/core": "7.22.11",
     "@babel/preset-env": "7.22.10",
     "@babel/preset-react": "7.22.5",
-    "@babel/preset-typescript": "7.22.5",
+    "@babel/preset-typescript": "7.22.11",
     "@tsconfig/recommended": "1.0.2",
     "@types/chrome": "0.0.206",
     "@types/filesystem": "0.0.32",
