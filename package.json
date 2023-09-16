@@ -26,7 +26,7 @@
     "@babel/preset-env": "7.22.15",
     "@babel/preset-react": "7.22.15",
     "@babel/preset-typescript": "7.22.15",
-    "@tsconfig/recommended": "1.0.2",
+    "@tsconfig/recommended": "1.0.3",
     "@types/chrome": "0.0.206",
     "@types/filesystem": "0.0.32",
     "@types/jest": "29.5.0",
