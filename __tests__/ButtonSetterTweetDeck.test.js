@@ -1,5 +1,5 @@
-import { SHOW_ON_TWEETDECK_TIMELINE, isFalse, SHOW_ON_TWEETDECK_TWEET_DETAIL, isTrue } from '../src/constants';
 import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
+import { SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, isFalse, isTrue } from '../src/constants';
 
 function makeAllEnabledOptions() {
   return {

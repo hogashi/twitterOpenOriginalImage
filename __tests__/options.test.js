@@ -1,5 +1,5 @@
 import { chrome } from 'jest-chrome';
-import { initialOptionsBool, SHOW_ON_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL } from '../src/constants';
+import { SHOW_ON_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, initialOptionsBool } from '../src/constants';
 
 import { getOptions, setOptions } from '../src/extension-contexts/options';
 

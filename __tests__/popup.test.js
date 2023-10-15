@@ -1,15 +1,15 @@
-import TestRenderer from 'react-test-renderer';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import TestRenderer from 'react-test-renderer';
 Enzyme.configure({ adapter: new Adapter() });
 const { shallow } = Enzyme;
 import { chrome } from 'jest-chrome';
 
 import {
   OPTIONS_TEXT,
+  OPTION_KEYS,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
-  OPTION_KEYS,
   initialOptionsBool,
 } from '../src/constants';
 import { Popup } from '../src/extension-contexts/popup';

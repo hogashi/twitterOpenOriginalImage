@@ -1,10 +1,10 @@
 import {
-  isTweetdeck,
-  isTwitter,
   OptionsBool,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEET_DETAIL,
+  isTweetdeck,
+  isTwitter,
 } from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
