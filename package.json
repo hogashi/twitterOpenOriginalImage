@@ -51,9 +51,9 @@
   "dependencies": {
     "@babel/polyfill": "7.12.1",
     "@babel/runtime": "7.23.1",
+    "@biomejs/biome": "1.2.2",
     "@material-ui/core": "4.12.4",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "@biomejs/biome": "1.0.0"
+    "react-dom": "17.0.2"
   }
 }
