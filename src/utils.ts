@@ -2,13 +2,13 @@ import { ButtonSetter, ButtonSetterType } from './ButtonSetter';
 import { ButtonSetterTweetDeck } from './ButtonSetterTweetDeck';
 import {
   GET_LOCAL_STORAGE,
-  isNativeChromeExtension,
-  isTweetdeck,
   OPTION_UPDATED,
-  STRIP_IMAGE_SUFFIX,
   OptionsBool,
+  STRIP_IMAGE_SUFFIX,
   initialOptionsBool,
+  isNativeChromeExtension,
   isReactView,
+  isTweetdeck,
 } from './constants';
 
 /** chrome.runtime.sendMessage で送るメッセージ */

@@ -1,6 +1,6 @@
 import { ButtonSetterType } from './ButtonSetter';
-import { SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, OptionsBool } from './constants';
-import { printException, setStyle, onOriginalButtonClick } from './utils';
+import { OptionsBool, SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL } from './constants';
+import { onOriginalButtonClick, printException, setStyle } from './utils';
 
 /**
  * tweetdeck.twitter.comでボタンを設置するクラス

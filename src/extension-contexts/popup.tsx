@@ -1,5 +1,3 @@
-import React, { useState, useCallback } from 'react';
-import ReactDOM from 'react-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -9,19 +7,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import React, { useCallback, useState } from 'react';
+import ReactDOM from 'react-dom';
 import {
-  OPTION_KEYS,
-  HOST_TWITTER_COM,
   HOST_MOBILE_TWITTER_COM,
-  HOST_TWEETDECK_TWITTER_COM,
   HOST_PBS_TWIMG_COM,
+  HOST_TWEETDECK_TWITTER_COM,
+  HOST_TWITTER_COM,
+  OPTIONS_TEXT,
+  OPTION_KEYS,
   OPTION_UPDATED,
+  OptionsBool,
   SHOW_ON_TIMELINE,
-  SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  OPTIONS_TEXT,
-  OptionsBool,
+  SHOW_ON_TWEET_DETAIL,
 } from '../constants';
 import { printException } from '../utils';
 import { getOptions, setOptions } from './options';
@@ -91,31 +91,31 @@ export const Popup = (props: Props): JSX.Element => {
         minWidth: '300px',
       }}
     >
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar
-          variant='dense'
+          variant="dense"
           style={{
             display: 'flex',
             justifyContent: 'center',
           }}
         >
-          <Typography color='inherit' variant='h5' style={{ flex: '0 1 auto' }}>
+          <Typography color="inherit" variant="h5" style={{ flex: '0 1 auto' }}>
             Options - 設定
           </Typography>
         </Toolbar>
       </AppBar>
-      <List subheader={<ListSubheader component='div'>TwitterWeb公式</ListSubheader>}>
+      <List subheader={<ListSubheader component="div">TwitterWeb公式</ListSubheader>}>
         {optionsItems[SHOW_ON_TIMELINE]}
         {optionsItems[SHOW_ON_TWEET_DETAIL]}
       </List>
-      <List subheader={<ListSubheader component='div'>TweetDeck</ListSubheader>}>
+      <List subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}>
         {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
         {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
       </List>
       <Button
-        className='saveSettingButton'
-        variant='contained'
-        color='primary'
+        className="saveSettingButton"
+        variant="contained"
+        color="primary"
         onClick={onSave}
         style={{ flex: '0 1 auto' }}
       >

@@ -2,21 +2,21 @@
 
 import { chrome } from 'jest-chrome';
 
-import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
-import {
-  printException,
-  collectUrlParams,
-  formatUrl,
-  openImages,
-  updateOptions,
-  setStyle,
-  getImageFilenameByUrl,
-  downloadImage,
-  onOriginalButtonClick,
-  getButtonSetter,
-} from '../src/utils';
 import { ButtonSetter } from '../src/ButtonSetter';
 import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
+import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
+import {
+  collectUrlParams,
+  downloadImage,
+  formatUrl,
+  getButtonSetter,
+  getImageFilenameByUrl,
+  onOriginalButtonClick,
+  openImages,
+  printException,
+  setStyle,
+  updateOptions,
+} from '../src/utils';
 
 const testParams = {
   protocol: 'https:',

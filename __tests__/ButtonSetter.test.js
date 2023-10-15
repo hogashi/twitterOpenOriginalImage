@@ -1,6 +1,6 @@
-// import * as main from '../src/main';
-import { SHOW_ON_TIMELINE, isFalse, SHOW_ON_TWEET_DETAIL, isTrue } from '../src/constants';
 import { ButtonSetter } from '../src/ButtonSetter';
+// import * as main from '../src/main';
+import { SHOW_ON_TIMELINE, SHOW_ON_TWEET_DETAIL, isFalse, isTrue } from '../src/constants';
 
 function makeAllEnabledOptions() {
   return {
