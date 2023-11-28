@@ -72,7 +72,7 @@ export const Popup = (props: Props): JSX.Element => {
             name={key}
             type="checkbox"
             checked={enabled[key]}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className={`${key} h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600`}
             onClick={(): void => {
               setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
             }}

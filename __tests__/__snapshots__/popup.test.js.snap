@@ -33,7 +33,7 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className="SHOW_ON_TIMELINE h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             id="SHOW_ON_TIMELINE"
             name="SHOW_ON_TIMELINE"
             onClick={[Function]}
@@ -59,7 +59,7 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className="SHOW_ON_TWEET_DETAIL h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             id="SHOW_ON_TWEET_DETAIL"
             name="SHOW_ON_TWEET_DETAIL"
             onClick={[Function]}
@@ -94,7 +94,7 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className="SHOW_ON_TWEETDECK_TIMELINE h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             id="SHOW_ON_TWEETDECK_TIMELINE"
             name="SHOW_ON_TWEETDECK_TIMELINE"
             onClick={[Function]}
@@ -120,7 +120,7 @@ exports[`Popup render 1`] = `
         >
           <input
             checked={true}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            className="SHOW_ON_TWEETDECK_TWEET_DETAIL h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             id="SHOW_ON_TWEETDECK_TWEET_DETAIL"
             name="SHOW_ON_TWEETDECK_TWEET_DETAIL"
             onClick={[Function]}
