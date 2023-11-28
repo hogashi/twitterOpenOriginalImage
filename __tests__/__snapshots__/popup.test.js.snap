@@ -2,381 +2,153 @@
 
 exports[`Popup render 1`] = `
 <div
+  className="p-3 flex flex-col justify-center items-center"
   style={
     {
-      "display": "flex",
-      "flexFlow": "column",
-      "justifyContent": "center",
-      "minWidth": "300px",
+      "minWidth": "280px",
     }
   }
 >
-  <header
-    className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+  <h1
+    className="text-xl font-bold leading-7 text-gray-900 self-center sm:truncate sm:text-3xl sm:tracking-tight"
   >
-    <div
-      className="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
-      style={
-        {
-          "display": "flex",
-          "justifyContent": "center",
-        }
-      }
-    >
-      <h5
-        className="MuiTypography-root MuiTypography-h5 MuiTypography-colorInherit"
-        style={
-          {
-            "flex": "0 1 auto",
-          }
-        }
-      >
-        Options - 設定
-      </h5>
-    </div>
-  </header>
-  <ul
-    className="MuiList-root MuiList-padding MuiList-subheader"
+    Options - 設定
+  </h1>
+  <div
+    className="my-1"
   >
-    <div
-      className="MuiListSubheader-root MuiListSubheader-sticky MuiListSubheader-gutters"
+    <fieldset
+      className="mx-3 my-1"
     >
-      TwitterWeb公式
-    </div>
-    <div
-      aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root checkboxListItem SHOW_ON_TIMELINE MuiListItem-dense MuiListItem-gutters MuiListItem-button"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onDragLeave={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseLeave={[Function]}
-      onMouseUp={[Function]}
-      onTouchEnd={[Function]}
-      onTouchMove={[Function]}
-      onTouchStart={[Function]}
-      role="button"
-      tabIndex={0}
-    >
-      <span
-        aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
-        onBlur={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        style={
-          {
-            "padding": "4px 12px",
-          }
-        }
-        tabIndex={null}
+      <h2
+        className="text-base font-semibold leading-7 text-gray-900"
       >
-        <span
-          className="MuiIconButton-label"
+        TwitterWeb公式
+      </h2>
+      <div
+        className="checkboxListItem relative flex gap-x-2"
+      >
+        <div
+          className="flex h-6 items-center"
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-4"
-            data-indeterminate={false}
-            onChange={[Function]}
-            tabIndex={-1}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            id="SHOW_ON_TIMELINE"
+            name="SHOW_ON_TIMELINE"
+            onClick={[Function]}
             type="checkbox"
           />
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-            />
-          </svg>
-        </span>
-      </span>
-      <div
-        className="MuiListItemText-root MuiListItemText-dense"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+        </div>
+        <div
+          className="text-sm leading-6"
         >
-          タイムラインにボタンを表示
-        </span>
+          <label
+            className="font-medium text-gray-900"
+            htmlFor="SHOW_ON_TIMELINE"
+          >
+            タイムラインにボタンを表示
+          </label>
+        </div>
       </div>
-    </div>
-    <div
-      aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root checkboxListItem SHOW_ON_TWEET_DETAIL MuiListItem-dense MuiListItem-gutters MuiListItem-button"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onDragLeave={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseLeave={[Function]}
-      onMouseUp={[Function]}
-      onTouchEnd={[Function]}
-      onTouchMove={[Function]}
-      onTouchStart={[Function]}
-      role="button"
-      tabIndex={0}
-    >
-      <span
-        aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
-        onBlur={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        style={
-          {
-            "padding": "4px 12px",
-          }
-        }
-        tabIndex={null}
+      <div
+        className="checkboxListItem relative flex gap-x-2"
       >
-        <span
-          className="MuiIconButton-label"
+        <div
+          className="flex h-6 items-center"
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-4"
-            data-indeterminate={false}
-            onChange={[Function]}
-            tabIndex={-1}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            id="SHOW_ON_TWEET_DETAIL"
+            name="SHOW_ON_TWEET_DETAIL"
+            onClick={[Function]}
             type="checkbox"
           />
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-            />
-          </svg>
-        </span>
-      </span>
-      <div
-        className="MuiListItemText-root MuiListItemText-dense"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+        </div>
+        <div
+          className="text-sm leading-6"
         >
-          ツイート詳細にボタンを表示
-        </span>
+          <label
+            className="font-medium text-gray-900"
+            htmlFor="SHOW_ON_TWEET_DETAIL"
+          >
+            ツイート詳細にボタンを表示
+          </label>
+        </div>
       </div>
-    </div>
-  </ul>
-  <ul
-    className="MuiList-root MuiList-padding MuiList-subheader"
-  >
-    <div
-      className="MuiListSubheader-root MuiListSubheader-sticky MuiListSubheader-gutters"
+    </fieldset>
+    <fieldset
+      className="mx-3 my-1"
     >
-      TweetDeck
-    </div>
-    <div
-      aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root checkboxListItem SHOW_ON_TWEETDECK_TIMELINE MuiListItem-dense MuiListItem-gutters MuiListItem-button"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onDragLeave={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseLeave={[Function]}
-      onMouseUp={[Function]}
-      onTouchEnd={[Function]}
-      onTouchMove={[Function]}
-      onTouchStart={[Function]}
-      role="button"
-      tabIndex={0}
-    >
-      <span
-        aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
-        onBlur={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        style={
-          {
-            "padding": "4px 12px",
-          }
-        }
-        tabIndex={null}
+      <h2
+        className="text-base font-semibold leading-7 text-gray-900"
       >
-        <span
-          className="MuiIconButton-label"
+        TweetDeck
+      </h2>
+      <div
+        className="checkboxListItem relative flex gap-x-2"
+      >
+        <div
+          className="flex h-6 items-center"
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-4"
-            data-indeterminate={false}
-            onChange={[Function]}
-            tabIndex={-1}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            id="SHOW_ON_TWEETDECK_TIMELINE"
+            name="SHOW_ON_TWEETDECK_TIMELINE"
+            onClick={[Function]}
             type="checkbox"
           />
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-            />
-          </svg>
-        </span>
-      </span>
-      <div
-        className="MuiListItemText-root MuiListItemText-dense"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+        </div>
+        <div
+          className="text-sm leading-6"
         >
-          タイムラインにボタンを表示
-        </span>
+          <label
+            className="font-medium text-gray-900"
+            htmlFor="SHOW_ON_TWEETDECK_TIMELINE"
+          >
+            タイムラインにボタンを表示
+          </label>
+        </div>
       </div>
-    </div>
-    <div
-      aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root checkboxListItem SHOW_ON_TWEETDECK_TWEET_DETAIL MuiListItem-dense MuiListItem-gutters MuiListItem-button"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onDragLeave={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseLeave={[Function]}
-      onMouseUp={[Function]}
-      onTouchEnd={[Function]}
-      onTouchMove={[Function]}
-      onTouchStart={[Function]}
-      role="button"
-      tabIndex={0}
-    >
-      <span
-        aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
-        onBlur={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        style={
-          {
-            "padding": "4px 12px",
-          }
-        }
-        tabIndex={null}
+      <div
+        className="checkboxListItem relative flex gap-x-2"
       >
-        <span
-          className="MuiIconButton-label"
+        <div
+          className="flex h-6 items-center"
         >
           <input
             checked={true}
-            className="PrivateSwitchBase-input-4"
-            data-indeterminate={false}
-            onChange={[Function]}
-            tabIndex={-1}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            id="SHOW_ON_TWEETDECK_TWEET_DETAIL"
+            name="SHOW_ON_TWEETDECK_TWEET_DETAIL"
+            onClick={[Function]}
             type="checkbox"
           />
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-            />
-          </svg>
-        </span>
-      </span>
-      <div
-        className="MuiListItemText-root MuiListItemText-dense"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+        </div>
+        <div
+          className="text-sm leading-6"
         >
-          ツイート詳細にボタンを表示
-        </span>
+          <label
+            className="font-medium text-gray-900"
+            htmlFor="SHOW_ON_TWEETDECK_TWEET_DETAIL"
+          >
+            ツイート詳細にボタンを表示
+          </label>
+        </div>
       </div>
-    </div>
-  </ul>
+    </fieldset>
+  </div>
   <button
-    className="MuiButtonBase-root MuiButton-root MuiButton-contained saveSettingButton MuiButton-containedPrimary"
-    disabled={false}
-    onBlur={[Function]}
+    className="saveSettingButton rounded-md bg-indigo-600 w-1/2 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     onClick={[Function]}
-    onDragLeave={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseDown={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    style={
-      {
-        "flex": "0 1 auto",
-      }
-    }
-    tabIndex={0}
-    type="button"
+    type="submit"
   >
-    <span
-      className="MuiButton-label"
-    >
-      設定を保存
-    </span>
+    設定を保存
   </button>
   <footer
-    style={
-      {
-        "marginTop": "3px",
-        "textAlign": "center",
-      }
-    }
+    className="text-center mt-1"
   >
     twitter画像原寸ボタン - hogashi
   </footer>
