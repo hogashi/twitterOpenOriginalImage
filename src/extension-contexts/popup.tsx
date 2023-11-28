@@ -91,19 +91,19 @@ export const Popup = (props: Props): JSX.Element => {
     <div
       className="p-3 flex flex-col justify-center items-center"
       style={{
-        minWidth: '280px',
+        minWidth: '260px',
       }}
     >
       <h1 className="text-xl font-bold leading-7 text-gray-900 self-center sm:truncate sm:text-3xl sm:tracking-tight">
         Options - 設定
       </h1>
       <div className="my-1">
-        <fieldset className="mx-3 my-1">
+        <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TwitterWeb公式</h2>
           {optionsItems[SHOW_ON_TIMELINE]}
           {optionsItems[SHOW_ON_TWEET_DETAIL]}
         </fieldset>
-        <fieldset className="mx-3 my-1">
+        <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TweetDeck</h2>
           {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
           {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}

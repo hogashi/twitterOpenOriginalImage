@@ -5,7 +5,7 @@ exports[`Popup render 1`] = `
   className="p-3 flex flex-col justify-center items-center"
   style={
     {
-      "minWidth": "280px",
+      "minWidth": "260px",
     }
   }
 >
@@ -18,7 +18,7 @@ exports[`Popup render 1`] = `
     className="my-1"
   >
     <fieldset
-      className="mx-3 my-1"
+      className="my-1"
     >
       <h2
         className="text-base font-semibold leading-7 text-gray-900"
@@ -79,7 +79,7 @@ exports[`Popup render 1`] = `
       </div>
     </fieldset>
     <fieldset
-      className="mx-3 my-1"
+      className="my-1"
     >
       <h2
         className="text-base font-semibold leading-7 text-gray-900"
