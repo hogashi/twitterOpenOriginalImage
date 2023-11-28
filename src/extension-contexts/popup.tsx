@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   HOST_MOBILE_TWITTER_COM,
-  HOST_PBS_TWIMG_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
   OPTIONS_TEXT,
@@ -46,11 +45,7 @@ export const Popup = (props: Props): JSX.Element => {
           return;
         }
         const tabUrl = new URL(tab.url).hostname;
-        if (
-          ![HOST_TWITTER_COM, HOST_MOBILE_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM, HOST_PBS_TWIMG_COM].some(
-            (url) => url === tabUrl,
-          )
-        ) {
+        if (![HOST_TWITTER_COM, HOST_MOBILE_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM].some((url) => url === tabUrl)) {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;
         }

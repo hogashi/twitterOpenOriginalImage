@@ -1,6 +1,5 @@
 import {
   GET_LOCAL_STORAGE,
-  HOST_PBS_TWIMG_COM,
   HOST_PRO_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
@@ -11,9 +10,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   SHOW_ON_TWEET_DETAIL,
-  STRIP_IMAGE_SUFFIX,
   initialOptionsBool,
-  isImageTab,
   isNativeChromeExtension,
   isReactView,
   isTweetdeck,
@@ -39,18 +36,12 @@ describe('定数', () => {
     expect(SHOW_ON_TWEETDECK_TWEET_DETAIL).toBe('SHOW_ON_TWEETDECK_TWEET_DETAIL');
   });
 
-  it('画像ページ', () => {
-    expect(HOST_PBS_TWIMG_COM).toBe('pbs.twimg.com');
-    expect(STRIP_IMAGE_SUFFIX).toBe('STRIP_IMAGE_SUFFIX');
-  });
-
   it('初期設定', () => {
     expect(initialOptionsBool).toStrictEqual({
       SHOW_ON_TIMELINE: true,
       SHOW_ON_TWEET_DETAIL: true,
       SHOW_ON_TWEETDECK_TIMELINE: true,
       SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
-      STRIP_IMAGE_SUFFIX: true,
     });
   });
 
@@ -60,17 +51,13 @@ describe('定数', () => {
       SHOW_ON_TWEET_DETAIL,
       SHOW_ON_TWEETDECK_TIMELINE,
       SHOW_ON_TWEETDECK_TWEET_DETAIL,
-      STRIP_IMAGE_SUFFIX,
     ]);
 
     expect(OPTIONS_TEXT).toStrictEqual({
       SHOW_ON_TIMELINE: 'タイムライン',
       SHOW_ON_TWEET_DETAIL: '(旧表示で)ツイート詳細',
-      // TweetDeck
       SHOW_ON_TWEETDECK_TIMELINE: 'タイムライン',
       SHOW_ON_TWEETDECK_TWEET_DETAIL: '(旧表示で)ツイート詳細',
-      // 画像ページ
-      STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
     });
   });
 
@@ -87,27 +74,23 @@ describe('定数', () => {
       window.location = new URL('https://twitter.com');
       expect(isTwitter()).toBeTruthy();
       expect(isTweetdeck()).toBeFalsy();
-      expect(isImageTab()).toBeFalsy();
     });
     describe('TweetDeck', () => {
       it('tweetdeck.twitter.com', () => {
         window.location = new URL('https://tweetdeck.twitter.com');
         expect(isTwitter()).toBeFalsy();
         expect(isTweetdeck()).toBeTruthy();
-        expect(isImageTab()).toBeFalsy();
       });
       it('pro.twitter.com', () => {
         window.location = new URL('https://pro.twitter.com');
         expect(isTwitter()).toBeFalsy();
         expect(isTweetdeck()).toBeTruthy();
-        expect(isImageTab()).toBeFalsy();
       });
     });
     it('画像ページ', () => {
       window.location = new URL('https://pbs.twimg.com');
       expect(isTwitter()).toBeFalsy();
       expect(isTweetdeck()).toBeFalsy();
-      expect(isImageTab()).toBeTruthy();
     });
   });
 

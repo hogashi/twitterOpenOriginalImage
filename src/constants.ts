@@ -12,9 +12,6 @@ export const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 export const HOST_PRO_TWITTER_COM = 'pro.twitter.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
-// 画像ページ
-export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
-export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
 /**
  * 設定項目
@@ -26,8 +23,6 @@ export interface OptionsBool {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: boolean;
   SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: boolean;
 }
 
 export const initialOptionsBool: OptionsBool = {
@@ -37,8 +32,6 @@ export const initialOptionsBool: OptionsBool = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: true,
   SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: true,
 };
 
 export const OPTION_KEYS = [
@@ -46,7 +39,6 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  STRIP_IMAGE_SUFFIX,
 ] as const;
 export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // 公式Web
@@ -55,8 +47,6 @@ export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムライン',
   SHOW_ON_TWEETDECK_TWEET_DETAIL: '(旧表示で)ツイート詳細',
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
 };
 
 /** 公式Webかどうか */
@@ -65,8 +55,6 @@ export const isTwitter = (): boolean =>
 /** Tweetdeckかどうか */
 export const isTweetdeck = (): boolean =>
   window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
-/** 画像ページかどうか */
-export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
 /** Reactビューかどうか */
 export const isReactView = (): boolean => !!document.getElementById('react-root');

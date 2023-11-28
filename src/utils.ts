@@ -4,7 +4,6 @@ import {
   GET_LOCAL_STORAGE,
   OPTION_UPDATED,
   OptionsBool,
-  STRIP_IMAGE_SUFFIX,
   initialOptionsBool,
   isNativeChromeExtension,
   isReactView,
@@ -276,19 +275,4 @@ export const setOriginalButton = (options: OptionsBool): void => {
       return true;
     });
   }
-};
-
-/**
- * @deprecated
- * twitterの画像を表示したときのC-sを拡張
- * 画像のファイル名を「～.jpg-orig」「～.png-orig」ではなく「～-orig.jpg」「～-orig.png」にする
- */
-export const fixFileNameOnSaveCommand = (options: OptionsBool): void => {
-  // キーを押したとき
-  document.addEventListener('keydown', (e) => {
-    // 設定が有効なら
-    if (options[STRIP_IMAGE_SUFFIX]) {
-      downloadImage(e);
-    }
-  });
 };
