@@ -59,7 +59,7 @@ export const Popup = (props: Props): JSX.Element => {
   const optionsItems: { [key: string]: JSX.Element } = {};
   optionKeys.forEach((key) => {
     optionsItems[key] = (
-      <div className="checkboxListItem relative flex gap-x-3">
+      <div className="checkboxListItem relative flex gap-x-2">
         <div className="flex h-6 items-center">
           <input
             id={key}
@@ -83,41 +83,34 @@ export const Popup = (props: Props): JSX.Element => {
 
   return (
     <div
+      className="p-3 flex flex-col justify-center items-center"
       style={{
-        display: 'flex',
-        flexFlow: 'column',
-        justifyContent: 'center',
-        minWidth: '300px',
+        minWidth: '280px',
       }}
     >
-      <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+      <h1 className="text-xl font-bold leading-7 text-gray-900 self-center sm:truncate sm:text-3xl sm:tracking-tight">
         Options - 設定
-      </h2>
-      <div>
-        <h3>TwitterWeb公式</h3>
-        {optionsItems[SHOW_ON_TIMELINE]}
-        {optionsItems[SHOW_ON_TWEET_DETAIL]}
-      </div>
-      <div>
-        <h3>TweetDeck</h3>
-        {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
-        {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+      </h1>
+      <div className="my-1">
+        <fieldset className="mx-3 my-1">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">TwitterWeb公式</h2>
+          {optionsItems[SHOW_ON_TIMELINE]}
+          {optionsItems[SHOW_ON_TWEET_DETAIL]}
+        </fieldset>
+        <fieldset className="mx-3 my-1">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">TweetDeck</h2>
+          {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
+          {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+        </fieldset>
       </div>
       <button
         type="submit"
-        className="saveSettingButton rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className="saveSettingButton rounded-md bg-indigo-600 w-1/2 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={onSave}
       >
         設定を保存
       </button>
-      <footer
-        style={{
-          textAlign: 'center',
-          marginTop: '3px',
-        }}
-      >
-        twitter画像原寸ボタン - hogashi
-      </footer>
+      <footer className="text-center mt-1">twitter画像原寸ボタン - hogashi</footer>
     </div>
   );
 };
