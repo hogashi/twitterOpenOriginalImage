@@ -3,7 +3,7 @@ import {
   OptionsBool,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  BUTTON_TEXT_OPTION_KEY,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
 } from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
@@ -60,7 +60,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
-        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
@@ -114,7 +114,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
-        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }

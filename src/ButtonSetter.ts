@@ -1,5 +1,5 @@
 import {
-  BUTTON_TEXT_OPTION_KEY,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   OptionsBool,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
@@ -169,7 +169,7 @@ export class ButtonSetter implements ButtonSetterType {
         className,
         getImgSrcs,
         target: actionList,
-        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
@@ -209,7 +209,7 @@ export class ButtonSetter implements ButtonSetterType {
       className,
       getImgSrcs,
       target: actionList,
-      text: currentOptions[BUTTON_TEXT_OPTION_KEY],
+      text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
     });
   }
 
@@ -262,7 +262,7 @@ export class ButtonSetter implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
-        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
