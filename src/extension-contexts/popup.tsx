@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   HOST_MOBILE_TWITTER_COM,
@@ -12,6 +12,7 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   SHOW_ON_TWEET_DETAIL,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
 } from '../constants';
 import { printException } from '../utils';
 import { getOptions, setOptions } from './options';
@@ -30,6 +31,13 @@ export const Popup = (props: Props): JSX.Element => {
   const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
   const [saveButtonText, setSaveButtonText] = useState('設定を保存');
+
+  const onOriginalButtonTextInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setEnabled({ ...enabled, [ORIGINAL_BUTTON_TEXT_OPTION_KEY]: event.target.value });
+    },
+    [enabled],
+  );
 
   const onSave = useCallback(() => {
     setOptions(enabled, () => {
@@ -103,6 +111,21 @@ export const Popup = (props: Props): JSX.Element => {
           {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
           {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
         </fieldset>
+        <div className="my-1">
+          <label htmlFor="button-text" className="text-base font-semibold leading-7 text-gray-900">
+            ボタンのテキスト
+          </label>
+          <div className="mt-2">
+            <input
+              id="original-button-text"
+              name="original-button-text"
+              type="text"
+              value={enabled[ORIGINAL_BUTTON_TEXT_OPTION_KEY]}
+              onChange={onOriginalButtonTextInputChange}
+              className="block w-1/2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2 text-base"
+            />
+          </div>
+        </div>
       </div>
       <button
         type="submit"

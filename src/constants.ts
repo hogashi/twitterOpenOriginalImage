@@ -49,6 +49,7 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
 ] as const;
 export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // 公式Web
