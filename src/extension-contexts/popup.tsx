@@ -1,12 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import React, { useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -39,9 +30,15 @@ interface Props {
 export const Popup = (props: Props): JSX.Element => {
   const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
+  const [buttonText, setButtonText] = useState('設定を保存');
 
   const onSave = useCallback(() => {
-    setOptions(enabled);
+    setOptions(enabled, () => {
+      setButtonText('しました');
+      setTimeout(() => {
+        setButtonText('設定を保存');
+      }, 500);
+    });
     chrome.tabs.query({}, (result) =>
       result.forEach((tab) => {
         // console.log(tab);
@@ -68,67 +65,58 @@ export const Popup = (props: Props): JSX.Element => {
   const optionsItems: { [key: string]: JSX.Element } = {};
   optionKeys.forEach((key) => {
     optionsItems[key] = (
-      <ListItem
-        className={`checkboxListItem ${key}`}
-        dense
-        button
-        onClick={(): void => {
-          setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
-        }}
-      >
-        <Checkbox checked={enabled[key]} style={{ padding: '4px 12px' }} tabIndex={-1} disableRipple />
-        <ListItemText primary={optionsText[key]} />
-      </ListItem>
+      <div className="checkboxListItem relative flex gap-x-2">
+        <div className="flex h-6 items-center">
+          <input
+            id={key}
+            name={key}
+            type="checkbox"
+            checked={enabled[key]}
+            className={`${key} h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600`}
+            onClick={(): void => {
+              setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
+            }}
+          />
+        </div>
+        <div className="text-sm leading-6">
+          <label htmlFor={key} className="font-medium text-gray-900">
+            {optionsText[key]}
+          </label>
+        </div>
+      </div>
     );
   });
 
   return (
     <div
+      className="p-3 flex flex-col justify-center items-center"
       style={{
-        display: 'flex',
-        flexFlow: 'column',
-        justifyContent: 'center',
-        minWidth: '300px',
+        minWidth: '260px',
       }}
     >
-      <AppBar position="static">
-        <Toolbar
-          variant="dense"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography color="inherit" variant="h5" style={{ flex: '0 1 auto' }}>
-            Options - 設定
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <List subheader={<ListSubheader component="div">TwitterWeb公式</ListSubheader>}>
-        {optionsItems[SHOW_ON_TIMELINE]}
-        {optionsItems[SHOW_ON_TWEET_DETAIL]}
-      </List>
-      <List subheader={<ListSubheader component="div">TweetDeck</ListSubheader>}>
-        {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
-        {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
-      </List>
-      <Button
-        className="saveSettingButton"
-        variant="contained"
-        color="primary"
+      <h1 className="text-xl font-bold leading-7 text-gray-900 self-center sm:truncate sm:text-3xl sm:tracking-tight">
+        Options - 設定
+      </h1>
+      <div className="my-1">
+        <fieldset className="my-1">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">TwitterWeb公式</h2>
+          {optionsItems[SHOW_ON_TIMELINE]}
+          {optionsItems[SHOW_ON_TWEET_DETAIL]}
+        </fieldset>
+        <fieldset className="my-1">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">TweetDeck</h2>
+          {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
+          {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+        </fieldset>
+      </div>
+      <button
+        type="submit"
+        className="saveSettingButton rounded-md bg-indigo-600 w-1/2 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={onSave}
-        style={{ flex: '0 1 auto' }}
       >
-        設定を保存
-      </Button>
-      <footer
-        style={{
-          textAlign: 'center',
-          marginTop: '3px',
-        }}
-      >
-        twitter画像原寸ボタン - hogashi
-      </footer>
+        {buttonText}
+      </button>
+      <footer className="text-center mt-1">twitter画像原寸ボタン - hogashi</footer>
     </div>
   );
 };
