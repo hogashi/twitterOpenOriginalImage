@@ -5,7 +5,7 @@ exports[`Popup render 1`] = `
   className="p-3 flex flex-col justify-center items-center"
   style={
     {
-      "minWidth": "260px",
+      "minWidth": "230px",
     }
   }
 >
@@ -47,7 +47,7 @@ exports[`Popup render 1`] = `
             className="font-medium text-gray-900"
             htmlFor="SHOW_ON_TIMELINE"
           >
-            タイムラインにボタンを表示
+            タイムライン
           </label>
         </div>
       </div>
@@ -73,7 +73,7 @@ exports[`Popup render 1`] = `
             className="font-medium text-gray-900"
             htmlFor="SHOW_ON_TWEET_DETAIL"
           >
-            ツイート詳細にボタンを表示
+            (旧表示で)ツイート詳細
           </label>
         </div>
       </div>
@@ -108,7 +108,7 @@ exports[`Popup render 1`] = `
             className="font-medium text-gray-900"
             htmlFor="SHOW_ON_TWEETDECK_TIMELINE"
           >
-            タイムラインにボタンを表示
+            タイムライン
           </label>
         </div>
       </div>
@@ -134,7 +134,7 @@ exports[`Popup render 1`] = `
             className="font-medium text-gray-900"
             htmlFor="SHOW_ON_TWEETDECK_TWEET_DETAIL"
           >
-            ツイート詳細にボタンを表示
+            (旧表示で)ツイート詳細
           </label>
         </div>
       </div>

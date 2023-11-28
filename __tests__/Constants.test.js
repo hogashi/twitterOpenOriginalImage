@@ -72,12 +72,11 @@ describe('定数', () => {
     ]);
 
     expect(OPTIONS_TEXT).toStrictEqual({
-      // 公式Web
-      SHOW_ON_TIMELINE: 'タイムラインにボタンを表示',
-      SHOW_ON_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+      SHOW_ON_TIMELINE: 'タイムライン',
+      SHOW_ON_TWEET_DETAIL: '(旧表示で)ツイート詳細',
       // TweetDeck
-      SHOW_ON_TWEETDECK_TIMELINE: 'タイムラインにボタンを表示',
-      SHOW_ON_TWEETDECK_TWEET_DETAIL: 'ツイート詳細にボタンを表示',
+      SHOW_ON_TWEETDECK_TIMELINE: 'タイムライン',
+      SHOW_ON_TWEETDECK_TWEET_DETAIL: '(旧表示で)ツイート詳細',
       // 画像ページ
       STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
     });
