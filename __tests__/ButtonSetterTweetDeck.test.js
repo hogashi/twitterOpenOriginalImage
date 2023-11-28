@@ -433,8 +433,10 @@ describe('ButtonSetterTweetDeck', () => {
       root.appendChild(target);
       document.body.appendChild(root);
 
+      const text = 'Original';
+
       const buttonSetter = new ButtonSetterTweetDeck();
-      buttonSetter.setButton({ className, getImgSrcs, target });
+      buttonSetter.setButton({ className, getImgSrcs, target, text });
 
       const button = target.querySelector(`a.${className}`);
 
@@ -478,8 +480,10 @@ describe('ButtonSetterTweetDeck', () => {
       root.appendChild(target);
       document.body.appendChild(root);
 
+      const text = 'Original';
+
       const buttonSetter = new ButtonSetterTweetDeck();
-      buttonSetter.setButton({ className, getImgSrcs, target });
+      buttonSetter.setButton({ className, getImgSrcs, target, text });
 
       const button = target.querySelector(`a.${className}`);
 

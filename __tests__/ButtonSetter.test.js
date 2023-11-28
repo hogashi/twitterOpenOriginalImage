@@ -56,9 +56,10 @@ describe('ButtonSetter', () => {
     const imgSrcs = ['src1', 'src2'];
     const getImgSrcs = () => imgSrcs;
     const target = document.createElement('div');
+    const text = 'Original';
 
     const buttonSetter = new ButtonSetter();
-    buttonSetter.setButton({ className, getImgSrcs, target });
+    buttonSetter.setButton({ className, getImgSrcs, target, text });
 
     it('ボタン設置される', () => {
       expect(target.innerHTML).toMatchSnapshot();
@@ -84,9 +85,10 @@ describe('ButtonSetter', () => {
     const imgSrcs = ['src1', 'src2'];
     const getImgSrcs = () => imgSrcs;
     const target = document.createElement('div');
+    const text = 'Original';
 
     const buttonSetter = new ButtonSetter();
-    buttonSetter.setReactLayoutButton({ className, getImgSrcs, target });
+    buttonSetter.setReactLayoutButton({ className, getImgSrcs, target, text });
 
     it('ボタン設置される', () => {
       expect(target.innerHTML).toMatchSnapshot();
