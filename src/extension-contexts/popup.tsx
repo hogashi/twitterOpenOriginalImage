@@ -65,30 +65,33 @@ export const Popup = (props: Props): JSX.Element => {
     );
   }, [enabled]);
 
-  const optionsItems: { [key: string]: JSX.Element } = {};
-  optionKeys.forEach((key) => {
-    optionsItems[key] = (
-      <div className="checkboxListItem relative flex gap-x-2">
-        <div className="flex h-6 items-center">
-          <input
-            id={key}
-            name={key}
-            type="checkbox"
-            checked={enabled[key]}
-            className={`${key} h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600`}
-            onClick={(): void => {
-              setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
-            }}
-          />
-        </div>
-        <div className="text-sm leading-6">
-          <label htmlFor={key} className="font-medium text-gray-900">
-            {optionsText[key]}
-          </label>
-        </div>
+  const renderItem = (
+    key:
+      | typeof SHOW_ON_TIMELINE
+      | typeof SHOW_ON_TWEET_DETAIL
+      | typeof SHOW_ON_TWEETDECK_TIMELINE
+      | typeof SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  ) => (
+    <div className="checkboxListItem relative flex gap-x-2">
+      <div className="flex h-6 items-center">
+        <input
+          id={key}
+          name={key}
+          type="checkbox"
+          checked={enabled[key]}
+          className={`${key} h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600`}
+          onClick={(): void => {
+            setEnabled(Object.assign({ ...enabled }, { [key]: !enabled[key] }));
+          }}
+        />
       </div>
-    );
-  });
+      <div className="text-sm leading-6">
+        <label htmlFor={key} className="font-medium text-gray-900">
+          {optionsText[key]}
+        </label>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -103,13 +106,13 @@ export const Popup = (props: Props): JSX.Element => {
       <div className="my-1">
         <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TwitterWeb公式</h2>
-          {optionsItems[SHOW_ON_TIMELINE]}
-          {optionsItems[SHOW_ON_TWEET_DETAIL]}
+          {renderItem(SHOW_ON_TIMELINE)}
+          {renderItem(SHOW_ON_TWEET_DETAIL)}
         </fieldset>
         <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TweetDeck</h2>
-          {optionsItems[SHOW_ON_TWEETDECK_TIMELINE]}
-          {optionsItems[SHOW_ON_TWEETDECK_TWEET_DETAIL]}
+          {renderItem(SHOW_ON_TWEETDECK_TIMELINE)}
+          {renderItem(SHOW_ON_TWEETDECK_TWEET_DETAIL)}
         </fieldset>
         <div className="my-1">
           <label htmlFor="button-text" className="text-base font-semibold leading-7 text-gray-900">
