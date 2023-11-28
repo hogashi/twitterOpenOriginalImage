@@ -417,9 +417,15 @@ describe('Utils', () => {
       window.location = originalLocation;
     });
 
-    it('古いTweetDeckではButtonSetterTweetDeck', () => {
-      window.location = new URL('https://tweetdeck.twitter.com');
-      expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
+    describe('古いTweetDeckではButtonSetterTweetDeck', () => {
+      it('tweetdeck.twitter.com', () => {
+        window.location = new URL('https://tweetdeck.twitter.com');
+        expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
+      });
+      it('pro.twitter.com', () => {
+        window.location = new URL('https://pro.twitter.com');
+        expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
+      });
     });
     it('公式WebではButtonSetter', () => {
       window.location = new URL('https://twitter.com');
@@ -429,10 +435,17 @@ describe('Utils', () => {
       window.location = new URL('https://mobile.twitter.com');
       expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
     });
-    it('新しいTweetDeckではButtonSetter', () => {
-      window.location = new URL('https://tweetdeck.twitter.com');
-      document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
-      expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
+    describe('新しいTweetDeckではButtonSetter', () => {
+      it('tweetdeck.twitter.com', () => {
+        window.location = new URL('https://tweetdeck.twitter.com');
+        document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
+        expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
+      });
+      it('pro.twitter.com', () => {
+        window.location = new URL('https://pro.twitter.com');
+        document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
+        expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
+      });
     });
     it('どちらでもなかったらButtonSetter', () => {
       window.location = new URL('https://hoge.test');

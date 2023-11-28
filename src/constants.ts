@@ -73,7 +73,8 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 export const isTwitter = (): boolean =>
   window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
 /** Tweetdeckかどうか */
-export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
+export const isTweetdeck = (): boolean =>
+  window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
 /** 画像ページかどうか */
 export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 

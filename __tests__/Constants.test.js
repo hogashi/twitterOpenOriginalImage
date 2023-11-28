@@ -1,6 +1,7 @@
 import {
   GET_LOCAL_STORAGE,
   HOST_PBS_TWIMG_COM,
+  HOST_PRO_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
   OPTIONS_TEXT,
@@ -35,6 +36,7 @@ describe('定数', () => {
 
   it('TweetDeck', () => {
     expect(HOST_TWEETDECK_TWITTER_COM).toBe('tweetdeck.twitter.com');
+    expect(HOST_PRO_TWITTER_COM).toBe('pro.twitter.com');
     expect(SHOW_ON_TWEETDECK_TIMELINE).toBe('SHOW_ON_TWEETDECK_TIMELINE');
     expect(SHOW_ON_TWEETDECK_TWEET_DETAIL).toBe('SHOW_ON_TWEETDECK_TWEET_DETAIL');
   });
@@ -96,11 +98,19 @@ describe('定数', () => {
       expect(isTweetdeck()).toBeFalsy();
       expect(isImageTab()).toBeFalsy();
     });
-    it('TweetDeck', () => {
-      window.location = new URL('https://tweetdeck.twitter.com');
-      expect(isTwitter()).toBeFalsy();
-      expect(isTweetdeck()).toBeTruthy();
-      expect(isImageTab()).toBeFalsy();
+    describe('TweetDeck', () => {
+      it('tweetdeck.twitter.com', () => {
+        window.location = new URL('https://tweetdeck.twitter.com');
+        expect(isTwitter()).toBeFalsy();
+        expect(isTweetdeck()).toBeTruthy();
+        expect(isImageTab()).toBeFalsy();
+      });
+      it('pro.twitter.com', () => {
+        window.location = new URL('https://pro.twitter.com');
+        expect(isTwitter()).toBeFalsy();
+        expect(isTweetdeck()).toBeTruthy();
+        expect(isImageTab()).toBeFalsy();
+      });
     });
     it('画像ページ', () => {
       window.location = new URL('https://pbs.twimg.com');
