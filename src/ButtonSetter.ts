@@ -31,8 +31,7 @@ export class ButtonSetter implements ButtonSetterType {
   // ツイート詳細にボタン表示
   public setButtonOnTweetDetail(currentOptions: OptionsBool): void {
     // 昔のビューの処理はしばらく残す
-    // TODO: Reactレイアウトでも実装する必要がある？
-    // ref: https://github.com/hogashi/twitterOpenOriginalImage/issues/32#issuecomment-578510155
+    // - 公式の新しいhtmlでは使えないが, 古いhtmlで閲覧している人がいるので残してある
     this._setButtonOnTweetDetail(currentOptions);
   }
 

@@ -91,7 +91,7 @@ export const Popup = (props: Props): JSX.Element => {
     <div
       className="p-3 flex flex-col justify-center items-center"
       style={{
-        minWidth: '260px',
+        minWidth: '230px',
       }}
     >
       <h1 className="text-xl font-bold leading-7 text-gray-900 self-center sm:truncate sm:text-3xl sm:tracking-tight">

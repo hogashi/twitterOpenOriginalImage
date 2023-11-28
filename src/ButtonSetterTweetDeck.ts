@@ -60,6 +60,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
   }
 
   // ツイート詳細にボタン表示
+  // - 公式の新しいhtmlでは使えないが, 古いhtmlで閲覧している人がいるので残してある
   public setButtonOnTweetDetail(currentOptions: OptionsBool): void {
     // ツイート詳細にボタン表示する設定がされているときだけ実行する
     if (!currentOptions[SHOW_ON_TWEETDECK_TWEET_DETAIL]) {
