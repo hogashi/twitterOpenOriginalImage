@@ -1,6 +1,6 @@
 name: Node.js CI
 
-on: [push]
+on: [push, workflow_dispatch]
 
 permissions:
   contents: read
@@ -8,21 +8,21 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: setup
-      uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
+      - uses: actions/checkout@v4
+      - name: setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
-    - name: install
-      run: yarn install --frozen-lockfile
+      - name: install
+        run: yarn install --frozen-lockfile
 
-    - name: build
-      run: yarn build
+      - name: build
+        run: yarn build
 
-    - name: test
-      run: yarn test
-      env:
-        CI: true
-        # for jest
-        FORCE_COLOR: true
+      - name: test
+        run: yarn test
+        env:
+          CI: true
+          # for jest
+          FORCE_COLOR: true
