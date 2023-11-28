@@ -80,6 +80,21 @@ describe('ButtonSetter', () => {
     // });
   });
 
+  describe('setButtonにボタンのテキストを指定するとそれが入る', () => {
+    const className = 'hogeclass';
+    const imgSrcs = ['src1', 'src2'];
+    const getImgSrcs = () => imgSrcs;
+    const target = document.createElement('div');
+    const text = '原寸';
+
+    const buttonSetter = new ButtonSetter();
+    buttonSetter.setButton({ className, getImgSrcs, target, text });
+
+    it('指定したテキストでボタン設置される', () => {
+      expect(target.innerHTML).toMatchSnapshot();
+    });
+  });
+
   describe('setReactLayoutButton', () => {
     const className = 'hogeclass';
     const imgSrcs = ['src1', 'src2'];
