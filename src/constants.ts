@@ -9,18 +9,20 @@ export interface OptionsBool {
   STRIP_IMAGE_SUFFIX: boolean;
 }
 
-export interface Options {
+export interface Options_SIMBOL_TO_BE_DELETED {
   // 公式Web
-  SHOW_ON_TIMELINE: TooiBoolean;
-  SHOW_ON_TWEET_DETAIL: TooiBoolean;
+  SHOW_ON_TIMELINE: TooiBoolean_SIMBOL_TO_BE_DELETED;
+  SHOW_ON_TWEET_DETAIL: TooiBoolean_SIMBOL_TO_BE_DELETED;
   // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean;
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean;
+  SHOW_ON_TWEETDECK_TIMELINE: TooiBoolean_SIMBOL_TO_BE_DELETED;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: TooiBoolean_SIMBOL_TO_BE_DELETED;
   // 画像ページ
-  STRIP_IMAGE_SUFFIX: TooiBoolean;
+  STRIP_IMAGE_SUFFIX: TooiBoolean_SIMBOL_TO_BE_DELETED;
 }
 
-export type OptionsMaybe = { [key in keyof Options]?: TooiBoolean };
+export type OptionsMaybe_SIMBOL_TO_BE_DELETED = {
+  [key in keyof Options_SIMBOL_TO_BE_DELETED]?: TooiBoolean_SIMBOL_TO_BE_DELETED;
+};
 
 /**
  * 設定項目
@@ -40,7 +42,7 @@ export const initialOptionsBool: OptionsBool = {
  * 設定項目
  * 'isfalse' とすると、その設定がオフになる
  */
-export const initialOptions: Options = {
+export const initialOptions: Options_SIMBOL_TO_BE_DELETED = {
   // 公式Web
   SHOW_ON_TIMELINE: 'istrue',
   SHOW_ON_TWEET_DETAIL: 'istrue',
@@ -89,7 +91,7 @@ export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== un
 // 設定に使う真偽値
 export const isTrue = 'istrue';
 export const isFalse = 'isfalse';
-type TooiBoolean = typeof isTrue | typeof isFalse;
+type TooiBoolean_SIMBOL_TO_BE_DELETED = typeof isTrue | typeof isFalse;
 
 export const OPTION_KEYS = [
   SHOW_ON_TIMELINE,
@@ -98,7 +100,7 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
 ] as const;
-export const OPTIONS_TEXT: { [key in keyof Options]: string } = {
+export const OPTIONS_TEXT: { [key in keyof Options_SIMBOL_TO_BE_DELETED]: string } = {
   // 公式Web
   SHOW_ON_TIMELINE: 'タイムライン',
   SHOW_ON_TWEET_DETAIL: '(旧表示で)ツイート詳細',
