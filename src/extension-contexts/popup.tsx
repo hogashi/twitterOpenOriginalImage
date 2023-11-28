@@ -65,13 +65,7 @@ export const Popup = (props: Props): JSX.Element => {
     );
   }, [enabled]);
 
-  const renderItem = (
-    key:
-      | typeof SHOW_ON_TIMELINE
-      | typeof SHOW_ON_TWEET_DETAIL
-      | typeof SHOW_ON_TWEETDECK_TIMELINE
-      | typeof SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  ) => (
+  const renderItem = (key: keyof Omit<OptionsBool, typeof ORIGINAL_BUTTON_TEXT_OPTION_KEY>) => (
     <div className="checkboxListItem relative flex gap-x-2">
       <div className="flex h-6 items-center">
         <input
