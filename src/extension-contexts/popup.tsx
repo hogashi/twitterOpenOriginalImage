@@ -65,7 +65,7 @@ export const Popup = (props: Props): JSX.Element => {
     );
   }, [enabled]);
 
-  const renderItem = (key: keyof Omit<OptionsBool, typeof ORIGINAL_BUTTON_TEXT_OPTION_KEY>) => (
+  const renderCheckboxItem = (key: keyof Omit<OptionsBool, typeof ORIGINAL_BUTTON_TEXT_OPTION_KEY>) => (
     <div className="checkboxListItem relative flex gap-x-2">
       <div className="flex h-6 items-center">
         <input
@@ -100,13 +100,13 @@ export const Popup = (props: Props): JSX.Element => {
       <div className="my-1">
         <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TwitterWeb公式</h2>
-          {renderItem(SHOW_ON_TIMELINE)}
-          {renderItem(SHOW_ON_TWEET_DETAIL)}
+          {renderCheckboxItem(SHOW_ON_TIMELINE)}
+          {renderCheckboxItem(SHOW_ON_TWEET_DETAIL)}
         </fieldset>
         <fieldset className="my-1">
           <h2 className="text-base font-semibold leading-7 text-gray-900">TweetDeck</h2>
-          {renderItem(SHOW_ON_TWEETDECK_TIMELINE)}
-          {renderItem(SHOW_ON_TWEETDECK_TWEET_DETAIL)}
+          {renderCheckboxItem(SHOW_ON_TWEETDECK_TIMELINE)}
+          {renderCheckboxItem(SHOW_ON_TWEETDECK_TWEET_DETAIL)}
         </fieldset>
         <div className="my-1">
           <label htmlFor="button-text" className="text-base font-semibold leading-7 text-gray-900">
