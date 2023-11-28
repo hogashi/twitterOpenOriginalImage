@@ -10,6 +10,8 @@ import {
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   SHOW_ON_TWEET_DETAIL,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
+  INITIAL_ORIGINAL_BUTTON_TEXT,
   initialOptionsBool,
   isNativeChromeExtension,
   isReactView,
@@ -42,6 +44,7 @@ describe('定数', () => {
       SHOW_ON_TWEET_DETAIL: true,
       SHOW_ON_TWEETDECK_TIMELINE: true,
       SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+      ORIGINAL_BUTTON_TEXT_OPTION_KEY: INITIAL_ORIGINAL_BUTTON_TEXT,
     });
   });
 
@@ -51,6 +54,7 @@ describe('定数', () => {
       SHOW_ON_TWEET_DETAIL,
       SHOW_ON_TWEETDECK_TIMELINE,
       SHOW_ON_TWEETDECK_TWEET_DETAIL,
+      ORIGINAL_BUTTON_TEXT_OPTION_KEY,
     ]);
 
     expect(OPTIONS_TEXT).toStrictEqual({
@@ -58,6 +62,7 @@ describe('定数', () => {
       SHOW_ON_TWEET_DETAIL: '(旧表示で)ツイート詳細',
       SHOW_ON_TWEETDECK_TIMELINE: 'タイムライン',
       SHOW_ON_TWEETDECK_TWEET_DETAIL: '(旧表示で)ツイート詳細',
+      ORIGINAL_BUTTON_TEXT_OPTION_KEY: 'ボタンのテキスト',
     });
   });
 
