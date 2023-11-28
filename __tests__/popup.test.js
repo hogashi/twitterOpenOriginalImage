@@ -8,6 +8,7 @@ import { chrome } from 'jest-chrome';
 import {
   OPTIONS_TEXT,
   OPTION_KEYS,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
   initialOptionsBool,
@@ -88,23 +89,27 @@ describe('Popup', () => {
     it('チェックボックスをクリックして保存すると設定変えられる', () => {
       wrapper.find(`.${SHOW_ON_TIMELINE}`).simulate('click');
       wrapper.find(`.${SHOW_ON_TWEETDECK_TIMELINE}`).simulate('click');
+      wrapper.find(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`).simulate('change', { target: { value: '原寸' } });
 
       wrapper.find('.saveSettingButton').simulate('click');
       expect(mockOptions).toMatchObject({
         ...optionsEnabled,
         [SHOW_ON_TIMELINE]: true,
         [SHOW_ON_TWEETDECK_TIMELINE]: false,
+        [ORIGINAL_BUTTON_TEXT_OPTION_KEY]: '原寸',
       });
     });
 
     it('何度も設定変えられる', () => {
       wrapper.find(`.${SHOW_ON_TIMELINE}`).simulate('click');
+      wrapper.find(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`).simulate('change', { target: { value: '🎍' } });
 
       wrapper.find('.saveSettingButton').simulate('click');
       expect(mockOptions).toMatchObject({
         ...optionsEnabled,
         [SHOW_ON_TIMELINE]: false,
         [SHOW_ON_TWEETDECK_TIMELINE]: false,
+        [ORIGINAL_BUTTON_TEXT_OPTION_KEY]: '🎍',
       });
     });
   });

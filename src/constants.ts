@@ -1,3 +1,7 @@
+/**
+ * 設定項目
+ */
+
 // 設定取得メッセージ
 export const OPTION_UPDATED = 'OPTION_UPDATED';
 export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
@@ -13,9 +17,10 @@ export const HOST_PRO_TWITTER_COM = 'pro.twitter.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 
-/**
- * 設定項目
- */
+// Originalボタンのテキスト
+export const ORIGINAL_BUTTON_TEXT_OPTION_KEY = 'ORIGINAL_BUTTON_TEXT_OPTION_KEY';
+export const INITIAL_ORIGINAL_BUTTON_TEXT = 'Original';
+
 export interface OptionsBool {
   // 公式Web
   SHOW_ON_TIMELINE: boolean;
@@ -23,8 +28,11 @@ export interface OptionsBool {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: boolean;
   SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
+  // Originalボタンのテキスト
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY: string;
 }
 
+// インストールした直後の初期値
 export const initialOptionsBool: OptionsBool = {
   // 公式Web
   SHOW_ON_TIMELINE: true,
@@ -32,6 +40,8 @@ export const initialOptionsBool: OptionsBool = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: true,
   SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+  // Originalボタンのテキスト
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY: INITIAL_ORIGINAL_BUTTON_TEXT,
 };
 
 export const OPTION_KEYS = [
@@ -39,6 +49,7 @@ export const OPTION_KEYS = [
   SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
 ] as const;
 export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // 公式Web
@@ -47,6 +58,8 @@ export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // TweetDeck
   SHOW_ON_TWEETDECK_TIMELINE: 'タイムライン',
   SHOW_ON_TWEETDECK_TWEET_DETAIL: '(旧表示で)ツイート詳細',
+  // Originalボタンのテキスト
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY: 'ボタンのテキスト',
 };
 
 /** 公式Webかどうか */

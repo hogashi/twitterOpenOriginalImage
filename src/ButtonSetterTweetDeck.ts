@@ -1,5 +1,10 @@
 import { ButtonSetterType } from './ButtonSetter';
-import { OptionsBool, SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL } from './constants';
+import {
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
+  OptionsBool,
+  SHOW_ON_TWEETDECK_TIMELINE,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL,
+} from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
 /**
@@ -55,6 +60,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
@@ -108,6 +114,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
+        text: currentOptions[ORIGINAL_BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
@@ -116,10 +123,12 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
     className,
     getImgSrcs,
     target,
+    text,
   }: {
     className: string;
     getImgSrcs: () => string[];
     target: HTMLElement;
+    text: string;
   }): void {
     // 枠線の色は'Original'と同じく'.txt-mute'の色を使うので取得する
     const txtMute = document.querySelector('.txt-mute');
@@ -157,7 +166,7 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
     button.addEventListener('click', (e) => {
       onOriginalButtonClick(e, getImgSrcs());
     });
-    button.insertAdjacentHTML('beforeend', 'Original');
+    button.insertAdjacentHTML('beforeend', text);
 
     target.appendChild(button);
   }

@@ -433,8 +433,10 @@ describe('ButtonSetterTweetDeck', () => {
       root.appendChild(target);
       document.body.appendChild(root);
 
+      const text = 'Original';
+
       const buttonSetter = new ButtonSetterTweetDeck();
-      buttonSetter.setButton({ className, getImgSrcs, target });
+      buttonSetter.setButton({ className, getImgSrcs, target, text });
 
       const button = target.querySelector(`a.${className}`);
 
@@ -478,8 +480,10 @@ describe('ButtonSetterTweetDeck', () => {
       root.appendChild(target);
       document.body.appendChild(root);
 
+      const text = 'Original';
+
       const buttonSetter = new ButtonSetterTweetDeck();
-      buttonSetter.setButton({ className, getImgSrcs, target });
+      buttonSetter.setButton({ className, getImgSrcs, target, text });
 
       const button = target.querySelector(`a.${className}`);
 
@@ -499,6 +503,55 @@ describe('ButtonSetterTweetDeck', () => {
         expect(styles.lineHeight).toStrictEqual('1.5em');
         expect(styles.cursor).toStrictEqual('pointer');
       });
+    });
+
+    describe('ボタンのテキストを指定するとそれが入る', () => {
+      document.body.innerHTML = '';
+
+      const root = document.createElement('div');
+      root.classList.add('txt-mute');
+      root.style.color = '#123456';
+
+      const target = document.createElement('footer');
+      root.appendChild(target);
+      document.body.appendChild(root);
+
+      const text = '原寸';
+
+      const buttonSetter = new ButtonSetterTweetDeck();
+      buttonSetter.setButton({ className, getImgSrcs, target, text });
+
+      const button = target.querySelector(`a.${className}`);
+
+      it('ボタン設置される', () => {
+        expect(button).toBeTruthy();
+        expect(target.innerHTML).toMatchSnapshot();
+      });
+
+      it('ボタンにスタイルついている', () => {
+        const styles = button.style;
+        expect(styles.border).toStrictEqual('1px solid rgb(18, 52, 86)'); // #123456 -> rgb(18, 52, 86)
+        expect(styles.borderRadius).toStrictEqual('2px');
+        expect(styles.display).toStrictEqual('inline-block');
+        expect(styles.fontSize).toStrictEqual('0.75em');
+        expect(styles.marginTop).toStrictEqual('5px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.lineHeight).toStrictEqual('1.5em');
+        expect(styles.cursor).toStrictEqual('pointer');
+      });
+
+      /* SKIP: なぜかうまくmockできないので飛ばす */
+      // it('ボタン押すとonClick呼ばれる', () => {
+      //   main.onOriginalButtonClick = jest.fn();
+      //   button.click();
+      //   expect(main.onOriginalButtonClick).toHaveBeenCalledTimes(1);
+      //   expect(main.onOriginalButtonClick.mock.calls[0][0]).toBeInstanceOf(
+      //     MouseEvent
+      //   );
+      //   expect(main.onOriginalButtonClick.mock.calls[0][1]).toStrictEqual(
+      //     imgSrcs
+      //   );
+      // });
     });
   });
 
