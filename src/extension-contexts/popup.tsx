@@ -30,9 +30,15 @@ interface Props {
 export const Popup = (props: Props): JSX.Element => {
   const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
+  const [buttonText, setButtonText] = useState('設定を保存');
 
   const onSave = useCallback(() => {
-    setOptions(enabled);
+    setOptions(enabled, () => {
+      setButtonText('しました');
+      setTimeout(() => {
+        setButtonText('設定を保存');
+      }, 500);
+    });
     chrome.tabs.query({}, (result) =>
       result.forEach((tab) => {
         // console.log(tab);
@@ -108,7 +114,7 @@ export const Popup = (props: Props): JSX.Element => {
         className="saveSettingButton rounded-md bg-indigo-600 w-1/2 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={onSave}
       >
-        設定を保存
+        {buttonText}
       </button>
       <footer className="text-center mt-1">twitter画像原寸ボタン - hogashi</footer>
     </div>

@@ -1,8 +1,11 @@
 import { OPTION_KEYS, OptionsBool, initialOptionsBool } from '../constants';
 
-export const setOptions = (options: OptionsBool): void => {
+export const setOptions = (options: OptionsBool, callback?: () => void): void => {
   chrome.storage.sync.set(options, () => {
     console.log('options set');
+    if (callback) {
+      callback();
+    }
   });
 };
 
