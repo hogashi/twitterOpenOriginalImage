@@ -1,28 +1,3 @@
-export interface OptionsBool {
-  // 公式Web
-  SHOW_ON_TIMELINE: boolean;
-  SHOW_ON_TWEET_DETAIL: boolean;
-  // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: boolean;
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: boolean;
-}
-
-/**
- * 設定項目
- */
-export const initialOptionsBool: OptionsBool = {
-  // 公式Web
-  SHOW_ON_TIMELINE: true,
-  SHOW_ON_TWEET_DETAIL: true,
-  // TweetDeck
-  SHOW_ON_TWEETDECK_TIMELINE: true,
-  SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
-  // 画像ページ
-  STRIP_IMAGE_SUFFIX: true,
-};
-
 // 設定取得メッセージ
 export const OPTION_UPDATED = 'OPTION_UPDATED';
 export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
@@ -41,22 +16,30 @@ export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 export const HOST_PBS_TWIMG_COM = 'pbs.twimg.com';
 export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 
-/** 公式Webかどうか */
-export const isTwitter = (): boolean =>
-  window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
-/** Tweetdeckかどうか */
-export const isTweetdeck = (): boolean =>
-  window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
-/** 画像ページかどうか */
-export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
+/**
+ * 設定項目
+ */
+export interface OptionsBool {
+  // 公式Web
+  SHOW_ON_TIMELINE: boolean;
+  SHOW_ON_TWEET_DETAIL: boolean;
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: boolean;
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: boolean;
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: boolean;
+}
 
-/** Reactビューかどうか */
-export const isReactView = (): boolean => !!document.getElementById('react-root');
-
-/** これ自体がChrome拡張機能かどうか */
-export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== undefined;
-
-// 設定
+export const initialOptionsBool: OptionsBool = {
+  // 公式Web
+  SHOW_ON_TIMELINE: true,
+  SHOW_ON_TWEET_DETAIL: true,
+  // TweetDeck
+  SHOW_ON_TWEETDECK_TIMELINE: true,
+  SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+  // 画像ページ
+  STRIP_IMAGE_SUFFIX: true,
+};
 
 export const OPTION_KEYS = [
   SHOW_ON_TIMELINE,
@@ -75,6 +58,21 @@ export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
   // 画像ページ
   STRIP_IMAGE_SUFFIX: '[Ctrl]+[s]で拡張子を校正',
 };
+
+/** 公式Webかどうか */
+export const isTwitter = (): boolean =>
+  window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
+/** Tweetdeckかどうか */
+export const isTweetdeck = (): boolean =>
+  window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
+/** 画像ページかどうか */
+export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
+
+/** Reactビューかどうか */
+export const isReactView = (): boolean => !!document.getElementById('react-root');
+
+/** これ自体がChrome拡張機能かどうか */
+export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== undefined;
 
 // chrome.storateへの移行が済んだかどうかのキー
 export const MIGRATED_TO_CHROME_STORAGE = 'MIGRATED_TO_CHROME_STORAGE';
