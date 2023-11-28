@@ -9,6 +9,9 @@
       },
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
       }
     },
     "ignore": ["__tests__/**/*.snap"]

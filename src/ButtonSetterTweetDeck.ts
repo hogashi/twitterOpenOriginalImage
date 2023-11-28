@@ -93,15 +93,14 @@ export class ButtonSetterTweetDeck implements ButtonSetterType {
       const getImgSrcs = (): string[] => {
         if (tweet.getElementsByClassName('media-img').length !== 0) {
           return [(tweet.getElementsByClassName('media-img')[0] as HTMLImageElement).src];
-        } else {
-          return Array.from(tweet.getElementsByClassName('media-image'))
-            .map((element) => {
-              const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
-              // filter で string[] にするためにここで string[] にする……
-              return urlstr ? urlstr : '';
-            })
-            .filter((urlstr) => urlstr !== '');
         }
+        return Array.from(tweet.getElementsByClassName('media-image'))
+          .map((element) => {
+            const urlstr = this.getBackgroundImageUrl(element as HTMLElement);
+            // filter で string[] にするためにここで string[] にする……
+            return urlstr ? urlstr : '';
+          })
+          .filter((urlstr) => urlstr !== '');
       };
 
       this.setButton({
