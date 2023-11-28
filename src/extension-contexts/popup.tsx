@@ -7,12 +7,12 @@ import {
   OPTIONS_TEXT,
   OPTION_KEYS,
   OPTION_UPDATED,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   OptionsBool,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   SHOW_ON_TWEET_DETAIL,
-  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
 } from '../constants';
 import { printException } from '../utils';
 import { getOptions, setOptions } from './options';
