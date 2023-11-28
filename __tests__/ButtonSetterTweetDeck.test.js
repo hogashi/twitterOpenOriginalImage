@@ -1,13 +1,13 @@
 import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
-import { SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL, isFalse, isTrue } from '../src/constants';
+import { SHOW_ON_TWEETDECK_TIMELINE, SHOW_ON_TWEETDECK_TWEET_DETAIL } from '../src/constants';
 
 function makeAllEnabledOptions() {
   return {
-    SHOW_ON_TIMELINE: isTrue,
-    SHOW_ON_TWEET_DETAIL: isTrue,
-    SHOW_ON_TWEETDECK_TIMELINE: isTrue,
-    SHOW_ON_TWEETDECK_TWEET_DETAIL: isTrue,
-    STRIP_IMAGE_SUFFIX: isTrue,
+    SHOW_ON_TIMELINE: true,
+    SHOW_ON_TWEET_DETAIL: true,
+    SHOW_ON_TWEETDECK_TIMELINE: true,
+    SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+    STRIP_IMAGE_SUFFIX: true,
   };
 }
 
@@ -197,7 +197,7 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButton = jest.fn();
 
       const options = makeAllEnabledOptions();
-      options[SHOW_ON_TWEETDECK_TIMELINE] = isFalse;
+      options[SHOW_ON_TWEETDECK_TIMELINE] = false;
       buttonSetter.setButtonOnTimeline(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
@@ -410,7 +410,7 @@ describe('ButtonSetterTweetDeck', () => {
       buttonSetter.setButton = jest.fn();
 
       const options = makeAllEnabledOptions();
-      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = isFalse;
+      options[SHOW_ON_TWEETDECK_TWEET_DETAIL] = false;
       buttonSetter.setButtonOnTweetDetail(options);
 
       expect(buttonSetter.setButton).not.toHaveBeenCalled();
