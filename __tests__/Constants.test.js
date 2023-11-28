@@ -12,12 +12,10 @@ import {
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
   SHOW_ON_TWEET_DETAIL,
   STRIP_IMAGE_SUFFIX,
-  initialOptions,
-  isFalse,
+  initialOptionsBool,
   isImageTab,
   isNativeChromeExtension,
   isReactView,
-  isTrue,
   isTweetdeck,
   isTwitter,
 } from '../src/constants';
@@ -46,23 +44,17 @@ describe('定数', () => {
     expect(STRIP_IMAGE_SUFFIX).toBe('STRIP_IMAGE_SUFFIX');
   });
 
-  it('設定に使う真偽値', () => {
-    expect(isTrue).toBe('istrue');
-    expect(isFalse).toBe('isfalse');
+  it('初期設定', () => {
+    expect(initialOptionsBool).toStrictEqual({
+      SHOW_ON_TIMELINE: true,
+      SHOW_ON_TWEET_DETAIL: true,
+      SHOW_ON_TWEETDECK_TIMELINE: true,
+      SHOW_ON_TWEETDECK_TWEET_DETAIL: true,
+      STRIP_IMAGE_SUFFIX: true,
+    });
   });
 
-  it('userjs用の設定項目の初期値は全部真', () => {
-    expect(initialOptions).toStrictEqual({
-      // 公式Web
-      SHOW_ON_TIMELINE: isTrue,
-      SHOW_ON_TWEET_DETAIL: isTrue,
-      // TweetDeck
-      SHOW_ON_TWEETDECK_TIMELINE: isTrue,
-      SHOW_ON_TWEETDECK_TWEET_DETAIL: isTrue,
-      // 画像ページ
-      STRIP_IMAGE_SUFFIX: isTrue,
-    });
-
+  it('設定ページの設定ごとのキーと日本語', () => {
     expect(OPTION_KEYS).toStrictEqual([
       SHOW_ON_TIMELINE,
       SHOW_ON_TWEET_DETAIL,

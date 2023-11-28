@@ -58,10 +58,6 @@ export const isNativeChromeExtension = (): boolean => chrome?.runtime?.id !== un
 
 // 設定
 
-// 設定に使う真偽値
-export const isTrue = 'istrue';
-export const isFalse = 'isfalse';
-
 export const OPTION_KEYS = [
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEET_DETAIL,
