@@ -1,4 +1,5 @@
 import {
+  BUTTON_TEXT_OPTION_KEY,
   OptionsBool,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
@@ -39,10 +40,12 @@ export class ButtonSetter implements ButtonSetterType {
     className,
     getImgSrcs,
     target,
+    text,
   }: {
     className: string;
     getImgSrcs: () => string[];
     target: HTMLElement;
+    text: string;
   }): void {
     const style = {
       width: '70px',
@@ -69,7 +72,7 @@ export class ButtonSetter implements ButtonSetterType {
     button.className = 'tooi-button';
     setStyle(button, style);
     button.type = 'button';
-    button.value = 'Original';
+    button.value = text;
     button.addEventListener('click', (e) => {
       onOriginalButtonClick(e, getImgSrcs());
     });
@@ -85,15 +88,17 @@ export class ButtonSetter implements ButtonSetterType {
     className,
     getImgSrcs,
     target,
+    text,
   }: {
     className: string;
     getImgSrcs: () => string[];
     target: HTMLElement;
+    text: string;
   }): void {
     const button = document.createElement('input');
 
     button.type = 'button';
-    button.value = 'Original';
+    button.value = text;
     const color = this.getReactLayoutActionButtonColor();
     setStyle(button, {
       'font-size': '13px',
@@ -164,6 +169,7 @@ export class ButtonSetter implements ButtonSetterType {
         className,
         getImgSrcs,
         target: actionList,
+        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
@@ -203,6 +209,7 @@ export class ButtonSetter implements ButtonSetterType {
       className,
       getImgSrcs,
       target: actionList,
+      text: currentOptions[BUTTON_TEXT_OPTION_KEY],
     });
   }
 
@@ -255,6 +262,7 @@ export class ButtonSetter implements ButtonSetterType {
         className,
         getImgSrcs,
         target,
+        text: currentOptions[BUTTON_TEXT_OPTION_KEY],
       });
     });
   }
