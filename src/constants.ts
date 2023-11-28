@@ -62,6 +62,7 @@ export const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 // TweetDeck
 export const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
+export const HOST_PRO_TWITTER_COM = 'pro.twitter.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 // 画像ページ
@@ -72,7 +73,7 @@ export const STRIP_IMAGE_SUFFIX = 'STRIP_IMAGE_SUFFIX';
 export const isTwitter = (): boolean =>
   window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
 /** Tweetdeckかどうか */
-export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEETDECK_TWITTER_COM;
+export const isTweetdeck = (): boolean => window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
 /** 画像ページかどうか */
 export const isImageTab = (): boolean => window.location.hostname === HOST_PBS_TWIMG_COM;
 
