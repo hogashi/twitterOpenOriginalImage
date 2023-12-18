@@ -51,7 +51,7 @@
     "typescript": "5.3.3",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",
-    "tailwindcss": "3.3.6"
+    "tailwindcss": "3.3.7"
   },
   "dependencies": {
     "@babel/polyfill": "7.12.1",
