@@ -25,11 +25,11 @@
     "restore-manifest-edge": "mv -f dist/manifest.json{.bak,}"
   },
   "devDependencies": {
-    "@babel/cli": "7.23.9",
-    "@babel/core": "7.24.0",
-    "@babel/preset-env": "7.24.0",
-    "@babel/preset-react": "7.23.3",
-    "@babel/preset-typescript": "7.23.3",
+    "@babel/cli": "7.24.1",
+    "@babel/core": "7.24.1",
+    "@babel/preset-env": "7.24.1",
+    "@babel/preset-react": "7.24.1",
+    "@babel/preset-typescript": "7.24.1",
     "@tsconfig/recommended": "1.0.3",
     "@types/chrome": "0.0.206",
     "@types/filesystem": "0.0.32",
@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.12.1",
-    "@babel/runtime": "7.24.0",
+    "@babel/runtime": "7.24.1",
     "@biomejs/biome": "1.6.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
