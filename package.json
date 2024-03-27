@@ -30,7 +30,7 @@
     "@babel/preset-env": "7.24.3",
     "@babel/preset-react": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
-    "@tsconfig/recommended": "1.0.4",
+    "@tsconfig/recommended": "1.0.5",
     "@types/chrome": "0.0.206",
     "@types/filesystem": "0.0.32",
     "@types/jest": "29.5.0",
