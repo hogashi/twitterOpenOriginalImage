@@ -1,8 +1,12 @@
 import {
   GET_LOCAL_STORAGE,
+  HOST_MOBILE_TWITTER_COM,
+  HOST_MOBILE_X_COM,
   HOST_PRO_TWITTER_COM,
+  HOST_PRO_X_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
+  HOST_X_COM,
   INITIAL_ORIGINAL_BUTTON_TEXT,
   OPTIONS_TEXT,
   OPTION_KEYS,
@@ -27,6 +31,9 @@ describe('定数', () => {
 
   it('公式Web', () => {
     expect(HOST_TWITTER_COM).toBe('twitter.com');
+    expect(HOST_MOBILE_TWITTER_COM).toBe('mobile.twitter.com');
+    expect(HOST_X_COM).toBe('x.com');
+    expect(HOST_MOBILE_X_COM).toBe('mobile.x.com');
     expect(SHOW_ON_TIMELINE).toBe('SHOW_ON_TIMELINE');
     expect(SHOW_ON_TWEET_DETAIL).toBe('SHOW_ON_TWEET_DETAIL');
   });
@@ -34,6 +41,7 @@ describe('定数', () => {
   it('TweetDeck', () => {
     expect(HOST_TWEETDECK_TWITTER_COM).toBe('tweetdeck.twitter.com');
     expect(HOST_PRO_TWITTER_COM).toBe('pro.twitter.com');
+    expect(HOST_PRO_X_COM).toBe('pro.x.com');
     expect(SHOW_ON_TWEETDECK_TIMELINE).toBe('SHOW_ON_TWEETDECK_TIMELINE');
     expect(SHOW_ON_TWEETDECK_TWEET_DETAIL).toBe('SHOW_ON_TWEETDECK_TWEET_DETAIL');
   });
