@@ -1,18 +1,18 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { type ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   HOST_MOBILE_TWITTER_COM,
+  HOST_MOBILE_X_COM,
   HOST_PRO_TWITTER_COM,
+  HOST_PRO_X_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
   HOST_X_COM,
-  HOST_MOBILE_X_COM,
-  HOST_PRO_X_COM,
   OPTIONS_TEXT,
   OPTION_KEYS,
   OPTION_UPDATED,
   ORIGINAL_BUTTON_TEXT_OPTION_KEY,
-  OptionsBool,
+  type OptionsBool,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
