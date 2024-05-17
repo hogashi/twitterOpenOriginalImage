@@ -9,11 +9,14 @@ export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
 // 公式Web
 export const HOST_TWITTER_COM = 'twitter.com';
 export const HOST_MOBILE_TWITTER_COM = 'mobile.twitter.com';
+export const HOST_X_COM = 'x.com';
+export const HOST_MOBILE_X_COM = 'mobile.x.com';
 export const SHOW_ON_TIMELINE = 'SHOW_ON_TIMELINE';
 export const SHOW_ON_TWEET_DETAIL = 'SHOW_ON_TWEET_DETAIL';
 // TweetDeck
 export const HOST_TWEETDECK_TWITTER_COM = 'tweetdeck.twitter.com';
 export const HOST_PRO_TWITTER_COM = 'pro.twitter.com';
+export const HOST_PRO_X_COM = 'pro.x.com';
 export const SHOW_ON_TWEETDECK_TIMELINE = 'SHOW_ON_TWEETDECK_TIMELINE';
 export const SHOW_ON_TWEETDECK_TWEET_DETAIL = 'SHOW_ON_TWEETDECK_TWEET_DETAIL';
 
@@ -64,10 +67,15 @@ export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
 
 /** 公式Webかどうか */
 export const isTwitter = (): boolean =>
-  window.location.hostname === HOST_TWITTER_COM || window.location.hostname === HOST_MOBILE_TWITTER_COM;
+  window.location.hostname === HOST_TWITTER_COM ||
+  window.location.hostname === HOST_MOBILE_TWITTER_COM ||
+  window.location.hostname === HOST_X_COM ||
+  window.location.hostname === HOST_MOBILE_X_COM;
 /** Tweetdeckかどうか */
 export const isTweetdeck = (): boolean =>
-  window.location.hostname === HOST_TWEETDECK_TWITTER_COM || window.location.hostname === HOST_PRO_TWITTER_COM;
+  window.location.hostname === HOST_TWEETDECK_TWITTER_COM ||
+  window.location.hostname === HOST_PRO_TWITTER_COM ||
+  window.location.hostname === HOST_PRO_X_COM;
 
 /** Reactビューかどうか */
 export const isReactView = (): boolean => !!document.getElementById('react-root');

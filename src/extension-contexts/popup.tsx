@@ -5,6 +5,9 @@ import {
   HOST_PRO_TWITTER_COM,
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
+  HOST_X_COM,
+  HOST_MOBILE_X_COM,
+  HOST_PRO_X_COM,
   OPTIONS_TEXT,
   OPTION_KEYS,
   OPTION_UPDATED,
@@ -55,9 +58,15 @@ export const Popup = (props: Props): JSX.Element => {
         }
         const tabUrl = new URL(tab.url).hostname;
         if (
-          ![HOST_TWITTER_COM, HOST_MOBILE_TWITTER_COM, HOST_TWEETDECK_TWITTER_COM, HOST_PRO_TWITTER_COM].some(
-            (url) => url === tabUrl,
-          )
+          ![
+            HOST_TWITTER_COM,
+            HOST_MOBILE_TWITTER_COM,
+            HOST_TWEETDECK_TWITTER_COM,
+            HOST_PRO_TWITTER_COM,
+            HOST_X_COM,
+            HOST_MOBILE_X_COM,
+            HOST_PRO_X_COM,
+          ].some((url) => url === tabUrl)
         ) {
           // 送り先タブが拡張機能が動作する対象ではないならメッセージを送らない
           return;

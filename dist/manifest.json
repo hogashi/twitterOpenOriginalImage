@@ -14,9 +14,12 @@
     {
       "matches": [
         "https://twitter.com/*",
+        "https://x.com/*",
         "https://mobile.twitter.com/*",
+        "https://mobile.x.com/*",
         "https://tweetdeck.twitter.com/*",
         "https://pro.twitter.com/*",
+        "https://pro.x.com/*",
         "https://pbs.twimg.com/*"
       ],
       "js": ["js/main.bundle.js"]
