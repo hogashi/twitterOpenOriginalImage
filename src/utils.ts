@@ -1,9 +1,9 @@
-import { ButtonSetter, ButtonSetterType } from './ButtonSetter';
+import { ButtonSetter, type ButtonSetterType } from './ButtonSetter';
 import { ButtonSetterTweetDeck } from './ButtonSetterTweetDeck';
 import {
   GET_LOCAL_STORAGE,
   OPTION_UPDATED,
-  OptionsBool,
+  type OptionsBool,
   initialOptionsBool,
   isNativeChromeExtension,
   isReactView,
