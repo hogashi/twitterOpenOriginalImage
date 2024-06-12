@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-o: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: setup
