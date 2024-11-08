@@ -587,20 +587,12 @@ video {
   height: 1.5rem;
 }
 
-.w-1 {
-  width: 0.25rem;
-}
-
 .w-1\/2 {
   width: 50%;
 }
 
 .w-4 {
   width: 1rem;
-}
-
-.w-2 {
-  width: 0.5rem;
 }
 
 .w-4\/5 {
