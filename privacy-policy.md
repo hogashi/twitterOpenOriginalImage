@@ -20,15 +20,18 @@ This Chrome extension does:
 
 This Chrome extension does not:
 
+- collect any personal data
 - send any data to anywhere in Internet without [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/storage/)
 - share any data with other people since `chrome.storage.sync` is Google Chrome's personal space
 
 この拡張機能は以下をしません:
 
+- 個人情報を収集すること
 - [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/storage/) 以外で何かのデータをインターネットのどこかに送ること
 - 何かのデータを他の誰かと共有すること (`chrome.storage.sync` は Google Chrome の個々人のデータ保管場所です)
 
 ## Changelog / 更新
 
+- 2024/11/09 add that this extension does not collect any personal data / この拡張機能が個人情報を収集しないことを追加
 - 2022/01/09 add use of [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/storage/) / [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/storage/) を使うようになったので追加
 - 2020/02/03 create this document / この文書を作成
