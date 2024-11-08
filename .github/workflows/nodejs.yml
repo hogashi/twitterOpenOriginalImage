@@ -9,19 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: setup
-        uses: actions/setup-node@v4
+      - name: pnpm install
+        uses: pnpm/action-setup@v4
         with:
-          node-version: lts/*
-
-      - name: install
-        run: yarn install --frozen-lockfile
+          version: 9
+          run_install: true
 
       - name: build
-        run: yarn build
+        run: pnpm run build
 
       - name: test
-        run: yarn test
+        run: pnpm run test
         env:
           CI: true
           # for jest
