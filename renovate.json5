@@ -1,30 +1,26 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    ":automergeMinor"
-  ],
-  "rebaseConflictedPrs": true,
-  "labels": ["renovate"],
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended", ":automergeMinor"],
+  labels: ["renovate"],
+  packageRules: [
     {
-      "updateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-      "postUpdateOptions": ["yarnDedupeHighest"]
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
+      automerge: true,
+      postUpdateOptions: ["yarnDedupeHighest"],
     },
     {
-      "packagePatterns": ["^@types/react(|-dom)$"],
-      "groupName": "@types/react, @types/react-dom"
+      groupName: "@types/react, @types/react-dom",
+      matchPackageNames: ["/^@types/react(|-dom)$/"],
     },
     {
       // don't create types and node patch update p-r
-      "matchPackagePatterns": ["^@types/", "^node$"],
-      "matchUpdateTypes": ["patch"],
-      "enabled": false
+      matchUpdateTypes: ["patch"],
+      enabled: false,
+      matchPackageNames: ["/^@types//", "/^node$/"],
     },
     {
-      "matchPackagePatterns": ["^node$"],
-      "prCreation": "immediate"
-    }
-  ]
+      prCreation: "immediate",
+      matchPackageNames: ["/^node$/"],
+    },
+  ],
 }
