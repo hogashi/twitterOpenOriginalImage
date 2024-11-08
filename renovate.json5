@@ -13,6 +13,7 @@
       matchPackageNames: ["/^@types/react(|-dom)$/"],
     },
     {
+      // don't create types and node patch update p-r
       matchUpdateTypes: ["patch"],
       enabled: false,
       matchPackageNames: ["/^@types//", "/^node$/"],
