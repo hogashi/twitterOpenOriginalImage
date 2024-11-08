@@ -140,7 +140,7 @@ export const Popup = (props: Props): JSX.Element => {
       </div>
       <button
         type="submit"
-        className="saveSettingButton rounded-md bg-indigo-600 w-1/2 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className="saveSettingButton rounded-md bg-indigo-600 w-4/5 mt-1 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={onSave}
       >
         {saveButtonText}
