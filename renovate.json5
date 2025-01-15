@@ -4,19 +4,17 @@
   labels: ["renovate"],
   packageRules: [
     {
-      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
+      matchUpdateTypes: ["minor", "pin", "digest"],
       automerge: true,
       postUpdateOptions: ["pnpmDedupe"],
     },
     {
-      groupName: "@types/react, @types/react-dom",
-      matchPackageNames: ["/^@types/react(|-dom)$/"],
-    },
-    {
-      // don't create types and node patch update p-r
       matchUpdateTypes: ["patch"],
       enabled: false,
-      matchPackageNames: ["/^@types//", "/^node$/"],
+    },
+    {
+      groupName: "@types/react, @types/react-dom",
+      matchPackageNames: ["/^@types/react(|-dom)$/"],
     },
     {
       prCreation: "immediate",
