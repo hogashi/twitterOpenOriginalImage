@@ -158,17 +158,17 @@ getOptions().then((optionsEnabled) => {
     optionsEnabled,
   };
 
-  let root = document.getElementById('root');
-  if (!root) {
-    root = document.createElement('div');
-    root.id = 'root';
+  let rootElem = document.getElementById('root');
+  if (!rootElem) {
+    rootElem = document.createElement('div');
+    rootElem.id = 'root';
     const body = document.querySelector('body');
     if (body) {
-      body.appendChild(root);
+      body.appendChild(rootElem);
     } else {
       printException('cant find body');
     }
   }
-  const root = createRoot(document.getElementById('root'));
+  const root = createRoot(rootElem);
   root.render(<Popup {...props} />);
 });
