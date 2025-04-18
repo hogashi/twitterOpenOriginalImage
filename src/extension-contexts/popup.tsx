@@ -1,6 +1,6 @@
-import { createRoot } from "react-dom/client";
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   HOST_MOBILE_TWITTER_COM,
   HOST_MOBILE_X_COM,
