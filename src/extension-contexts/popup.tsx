@@ -1,3 +1,4 @@
+import { createRoot } from "react-dom/client";
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -168,5 +169,6 @@ getOptions().then((optionsEnabled) => {
       printException('cant find body');
     }
   }
-  ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+  const root = createRoot(document.getElementById('root'));
+  root.render(<Popup {...props} />);
 });
