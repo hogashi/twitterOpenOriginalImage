@@ -1,9 +1,7 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import TestRenderer from 'react-test-renderer';
-Enzyme.configure({ adapter: new Adapter() });
-const { shallow } = Enzyme;
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { chrome } from 'jest-chrome';
+import React from 'react';
 
 import {
   OPTIONS_TEXT,
@@ -22,7 +20,7 @@ chrome.storage.sync.set.mockImplementation((newOptions) => {
 chrome.storage.sync.get.mockImplementation(() => mockOptions);
 
 describe('Popup', () => {
-  it('render', () => {
+  it('renders correctly', () => {
     const optionsText = OPTIONS_TEXT;
     const optionKeys = OPTION_KEYS;
     const optionsEnabled = { ...initialOptionsBool };
@@ -32,66 +30,99 @@ describe('Popup', () => {
       optionKeys,
       optionsEnabled,
     };
-    const tree = TestRenderer.create(<Popup {...props} />).toJSON();
-    expect(tree).toMatchSnapshot();
+
+    const { container } = render(<Popup {...props} />);
+    expect(container).toMatchSnapshot();
   });
 
   describe('保存ボタン押すと設定が保存される', () => {
-    mockOptions = initialOptionsBool;
+    beforeEach(() => {
+      mockOptions = initialOptionsBool;
 
-    const optionsText = OPTIONS_TEXT;
-    const optionKeys = OPTION_KEYS;
-    const optionsEnabled = { ...initialOptionsBool };
-    // 初期設定いっこOFFにしてみる
-    optionsEnabled[SHOW_ON_TIMELINE] = false;
+      chrome.tabs.query.mockImplementation((_, callback) => {
+        callback([
+          {
+            // 対象タブ
+            id: 1,
+            url: 'http://twitter.com',
+          },
+          {
+            // 対象ではないタブ
+            id: 1,
+            url: 'http://google.com',
+          },
+          {
+            // 対象ではないタブ
+            id: 1,
+          },
+          {
+            // 対象ではないタブ
+            url: 'http://twitter.com',
+          },
+        ]);
+      });
 
-    const props = {
-      optionsText,
-      optionKeys,
-      optionsEnabled,
-    };
-
-    chrome.tabs.query.mockImplementation((_, callback) => {
-      callback([
-        {
-          // 対象タブ
-          id: 1,
-          url: 'http://twitter.com',
-        },
-        {
-          // 対象ではないタブ
-          id: 1,
-          url: 'http://google.com',
-        },
-        {
-          // 対象ではないタブ
-          id: 1,
-        },
-        {
-          // 対象ではないタブ
-          url: 'http://twitter.com',
-        },
-      ]);
+      chrome.tabs.sendMessage.mockImplementation((id, option, callback) => {
+        callback('mock ok');
+      });
     });
-    chrome.tabs.sendMessage.mockImplementation((id, option, callback) => {
-      callback('mock ok');
-    });
-    const wrapper = shallow(<Popup {...props} />);
 
-    it('渡した設定がそのまま保存される', () => {
-      wrapper.find('.saveSettingButton').simulate('click');
+    it('渡した設定がそのまま保存される', async () => {
+      const user = userEvent.setup();
+      const optionsText = OPTIONS_TEXT;
+      const optionKeys = OPTION_KEYS;
+      const optionsEnabled = { ...initialOptionsBool };
+      // 初期設定いっこOFFにしてみる
+      optionsEnabled[SHOW_ON_TIMELINE] = false;
+
+      const props = {
+        optionsText,
+        optionKeys,
+        optionsEnabled,
+      };
+
+      render(<Popup {...props} />);
+
+      // Find and click the save button
+      const saveButton = screen.getByText('設定を保存');
+      await user.click(saveButton);
+
       // 送りたいタブは正しい形式かつ対象ホストなタブのみ
       expect(window.chrome.tabs.query.mock.calls.length).toBe(1);
-
       expect(mockOptions).toMatchObject(optionsEnabled);
     });
 
-    it('チェックボックスをクリックして保存すると設定変えられる', () => {
-      wrapper.find(`.${SHOW_ON_TIMELINE}`).simulate('click');
-      wrapper.find(`.${SHOW_ON_TWEETDECK_TIMELINE}`).simulate('click');
-      wrapper.find(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`).simulate('change', { target: { value: '原寸' } });
+    it('チェックボックスをクリックして保存すると設定変えられる', async () => {
+      const user = userEvent.setup();
+      const optionsText = OPTIONS_TEXT;
+      const optionKeys = OPTION_KEYS;
+      const optionsEnabled = { ...initialOptionsBool };
+      // 初期設定いっこOFFにしてみる
+      optionsEnabled[SHOW_ON_TIMELINE] = false;
 
-      wrapper.find('.saveSettingButton').simulate('click');
+      const props = {
+        optionsText,
+        optionKeys,
+        optionsEnabled,
+      };
+
+      render(<Popup {...props} />);
+
+      // Find and click checkboxes
+      const timelineCheckbox = document.querySelector(`.${SHOW_ON_TIMELINE}`);
+      const tweetdeckCheckbox = document.querySelector(`.${SHOW_ON_TWEETDECK_TIMELINE}`);
+      await user.click(timelineCheckbox);
+      await user.click(tweetdeckCheckbox);
+
+      // Change text input
+      const textInput = document.querySelector(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`);
+      await user.clear(textInput);
+      await user.type(textInput, '原寸');
+
+      // Save
+      const saveButton = screen.getByText('設定を保存');
+      await user.click(saveButton);
+
       expect(mockOptions).toMatchObject({
         ...optionsEnabled,
         [SHOW_ON_TIMELINE]: true,
@@ -100,15 +131,36 @@ describe('Popup', () => {
       });
     });
 
-    it('何度も設定変えられる', () => {
-      wrapper.find(`.${SHOW_ON_TIMELINE}`).simulate('click');
-      wrapper.find(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`).simulate('change', { target: { value: '🎍' } });
+    it('何度も設定変えられる', async () => {
+      const user = userEvent.setup();
+      const optionsText = OPTIONS_TEXT;
+      const optionKeys = OPTION_KEYS;
+      const optionsEnabled = { ...initialOptionsBool };
+      // 初期設定いっこOFFにしてみる
+      optionsEnabled[SHOW_ON_TIMELINE] = false;
 
-      wrapper.find('.saveSettingButton').simulate('click');
+      const props = {
+        optionsText,
+        optionKeys,
+        optionsEnabled,
+      };
+
+      render(<Popup {...props} />);
+
+      // First change
+      const timelineCheckbox = document.querySelector(`.${SHOW_ON_TIMELINE}`);
+      await user.click(timelineCheckbox);
+
+      const textInput = document.querySelector(`.${ORIGINAL_BUTTON_TEXT_OPTION_KEY}`);
+      await user.clear(textInput);
+      await user.type(textInput, '🎍');
+
+      const saveButton = screen.getByText('設定を保存');
+      await user.click(saveButton);
+
       expect(mockOptions).toMatchObject({
         ...optionsEnabled,
-        [SHOW_ON_TIMELINE]: false,
-        [SHOW_ON_TWEETDECK_TIMELINE]: false,
+        [SHOW_ON_TIMELINE]: true,
         [ORIGINAL_BUTTON_TEXT_OPTION_KEY]: '🎍',
       });
     });
