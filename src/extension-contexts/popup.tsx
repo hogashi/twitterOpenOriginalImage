@@ -1,5 +1,6 @@
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   HOST_MOBILE_TWITTER_COM,
   HOST_MOBILE_X_COM,
@@ -157,16 +158,17 @@ getOptions().then((optionsEnabled) => {
     optionsEnabled,
   };
 
-  let root = document.getElementById('root');
-  if (!root) {
-    root = document.createElement('div');
-    root.id = 'root';
+  let rootElem = document.getElementById('root');
+  if (!rootElem) {
+    rootElem = document.createElement('div');
+    rootElem.id = 'root';
     const body = document.querySelector('body');
     if (body) {
-      body.appendChild(root);
+      body.appendChild(rootElem);
     } else {
       printException('cant find body');
     }
   }
-  ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+  const root = createRoot(rootElem);
+  root.render(<Popup {...props} />);
 });
