@@ -52,8 +52,8 @@ importers:
         specifier: 1.0.8
         version: 1.0.8
       '@types/chrome':
-        specifier: 0.0.206
-        version: 0.0.206
+        specifier: 0.1.0
+        version: 0.1.0
       '@types/filesystem':
         specifier: 0.0.32
         version: 0.0.32
@@ -1041,8 +1041,8 @@ packages:
   '@types/chrome@0.0.114':
     resolution: {integrity: sha512-i7qRr74IrxHtbnrZSKUuP5Uvd5EOKwlwJq/yp7+yTPihOXnPhNQO4Z5bqb1XTnrjdbUKEJicaVVbhcgtRijmLA==}
 
-  '@types/chrome@0.0.206':
-    resolution: {integrity: sha512-fQnTFjghPB9S4UzbfublUB6KmsBkvvJeGXGaaoD5Qu+ZxrDUfgJnKN5egLSzDcGAH5YxQubDgbCdNwwUGewQHg==}
+  '@types/chrome@0.1.0':
+    resolution: {integrity: sha512-Mq712O2Ykw+EVAC5D1wt4Ot4v2rfp7nDosmxhIMKULJAa8o7ELeO88rWzRasaB+AYnqayzfX/XSWaDKBfk1rYQ==}
 
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
@@ -4298,7 +4298,7 @@ snapshots:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.16
 
-  '@types/chrome@0.0.206':
+  '@types/chrome@0.1.0':
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.16
