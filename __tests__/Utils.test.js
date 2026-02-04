@@ -4,7 +4,7 @@ import { chrome } from 'jest-chrome';
 
 import { ButtonSetter } from '../src/ButtonSetter';
 import { ButtonSetterTweetDeck } from '../src/ButtonSetterTweetDeck';
-import { OPTION_KEYS, initialOptionsBool } from '../src/constants';
+import { initialOptionsBool, OPTION_KEYS } from '../src/constants';
 import {
   collectUrlParams,
   downloadImage,
