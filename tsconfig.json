@@ -4,7 +4,7 @@
     "outDir": "./dist/js/",
     // add `dom` over tsconfig/bases
     "lib": ["es2020", "dom"],
-    "jsx": "react"
+    "jsx": "react-jsx"
   },
   "include": ["./src/", "./__tests__/"]
 }
