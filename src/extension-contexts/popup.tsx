@@ -168,6 +168,7 @@ getOptions().then((optionsEnabled) => {
       body.appendChild(rootElement);
     } else {
       printException('cant find body');
+      return;
     }
   }
   
