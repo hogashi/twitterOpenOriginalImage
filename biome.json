@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.0.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
   "linter": {
     "enabled": true,
     "rules": {
@@ -12,14 +12,17 @@
       },
       "complexity": {
         "noForEach": "off"
+      },
+      "suspicious": {
+        "useIterableCallbackReturn": "off"
       }
     },
-    "ignore": ["__tests__/**/*.snap"]
+    "includes": ["**", "!**/__tests__/**/*.snap", "!**/src/input.css"]
   },
   "formatter": {
     "indentStyle": "space",
     "lineWidth": 120,
-    "ignore": ["__tests__/**/*.snap"]
+    "includes": ["**", "!**/__tests__/**/*.snap", "!**/src/input.css"]
   },
   "javascript": {
     "formatter": {

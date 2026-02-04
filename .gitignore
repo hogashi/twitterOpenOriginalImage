@@ -2,6 +2,7 @@
 *.swp
 node_modules
 *.log
+package-lock.json
 
 /coverage/
 !/coverage/coverage-summary.json
