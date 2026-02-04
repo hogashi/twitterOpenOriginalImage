@@ -1,11 +1,11 @@
 import {
-  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
-  type OptionsBool,
-  SHOW_ON_TIMELINE,
-  SHOW_ON_TWEETDECK_TIMELINE,
-  SHOW_ON_TWEET_DETAIL,
   isTweetdeck,
   isTwitter,
+  type OptionsBool,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
+  SHOW_ON_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
+  SHOW_ON_TWEETDECK_TIMELINE,
 } from './constants';
 import { onOriginalButtonClick, printException, setStyle } from './utils';
 
