@@ -1,5 +1,5 @@
 import { type ChangeEvent, useCallback, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   HOST_MOBILE_TWITTER_COM,
   HOST_MOBILE_X_COM,
@@ -31,7 +31,7 @@ interface Props {
   optionsEnabled: OptionsBool;
 }
 
-export const Popup = (props: Props): JSX.Element => {
+export const Popup = (props: Props): React.JSX.Element => {
   const { optionsText, optionKeys, optionsEnabled } = props;
   const [enabled, setEnabled] = useState(optionsEnabled);
   const [saveButtonText, setSaveButtonText] = useState('設定を保存');
@@ -157,16 +157,17 @@ getOptions().then((optionsEnabled) => {
     optionsEnabled,
   };
 
-  let root = document.getElementById('root');
-  if (!root) {
-    root = document.createElement('div');
-    root.id = 'root';
+  let rootElement = document.getElementById('root');
+  if (!rootElement) {
+    rootElement = document.createElement('div');
+    rootElement.id = 'root';
     const body = document.querySelector('body');
     if (body) {
-      body.appendChild(root);
+      body.appendChild(rootElement);
     } else {
       printException('cant find body');
     }
   }
-  ReactDOM.render(<Popup {...props} />, document.getElementById('root'));
+  const root = createRoot(rootElement);
+  root.render(<Popup {...props} />);
 });
