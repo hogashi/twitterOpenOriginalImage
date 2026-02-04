@@ -1,4 +1,4 @@
-import React, { type ChangeEvent, useCallback, useState } from 'react';
+import { type ChangeEvent, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   HOST_MOBILE_TWITTER_COM,
@@ -8,15 +8,15 @@ import {
   HOST_TWEETDECK_TWITTER_COM,
   HOST_TWITTER_COM,
   HOST_X_COM,
-  OPTIONS_TEXT,
   OPTION_KEYS,
   OPTION_UPDATED,
-  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
+  OPTIONS_TEXT,
   type OptionsBool,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   SHOW_ON_TIMELINE,
+  SHOW_ON_TWEET_DETAIL,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
-  SHOW_ON_TWEET_DETAIL,
 } from '../constants';
 import { printException } from '../utils';
 import { getOptions, setOptions } from './options';

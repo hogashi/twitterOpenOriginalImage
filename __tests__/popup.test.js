@@ -1,15 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { chrome } from 'jest-chrome';
-import React from 'react';
 
 import {
-  OPTIONS_TEXT,
+  initialOptionsBool,
   OPTION_KEYS,
+  OPTIONS_TEXT,
   ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   SHOW_ON_TIMELINE,
   SHOW_ON_TWEETDECK_TIMELINE,
-  initialOptionsBool,
 } from '../src/constants';
 import { Popup } from '../src/extension-contexts/popup';
 
@@ -62,7 +61,7 @@ describe('Popup', () => {
         ]);
       });
 
-      chrome.tabs.sendMessage.mockImplementation((id, option, callback) => {
+      chrome.tabs.sendMessage.mockImplementation((_id, _option, callback) => {
         callback('mock ok');
       });
     });

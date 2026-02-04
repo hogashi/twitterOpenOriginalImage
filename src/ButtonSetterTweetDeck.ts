@@ -1,7 +1,7 @@
 import type { ButtonSetterType } from './ButtonSetter';
 import {
-  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   type OptionsBool,
+  ORIGINAL_BUTTON_TEXT_OPTION_KEY,
   SHOW_ON_TWEETDECK_TIMELINE,
   SHOW_ON_TWEETDECK_TWEET_DETAIL,
 } from './constants';
