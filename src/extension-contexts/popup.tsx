@@ -1,5 +1,5 @@
 import { type ChangeEvent, useCallback, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { type Root, createRoot } from 'react-dom/client';
 import {
   HOST_MOBILE_TWITTER_COM,
   HOST_MOBILE_X_COM,
@@ -150,6 +150,8 @@ export const Popup = (props: Props): React.JSX.Element => {
   );
 };
 
+let reactRoot: Root | null = null;
+
 getOptions().then((optionsEnabled) => {
   const props = {
     optionsText: OPTIONS_TEXT,
@@ -168,6 +170,9 @@ getOptions().then((optionsEnabled) => {
       printException('cant find body');
     }
   }
-  const root = createRoot(rootElement);
-  root.render(<Popup {...props} />);
+  
+  if (!reactRoot) {
+    reactRoot = createRoot(rootElement);
+  }
+  reactRoot.render(<Popup {...props} />);
 });
