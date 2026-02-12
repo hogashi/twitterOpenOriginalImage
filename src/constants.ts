@@ -66,16 +66,16 @@ export const OPTIONS_TEXT: { [key in keyof OptionsBool]: string } = {
 };
 
 /** 公式Webかどうか */
-export const isTwitter = (): boolean =>
-  window.location.hostname === HOST_TWITTER_COM ||
-  window.location.hostname === HOST_MOBILE_TWITTER_COM ||
-  window.location.hostname === HOST_X_COM ||
-  window.location.hostname === HOST_MOBILE_X_COM;
+export const isTwitter = (location: Location | URL = window.location): boolean =>
+  location.hostname === HOST_TWITTER_COM ||
+  location.hostname === HOST_MOBILE_TWITTER_COM ||
+  location.hostname === HOST_X_COM ||
+  location.hostname === HOST_MOBILE_X_COM;
 /** Tweetdeckかどうか */
-export const isTweetdeck = (): boolean =>
-  window.location.hostname === HOST_TWEETDECK_TWITTER_COM ||
-  window.location.hostname === HOST_PRO_TWITTER_COM ||
-  window.location.hostname === HOST_PRO_X_COM;
+export const isTweetdeck = (location: Location | URL = window.location): boolean =>
+  location.hostname === HOST_TWEETDECK_TWITTER_COM ||
+  location.hostname === HOST_PRO_TWITTER_COM ||
+  location.hostname === HOST_PRO_X_COM;
 
 /** Reactビューかどうか */
 export const isReactView = (): boolean => !!document.getElementById('react-root');

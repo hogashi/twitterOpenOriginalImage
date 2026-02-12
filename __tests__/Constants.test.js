@@ -75,35 +75,27 @@ describe('定数', () => {
   });
 
   describe('どのページかのフラグ', () => {
-    const originalLocation = window.location;
-    beforeAll(() => {
-      delete window.location;
-    });
-    afterAll(() => {
-      window.location = originalLocation;
-    });
-
     it('公式Web', () => {
-      window.location = new URL('https://twitter.com');
-      expect(isTwitter()).toBeTruthy();
-      expect(isTweetdeck()).toBeFalsy();
+      const location = new URL('https://twitter.com');
+      expect(isTwitter(location)).toBeTruthy();
+      expect(isTweetdeck(location)).toBeFalsy();
     });
     describe('TweetDeck', () => {
       it('tweetdeck.twitter.com', () => {
-        window.location = new URL('https://tweetdeck.twitter.com');
-        expect(isTwitter()).toBeFalsy();
-        expect(isTweetdeck()).toBeTruthy();
+        const location = new URL('https://tweetdeck.twitter.com');
+        expect(isTwitter(location)).toBeFalsy();
+        expect(isTweetdeck(location)).toBeTruthy();
       });
       it('pro.twitter.com', () => {
-        window.location = new URL('https://pro.twitter.com');
-        expect(isTwitter()).toBeFalsy();
-        expect(isTweetdeck()).toBeTruthy();
+        const location = new URL('https://pro.twitter.com');
+        expect(isTwitter(location)).toBeFalsy();
+        expect(isTweetdeck(location)).toBeTruthy();
       });
     });
     it('画像ページ', () => {
-      window.location = new URL('https://pbs.twimg.com');
-      expect(isTwitter()).toBeFalsy();
-      expect(isTweetdeck()).toBeFalsy();
+      const location = new URL('https://pbs.twimg.com');
+      expect(isTwitter(location)).toBeFalsy();
+      expect(isTweetdeck(location)).toBeFalsy();
     });
   });
 
