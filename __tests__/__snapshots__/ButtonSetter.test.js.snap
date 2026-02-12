@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ButtonSetter setButton ボタン設置される 1`] = `"<div class="ProfileTweet-action hogeclass"><input class="tooi-button" style="width: 70px; font-size: 13px; color: rgb(105, 123, 140);" type="button" value="Original"></div>"`;
 
