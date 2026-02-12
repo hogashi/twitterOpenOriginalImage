@@ -698,7 +698,7 @@ describe('ButtonSetter', () => {
     it('actionButtonのcolorなかったらデフォルト', () => {
       makeActionButton(null);
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getActionButtonColor()).toStrictEqual('#697b8c');
+      expect(buttonSetter.getActionButtonColor()).toStrictEqual('canvastext');
     });
 
     it('actionButtonのcolorあったらその色が返る', () => {
@@ -743,13 +743,13 @@ describe('ButtonSetter', () => {
     it('actionButtonのcolor空文字ならデフォルト', () => {
       makeReactActionButton('');
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('#697b8c');
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('canvastext');
     });
 
     it('actionButtonのcolorなかったらデフォルト', () => {
       makeReactActionButton(null);
       const buttonSetter = new ButtonSetter();
-      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('#697b8c');
+      expect(buttonSetter.getReactLayoutActionButtonColor()).toStrictEqual('canvastext');
     });
 
     it('actionButtonのcolorあったらその色が返る', () => {

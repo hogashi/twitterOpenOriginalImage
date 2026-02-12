@@ -452,7 +452,7 @@ describe('ButtonSetterTweetDeck', () => {
         expect(styles.display).toStrictEqual('inline-block');
         expect(styles.fontSize).toStrictEqual('0.75em');
         expect(styles.marginTop).toStrictEqual('5px');
-        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px 1px');
         expect(styles.lineHeight).toStrictEqual('1.5em');
         expect(styles.cursor).toStrictEqual('pointer');
       });
@@ -494,12 +494,12 @@ describe('ButtonSetterTweetDeck', () => {
 
       it('ボタンにスタイルついている', () => {
         const styles = button.style;
-        expect(styles.border).toStrictEqual('1px solid #697b8c');
+        expect(styles.border).toStrictEqual('1px solid rgb(105, 123, 140)');
         expect(styles.borderRadius).toStrictEqual('2px');
         expect(styles.display).toStrictEqual('inline-block');
         expect(styles.fontSize).toStrictEqual('0.75em');
         expect(styles.marginTop).toStrictEqual('5px');
-        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px 1px');
         expect(styles.lineHeight).toStrictEqual('1.5em');
         expect(styles.cursor).toStrictEqual('pointer');
       });
@@ -535,7 +535,7 @@ describe('ButtonSetterTweetDeck', () => {
         expect(styles.display).toStrictEqual('inline-block');
         expect(styles.fontSize).toStrictEqual('0.75em');
         expect(styles.marginTop).toStrictEqual('5px');
-        expect(styles.padding).toStrictEqual('1px 1px 0px');
+        expect(styles.padding).toStrictEqual('1px 1px 0px 1px');
         expect(styles.lineHeight).toStrictEqual('1.5em');
         expect(styles.cursor).toStrictEqual('pointer');
       });
