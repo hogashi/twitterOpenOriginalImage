@@ -20,8 +20,8 @@
     "test:lint-format": "rome check src __tests__ && rome format src __tests__",
     "test:ts": "tsc --noEmit",
     "bump": "bash -c 'scripts/bump-version.sh'",
-    "compress": "zip -r dist.zip dist",
-    "compress:edge": "run-s edit-manifest-edge compress restore-manifest-edge",
+    "compress": "bash -c 'scripts/compress.sh'",
+    "compress:edge": "bash -c 'scripts/compress.sh edge'",
     "edit-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh'",
     "restore-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh r'"
   },
