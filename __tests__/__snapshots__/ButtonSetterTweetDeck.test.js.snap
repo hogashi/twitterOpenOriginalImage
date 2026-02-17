@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ButtonSetterTweetDeck setButton txt-muteある ボタン設置される 1`] = `"<a class="pull-left margin-txs txt-mute hogeclass" style="border: 1px solid rgb(18, 52, 86); border-radius: 2px; display: inline-block; font-size: 0.75em; margin-top: 5px; padding: 1px 1px 0px; line-height: 1.5em; cursor: pointer;">Original</a>"`;
 
-exports[`ButtonSetterTweetDeck setButton txt-muteない ボタン設置される 1`] = `"<a class="pull-left margin-txs txt-mute hogeclass" style="border: 1px solid #697b8c; border-radius: 2px; display: inline-block; font-size: 0.75em; margin-top: 5px; padding: 1px 1px 0px; line-height: 1.5em; cursor: pointer;">Original</a>"`;
+exports[`ButtonSetterTweetDeck setButton txt-muteない ボタン設置される 1`] = `"<a class="pull-left margin-txs txt-mute hogeclass" style="border: 1px solid rgb(105, 123, 140); border-radius: 2px; display: inline-block; font-size: 0.75em; margin-top: 5px; padding: 1px 1px 0px; line-height: 1.5em; cursor: pointer;">Original</a>"`;
 
 exports[`ButtonSetterTweetDeck setButton ボタンのテキストを指定するとそれが入る ボタン設置される 1`] = `"<a class="pull-left margin-txs txt-mute hogeclass" style="border: 1px solid rgb(18, 52, 86); border-radius: 2px; display: inline-block; font-size: 0.75em; margin-top: 5px; padding: 1px 1px 0px; line-height: 1.5em; cursor: pointer;">原寸</a>"`;
