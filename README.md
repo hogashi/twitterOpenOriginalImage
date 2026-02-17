@@ -1,7 +1,7 @@
 # twitter画像原寸ボタン
 
 [![release version](https://img.shields.io/github/v/release/hogashi/twitterOpenOriginalImage?sort=semver)](https://github.com/hogashi/twitterOpenOriginalImage/releases)
-[![Node.js CI](https://github.com/hogashi/twitterOpenOriginalImage/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/hogashi/twitterOpenOriginalImage/actions?query=workflow%3A%22Node.js+CI%22)
+[![Node.js CI](https://github.com/hogashi/twitterOpenOriginalImage/actions/workflows/nodejs.yml/badge.svg)](https://github.com/hogashi/twitterOpenOriginalImage/actions/workflows/nodejs.yml)
 [![Coverage Status](https://raw.githubusercontent.com/hogashi/twitterOpenOriginalImage/master/coverage/badge.svg?sanitize=true)](https://github.com/hogashi/twitterOpenOriginalImage/actions?query=branch%3Amaster)
 
 画像ツイートの画像の原寸を新しいタブで開く、GoogleChrome拡張機能です。  
