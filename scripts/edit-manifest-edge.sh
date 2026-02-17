@@ -7,7 +7,6 @@ if ! command -v jq &> /dev/null; then
   exit 1
 fi
 
-echo "${1:-}"
 
 if [ "${1:-}" = "r" ]; then
   mv -f dist/manifest.json{.chrome,}
