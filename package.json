@@ -21,8 +21,8 @@
     "test:ts": "tsc --noEmit",
     "compress": "zip -r dist.zip dist",
     "compress:edge": "run-s edit-manifest-edge compress restore-manifest-edge",
-    "edit-manifest-edge": "sed -i.bak 's/\\(options_page.*\\)$/\\1, \"update_URL\": \"https:\\/\\/edge.microsoft.com\\/extensionwebstorebase\\/v1\\/crx\"/' dist/manifest.json",
-    "restore-manifest-edge": "mv -f dist/manifest.json{.bak,}"
+    "edit-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh'",
+    "restore-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh r'"
   },
   "devDependencies": {
     "@babel/cli": "7.28.0",
