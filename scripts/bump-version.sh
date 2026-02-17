@@ -1,14 +1,22 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
 
-which -a jq
+if ! command -v jq &> /dev/null; then
+  echo "Error: jq is not installed"
+  exit 1
+fi
+
+if [ ! -f dist/manifest.json ]; then
+  echo "Error: dist/manifest.json not found"
+  exit 1
+fi
 
 oldversion="$(jq -r .version dist/manifest.json)"
 echo 'version in dist/manifest.json: '"$oldversion"
 
 echo -n 'new version?: '
-read newversion
+read -r newversion
 if [ "$newversion" = '' ]; then
   echo 'quit'
   exit 1

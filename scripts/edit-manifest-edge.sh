@@ -1,12 +1,15 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
 
-which -a jq
+if ! command -v jq &> /dev/null; then
+  echo "Error: jq is not installed"
+  exit 1
+fi
 
-echo "$1"
+echo "${1:-}"
 
-if [ "$1" = "r" ]; then
+if [ "${1:-}" = "r" ]; then
   mv -f dist/manifest.json{.chrome,}
   exit
 fi
