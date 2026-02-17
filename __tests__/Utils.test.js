@@ -409,46 +409,38 @@ describe('Utils', () => {
   });
 
   describe('getButtonSetter ボタン設置するクラスのゲッタ', () => {
-    const originalLocation = window.location;
-    beforeAll(() => {
-      delete window.location;
-    });
-    afterAll(() => {
-      window.location = originalLocation;
-    });
-
     describe('古いTweetDeckではButtonSetterTweetDeck', () => {
       it('tweetdeck.twitter.com', () => {
-        window.location = new URL('https://tweetdeck.twitter.com');
+        jsdom.reconfigure({ url: 'https://tweetdeck.twitter.com' });
         expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
       });
       it('pro.twitter.com', () => {
-        window.location = new URL('https://pro.twitter.com');
+        jsdom.reconfigure({ url: 'https://pro.twitter.com' });
         expect(getButtonSetter()).toBeInstanceOf(ButtonSetterTweetDeck);
       });
     });
     it('公式WebではButtonSetter', () => {
-      window.location = new URL('https://twitter.com');
+      jsdom.reconfigure({ url: 'https://twitter.com' });
       expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
     });
     it('公式Web(モバイル版)ではButtonSetter', () => {
-      window.location = new URL('https://mobile.twitter.com');
+      jsdom.reconfigure({ url: 'https://mobile.twitter.com' });
       expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
     });
     describe('新しいTweetDeckではButtonSetter', () => {
       it('tweetdeck.twitter.com', () => {
-        window.location = new URL('https://tweetdeck.twitter.com');
+        jsdom.reconfigure({ url: 'https://tweetdeck.twitter.com' });
         document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
         expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
       });
       it('pro.twitter.com', () => {
-        window.location = new URL('https://pro.twitter.com');
+        jsdom.reconfigure({ url: 'https://pro.twitter.com' });
         document.querySelector('body').insertAdjacentHTML('beforeend', '<div id="react-root"></div>');
         expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
       });
     });
     it('どちらでもなかったらButtonSetter', () => {
-      window.location = new URL('https://hoge.test');
+      jsdom.reconfigure({ url: 'https://hoge.test' });
       expect(getButtonSetter()).toBeInstanceOf(ButtonSetter);
     });
   });
