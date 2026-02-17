@@ -23,7 +23,8 @@
     "compress": "bash -c 'scripts/compress.sh'",
     "compress:edge": "bash -c 'scripts/compress.sh edge'",
     "edit-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh'",
-    "restore-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh r'"
+    "restore-manifest-edge": "bash -c 'scripts/edit-manifest-edge.sh r'",
+    "release": "run-s bump compress edit-manifest-edge compress:edge restore-manifest-edge"
   },
   "devDependencies": {
     "@babel/cli": "7.28.0",
