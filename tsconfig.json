@@ -4,7 +4,9 @@
     "outDir": "./dist/js/",
     // add `dom` over tsconfig/bases
     "lib": ["es2020", "dom"],
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // TypeScript 6 no longer auto-includes @types/* packages; list globals explicitly
+    "types": ["chrome"]
   },
   "include": ["./src/", "./__tests__/"]
 }
