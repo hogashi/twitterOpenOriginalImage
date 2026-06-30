@@ -1,0 +1,5 @@
+allowBuilds:
+  '@parcel/watcher': true
+  unrs-resolver: true
+overrides:
+  cheerio: 1.2.0
